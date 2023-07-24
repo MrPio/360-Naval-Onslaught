@@ -81,7 +81,7 @@ namespace Managers
                 sprite: "Sprites/ship_1",
                 fireClip: null,
                 explodeClip: "Audio/ship_destroy",
-                baseSpeed: 130*4,
+                baseSpeed: 130*2,
                 baseRate: 0,
                 baseDamage: 50,
                 baseHealth: 90,

@@ -408,8 +408,8 @@ GameObject:
   - component: {fileID: 1000699228564121685}
   - component: {fileID: 1000699228564121684}
   - component: {fileID: 1000699228564121687}
-  - component: {fileID: 1000699228564121690}
   - component: {fileID: 1000699228564121688}
+  - component: {fileID: 1000699228564121690}
   - component: {fileID: 1000699228564121691}
   m_Layer: 0
   m_Name: ship
@@ -500,6 +500,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   path: {fileID: 0}
   friction: 0.95
+--- !u!114 &1000699228564121688
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1000699228564121686}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c9b4f19529e4e14d8b46617739c7222, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthBar: {fileID: 1000699227325673139}
+  explosions:
+  - {fileID: 5769937503842670313, guid: 85d14b13ee18ad949b6c6ee3e23da0a5, type: 3}
+  - {fileID: 7950496749294567380, guid: ea89189d5f3e92640b3ce62da8b271a2, type: 3}
+  animator: {fileID: 1000699228564121691}
+  spriteRenderer: {fileID: 1000699228564121684}
+  boxCollider: {fileID: 1000699228564121690}
+  floatingTextBig: {fileID: 8266766500792680827, guid: e34e26188880c5447aed4831bb5942fb, type: 3}
 --- !u!61 &1000699228564121690
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -526,24 +546,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.98, y: 0.5}
   m_EdgeRadius: 0
---- !u!114 &1000699228564121688
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1000699228564121686}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7c9b4f19529e4e14d8b46617739c7222, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  healthBar: {fileID: 1000699227325673139}
-  explosions: []
-  animator: {fileID: 1000699228564121691}
-  spriteRenderer: {fileID: 1000699228564121684}
-  boxCollider: {fileID: 1000699228564121690}
-  floatingTextBig: {fileID: 8266766500792680827, guid: e34e26188880c5447aed4831bb5942fb, type: 3}
 --- !u!95 &1000699228564121691
 Animator:
   serializedVersion: 5

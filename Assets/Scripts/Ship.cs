@@ -20,25 +20,25 @@ public class Ship : MonoBehaviour
     private AudioClip _fireClip;
     private MoneyCounter _moneyCounter;
     private AudioClip _explodeClip;
-    public ShipModel Model;
+    private ShipModel _model;
     private int _health;
 
     private void Awake()
     {
-        Model = GameManager.Instance.CurrentWave.Spawn();
-        spriteRenderer.sprite = Resources.Load<Sprite>(Model.Sprite);
+        _model = GameManager.Instance.CurrentWave.Spawn();
+        spriteRenderer.sprite = Resources.Load<Sprite>(_model.Sprite);
         boxCollider.size = spriteRenderer.bounds.size;
-        if (Model.ExplodeClip != null)
-            _explodeClip = Resources.Load<AudioClip>(Model.ExplodeClip);
-        _fireClip = Resources.Load<AudioClip>(Model.FireClip);
+        if (_model.ExplodeClip != null)
+            _explodeClip = Resources.Load<AudioClip>(_model.ExplodeClip);
+        _fireClip = Resources.Load<AudioClip>(_model.FireClip);
         _moneyCounter = GameObject.FindWithTag("money_counter").GetComponent<MoneyCounter>();
-        GetComponent<ShipPath>().Model = Model;
+        GetComponent<ShipPath>().Model = _model;
         var pos = MainCamera.mainCam.RandomBoundaryPoint() * 1.1f;
         transform.SetPositionAndRotation(pos, pos.toQuaternion());
 
 
         // Custom Path for SpeedBoat
-        if (Model.Name == "SpeedBoat")
+        if (_model.Name == "SpeedBoat")
         {
             GetComponent<ShipPath>().AddPath(
                 Random.Range(0, 2) == 0
@@ -54,7 +54,7 @@ public class Ship : MonoBehaviour
 
     void Start()
     {
-        _health = Model.Health;
+        _health = _model.Health;
         healthBar.gameObject.SetActive(false);
     }
 
@@ -65,14 +65,15 @@ public class Ship : MonoBehaviour
             _health -= damage;
             animator.SetTrigger(ShipDamage);
             healthBar.gameObject.SetActive(true);
-            healthBar.setValue(_health / (float)Model.Health);
+            healthBar.setValue(_health / (float)_model.Health);
             if (_health <= 0)
                 Explode();
         }
     }
 
-    public void Explode(bool reward = true)
+    private void Explode(bool reward = true)
     {
+        GetComponent<ShipPath>().dead = true;
         MainCamera.AudioSource.PlayOneShot(_explodeClip);
         animator.SetTrigger(ShipDestroy);
         Instantiate(explosions.RandomItem(), transform);
@@ -81,12 +82,21 @@ public class Ship : MonoBehaviour
         if (reward)
         {
             var floatingTextBig = Instantiate(this.floatingTextBig, GameObject.FindWithTag("canvas").transform);
-            floatingTextBig.transform.Find("Text").GetComponent<TextMeshProUGUI>().text = $"+ {Model.Money} $";
+            floatingTextBig.transform.Find("Text").GetComponent<TextMeshProUGUI>().text = $"+ {_model.Money} $";
             floatingTextBig.transform.position = transform.position + Vector3.up * 0.5f;
-            GameManager.Instance.Money += Model.Money;
+            GameManager.Instance.Money += _model.Money;
             _moneyCounter.UpdateUI();
         }
     }
 
     public void End() => Destroy(gameObject);
+
+    private void OnTriggerEnter2D(Collider2D col)
+    {
+        if (col.CompareTag("base"))
+        {
+            GameObject.FindWithTag("base").GetComponent<Base>().TakeDamage(_model.Damage);
+            Explode(false);
+        }
+    }
 }

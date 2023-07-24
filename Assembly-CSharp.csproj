@@ -53,14 +53,14 @@
      <Compile Include="Assets\Scripts\Managers\GameManager.cs" />
      <Compile Include="Assets\Scripts\Turret.cs" />
      <Compile Include="Assets\Scripts\Base.cs" />
+     <Compile Include="Assets\Scripts\MoneyCounter.cs" />
      <Compile Include="Assets\Scripts\Model\TurretModel.cs" />
      <Compile Include="Assets\Scripts\Explosion.cs" />
      <Compile Include="Assets\Scripts\WaveSpawner.cs" />
      <Compile Include="Assets\Scripts\Model\WaveModel.cs" />
      <Compile Include="Assets\Scripts\Managers\DataManager.cs" />
-     <Compile Include="Assets\Scripts\Bullet.cs" />
-     <Compile Include="Assets\Scripts\MoneyCounter.cs" />
      <Compile Include="Assets\Scripts\ExtensionsFunctions\ListExtensions.cs" />
+     <Compile Include="Assets\Scripts\Bullet.cs" />
      <Folder Include="Assets" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />

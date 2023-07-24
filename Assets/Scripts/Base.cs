@@ -34,14 +34,4 @@ public class Base : MonoBehaviour
     {
         
     }
-    
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("ship"))
-        {
-            var ship = GameObject.FindWithTag("ship").GetComponent<Ship>();
-            ship.Explode(false);
-            TakeDamage(ship.Model.Damage);
-        }
-    }
 }
