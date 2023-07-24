@@ -130,14 +130,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4eec611d056f7644ab888c2e3b70c6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _leftSpawnPoint: {fileID: 442988400617981391}
-  _rightSpawnPoint: {fileID: 442988399082305604}
-  _bullet: {fileID: 1676987638764990353, guid: b9002b768d0bed949a14adaf6824394c, type: 3}
-  _ammoCounter: {fileID: 0}
-  _fireRate: 10
-  _fireSpeed: 5
-  maxAmmo: 20
-  ammo: 20
+  leftSpawnPoint: {fileID: 442988400617981391}
+  rightSpawnPoint: {fileID: 442988399082305604}
+  bullet: {fileID: 1676987638764990353, guid: b9002b768d0bed949a14adaf6824394c, type: 3}
+  ammoCounter: {fileID: 0}
+  spriteRenderer: {fileID: 442988400280280843}
 --- !u!1 &442988400617981391
 GameObject:
   m_ObjectHideFlags: 0

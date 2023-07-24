@@ -15,7 +15,7 @@ public class Bullet : MonoBehaviour
     {
         if (col.gameObject.tag.Contains("ship"))
         {
-            col.GetComponent<ShipHealth>().TakeDamage(Player.Damage);
+            col.GetComponent<Ship>().TakeDamage(Player.CurrentTurret.Damage);
             Destroy(gameObject);
         }
     }

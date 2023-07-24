@@ -10,10 +10,13 @@ public class ShipPath : MonoBehaviour
     [SerializeField] [Range(0.9f, 1f)] private float friction = 0.99f;
 
     private int index;
-    private List<Vector3> points;
+    private List<Vector3> points=new ();
 
     private void Start()
     {
+        var pos = MainCamera.mainCam.RandomBoundaryPoint() * 1.1f;
+        transform.SetPositionAndRotation(pos, pos.toQuaternion());
+
         if (path != null)
             points = path.GetComponentsInChildren<Transform>()
                 .Where(tr => tr != path)

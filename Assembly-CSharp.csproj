@@ -41,19 +41,24 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
+     <Compile Include="Assets\Scripts\Ship.cs" />
+     <Compile Include="Assets\Scripts\HealthBar.cs" />
+     <Compile Include="Assets\Scripts\AmmoCounter.cs" />
      <Compile Include="Assets\Scripts\ExtensionsFunctions\CameraExtensions.cs" />
      <Compile Include="Assets\Scripts\MainCamera.cs" />
      <Compile Include="Assets\Scripts\ExtensionsFunctions\VectorExtensions.cs" />
      <Compile Include="Assets\Scripts\ShipPath.cs" />
+     <Compile Include="Assets\Scripts\Managers\PlayerManager.cs" />
      <Compile Include="Assets\Scripts\Turret.cs" />
      <Compile Include="Assets\Scripts\BaseMovement.cs" />
-     <Compile Include="Assets\Scripts\Bullet.cs" />
-     <Compile Include="Assets\Scripts\Speedboat.cs" />
-     <Compile Include="Assets\Scripts\AmmoCounter.cs" />
-     <Compile Include="Assets\Scripts\HealthBar.cs" />
-     <Compile Include="Assets\Scripts\ShipHealth.cs" />
+     <Compile Include="Assets\Scripts\Model\TurretModel.cs" />
      <Compile Include="Assets\Scripts\Explosion.cs" />
-     <Compile Include="Assets\Scripts\Managers\PlayerManager.cs" />
+     <Compile Include="Assets\Scripts\Managers\DataManager.cs" />
+     <Compile Include="Assets\Scripts\Bullet.cs" />
+     <Compile Include="Assets\Scripts\Points.cs" />
+     <Compile Include="Assets\Scripts\Model\ShipModel.cs" />
+     <Compile Include="Assets\Scripts\Model\WaveModel.cs" />
+     <Compile Include="Assets\Scripts\WaveSpawner.cs" />
      <Folder Include="Assets" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
@@ -81,6 +86,7 @@
      <Folder Include="Assets\TextMesh Pro\Shaders" />
      <Folder Include="Assets\TextMesh Pro\Resources\Style Sheets" />
      <Folder Include="Assets\TextMesh Pro\Fonts" />
+     <Folder Include="Assets\Scripts\Model" />
      <None Include="Assets\TextMesh Pro\Resources\LineBreaking Following Characters.txt" />
      <Folder Include="Assets\Scripts\Managers" />
      <Folder Include="Assets\Resources\Sprites" />

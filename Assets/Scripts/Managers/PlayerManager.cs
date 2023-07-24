@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+﻿using Model;
 
 namespace Managers
 {
@@ -8,18 +8,18 @@ namespace Managers
 
         private PlayerManager()
         {
-            Ammo = MaxAmmo;
+            Ammo = CurrentTurret.Ammo;
+            Health = MaxHealth;
         }
 
         public static PlayerManager Instance => _instance ??= new PlayerManager();
 
-        public float FireRate=10;
-        public float BulletSpeed=8;
-        public int Health=5;
-        public int MaxHealth=5;
-        public int MaxAmmo=50;
+        public int Health;
+        public int MaxHealth = 500;
+        public int Wave = 0;
         public int Ammo;
-        public int Damage=6;
-        
+        public int Money = 500;
+        public TurretModel CurrentTurret = DataManager.Instance.Turrets[0];
+        public WaveModel CurrentWave => DataManager.Instance.Waves[Wave];
     }
 }

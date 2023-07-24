@@ -15,6 +15,7 @@ TagManager:
   - ship_4
   - ship_5
   - ammo_counter
+  - canvas
   layers:
   - Default
   - TransparentFX
