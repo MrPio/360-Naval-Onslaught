@@ -1,12 +1,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using ExtensionsFunctions;
+using Model;
 using UnityEngine;
 
 public class ShipPath : MonoBehaviour
 {
     [SerializeField] private Transform path;
-    [SerializeField] private float speed = 1;
+    public ShipModel Model;
     [SerializeField] [Range(0.9f, 1f)] private float friction = 0.99f;
 
     private int index;
@@ -14,9 +15,6 @@ public class ShipPath : MonoBehaviour
 
     private void Start()
     {
-        var pos = MainCamera.mainCam.RandomBoundaryPoint() * 1.1f;
-        transform.SetPositionAndRotation(pos, pos.toQuaternion());
-
         if (path != null)
             points = path.GetComponentsInChildren<Transform>()
                 .Where(tr => tr != path)
@@ -26,13 +24,13 @@ public class ShipPath : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (path is { } && index <= points.Count - 1)
+        if (path is { } && Model is {}&& index <= points.Count - 1)
         {
             var currentPos = transform.position;
             var newPos = Vector2.MoveTowards(
                 current: currentPos,
                 target: points[index],
-                maxDistanceDelta: speed * Time.deltaTime
+                maxDistanceDelta: Model.Speed/100f * Time.deltaTime
             );
             var newRotation = (currentPos - points[index]).toQuaternion();
             transform.SetPositionAndRotation(

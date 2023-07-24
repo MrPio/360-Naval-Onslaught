@@ -6,8 +6,8 @@ using UnityEngine;
 
 public class Turret : MonoBehaviour
 {
-    private static PlayerManager Player => PlayerManager.Instance;
-    private static TurretModel TurretModel => Player.CurrentTurret;
+    private static GameManager Game => GameManager.Instance;
+    private static TurretModel TurretModel => Game.CurrentTurret;
     [SerializeField] private GameObject leftSpawnPoint;
     [SerializeField] private GameObject rightSpawnPoint;
     [SerializeField] private GameObject bullet;
@@ -26,7 +26,7 @@ public class Turret : MonoBehaviour
     void Update()
     {
         _fireAccumulator += Time.deltaTime;
-        if (Input.GetMouseButton(0) && Player.Ammo > 0 && _fireAccumulator > 100f / TurretModel.Rate)
+        if (Input.GetMouseButton(0) && Game.Ammo > 0 && _fireAccumulator > 100f / TurretModel.Rate)
         {
             _fireAccumulator = 0;
             Fire(leftSpawnPoint);
@@ -43,7 +43,7 @@ public class Turret : MonoBehaviour
             rotation: MainCamera.mainCam.AngleToMouse(transform.position)
         );
         newBullet.GetComponent<Rigidbody2D>().velocity = newBullet.transform.right * TurretModel.Speed / 100f;
-        --Player.Ammo;
+        --Game.Ammo;
         _ammoCounter.UpdateUI();
     }
 }

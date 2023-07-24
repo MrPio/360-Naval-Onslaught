@@ -7,7 +7,7 @@ namespace Model
 {
     public class TurretModel
     {
-        private static PlayerManager PlayerManager => PlayerManager.Instance;
+        private static GameManager GameManager => GameManager.Instance;
 
         public string Name;
         public string Sprite;
@@ -71,36 +71,36 @@ namespace Model
 
         public void BuySpeed()
         {
-            if (PlayerManager.Money >= SpeedCost)
+            if (GameManager.Money >= SpeedCost)
             {
-                PlayerManager.Money -= SpeedCost;
+                GameManager.Money -= SpeedCost;
                 Speed += SpeedLevelSteps.Where(entry => entry.Key >= SpeedLevel).ToList()[0].Value;
             }
         }
 
         public void BuyRate()
         {
-            if (PlayerManager.Money >= RateCost)
+            if (GameManager.Money >= RateCost)
             {
-                PlayerManager.Money -= RateCost;
+                GameManager.Money -= RateCost;
                 Rate += RateLevelSteps.Where(entry => entry.Key >= RateLevel).ToList()[0].Value;
             }
         }
 
         public void BuyDamage()
         {
-            if (PlayerManager.Money >= DamageCost)
+            if (GameManager.Money >= DamageCost)
             {
-                PlayerManager.Money -= DamageCost;
+                GameManager.Money -= DamageCost;
                 Damage += DamageLevelSteps.Where(entry => entry.Key >= DamageLevel).ToList()[0].Value;
             }
         }
 
         public void BuyAmmo()
         {
-            if (PlayerManager.Money >= AmmoCost)
+            if (GameManager.Money >= AmmoCost)
             {
-                PlayerManager.Money -= AmmoCost;
+                GameManager.Money -= AmmoCost;
                 Ammo += AmmoLevelSteps.Where(entry => entry.Key >= AmmoLevel).ToList()[0].Value;
             }
         }

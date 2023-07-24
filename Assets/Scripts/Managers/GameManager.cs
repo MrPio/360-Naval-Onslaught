@@ -2,17 +2,17 @@
 
 namespace Managers
 {
-    public class PlayerManager
+    public class GameManager
     {
-        private static PlayerManager _instance;
+        private static GameManager _instance;
 
-        private PlayerManager()
+        private GameManager()
         {
             Ammo = CurrentTurret.Ammo;
             Health = MaxHealth;
         }
 
-        public static PlayerManager Instance => _instance ??= new PlayerManager();
+        public static GameManager Instance => _instance ??= new GameManager();
 
         public int Health;
         public int MaxHealth = 500;

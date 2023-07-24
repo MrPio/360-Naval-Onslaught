@@ -9,13 +9,10 @@ TagManager:
   - turret
   - ocean
   - bullet
-  - ship_1
-  - ship_2
-  - ship_3
-  - ship_4
-  - ship_5
   - ammo_counter
   - canvas
+  - money_counter
+  - ship
   layers:
   - Default
   - TransparentFX

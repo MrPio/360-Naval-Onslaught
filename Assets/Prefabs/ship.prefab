@@ -413,7 +413,7 @@ GameObject:
   - component: {fileID: 1000699228564121691}
   m_Layer: 0
   m_Name: ship
-  m_TagString: ship_2
+  m_TagString: ship
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -499,7 +499,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   path: {fileID: 0}
-  speed: 1
   friction: 0.95
 --- !u!61 &1000699228564121690
 BoxCollider2D:
@@ -540,7 +539,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthBar: {fileID: 1000699227325673139}
-  explosion: {fileID: 5769937503842670313, guid: 85d14b13ee18ad949b6c6ee3e23da0a5, type: 3}
+  explosions: []
   animator: {fileID: 1000699228564121691}
   spriteRenderer: {fileID: 1000699228564121684}
   boxCollider: {fileID: 1000699228564121690}

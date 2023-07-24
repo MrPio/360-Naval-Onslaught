@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    private static PlayerManager Player => PlayerManager.Instance;
+    private static GameManager Game => GameManager.Instance;
     [SerializeField] private Rigidbody2D rb;
 
     private void OnBecameInvisible()
@@ -15,7 +15,7 @@ public class Bullet : MonoBehaviour
     {
         if (col.gameObject.tag.Contains("ship"))
         {
-            col.GetComponent<Ship>().TakeDamage(Player.CurrentTurret.Damage);
+            col.GetComponent<Ship>().TakeDamage(Game.CurrentTurret.Damage);
             Destroy(gameObject);
         }
     }

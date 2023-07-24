@@ -9,6 +9,11 @@ public class HealthBar : MonoBehaviour
     [SerializeField] private Slider slider;
     [SerializeField] private GameObject fillArea;
 
+    private void Start()
+    {
+        transform.position = target.position + Vector3.up * offset;
+    }
+
     private void Update()
     {
         transform.SetPositionAndRotation(
