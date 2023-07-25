@@ -9,6 +9,7 @@ namespace Managers
         private GameManager()
         {
             Ammo = CurrentTurretModel.Ammo;
+            CannonAmmo = 1;
             Health = MaxHealth;
         }
 
@@ -17,7 +18,7 @@ namespace Managers
         public int Health;
         public int MaxHealth = 500;
         public int Wave = 0;
-        public int Ammo;
+        public int Ammo,CannonAmmo;
         public int Money = 500;
         public int CurrentTurret = 0;
         public int CurrentCannon = 0;

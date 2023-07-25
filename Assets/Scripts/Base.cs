@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using ExtensionsFunctions;
 using Managers;
+using Model;
 using UnityEngine;
 
 public class Base : MonoBehaviour
@@ -11,24 +12,10 @@ public class Base : MonoBehaviour
     [SerializeField] private GameObject turret;
     [SerializeField] private List<Animator> damageAnimators;
     [SerializeField] private HealthBar healthBar;
-    [SerializeField] private ReloadBar reloadBar;
-    [SerializeField] private AudioClip reloadStart,reloadMiss;
 
     void Update()
     {
         transform.rotation = MainCamera.mainCam.AngleToMouse(transform.position);
-        if (!reloadBar.IsReloading && Input.GetKeyDown(KeyCode.R))
-        {
-            if (Game.Ammo < Game.CurrentTurretModel.Ammo)
-            {
-                MainCamera.AudioSource.PlayOneShot(reloadStart);
-                reloadBar.Reload();
-            }
-            else
-            {
-                MainCamera.AudioSource.PlayOneShot(reloadMiss);
-            }
-        }
     }
 
     public void TakeDamage(int damage)
@@ -44,7 +31,7 @@ public class Base : MonoBehaviour
         }
     }
 
-    private void GameOver()
+    public void GameOver()
     {
     }
 }
