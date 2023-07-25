@@ -6,7 +6,7 @@ using UnityEngine;
 public class CannonBall : MonoBehaviour
 {
     private const float Duration = 1;
-    [SerializeField] private AudioClip cannonMiss, cannonHit;
+    // [SerializeField] private AudioClip cannonMiss, cannonHit;
     private float _accumulator;
     [NonSerialized] public Vector2 Destination;
 

@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using ExtensionsFunctions;
 using Managers;
@@ -64,7 +65,6 @@ public class Ship : MonoBehaviour
         {
             _health -= damage;
             animator.SetTrigger(ShipDamage);
-            healthBar.gameObject.SetActive(true);
             healthBar.SetValue(_health / (float)_model.Health);
             if (_health <= 0)
                 Explode();
@@ -89,6 +89,13 @@ public class Ship : MonoBehaviour
             GameManager.Instance.Money += _model.Money;
             _moneyCounter.UpdateUI();
         }
+        
+        IEnumerator myWaitCoroutine()
+        {
+            yield return new WaitForSeconds(1f);
+            Destroy(gameObject);
+        }
+        StartCoroutine(myWaitCoroutine());
     }
 
     public void End() => Destroy(gameObject);

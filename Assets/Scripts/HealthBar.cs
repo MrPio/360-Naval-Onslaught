@@ -13,7 +13,6 @@ public class HealthBar : MonoBehaviour
     private void Start()
     {
         transform.position = target.position + Vector3.up * offset;
-        slider.value = 1;
     }
 
     private void Update()
@@ -29,6 +28,7 @@ public class HealthBar : MonoBehaviour
 
     public void SetValue(float value)
     {
+        gameObject.SetActive(true);
         slider.value = value;
         if (value < 0.02) fillArea.SetActive(false);
     }

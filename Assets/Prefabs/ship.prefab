@@ -284,6 +284,7 @@ MonoBehaviour:
   offset: -0.54
   slider: {fileID: 1000699227325673136}
   fillArea: {fileID: 1000699227565271631}
+  adjustRotationAndPosition: 1
 --- !u!1 &1000699227329762723
 GameObject:
   m_ObjectHideFlags: 0
@@ -500,6 +501,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   path: {fileID: 0}
   friction: 0.95
+  dead: 0
 --- !u!114 &1000699228564121688
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -519,7 +521,7 @@ MonoBehaviour:
   animator: {fileID: 1000699228564121691}
   spriteRenderer: {fileID: 1000699228564121684}
   boxCollider: {fileID: 1000699228564121690}
-  floatingTextBig: {fileID: 8266766500792680827, guid: e34e26188880c5447aed4831bb5942fb, type: 3}
+  floatingTextBig: {fileID: 3642708000545194092, guid: a970b1e306084a740b451410b403ab2e, type: 3}
 --- !u!61 &1000699228564121690
 BoxCollider2D:
   m_ObjectHideFlags: 0

@@ -5,7 +5,7 @@ using UnityEngine;
 public class WaveSpawner : MonoBehaviour
 {
     [SerializeField] private GameObject ship;
-    private float _waveStart, _accumulator, _nextSpawn = 1f*0f;
+    private float _waveStart, _accumulator, _nextSpawn = 1f * 0f;
     private WaveModel _model;
 
     void Start()
@@ -28,7 +28,11 @@ public class WaveSpawner : MonoBehaviour
     private void SpawnShip()
     {
         Instantiate(ship);
-        _nextSpawn = Random.Range(0f, 2f + 4f * Mathf.Max(0, 1 - GameManager.Instance.Wave / 20f));
+        _nextSpawn = Random.Range(0, 2) switch
+        {
+            0 => 0f,
+            _ => 0f+Random.Range(0, 4f * Mathf.Max(0, 1 - GameManager.Instance.Wave / DataManager.Instance.Waves.Length)),
+        };
         _accumulator = 0;
     }
 

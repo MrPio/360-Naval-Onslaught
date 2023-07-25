@@ -38,7 +38,7 @@ public class Cannon : MonoBehaviour
         _fireAccumulator += Time.deltaTime;
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            if (Game.CannonAmmo < 99)
+            if (Game.CannonAmmo <= 0)
             {
                 MainCamera.AudioSource.PlayOneShot(noAmmoClip);
                 return;

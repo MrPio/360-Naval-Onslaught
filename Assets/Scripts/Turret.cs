@@ -68,7 +68,7 @@ public class Turret : MonoBehaviour
     {
         MainCamera.AudioSource.PlayOneShot(reloadStart);
         reloadBar.Reload(
-            duration: 100f / Game.CurrentCannonModel.Reload,
+            duration: 100f / Model.Reload,
             reloadCallback: () =>
             {
                 MainCamera.AudioSource.PlayOneShot(reloadFinish);

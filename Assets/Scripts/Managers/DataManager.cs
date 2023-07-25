@@ -19,11 +19,11 @@ namespace Managers
                 name: "Base Turret",
                 sprite: "Sprites/turret_1",
                 fireClip: "Audio/turret_fire_1",
-                baseSpeed: 400,
-                baseRate: 300,
+                baseSpeed: 400 * 5,
+                baseRate: 300 * 8,
                 baseDamage: 20,
-                baseAmmo: 26,
-                baseReload: 50,
+                baseAmmo: 26 * 2,
+                baseReload: 75 * 3,
                 speedBaseCost: 100,
                 rateBaseCost: 180,
                 damageBaseCost: 150,
@@ -142,7 +142,7 @@ namespace Managers
                 sprite: "Sprites/ship_1",
                 fireClip: null,
                 explodeClip: "Audio/ship_destroy",
-                baseSpeed: 130 * 2,
+                baseSpeed: 130 * 1,
                 baseRate: 0,
                 baseDamage: 50,
                 baseHealth: 90,
@@ -163,7 +163,33 @@ namespace Managers
 
         public readonly WaveModel[] Waves =
         {
-            new(ships: new List<int> { 0, 0, 1, 0, 1, 0, 0, 0, 1, 1, 0, 0 })
+            new(ships: new List<int>
+            {
+                0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 1, 0, 0
+            }),
+            new(ships: new List<int> { 0, 0, 1, 0, 1, 0, 0, 0, 1, 1, 0, 0 }),
+            new(ships: new List<int> { 0, 0, 1, 0, 1, 0, 0, 0, 1, 1, 0, 0 }),
+            new(ships: new List<int> { 0, 0, 1, 0, 1, 0, 0, 0, 1, 1, 0, 0 }),
+            new(ships: new List<int> { 0, 0, 1, 0, 1, 0, 0, 0, 1, 1, 0, 0 }),
+
+            new(ships: new List<int> { 0, 0, 1, 0, 1, 0, 0, 0, 1, 1, 0, 0 }),
+            new(ships: new List<int> { 0, 0, 1, 0, 1, 0, 0, 0, 1, 1, 0, 0 }),
+            new(ships: new List<int> { 0, 0, 1, 0, 1, 0, 0, 0, 1, 1, 0, 0 }),
+            new(ships: new List<int> { 0, 0, 1, 0, 1, 0, 0, 0, 1, 1, 0, 0 }),
+            new(ships: new List<int> { 0, 0, 1, 0, 1, 0, 0, 0, 1, 1, 0, 0 }),
+
+            new(ships: new List<int> { 0, 0, 1, 0, 1, 0, 0, 0, 1, 1, 0, 0 }),
+            new(ships: new List<int> { 0, 0, 1, 0, 1, 0, 0, 0, 1, 1, 0, 0 }),
+            new(ships: new List<int> { 0, 0, 1, 0, 1, 0, 0, 0, 1, 1, 0, 0 }),
+            new(ships: new List<int> { 0, 0, 1, 0, 1, 0, 0, 0, 1, 1, 0, 0 }),
+            new(ships: new List<int> { 0, 0, 1, 0, 1, 0, 0, 0, 1, 1, 0, 0 }),
+
+            new(ships: new List<int> { 0, 0, 1, 0, 1, 0, 0, 0, 1, 1, 0, 0 }),
+            new(ships: new List<int> { 0, 0, 1, 0, 1, 0, 0, 0, 1, 1, 0, 0 }),
+            new(ships: new List<int> { 0, 0, 1, 0, 1, 0, 0, 0, 1, 1, 0, 0 }),
+            new(ships: new List<int> { 0, 0, 1, 0, 1, 0, 0, 0, 1, 1, 0, 0 }),
+            new(ships: new List<int> { 0, 0, 1, 0, 1, 0, 0, 0, 1, 1, 0, 0 }),
         };
     }
 }

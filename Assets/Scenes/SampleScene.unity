@@ -831,6 +831,10 @@ PrefabInstance:
       propertyPath: reloadFinish
       value: 
       objectReference: {fileID: 8300000, guid: 6b783d866c9e8a744b1128eedbedd814, type: 3}
+    - target: {fileID: 457978383078386763, guid: 6c91a79bc0f4d3244b3a227aead7f8ba, type: 3}
+      propertyPath: damageAnimators.Array.data[1]
+      value: 
+      objectReference: {fileID: 457978382323293723}
     - target: {fileID: 457978383078386773, guid: 6c91a79bc0f4d3244b3a227aead7f8ba, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -1387,6 +1391,10 @@ PrefabInstance:
     - target: {fileID: 4908581743553608466, guid: 208289b1b8f3bcc438778fdb3a1f3ade, type: 3}
       propertyPath: m_Name
       value: base_health_slider
+      objectReference: {fileID: 0}
+    - target: {fileID: 4908581743553608467, guid: 208289b1b8f3bcc438778fdb3a1f3ade, type: 3}
+      propertyPath: m_Value
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4908581744057259442, guid: 208289b1b8f3bcc438778fdb3a1f3ade, type: 3}
       propertyPath: m_AnchorMax.x
