@@ -18,15 +18,17 @@ namespace Managers
             new(
                 name: "Base Turret",
                 sprite: "Sprites/turret_1",
-                clip: "Audio/turret_fire_1",
+                fireClip: "Audio/turret_fire_1",
                 baseSpeed: 400,
-                baseRate: 600,
+                baseRate: 300,
                 baseDamage: 20,
                 baseAmmo: 26,
+                baseReload: 50,
                 speedBaseCost: 100,
                 rateBaseCost: 180,
-                damageBaseCost: 250,
+                damageBaseCost: 150,
                 ammoBaseCost: 125,
+                reloadBaseCost: 115,
                 speedLevelSteps: new Dictionary<int, int>
                 {
                     { 0, 20 },
@@ -51,7 +53,7 @@ namespace Managers
                 },
                 damageLevelSteps: new Dictionary<int, int>
                 {
-                    { 0, 2 },
+                    { 0, 1 },
                     { 5, 2 },
                     { 10, 3 },
                     { 15, 3 },
@@ -70,6 +72,65 @@ namespace Managers
                     { 25, 4 },
                     { 30, 6 },
                     { 35, 6 },
+                },
+                reloadLevelSteps: new Dictionary<int, int>
+                {
+                    { 0, 25 },
+                    { 5, 30 },
+                    { 10, 35 },
+                    { 15, 40 },
+                    { 20, 50 },
+                    { 25, 65 },
+                    { 30, 70 },
+                    { 35, 80 },
+                }
+            ),
+        };
+
+        public readonly CannonModel[] Cannons =
+        {
+            new(
+                name: "Base Cannon",
+                sprite: "Sprites/cannon_1",
+                fireClip: "Audio/cannon_fire_1",
+                baseSpeed: 100,
+                baseDamage: 200,
+                baseReload: 20,
+                speedBaseCost: 450,
+                damageBaseCost: 300,
+                reloadBaseCost: 350,
+                speedLevelSteps: new Dictionary<int, int>
+                {
+                    { 0, 15 },
+                    { 5, 20 },
+                    { 10, 25 },
+                    { 15, 30 },
+                    { 20, 40 },
+                    { 25, 55 },
+                    { 30, 60 },
+                    { 35, 75 },
+                },
+                damageLevelSteps: new Dictionary<int, int>
+                {
+                    { 0, 10 },
+                    { 5, 16 },
+                    { 10, 24 },
+                    { 15, 32 },
+                    { 20, 40 },
+                    { 25, 50 },
+                    { 30, 65 },
+                    { 35, 75 },
+                },
+                reloadLevelSteps: new Dictionary<int, int>
+                {
+                    { 0, 2 },
+                    { 5, 3 },
+                    { 10, 4 },
+                    { 15, 6 },
+                    { 20, 8 },
+                    { 25, 10 },
+                    { 30, 12 },
+                    { 35, 15 },
                 }
             ),
         };
@@ -81,7 +142,7 @@ namespace Managers
                 sprite: "Sprites/ship_1",
                 fireClip: null,
                 explodeClip: "Audio/ship_destroy",
-                baseSpeed: 130*2,
+                baseSpeed: 130 * 2,
                 baseRate: 0,
                 baseDamage: 50,
                 baseHealth: 90,

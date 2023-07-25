@@ -7,11 +7,12 @@ using UnityEngine;
 public class Turret : MonoBehaviour
 {
     private static GameManager Game => GameManager.Instance;
-    private static TurretModel TurretModel => Game.CurrentTurret;
+    private static TurretModel TurretModel => Game.CurrentTurretModel;
     [SerializeField] private GameObject leftSpawnPoint;
     [SerializeField] private GameObject rightSpawnPoint;
     [SerializeField] private GameObject bullet;
     [SerializeField] private SpriteRenderer spriteRenderer;
+    [SerializeField] private ReloadBar reloadBar;
     private AmmoCounter _ammoCounter;
     private float _fireAccumulator;
     private AudioClip _fireClip;
@@ -19,7 +20,7 @@ public class Turret : MonoBehaviour
     private void Awake()
     {
         spriteRenderer.sprite = Resources.Load<Sprite>(TurretModel.Sprite);
-        _fireClip = Resources.Load<AudioClip>(TurretModel.Clip);
+        _fireClip = Resources.Load<AudioClip>(TurretModel.FireClip);
         _ammoCounter = GameObject.FindWithTag("ammo_counter").GetComponent<AmmoCounter>();
     }
 
@@ -45,5 +46,10 @@ public class Turret : MonoBehaviour
         newBullet.GetComponent<Rigidbody2D>().velocity = newBullet.transform.right * TurretModel.Speed / 100f;
         --Game.Ammo;
         _ammoCounter.UpdateUI();
+        
+        // Reload if no more ammo
+        if (!reloadBar.IsReloading && Game.Ammo<=0)
+            reloadBar.Reload();
+
     }
 }

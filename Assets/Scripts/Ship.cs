@@ -65,7 +65,7 @@ public class Ship : MonoBehaviour
             _health -= damage;
             animator.SetTrigger(ShipDamage);
             healthBar.gameObject.SetActive(true);
-            healthBar.setValue(_health / (float)_model.Health);
+            healthBar.SetValue(_health / (float)_model.Health);
             if (_health <= 0)
                 Explode();
         }
@@ -73,6 +73,8 @@ public class Ship : MonoBehaviour
 
     private void Explode(bool reward = true)
     {
+        if (GetComponent<ShipPath>().dead) return;
+
         GetComponent<ShipPath>().dead = true;
         MainCamera.AudioSource.PlayOneShot(_explodeClip);
         animator.SetTrigger(ShipDestroy);

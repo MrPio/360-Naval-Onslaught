@@ -8,7 +8,7 @@ namespace Managers
 
         private GameManager()
         {
-            Ammo = CurrentTurret.Ammo;
+            Ammo = CurrentTurretModel.Ammo;
             Health = MaxHealth;
         }
 
@@ -19,7 +19,10 @@ namespace Managers
         public int Wave = 0;
         public int Ammo;
         public int Money = 500;
-        public TurretModel CurrentTurret = DataManager.Instance.Turrets[0];
+        public int CurrentTurret = 0;
+        public int CurrentCannon = 0;
+        public TurretModel CurrentTurretModel => DataManager.Instance.Turrets[0];
+        public CannonModel CurrentCannonModel => DataManager.Instance.Cannons[0];
         public WaveModel CurrentWave => DataManager.Instance.Waves[Wave];
     }
 }

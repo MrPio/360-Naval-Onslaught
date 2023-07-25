@@ -7,7 +7,7 @@ using UnityEngine;
 public class AmmoCounter : MonoBehaviour
 {
     private static GameManager Game => GameManager.Instance;
-    private static TurretModel TurretModel => Game.CurrentTurret;
+    private static TurretModel TurretModel => Game.CurrentTurretModel;
     [SerializeField] private TextMeshProUGUI textMeshPro;
     [SerializeField] private Animator animator;
     private static readonly int Bounce = Animator.StringToHash("bounce");
