@@ -21,6 +21,7 @@ public class Cannon : MonoBehaviour
     private bool _isAiming;
     private GameObject _crosshair;
     private float _maxDistance;
+    private static readonly int Speed = Animator.StringToHash("speed");
 
     private void Awake()
     {
@@ -30,7 +31,7 @@ public class Cannon : MonoBehaviour
 
     private void Start()
     {
-        _maxDistance = Mathf.Min(MainCamera.mainCam.GetHeight(), MainCamera.mainCam.GetWidth()) * 0.9f;
+        _maxDistance = Mathf.Min(MainCamera.mainCam.GetHeight(), MainCamera.mainCam.GetWidth()) * 0.95f;
     }
 
     void Update()
@@ -56,9 +57,9 @@ public class Cannon : MonoBehaviour
 
         if (_isAiming)
         {
-            var direction = MainCamera.mainCam.ScreenToWorldPoint(Input.mousePosition).normalized;
+            var direction = ((Vector2)MainCamera.mainCam.ScreenToWorldPoint(Input.mousePosition)).normalized;
             _crosshair.transform.position =
-                direction * (_maxDistance * Mathf.Min(1f, _fireAccumulator / (100f / Model.Speed)));
+                direction * (_maxDistance * Mathf.Min(1f, 0.12f + _fireAccumulator / (100f / Model.Speed)));
 
             if (Input.GetKeyUp(KeyCode.Space))
             {
@@ -75,11 +76,16 @@ public class Cannon : MonoBehaviour
         MainCamera.AudioSource.PlayOneShot(_fireClip);
         animator.SetTrigger(Fire1);
         var spawnPos = spawnPoint.position;
-        Instantiate(
+        var newCannonBall = Instantiate(
             original: cannonBall,
             position: spawnPos,
             rotation: MainCamera.mainCam.AngleToMouse(from: spawnPos)
-        ).GetComponent<CannonBall>().Destination = destination;
+        );
+        var speedMultiplier = 1f + 2f * (1f - destination.magnitude / _maxDistance);
+        var script = newCannonBall.GetComponent<CannonBall>();
+        script.Destination = destination;
+        script.Duration /= speedMultiplier;
+        newCannonBall.GetComponent<Animator>().SetFloat(Speed, speedMultiplier);
         --Game.CannonAmmo;
 
         // Reload if no more ammo

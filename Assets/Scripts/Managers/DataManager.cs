@@ -95,10 +95,12 @@ namespace Managers
                 fireClip: "Audio/cannon_fire_1",
                 baseSpeed: 100,
                 baseDamage: 200,
-                baseReload: 20,
+                baseReload: 20 * 5,
+                baseRadius: 20,
                 speedBaseCost: 450,
                 damageBaseCost: 300,
                 reloadBaseCost: 350,
+                radiusBaseCost: 250,
                 speedLevelSteps: new Dictionary<int, int>
                 {
                     { 0, 15 },
@@ -131,6 +133,12 @@ namespace Managers
                     { 25, 10 },
                     { 30, 12 },
                     { 35, 15 },
+                },
+                radiusLevelSteps: new Dictionary<int, int>
+                {
+                    { 0, 2 },
+                    { 15, 3 },
+                    { 30, 4 },
                 }
             ),
         };

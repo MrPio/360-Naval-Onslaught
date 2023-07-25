@@ -16,32 +16,37 @@ namespace Model
         public int BaseSpeed;
         public int BaseDamage;
         public int BaseReload;
+        public int BaseRadius;
 
         public int Speed;
         public int Damage;
         public int Reload;
+        public int Radius;
 
         public int SpeedLevel;
         public int DamageLevel;
         public int ReloadLevel;
+        public int RadiusLevel;
 
         public Dictionary<int, int> SpeedLevelSteps;
         public Dictionary<int, int> DamageLevelSteps;
         public Dictionary<int, int> ReloadLevelSteps;
+        public Dictionary<int, int> RadiusLevelSteps;
 
         private readonly int _speedBaseCost;
         private readonly int _damageBaseCost;
         private readonly int _reloadBaseCost;
+        private readonly int _radiusBaseCost;
 
         public int SpeedCost => (int)(_speedBaseCost * (1f + 0.35f * SpeedLevel));
         public int DamageCost => (int)(_damageBaseCost * (1f + 0.35f * DamageLevel));
         public int ReloadCost => (int)(_reloadBaseCost * (1f + 0.35f * ReloadLevel));
+        public int RadiusCost => (int)(_radiusBaseCost * (1f + 0.35f * RadiusLevel));
 
         public CannonModel(string name, string sprite, string fireClip, int baseSpeed, int baseDamage,
-            int baseReload,
-            Dictionary<int, int> speedLevelSteps,
-            Dictionary<int, int> damageLevelSteps,
-            Dictionary<int, int> reloadLevelSteps, int speedBaseCost, int damageBaseCost, int reloadBaseCost)
+            int baseReload, int baseRadius, Dictionary<int, int> speedLevelSteps, Dictionary<int, int> damageLevelSteps,
+            Dictionary<int, int> reloadLevelSteps, Dictionary<int, int> radiusLevelSteps, int speedBaseCost,
+            int damageBaseCost, int reloadBaseCost, int radiusBaseCost)
         {
             Name = name;
             Sprite = sprite;
@@ -49,15 +54,19 @@ namespace Model
             BaseSpeed = baseSpeed;
             BaseDamage = baseDamage;
             BaseReload = baseReload;
+            BaseRadius = baseRadius;
             Speed = BaseSpeed;
             Damage = BaseDamage;
             Reload = BaseReload;
+            Radius = BaseRadius;
             SpeedLevelSteps = speedLevelSteps;
             DamageLevelSteps = damageLevelSteps;
             ReloadLevelSteps = reloadLevelSteps;
+            RadiusLevelSteps = radiusLevelSteps;
             _speedBaseCost = speedBaseCost;
             _damageBaseCost = damageBaseCost;
             _reloadBaseCost = reloadBaseCost;
+            _radiusBaseCost = radiusBaseCost;
         }
 
         public void BuySpeed()
@@ -68,7 +77,7 @@ namespace Model
                 Speed += SpeedLevelSteps.Where(entry => entry.Key >= SpeedLevel).ToList()[0].Value;
             }
         }
-        
+
         public void BuyDamage()
         {
             if (GameManager.Money >= DamageCost)
@@ -77,7 +86,7 @@ namespace Model
                 Damage += DamageLevelSteps.Where(entry => entry.Key >= DamageLevel).ToList()[0].Value;
             }
         }
-        
+
         public void BuyReload()
         {
             if (GameManager.Money >= ReloadCost)
