@@ -15,7 +15,7 @@ public class Base : MonoBehaviour
 
     void Update()
     {
-        transform.rotation = MainCamera.mainCam.AngleToMouse(transform.position);
+        transform.rotation = MainCamera.MainCam.AngleToMouse(transform.position);
     }
 
     public void TakeDamage(int damage)

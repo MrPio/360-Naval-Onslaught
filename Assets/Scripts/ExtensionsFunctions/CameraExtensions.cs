@@ -15,8 +15,8 @@ namespace ExtensionsFunctions
 
         public static Vector3 RandomBoundaryPoint(this Camera camera)
         {
-            var width = camera.GetWidth();
-            var height = camera.GetHeight();
+            var width = MainCamera.Width;
+            var height = MainCamera.Height;
             return Random.Range(0, 2) == 0
                 ? new Vector2(Random.Range(-width, width), Random.Range(0, 2) == 1 ? height : -height)
                 : new Vector2(Random.Range(0, 2) == 1 ? width : -width, Random.Range(-height, height));

@@ -53,7 +53,7 @@ public class Turret : MonoBehaviour
         var newBullet = Instantiate(
             original: bullet,
             position: armPos,
-            rotation: MainCamera.mainCam.AngleToMouse(transform.position)
+            rotation: MainCamera.MainCam.AngleToMouse(transform.position)
         );
         newBullet.GetComponent<Rigidbody2D>().velocity = newBullet.transform.right * Model.Speed / 100f;
         --Game.Ammo;

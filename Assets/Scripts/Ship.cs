@@ -34,7 +34,7 @@ public class Ship : MonoBehaviour
         _fireClip = Resources.Load<AudioClip>(_model.FireClip);
         _moneyCounter = GameObject.FindWithTag("money_counter").GetComponent<MoneyCounter>();
         GetComponent<ShipPath>().Model = _model;
-        var pos = MainCamera.mainCam.RandomBoundaryPoint() * 1.1f;
+        var pos = MainCamera.MainCam.RandomBoundaryPoint() * 1.1f;
         transform.SetPositionAndRotation(pos, pos.toQuaternion());
 
 

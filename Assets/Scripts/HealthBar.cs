@@ -21,7 +21,7 @@ public class HealthBar : MonoBehaviour
         {
             transform.SetPositionAndRotation(
                 position: target.position + Vector3.up * offset,
-                rotation: MainCamera.mainCam.transform.rotation
+                rotation: MainCamera.MainCam.transform.rotation
             );
         }
     }

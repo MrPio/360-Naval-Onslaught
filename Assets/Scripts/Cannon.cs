@@ -31,7 +31,7 @@ public class Cannon : MonoBehaviour
 
     private void Start()
     {
-        _maxDistance = Mathf.Min(MainCamera.mainCam.GetHeight(), MainCamera.mainCam.GetWidth()) * 0.95f;
+        _maxDistance = Mathf.Min(MainCamera.Height, MainCamera.Width) * 0.95f;
     }
 
     void Update()
@@ -57,7 +57,7 @@ public class Cannon : MonoBehaviour
 
         if (_isAiming)
         {
-            var direction = ((Vector2)MainCamera.mainCam.ScreenToWorldPoint(Input.mousePosition)).normalized;
+            var direction = ((Vector2)MainCamera.MainCam.ScreenToWorldPoint(Input.mousePosition)).normalized;
             _crosshair.transform.position =
                 direction * (_maxDistance * Mathf.Min(1f, 0.12f + _fireAccumulator / (100f / Model.Speed)));
 
@@ -79,7 +79,7 @@ public class Cannon : MonoBehaviour
         var newCannonBall = Instantiate(
             original: cannonBall,
             position: spawnPos,
-            rotation: MainCamera.mainCam.AngleToMouse(from: spawnPos)
+            rotation: MainCamera.MainCam.AngleToMouse(from: spawnPos)
         );
         var speedMultiplier = 1f + 2f * (1f - destination.magnitude / _maxDistance);
         var script = newCannonBall.GetComponent<CannonBall>();
