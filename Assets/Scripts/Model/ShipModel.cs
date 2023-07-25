@@ -1,4 +1,5 @@
 ﻿using Managers;
+using UnityEngine;
 
 namespace Model
 {
@@ -8,6 +9,7 @@ namespace Model
         public readonly string Sprite;
         public readonly string FireClip;
         public readonly string ExplodeClip;
+        public readonly bool HasPath;
 
         public readonly int BaseSpeed;
         public readonly int BaseRate;
@@ -15,14 +17,15 @@ namespace Model
         public readonly int BaseHealth;
         public readonly int BaseMoney;
 
-        public int Speed => (int)(BaseSpeed * (1f + 0.15f * GameManager.Instance.Wave));
-        public int Rate => (int)(BaseRate * (1f + 0.15f * GameManager.Instance.Wave));
-        public int Damage => (int)(BaseDamage * (1f + 0.15f * GameManager.Instance.Wave));
-        public int Health => (int)(BaseHealth * (1f + 0.15f * GameManager.Instance.Wave));
-        public int Money => (int)(BaseHealth * (1f + 0.1f * GameManager.Instance.Wave));
+        public float Delay => Mathf.Max(2f,5f - 0.125f * GameManager.Instance.Wave);
+        public int Speed => (int)(BaseSpeed * (1f + 0.1f * GameManager.Instance.Wave));
+        public int Rate => (int)(BaseRate * (1f + 0.1f * GameManager.Instance.Wave));
+        public int Damage => (int)(BaseDamage * (1f + 0.1f * GameManager.Instance.Wave));
+        public int Health => (int)(BaseHealth * (1f + 0.1f * GameManager.Instance.Wave));
+        public int Money => (int)(BaseHealth * (1f + 0.05f * GameManager.Instance.Wave));
 
         public ShipModel(string name, string sprite, string fireClip, string explodeClip, int baseSpeed, int baseRate,
-            int baseDamage, int baseHealth, int baseMoney)
+            int baseDamage, int baseHealth, int baseMoney, bool hasPath)
         {
             Name = name;
             Sprite = sprite;
@@ -33,6 +36,7 @@ namespace Model
             BaseDamage = baseDamage;
             BaseHealth = baseHealth;
             BaseMoney = baseMoney;
+            HasPath = hasPath;
         }
     }
 }

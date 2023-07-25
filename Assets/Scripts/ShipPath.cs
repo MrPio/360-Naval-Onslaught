@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using ExtensionsFunctions;
@@ -6,26 +7,31 @@ using UnityEngine;
 
 public class ShipPath : MonoBehaviour
 {
-    [SerializeField] private Transform path;
+    [NonSerialized] public Transform Path;
     [SerializeField] [Range(0.9f, 1f)] private float friction = 0.99f;
-    public ShipModel Model;
-    public bool dead;
+    [SerializeField] private List<Transform> paths;
+    [NonSerialized] public ShipModel Model;
+    [NonSerialized] public bool dead;
 
     private int _index;
     private List<Vector3> _points = new();
 
     private void Start()
     {
-        if (path != null)
-            _points = path.GetComponentsInChildren<Transform>()
-                .Where(tr => tr != path)
+        if (Model.HasPath)
+        {
+            Path = paths.RandomItem();
+            _points = Path.GetComponentsInChildren<Transform>()
+                .Where(tr => tr != Path)
                 .Select(tr => tr.position)
                 .ToList();
+            transform.SetPositionAndRotation(_points[0],(_points[0] - _points[1]).toQuaternion());
+        }
     }
 
     private void FixedUpdate()
     {
-        if (path is { } && Model is { } && !dead && _index <= _points.Count - 1)
+        if (Path is { } && Model is { } && !dead && _index <= _points.Count - 1)
         {
             var currentPos = transform.position;
             var newPos = Vector2.MoveTowards(

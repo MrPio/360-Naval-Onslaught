@@ -154,18 +154,20 @@ namespace Managers
                 baseRate: 0,
                 baseDamage: 50,
                 baseHealth: 90,
-                baseMoney: 103
+                baseMoney: 103,
+                hasPath:false
             ),
             new(
                 name: "Vessel",
                 sprite: "Sprites/ship_2",
                 fireClip: "Audio/cannon_fire_1",
                 explodeClip: "Audio/ship_destroy",
-                baseSpeed: 100,
-                baseRate: 30,
+                baseSpeed: 90,
+                baseRate: 18,
                 baseDamage: 75,
-                baseHealth: 180,
-                baseMoney: 258
+                baseHealth: 220,
+                baseMoney: 258,
+                hasPath:true
             ),
         };
 
@@ -173,8 +175,7 @@ namespace Managers
         {
             new(ships: new List<int>
             {
-                0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 1, 0, 0
+                0,1,1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 1, 0, 0
             }),
             new(ships: new List<int> { 0, 0, 1, 0, 1, 0, 0, 0, 1, 1, 0, 0 }),
             new(ships: new List<int> { 0, 0, 1, 0, 1, 0, 0, 0, 1, 1, 0, 0 }),

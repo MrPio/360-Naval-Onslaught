@@ -16,10 +16,10 @@ namespace Managers
         public static GameManager Instance => _instance ??= new GameManager();
 
         public int Health;
-        public int MaxHealth = 500;
+        public int MaxHealth = 750;
         public int Wave = 0;
         public int Ammo,CannonAmmo;
-        public int Money = 500;
+        public int Money = 0;
         public int CurrentTurret = 0;
         public int CurrentCannon = 0;
         public TurretModel CurrentTurretModel => DataManager.Instance.Turrets[0];

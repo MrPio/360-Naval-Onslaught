@@ -499,8 +499,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24817897edd2f404183f780008a70ad4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  path: {fileID: 0}
   friction: 0.95
+  paths:
+  - {fileID: 7294401100433312086, guid: 6129886d84819ce49a0ba8316a9391a6, type: 3}
   dead: 0
 --- !u!114 &1000699228564121688
 MonoBehaviour:
@@ -522,6 +523,7 @@ MonoBehaviour:
   spriteRenderer: {fileID: 1000699228564121684}
   boxCollider: {fileID: 1000699228564121690}
   floatingTextBig: {fileID: 3642708000545194092, guid: a970b1e306084a740b451410b403ab2e, type: 3}
+  missile: {fileID: 7026088318313041786, guid: e9527713f032aab459f93c1f4cc3c69b, type: 3}
 --- !u!61 &1000699228564121690
 BoxCollider2D:
   m_ObjectHideFlags: 0

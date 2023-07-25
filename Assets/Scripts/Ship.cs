@@ -17,12 +17,14 @@ public class Ship : MonoBehaviour
     [SerializeField] private Animator animator;
     [SerializeField] private SpriteRenderer spriteRenderer;
     [SerializeField] private BoxCollider2D boxCollider;
-    [SerializeField] private GameObject floatingTextBig;
+    [SerializeField] private GameObject floatingTextBig, missile;
     private AudioClip _fireClip;
     private MoneyCounter _moneyCounter;
     private AudioClip _explodeClip;
     private ShipModel _model;
     private int _health;
+    private bool _hasDelay = true;
+    private float _accumulator;
 
     private void Awake()
     {
@@ -59,6 +61,42 @@ public class Ship : MonoBehaviour
         healthBar.gameObject.SetActive(false);
     }
 
+    private void Update()
+    {
+        if (_model.Rate <= 0.001f)
+            return;
+        _accumulator += Time.deltaTime;
+        if (_hasDelay && _accumulator >= _model.Delay)
+        {
+            _accumulator = 0;
+            _hasDelay = false;
+        }
+        else if (_accumulator >= 100f / _model.Rate)
+        {
+            _accumulator = 0;
+            Fire();
+        }
+    }
+
+    private void Fire()
+    {
+        const float range = 0.9f;
+        var currentPos = (Vector2)transform.position;
+        var destination = new Vector2(
+            x: Random.Range(-range, range),
+            y: Random.Range(-range, range)
+        );
+        print((currentPos - destination).toQuaternion());
+        var newMissile = Instantiate(
+            original: missile,
+            position: currentPos,
+            rotation: (destination - currentPos).toQuaternion()
+        ).GetComponent<Missile>();
+        newMissile.StartPosition = currentPos;
+        newMissile.Destination = destination;
+        newMissile.Damage = _model.Damage;
+    }
+
     public void TakeDamage(int damage)
     {
         if (_health > 0)
@@ -89,12 +127,13 @@ public class Ship : MonoBehaviour
             GameManager.Instance.Money += _model.Money;
             _moneyCounter.UpdateUI();
         }
-        
+
         IEnumerator myWaitCoroutine()
         {
             yield return new WaitForSeconds(1f);
             Destroy(gameObject);
         }
+
         StartCoroutine(myWaitCoroutine());
     }
 
