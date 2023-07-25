@@ -13,6 +13,7 @@ TagManager:
   - canvas
   - money_counter
   - ship
+  - wave_spawner
   layers:
   - Default
   - TransparentFX

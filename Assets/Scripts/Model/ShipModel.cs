@@ -9,6 +9,7 @@ namespace Model
         public readonly string Sprite;
         public readonly string FireClip;
         public readonly string ExplodeClip;
+        public readonly string MissileSprite;
         public readonly bool HasPath;
 
         public readonly int BaseSpeed;
@@ -25,7 +26,7 @@ namespace Model
         public int Money => (int)(BaseHealth * (1f + 0.05f * GameManager.Instance.Wave));
 
         public ShipModel(string name, string sprite, string fireClip, string explodeClip, int baseSpeed, int baseRate,
-            int baseDamage, int baseHealth, int baseMoney, bool hasPath)
+            int baseDamage, int baseHealth, int baseMoney, bool hasPath, string missileSprite)
         {
             Name = name;
             Sprite = sprite;
@@ -37,6 +38,7 @@ namespace Model
             BaseHealth = baseHealth;
             BaseMoney = baseMoney;
             HasPath = hasPath;
+            MissileSprite = missileSprite;
         }
     }
 }

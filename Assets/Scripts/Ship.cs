@@ -18,6 +18,7 @@ public class Ship : MonoBehaviour
     [SerializeField] private SpriteRenderer spriteRenderer;
     [SerializeField] private BoxCollider2D boxCollider;
     [SerializeField] private GameObject floatingTextBig, missile;
+    private Sprite _missileSprite;
     private AudioClip _fireClip;
     private MoneyCounter _moneyCounter;
     private AudioClip _explodeClip;
@@ -38,21 +39,20 @@ public class Ship : MonoBehaviour
         GetComponent<ShipPath>().Model = _model;
         var pos = MainCamera.MainCam.RandomBoundaryPoint() * 1.1f;
         transform.SetPositionAndRotation(pos, pos.toQuaternion());
-
+        if (_model.MissileSprite is { })
+            _missileSprite = Resources.Load<Sprite>(_model.MissileSprite);
 
         // Custom Path for SpeedBoat
         if (_model.Name == "SpeedBoat")
-        {
             GetComponent<ShipPath>().AddPath(
                 Random.Range(0, 2) == 0
-                    ? new List<Vector3> { Vector3.zero }
-                    : new List<Vector3>
+                    ? new List<Vector2> { Vector2.zero }
+                    : new List<Vector2>
                     {
                         Quaternion.AngleAxis(Random.Range(-20f, 20f), Vector3.forward) * pos,
-                        Vector3.zero
+                        Vector2.zero
                     }
             );
-        }
     }
 
     void Start()
@@ -86,12 +86,12 @@ public class Ship : MonoBehaviour
             x: Random.Range(-range, range),
             y: Random.Range(-range, range)
         );
-        print((currentPos - destination).toQuaternion());
         var newMissile = Instantiate(
             original: missile,
             position: currentPos,
             rotation: (destination - currentPos).toQuaternion()
         ).GetComponent<Missile>();
+        newMissile.SetMissile(_missileSprite);
         newMissile.StartPosition = currentPos;
         newMissile.Destination = destination;
         newMissile.Damage = _model.Damage;
@@ -111,9 +111,9 @@ public class Ship : MonoBehaviour
 
     private void Explode(bool reward = true)
     {
-        if (GetComponent<ShipPath>().dead) return;
+        if (GetComponent<ShipPath>().Dead) return;
 
-        GetComponent<ShipPath>().dead = true;
+        GetComponent<ShipPath>().Dead = true;
         MainCamera.AudioSource.PlayOneShot(_explodeClip);
         animator.SetTrigger(ShipDestroy);
         Instantiate(explosions.RandomItem(), transform);

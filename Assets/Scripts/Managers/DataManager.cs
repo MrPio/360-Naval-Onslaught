@@ -155,19 +155,47 @@ namespace Managers
                 baseDamage: 50,
                 baseHealth: 90,
                 baseMoney: 103,
-                hasPath:false
+                hasPath:false,
+                missileSprite:null
             ),
             new(
                 name: "Vessel",
                 sprite: "Sprites/ship_2",
                 fireClip: "Audio/cannon_fire_1",
                 explodeClip: "Audio/ship_destroy",
-                baseSpeed: 90,
-                baseRate: 18,
+                baseSpeed: 92,
+                baseRate: 12,
                 baseDamage: 75,
                 baseHealth: 220,
                 baseMoney: 258,
-                hasPath:true
+                hasPath:true,
+                missileSprite:"Sprites/missile_2"
+            ),
+            new(
+                name: "Military",
+                sprite: "Sprites/ship_3",
+                fireClip: "Audio/cannon_fire_1",
+                explodeClip: "Audio/ship_destroy",
+                baseSpeed: 70,
+                baseRate: 20,
+                baseDamage: 185,
+                baseHealth: 460,
+                baseMoney: 681,
+                hasPath:true,
+                missileSprite:"Sprites/missile_3"
+            ),
+            new(
+                name: "Submarine",
+                sprite: "Sprites/ship_4",
+                fireClip: "Audio/cannon_fire_1",
+                explodeClip: "Audio/ship_destroy",
+                baseSpeed: 50,
+                baseRate: 10,
+                baseDamage: 525,
+                baseHealth: 782,
+                baseMoney: 1460,
+                hasPath:true,
+                missileSprite:"Sprites/missile_1"
             ),
         };
 
@@ -175,7 +203,7 @@ namespace Managers
         {
             new(ships: new List<int>
             {
-                0,1,1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 1, 0, 0
+                0,0,0,0, 0, 2, 0, 1, 0, 1, 0, 0, 0, 1, 1, 0, 0
             }),
             new(ships: new List<int> { 0, 0, 1, 0, 1, 0, 0, 0, 1, 1, 0, 0 }),
             new(ships: new List<int> { 0, 0, 1, 0, 1, 0, 0, 0, 1, 1, 0, 0 }),

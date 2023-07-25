@@ -150,11 +150,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2004ba4362365e4b88ebcacc0cc7bab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Duration: 1
+  Duration: 1.5
   cannonMiss: {fileID: 8300000, guid: 7bc720a608d02cf4d9b2c895106b8cdc, type: 3}
   cannonHit: {fileID: 8300000, guid: 1e34437a978574b4c93fa57767fd6e84, type: 3}
   explosion: {fileID: 3303104708930059665, guid: 4a1925b35adf3794a9b3cb365e54115e, type: 3}
   splash: {fileID: 5067368189887175551, guid: 0bf28d837aa395044aea98c5949864a3, type: 3}
+  spriteRenderer: {fileID: 7026088319521137610}
 --- !u!1 &7026088319521137604
 GameObject:
   m_ObjectHideFlags: 0

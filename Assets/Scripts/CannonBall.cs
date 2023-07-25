@@ -37,7 +37,6 @@ public class CannonBall : MonoBehaviour
                          .Where(col => col.CompareTag("ship"))
                     )
             {
-                print("Ship collided!!");
                 hit = true;
                 ship.GetComponent<Ship>().TakeDamage(GameManager.Instance.CurrentCannonModel.Damage);
             }

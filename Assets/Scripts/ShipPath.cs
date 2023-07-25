@@ -4,55 +4,62 @@ using System.Linq;
 using ExtensionsFunctions;
 using Model;
 using UnityEngine;
+using UnityEngine.Serialization;
+using Random = UnityEngine.Random;
 
 public class ShipPath : MonoBehaviour
 {
-    [NonSerialized] public Transform Path;
     [SerializeField] [Range(0.9f, 1f)] private float friction = 0.99f;
     [SerializeField] private List<Transform> paths;
+    [NonSerialized] private static int _spawnIndex;
     [NonSerialized] public ShipModel Model;
-    [NonSerialized] public bool dead;
+    [NonSerialized] public bool Dead;
 
-    private int _index;
-    private List<Vector3> _points = new();
+    private int _pointIndex;
+    private List<Vector2> _points = new();
+
 
     private void Start()
     {
         if (Model.HasPath)
         {
-            Path = paths.RandomItem();
-            _points = Path.GetComponentsInChildren<Transform>()
-                .Where(tr => tr != Path)
-                .Select(tr => tr.position)
+            
+            var waveSpawner = GameObject.FindWithTag("wave_spawner").GetComponent<WaveSpawner>();
+            var flip = new Vector2(Random.Range(0, 2) * 2 - 1, Random.Range(0, 2) * 2 - 1);
+            var _path = paths[waveSpawner.PathsOrder[_spawnIndex % paths.Count]];
+            _spawnIndex++;
+            _points = _path.GetComponentsInChildren<Transform>()
+                .Where(tr => tr != _path)
+                .Select(tr => tr.position * flip)
                 .ToList();
-            transform.SetPositionAndRotation(_points[0],(_points[0] - _points[1]).toQuaternion());
+            transform.SetPositionAndRotation(_points[0], (_points[0] - _points[1]).toQuaternion());
         }
     }
 
     private void FixedUpdate()
     {
-        if (Path is { } && Model is { } && !dead && _index <= _points.Count - 1)
+        if (Model is { } && !Dead && _pointIndex < _points.Count)
         {
-            var currentPos = transform.position;
+            var currentPos = (Vector2)transform.position;
             var newPos = Vector2.MoveTowards(
                 current: currentPos,
-                target: _points[_index],
+                target: _points[_pointIndex],
                 maxDistanceDelta: Model.Speed / 100f * Time.deltaTime
             );
-            var newRotation = (currentPos - _points[_index]).toQuaternion();
+            var newRotation = (currentPos - _points[_pointIndex]).toQuaternion();
             transform.SetPositionAndRotation(
                 position: newPos,
                 rotation: Quaternion.Lerp(newRotation, transform.rotation, friction)
             );
 
-            if (currentPos == _points[_index])
-                ++_index;
+            if (currentPos == _points[_pointIndex])
+                ++_pointIndex;
         }
     }
 
-    public void AddPath(List<Vector3> points)
+    public void AddPath(List<Vector2> points)
     {
-        _index = 0;
-        this._points = points;
+        _pointIndex = 0;
+        _points = points;
     }
 }

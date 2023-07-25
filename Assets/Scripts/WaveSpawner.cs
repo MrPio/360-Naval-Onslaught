@@ -1,15 +1,23 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using ExtensionsFunctions;
 using Managers;
 using Model;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class WaveSpawner : MonoBehaviour
 {
     [SerializeField] private GameObject ship;
     private float _waveStart, _accumulator, _nextSpawn = 1f * 0f;
     private WaveModel _model;
+    [SerializeField] private int pathsSize=1;
+    [NonSerialized] public List<int> PathsOrder;
 
     void Start()
     {
+        PathsOrder=Enumerable.Range(0, pathsSize).ToList();
         BeginWave();
     }
 
@@ -47,5 +55,6 @@ public class WaveSpawner : MonoBehaviour
         _model = GameManager.Instance.CurrentWave;
         _waveStart = Time.time;
         _accumulator = 0;
+        PathsOrder.Shuffle();
     }
 }

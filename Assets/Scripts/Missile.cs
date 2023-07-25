@@ -9,6 +9,8 @@ public class Missile : MonoBehaviour
     [NonSerialized] public int Damage = 0;
     [SerializeField] private AudioClip cannonMiss, cannonHit;
     [SerializeField] private GameObject explosion, splash;
+    [SerializeField] private SpriteRenderer spriteRenderer;
+
     private float _accumulator;
     [NonSerialized] public Vector2 Destination, StartPosition;
 
@@ -52,5 +54,10 @@ public class Missile : MonoBehaviour
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, GameManager.Instance.CurrentCannonModel.Radius / 100f);
+    }
+
+    public void SetMissile(Sprite missileSprite)
+    {
+        spriteRenderer.sprite = missileSprite;
     }
 }

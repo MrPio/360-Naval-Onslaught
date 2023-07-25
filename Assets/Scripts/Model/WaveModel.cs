@@ -6,20 +6,20 @@ namespace Model
     public class WaveModel
     {
         public List<int> Ships;
-        private int _spawned;
+        static public int Spawned;
 
         public WaveModel(List<int> ships)
         {
             Ships = ships;
         }
 
-        public bool HasMore() => _spawned < Ships.Count;
+        public bool HasMore() => Spawned < Ships.Count;
         public ShipModel Spawn()
         {
             if (HasMore())
             {
-                ++_spawned;
-                return DataManager.Instance.Ships[Ships[_spawned - 1]];
+                ++Spawned;
+                return DataManager.Instance.Ships[Ships[Spawned - 1]];
             }
 
             return null;
