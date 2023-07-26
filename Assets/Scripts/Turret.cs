@@ -16,11 +16,12 @@ public class Turret : MonoBehaviour
     [SerializeField] private AudioClip reloadStart, reloadMiss, reloadFinish, noAmmo;
 
     private AmmoCounter _ammoCounter;
-    private float _fireAccumulator;
+    private float _fireAccumulator=9999f;
     private AudioClip _fireClip;
 
     private void Awake()
     {
+        print(Model.Sprite);
         spriteRenderer.sprite = Resources.Load<Sprite>(Model.Sprite);
         _fireClip = Resources.Load<AudioClip>(Model.FireClip);
         _ammoCounter = GameObject.FindWithTag("ammo_counter").GetComponent<AmmoCounter>();
@@ -34,10 +35,21 @@ public class Turret : MonoBehaviour
         if (Input.GetMouseButton(0) && Game.Ammo > 0 && _fireAccumulator > 100f / Model.Rate && !reloadBar.IsReloading)
         {
             _fireAccumulator = 0;
-            Fire(leftSpawnPoint);
-            Fire(rightSpawnPoint);
+            if (Game.CurrentTurret == 2)
+            {
+                Fire(Game.Ammo % 2 == 0 ? leftSpawnPoint: rightSpawnPoint);
+            }
+            else
+            {
+                Fire(leftSpawnPoint);
+                Fire(rightSpawnPoint);
+            }
+
             MainCamera.AudioSource.PlayOneShot(_fireClip);
         }
+
+        if (Input.GetMouseButtonUp(0))
+            _fireAccumulator += 99999f;
 
         if (!reloadBar.IsReloading && Input.GetKeyDown(KeyCode.R))
             if (Game.Ammo < Game.CurrentTurretModel.Ammo)

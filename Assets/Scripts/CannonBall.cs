@@ -1,7 +1,10 @@
 using System;
 using System.Linq;
+using System.Numerics;
 using Managers;
 using UnityEngine;
+using Quaternion = UnityEngine.Quaternion;
+using Vector2 = UnityEngine.Vector2;
 
 public class CannonBall : MonoBehaviour
 {
@@ -9,12 +12,12 @@ public class CannonBall : MonoBehaviour
     [SerializeField] private AudioClip cannonMiss, cannonHit;
     [SerializeField] private GameObject explosion, splash;
     private float _accumulator;
-    [NonSerialized] public Vector2 Destination;
+    [NonSerialized] public Vector2 Destination,StartPos;
 
     private void Update()
     {
         _accumulator += Time.deltaTime;
-        var currentPos = Destination * (_accumulator / Duration);
+        var currentPos = Vector2.Lerp(StartPos,Destination,_accumulator / Duration);
         transform.position = currentPos;
         if (_accumulator >= Duration)
         {

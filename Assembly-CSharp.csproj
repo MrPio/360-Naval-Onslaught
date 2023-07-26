@@ -51,8 +51,10 @@
      <Compile Include="Assets\Scripts\MainCamera.cs" />
      <Compile Include="Assets\Scripts\ExtensionsFunctions\VectorExtensions.cs" />
      <Compile Include="Assets\Scripts\FloatingText.cs" />
+     <Compile Include="Assets\Scripts\ShopMenu.cs" />
      <Compile Include="Assets\Scripts\Splash.cs" />
      <Compile Include="Assets\Scripts\Model\ShipModel.cs" />
+     <Compile Include="Assets\Scripts\ContextMenu.cs" />
      <Compile Include="Assets\Scripts\ShipPath.cs" />
      <Compile Include="Assets\Scripts\Managers\GameManager.cs" />
      <Compile Include="Assets\Scripts\Turret.cs" />
@@ -69,8 +71,6 @@
      <Compile Include="Assets\Scripts\Managers\DataManager.cs" />
      <Compile Include="Assets\Scripts\ExtensionsFunctions\ListExtensions.cs" />
      <Compile Include="Assets\Scripts\Bullet.cs" />
-     <Compile Include="Assets\Scripts\ShopMenu.cs" />
-     <Compile Include="Assets\Scripts\ContextMenu.cs" />
      <Folder Include="Assets" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />

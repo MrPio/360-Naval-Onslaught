@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using ExtensionsFunctions;
+using JetBrains.Annotations;
 using Managers;
 using Model;
 using TMPro;
@@ -21,7 +22,7 @@ public class Ship : MonoBehaviour
     [SerializeField] private BoxCollider2D boxCollider;
     [SerializeField] private GameObject floatingTextBig, missile;
     private Sprite _missileSprite;
-    private AudioClip _fireClip;
+    private List<AudioClip> _fireClip;
     private MoneyCounter _moneyCounter;
     private AudioClip _explodeClip;
     private ShipModel _model;
@@ -39,10 +40,11 @@ public class Ship : MonoBehaviour
         boxCollider.size = spriteRenderer.bounds.size;
         if (_model.ExplodeClip != null)
             _explodeClip = Resources.Load<AudioClip>(_model.ExplodeClip);
-        _fireClip = Resources.Load<AudioClip>(_model.FireClip);
+        if (_model.FireClip != null)
+            _fireClip = _model.FireClip.Select(Resources.Load<AudioClip>).ToList();
         _moneyCounter = GameObject.FindWithTag("money_counter").GetComponent<MoneyCounter>();
         GetComponent<ShipPath>().Model = _model;
-        var pos = MainCamera.MainCam.RandomBoundaryPoint() * 1.1f;
+        var pos = MainCamera.MainCam.RandomBoundaryPoint() * 1.15f;
         transform.SetPositionAndRotation(pos, pos.ToQuaternion());
         if (_model.MissileSprite is { })
             _missileSprite = Resources.Load<Sprite>(_model.MissileSprite);
@@ -87,7 +89,7 @@ public class Ship : MonoBehaviour
 
     private void Fire()
     {
-        const float range = 0.9f;
+        const float range = 0.82f;
         var currentPos = (Vector2)transform.position;
         var destination = new Vector2(
             x: Random.Range(-range, range),
@@ -98,6 +100,18 @@ public class Ship : MonoBehaviour
             position: currentPos,
             rotation: (destination - currentPos).ToQuaternion()
         ).GetComponent<Missile>();
+
+        IEnumerator playAllSound()
+        {
+            foreach (var clip in _fireClip)
+            {
+                MainCamera.AudioSource.PlayOneShot(clip);
+                yield return new WaitForSeconds(0.5f);
+            }
+        }
+
+        StartCoroutine(playAllSound());
+
         newMissile.SetMissile(_missileSprite);
         newMissile.StartPosition = currentPos;
         newMissile.Destination = destination;
@@ -150,13 +164,13 @@ public class Ship : MonoBehaviour
             _moneyCounter.UpdateUI();
         }
 
-        IEnumerator myWaitCoroutine()
+        IEnumerator scheduleDestroy()
         {
             yield return new WaitForSeconds(1f);
             Destroy(gameObject);
         }
 
-        StartCoroutine(myWaitCoroutine());
+        StartCoroutine(scheduleDestroy());
     }
 
     public void End() => Destroy(gameObject);

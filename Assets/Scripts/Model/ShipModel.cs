@@ -9,7 +9,7 @@ namespace Model
     {
         public string Name;
         public readonly string Sprite;
-        public readonly string FireClip;
+        public readonly string[] FireClip;
         public readonly string ExplodeClip;
         public readonly string MissileSprite;
         public readonly bool HasPath;
@@ -29,7 +29,7 @@ namespace Model
         public int Health => (int)(BaseHealth * (1f + 0.1f * GameManager.Instance.Wave));
         public int Money => (int)(BaseHealth * (1f + 0.05f * GameManager.Instance.Wave));
 
-        public ShipModel(string name, string sprite, string fireClip, string explodeClip, int baseSpeed, int baseRate,
+        public ShipModel(string name, string sprite, string[] fireClip, string explodeClip, int baseSpeed, int baseRate,
             int baseDamage, int baseHealth, int baseMoney, bool hasPath, string missileSprite, int explosionsCount=1, Action<GameObject> startCallback=null, Action<GameObject> endPathCallback=null)
         {
             Name = name;

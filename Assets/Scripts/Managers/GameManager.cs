@@ -24,14 +24,14 @@ namespace Managers
         public int Wave = 0;
         public int Ammo, CannonAmmo;
         public int Money = 0;
-        public int CurrentTurret = 0;
+        public int CurrentTurret = 2;
         public int CurrentCannon = 0;
         public int HealthStep => (int)(_healthBaseStep * (1f + 0.35f * HealthLevel));
         public int HealthCost => (int)(_healthBaseCost * (1f + 0.25f * HealthLevel));
         public int RepairCost => (int)((MaxHealth - Health) * (1f + 0.35f * _repairLevel));
 
-        public TurretModel CurrentTurretModel => DataManager.Instance.Turrets[0];
-        public CannonModel CurrentCannonModel => DataManager.Instance.Cannons[0];
+        public TurretModel CurrentTurretModel => DataManager.Instance.Turrets[CurrentTurret];
+        public CannonModel CurrentCannonModel => DataManager.Instance.Cannons[CurrentCannon];
         public WaveModel CurrentWave => DataManager.Instance.Waves[Wave];
 
         public void BuyHealth()

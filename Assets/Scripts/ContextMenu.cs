@@ -8,6 +8,7 @@ using UnityEngine.EventSystems;
 public class ContextMenu : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerMoveHandler
 {
     private static GameManager Game => GameManager.Instance;
+    private static DataManager Data => DataManager.Instance;
 
     enum ContextMenuType
     {
@@ -36,7 +37,7 @@ public class ContextMenu : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
             original: contextMenu,
             position: (followMouse
                 ? (Vector2)MainCamera.MainCam.ScreenToWorldPoint(Input.mousePosition)
-                : transform.position) + Vector2.up * 0.175f,
+                : transform.position) + Vector2.up * 0.215f,
             rotation: Quaternion.identity,
             canvas.transform
         ).transform;
@@ -110,11 +111,24 @@ public class ContextMenu : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
         if (contextMenu.name == "turret_context_menu")
         {
-            // init context menu turret
+            var turret = Data.Turrets[turretIndex];
+            _contextMenu.Find("title").GetComponent<TextMeshProUGUI>().text = $"( {turret.Name} )";
+            _contextMenu.Find("speed_text").GetComponent<TextMeshProUGUI>().text = turret.Speed.ToString("N0");
+            _contextMenu.Find("ammo_text").GetComponent<TextMeshProUGUI>().text = turret.Ammo.ToString("N0");
+            _contextMenu.Find("damage_text").GetComponent<TextMeshProUGUI>().text = turret.Damage.ToString("N0");
+            _contextMenu.Find("rate_text").GetComponent<TextMeshProUGUI>().text = turret.Rate.ToString("N0");
+            _contextMenu.Find("reload_text").GetComponent<TextMeshProUGUI>().text = turret.Reload.ToString("N0");
         }
 
         if (contextMenu.name == "cannon_context_menu")
         {
+            var cannon = Data.Cannons[cannonIndex];
+            _contextMenu.Find("title").GetComponent<TextMeshProUGUI>().text = $"( {cannon.Name} )";
+            _contextMenu.Find("speed_text").GetComponent<TextMeshProUGUI>().text = cannon.Speed.ToString("N0");
+            _contextMenu.Find("damage_text").GetComponent<TextMeshProUGUI>().text = cannon.Damage.ToString("N0");
+            _contextMenu.Find("radius_text").GetComponent<TextMeshProUGUI>().text = cannon.Radius.ToString("N0");
+            _contextMenu.Find("reload_text").GetComponent<TextMeshProUGUI>().text = cannon.Reload.ToString("N0");
+
         }
     }
     //funzioni di onclick da collegare da inspector + parametri

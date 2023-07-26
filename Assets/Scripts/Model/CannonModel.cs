@@ -12,6 +12,7 @@ namespace Model
         public string Name;
         public string Sprite;
         public string FireClip;
+        public bool Locked;
 
         public int BaseSpeed;
         public int BaseDamage;
@@ -46,7 +47,7 @@ namespace Model
         public CannonModel(string name, string sprite, string fireClip, int baseSpeed, int baseDamage,
             int baseReload, int baseRadius, Dictionary<int, int> speedLevelSteps, Dictionary<int, int> damageLevelSteps,
             Dictionary<int, int> reloadLevelSteps, Dictionary<int, int> radiusLevelSteps, int speedBaseCost,
-            int damageBaseCost, int reloadBaseCost, int radiusBaseCost)
+            int damageBaseCost, int reloadBaseCost, int radiusBaseCost, bool locked=true)
         {
             Name = name;
             Sprite = sprite;
@@ -67,6 +68,7 @@ namespace Model
             _damageBaseCost = damageBaseCost;
             _reloadBaseCost = reloadBaseCost;
             _radiusBaseCost = radiusBaseCost;
+            Locked = locked;
         }
 
         public void BuySpeed()

@@ -26,13 +26,14 @@ public class Cannon : MonoBehaviour
 
     private void Awake()
     {
+        print(Model.Sprite);
         spriteRenderer.sprite = Resources.Load<Sprite>(Model.Sprite);
         _fireClip = Resources.Load<AudioClip>(Model.FireClip);
     }
 
     private void Start()
     {
-        _maxDistance = Mathf.Min(MainCamera.Height, MainCamera.Width) * 0.95f;
+        _maxDistance = Mathf.Min(MainCamera.Height, MainCamera.Width) * 1.15f;
     }
 
     void Update()
@@ -90,6 +91,7 @@ public class Cannon : MonoBehaviour
         var speedMultiplier = 1f + 2f * (1f - destination.magnitude / _maxDistance);
         var script = newCannonBall.GetComponent<CannonBall>();
         script.Destination = destination;
+        script.StartPos = spawnPos;
         script.Duration /= speedMultiplier;
         newCannonBall.GetComponent<Animator>().SetFloat(Speed, speedMultiplier);
         --Game.CannonAmmo;

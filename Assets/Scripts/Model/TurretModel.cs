@@ -10,8 +10,9 @@ namespace Model
         private static GameManager GameManager => GameManager.Instance;
 
         public string Name;
-        public string Sprite;
+        public string Sprite,BulletSprite;
         public string FireClip;
+        public bool Locked;
 
         public int BaseSpeed;
         public int BaseRate;
@@ -54,7 +55,7 @@ namespace Model
             Dictionary<int, int> speedLevelSteps, Dictionary<int, int> rateLevelSteps,
             Dictionary<int, int> damageLevelSteps, Dictionary<int, int> ammoLevelSteps,
             Dictionary<int, int> reloadLevelSteps, int speedBaseCost,
-            int rateBaseCost, int damageBaseCost, int ammoBaseCost, int reloadBaseCost)
+            int rateBaseCost, int damageBaseCost, int ammoBaseCost, int reloadBaseCost, string bulletSprite, bool locked=true)
         {
             Name = name;
             Sprite = sprite;
@@ -79,6 +80,8 @@ namespace Model
             _damageBaseCost = damageBaseCost;
             _ammoBaseCost = ammoBaseCost;
             _reloadBaseCost = reloadBaseCost;
+            BulletSprite = bulletSprite;
+            Locked = locked;
         }
 
         public void BuySpeed()
