@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Model;
+using UnityEngine;
 
 namespace Managers
 {
@@ -12,6 +13,7 @@ namespace Managers
         }
 
         public static DataManager Instance => _instance ??= new DataManager();
+
 
         public readonly TurretModel[] Turrets =
         {
@@ -155,8 +157,8 @@ namespace Managers
                 baseDamage: 50,
                 baseHealth: 90,
                 baseMoney: 103,
-                hasPath:false,
-                missileSprite:null
+                hasPath: false,
+                missileSprite: null
             ),
             new(
                 name: "Vessel",
@@ -168,8 +170,9 @@ namespace Managers
                 baseDamage: 75,
                 baseHealth: 220,
                 baseMoney: 258,
-                hasPath:true,
-                missileSprite:"Sprites/missile_2"
+                hasPath: true,
+                missileSprite: "Sprites/missile_2",
+                explosionsCount: 2
             ),
             new(
                 name: "Military",
@@ -181,30 +184,43 @@ namespace Managers
                 baseDamage: 185,
                 baseHealth: 460,
                 baseMoney: 681,
-                hasPath:true,
-                missileSprite:"Sprites/missile_3"
+                hasPath: true,
+                explosionsCount: 5,
+                missileSprite: "Sprites/missile_3"
             ),
             new(
                 name: "Submarine",
                 sprite: "Sprites/ship_4",
                 fireClip: "Audio/cannon_fire_1",
                 explodeClip: "Audio/ship_destroy",
-                baseSpeed: 50,
+                baseSpeed: 75,
                 baseRate: 10,
                 baseDamage: 525,
                 baseHealth: 782,
                 baseMoney: 1460,
-                hasPath:true,
-                missileSprite:"Sprites/missile_1"
+                hasPath: true,
+                explosionsCount: 4,
+                missileSprite: "Sprites/missile_1",
+                startCallback: go =>
+                {
+                    var renderer = go.GetComponent<Renderer>();
+                    renderer.material.color = new Color(1, 1, 1, 0.5f);
+                    go.GetComponent<Ship>().Invincible = true;
+                },
+                endPathCallback: go =>
+                {
+                    go.GetComponent<Ship>().Invincible = false;
+                    var overlay = go.transform.Find("overlay");
+                    overlay.gameObject.SetActive(true);
+                    overlay.GetComponent<Animator>().SetTrigger(Ship4);
+                    overlay.GetComponent<SpriteRenderer>().sprite = go.GetComponent<SpriteRenderer>().sprite;
+                }
             ),
         };
 
         public readonly WaveModel[] Waves =
         {
-            new(ships: new List<int>
-            {
-                0,0,0,0, 0, 2, 0, 1, 0, 1, 0, 0, 0, 1, 1, 0, 0
-            }),
+            new(ships: new List<int> { 0, 3, 3, 2, 1, 0, }),
             new(ships: new List<int> { 0, 0, 1, 0, 1, 0, 0, 0, 1, 1, 0, 0 }),
             new(ships: new List<int> { 0, 0, 1, 0, 1, 0, 0, 0, 1, 1, 0, 0 }),
             new(ships: new List<int> { 0, 0, 1, 0, 1, 0, 0, 0, 1, 1, 0, 0 }),
@@ -228,5 +244,7 @@ namespace Managers
             new(ships: new List<int> { 0, 0, 1, 0, 1, 0, 0, 0, 1, 1, 0, 0 }),
             new(ships: new List<int> { 0, 0, 1, 0, 1, 0, 0, 0, 1, 1, 0, 0 }),
         };
+
+        private static readonly int Ship4 = Animator.StringToHash("ship_4");
     }
 }

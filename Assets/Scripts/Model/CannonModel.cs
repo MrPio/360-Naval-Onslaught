@@ -23,10 +23,10 @@ namespace Model
         public int Reload;
         public int Radius;
 
-        public int SpeedLevel;
-        public int DamageLevel;
-        public int ReloadLevel;
-        public int RadiusLevel;
+        public int SpeedLevel=1;
+        public int DamageLevel=1;
+        public int ReloadLevel=1;
+        public int RadiusLevel=1;
 
         public Dictionary<int, int> SpeedLevelSteps;
         public Dictionary<int, int> DamageLevelSteps;
@@ -74,7 +74,7 @@ namespace Model
             if (GameManager.Money >= SpeedCost)
             {
                 GameManager.Money -= SpeedCost;
-                Speed += SpeedLevelSteps.Where(entry => entry.Key >= SpeedLevel).ToList()[0].Value;
+                Speed += SpeedLevelSteps.Where(entry => entry.Key >= SpeedLevel).ElementAt(0).Value;
             }
         }
 
@@ -83,7 +83,7 @@ namespace Model
             if (GameManager.Money >= DamageCost)
             {
                 GameManager.Money -= DamageCost;
-                Damage += DamageLevelSteps.Where(entry => entry.Key >= DamageLevel).ToList()[0].Value;
+                Damage += DamageLevelSteps.Where(entry => entry.Key >= DamageLevel).ElementAt(0).Value;
             }
         }
 
@@ -92,7 +92,7 @@ namespace Model
             if (GameManager.Money >= ReloadCost)
             {
                 GameManager.Money -= ReloadCost;
-                Reload += ReloadLevelSteps.Where(entry => entry.Key >= ReloadLevel).ToList()[0].Value;
+                Reload += ReloadLevelSteps.Where(entry => entry.Key >= ReloadLevel).ElementAt(0).Value;
             }
         }
     }

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using ExtensionsFunctions;
 using Managers;
 using Model;
@@ -10,6 +11,7 @@ using Random = UnityEngine.Random;
 
 public class Ship : MonoBehaviour
 {
+    public static List<int[]> Collisions = new();
     private static readonly int ShipDamage = Animator.StringToHash("ship_damage");
     private static readonly int ShipDestroy = Animator.StringToHash("ship_destroy");
     [SerializeField] private HealthBar healthBar;
@@ -26,9 +28,12 @@ public class Ship : MonoBehaviour
     private int _health;
     private bool _hasDelay = true;
     private float _accumulator;
+    public bool Invincible;
+    public int currentIndex;
 
     private void Awake()
     {
+        currentIndex = WaveModel.Spawned;
         _model = GameManager.Instance.CurrentWave.Spawn();
         spriteRenderer.sprite = Resources.Load<Sprite>(_model.Sprite);
         boxCollider.size = spriteRenderer.bounds.size;
@@ -38,7 +43,7 @@ public class Ship : MonoBehaviour
         _moneyCounter = GameObject.FindWithTag("money_counter").GetComponent<MoneyCounter>();
         GetComponent<ShipPath>().Model = _model;
         var pos = MainCamera.MainCam.RandomBoundaryPoint() * 1.1f;
-        transform.SetPositionAndRotation(pos, pos.toQuaternion());
+        transform.SetPositionAndRotation(pos, pos.ToQuaternion());
         if (_model.MissileSprite is { })
             _missileSprite = Resources.Load<Sprite>(_model.MissileSprite);
 
@@ -59,19 +64,21 @@ public class Ship : MonoBehaviour
     {
         _health = _model.Health;
         healthBar.gameObject.SetActive(false);
+        _model.StartCallback?.Invoke(gameObject);
     }
 
     private void Update()
     {
         if (_model.Rate <= 0.001f)
             return;
-        _accumulator += Time.deltaTime;
+        if (!Invincible)
+            _accumulator += Time.deltaTime;
         if (_hasDelay && _accumulator >= _model.Delay)
         {
             _accumulator = 0;
             _hasDelay = false;
         }
-        else if (_accumulator >= 100f / _model.Rate)
+        else if (!Invincible && _accumulator >= 100f / _model.Rate)
         {
             _accumulator = 0;
             Fire();
@@ -89,7 +96,7 @@ public class Ship : MonoBehaviour
         var newMissile = Instantiate(
             original: missile,
             position: currentPos,
-            rotation: (destination - currentPos).toQuaternion()
+            rotation: (destination - currentPos).ToQuaternion()
         ).GetComponent<Missile>();
         newMissile.SetMissile(_missileSprite);
         newMissile.StartPosition = currentPos;
@@ -99,7 +106,7 @@ public class Ship : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-        if (_health > 0)
+        if (!Invincible && _health > 0)
         {
             _health -= damage;
             animator.SetTrigger(ShipDamage);
@@ -111,12 +118,27 @@ public class Ship : MonoBehaviour
 
     private void Explode(bool reward = true)
     {
-        if (GetComponent<ShipPath>().Dead) return;
+        if (GetComponent<ShipPath>().Dead || Invincible) return;
 
         GetComponent<ShipPath>().Dead = true;
         MainCamera.AudioSource.PlayOneShot(_explodeClip);
         animator.SetTrigger(ShipDestroy);
-        Instantiate(explosions.RandomItem(), transform);
+
+        // Multiple explosions
+        var bounds = GetComponent<SpriteRenderer>().bounds;
+
+        IEnumerator SpawnExplosions()
+        {
+            for (var i = 0; i < _model.ExplosionsCount; ++i)
+            {
+                var spawnPoint = bounds.GetRandomPointInBounds();
+                Instantiate(explosions.RandomItem(), spawnPoint, Quaternion.identity);
+                yield return new WaitForSeconds(0.2f);
+            }
+        }
+
+        StartCoroutine(SpawnExplosions());
+
 
         // Money Reward
         if (reward)
@@ -139,12 +161,33 @@ public class Ship : MonoBehaviour
 
     public void End() => Destroy(gameObject);
 
-    private void OnTriggerEnter2D(Collider2D col)
+    private void OnTriggerEnter2D(Collider2D other)
     {
-        if (col.CompareTag("base"))
+        if (other.CompareTag("base"))
         {
             GameObject.FindWithTag("base").GetComponent<Base>().TakeDamage(_model.Damage);
             Explode(false);
+        }
+        else if (other.CompareTag("ship"))
+        {
+            var otherShip = other.GetComponent<Ship>();
+            print(string.Join(',', Collisions.Select(it => string.Join('|', it))));
+            if (!Collisions.Exists(it => it.Contains(currentIndex) && it.Contains(otherShip.currentIndex)))
+            {
+                print("mi fermo");
+                Collisions.Add(new[] { currentIndex, otherShip.currentIndex });
+                GetComponent<ShipPath>().Wait = true;
+            }
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.CompareTag("ship"))
+        {
+            var otherShip = other.GetComponent<Ship>();
+            Collisions.RemoveAll(it => it.Contains(currentIndex) && it.Contains(otherShip.currentIndex));
+            GetComponent<ShipPath>().Wait = false;
         }
     }
 }

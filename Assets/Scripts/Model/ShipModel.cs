@@ -1,4 +1,6 @@
-﻿using Managers;
+﻿using System;
+using Managers;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Model
@@ -11,6 +13,8 @@ namespace Model
         public readonly string ExplodeClip;
         public readonly string MissileSprite;
         public readonly bool HasPath;
+        public readonly Action<GameObject> StartCallback,EndPathCallback;
+        public readonly int ExplosionsCount;
 
         public readonly int BaseSpeed;
         public readonly int BaseRate;
@@ -26,7 +30,7 @@ namespace Model
         public int Money => (int)(BaseHealth * (1f + 0.05f * GameManager.Instance.Wave));
 
         public ShipModel(string name, string sprite, string fireClip, string explodeClip, int baseSpeed, int baseRate,
-            int baseDamage, int baseHealth, int baseMoney, bool hasPath, string missileSprite)
+            int baseDamage, int baseHealth, int baseMoney, bool hasPath, string missileSprite, int explosionsCount=1, Action<GameObject> startCallback=null, Action<GameObject> endPathCallback=null)
         {
             Name = name;
             Sprite = sprite;
@@ -39,6 +43,9 @@ namespace Model
             BaseMoney = baseMoney;
             HasPath = hasPath;
             MissileSprite = missileSprite;
+            ExplosionsCount = explosionsCount;
+            StartCallback = startCallback;
+            EndPathCallback = endPathCallback;
         }
     }
 }

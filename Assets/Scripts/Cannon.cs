@@ -2,6 +2,7 @@ using System;
 using ExtensionsFunctions;
 using Managers;
 using Model;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Cannon : MonoBehaviour
@@ -40,23 +41,25 @@ public class Cannon : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             if (Game.CannonAmmo <= 0)
-            {
                 MainCamera.AudioSource.PlayOneShot(noAmmoClip);
-                return;
-            }
-
             _isAiming = true;
-            _fireAccumulator = 0;
-            MainCamera.AudioSource.PlayOneShot(aimingClip);
-            _crosshair = Instantiate(
-                original: crosshair,
-                position: spawnPoint.position,
-                rotation: Quaternion.identity
-            );
         }
 
-        if (_isAiming)
+        if (_isAiming && Game.CannonAmmo > 0)
         {
+            // La prima volta creo il crosshair
+            if (_crosshair is null || _crosshair.IsDestroyed())
+            {
+                _fireAccumulator = 0;
+                MainCamera.AudioSource.PlayOneShot(aimingClip);
+                _crosshair = Instantiate(
+                    original: crosshair,
+                    position: spawnPoint.position,
+                    rotation: Quaternion.identity
+                );
+            }
+
+            // Crosshair Movement
             var direction = ((Vector2)MainCamera.MainCam.ScreenToWorldPoint(Input.mousePosition)).normalized;
             _crosshair.transform.position =
                 direction * (_maxDistance * Mathf.Min(1f, 0.12f + _fireAccumulator / (100f / Model.Speed)));
@@ -69,6 +72,9 @@ public class Cannon : MonoBehaviour
                 Fire(pos);
             }
         }
+
+        if (Input.GetKeyUp(KeyCode.Space))
+            _isAiming = false;
     }
 
     private void Fire(Vector2 destination)

@@ -412,6 +412,7 @@ GameObject:
   - component: {fileID: 1000699228564121688}
   - component: {fileID: 1000699228564121690}
   - component: {fileID: 1000699228564121691}
+  - component: {fileID: 2949196764749780218}
   m_Layer: 0
   m_Name: ship
   m_TagString: ship
@@ -533,6 +534,7 @@ MonoBehaviour:
   boxCollider: {fileID: 1000699228564121690}
   floatingTextBig: {fileID: 3642708000545194092, guid: a970b1e306084a740b451410b403ab2e, type: 3}
   missile: {fileID: 7026088318313041786, guid: e9527713f032aab459f93c1f4cc3c69b, type: 3}
+  Invincible: 0
 --- !u!61 &1000699228564121690
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -579,6 +581,27 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
+--- !u!50 &2949196764749780218
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1000699228564121686}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1001 &2177141999654739409
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -672,7 +695,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4625735605971566731, guid: 19bdc79eb1c6c79499d26bb71bd2a324, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 19bdc79eb1c6c79499d26bb71bd2a324, type: 3}

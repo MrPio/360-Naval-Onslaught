@@ -14,7 +14,7 @@ public class Bullet : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D col)
     {
-        if (col.gameObject.tag.Contains("ship"))
+        if (col.gameObject.tag.Contains("ship") && !col.GetComponent<Ship>().Invincible)
         {
             col.GetComponent<Ship>().TakeDamage(Game.CurrentTurretModel.Damage);
             Instantiate(

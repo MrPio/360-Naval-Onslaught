@@ -25,11 +25,11 @@ namespace Model
         public int Ammo;
         public int Reload;
 
-        public int SpeedLevel;
-        public int RateLevel;
-        public int DamageLevel;
-        public int AmmoLevel;
-        public int ReloadLevel;
+        public int SpeedLevel=1;
+        public int RateLevel=1;
+        public int DamageLevel=1;
+        public int AmmoLevel=1;
+        public int ReloadLevel=1;
 
         public Dictionary<int, int> SpeedLevelSteps;
         public Dictionary<int, int> RateLevelSteps;
@@ -86,7 +86,7 @@ namespace Model
             if (GameManager.Money >= SpeedCost)
             {
                 GameManager.Money -= SpeedCost;
-                Speed += SpeedLevelSteps.Where(entry => entry.Key >= SpeedLevel).ToList()[0].Value;
+                Speed += SpeedLevelSteps.Where(entry => entry.Key >= SpeedLevel).ElementAt(0).Value;
             }
         }
 
@@ -95,7 +95,7 @@ namespace Model
             if (GameManager.Money >= RateCost)
             {
                 GameManager.Money -= RateCost;
-                Rate += RateLevelSteps.Where(entry => entry.Key >= RateLevel).ToList()[0].Value;
+                Rate += RateLevelSteps.Where(entry => entry.Key >= RateLevel).ElementAt(0).Value;
             }
         }
 
@@ -104,7 +104,7 @@ namespace Model
             if (GameManager.Money >= DamageCost)
             {
                 GameManager.Money -= DamageCost;
-                Damage += DamageLevelSteps.Where(entry => entry.Key >= DamageLevel).ToList()[0].Value;
+                Damage += DamageLevelSteps.Where(entry => entry.Key >= DamageLevel).ElementAt(0).Value;
             }
         }
 
@@ -113,7 +113,7 @@ namespace Model
             if (GameManager.Money >= AmmoCost)
             {
                 GameManager.Money -= AmmoCost;
-                Ammo += AmmoLevelSteps.Where(entry => entry.Key >= AmmoLevel).ToList()[0].Value;
+                Ammo += AmmoLevelSteps.Where(entry => entry.Key >= AmmoLevel).ElementAt(0).Value;
             }
         }
         
@@ -122,7 +122,7 @@ namespace Model
             if (GameManager.Money >= ReloadCost)
             {
                 GameManager.Money -= ReloadCost;
-                Reload += ReloadLevelSteps.Where(entry => entry.Key >= ReloadLevel).ToList()[0].Value;
+                Reload += ReloadLevelSteps.Where(entry => entry.Key >= ReloadLevel).ElementAt(0).Value;
             }
         }
     }

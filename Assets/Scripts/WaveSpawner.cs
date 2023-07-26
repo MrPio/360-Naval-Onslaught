@@ -39,7 +39,7 @@ public class WaveSpawner : MonoBehaviour
         _nextSpawn = Random.Range(0, 2) switch
         {
             0 => 0f,
-            _ => 0f+Random.Range(0, 4f * Mathf.Max(0, 1 - GameManager.Instance.Wave / DataManager.Instance.Waves.Length)),
+            _ => 0f+Random.Range(0, 1f * Mathf.Max(0, 1 - GameManager.Instance.Wave / DataManager.Instance.Waves.Length)),
         };
         _accumulator = 0;
     }
