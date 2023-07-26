@@ -33,7 +33,7 @@ public class Bullet : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (_target is { })
+        if (_target is { } || !Game.CurrentTurretModel.BulletSprite.Contains("missile"))
             return;
 
         //Search for target
