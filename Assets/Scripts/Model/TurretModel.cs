@@ -9,16 +9,17 @@ namespace Model
     {
         private static GameManager GameManager => GameManager.Instance;
 
-        public string Name;
-        public string Sprite, BulletSprite;
-        public string FireClip;
-        public int WaveUnlock;
+        public readonly string Name;
+        public readonly string Sprite;
+        public readonly string BulletSprite;
+        public readonly string FireClip;
+        public readonly int WaveUnlock;
 
-        public int BaseSpeed;
-        public int BaseRate;
-        public int BaseDamage;
-        public int BaseAmmo;
-        public int BaseReload;
+        private int _baseSpeed;
+        private int _baseRate;
+        private int _baseDamage;
+        private int _baseAmmo;
+        private int _baseReload;
 
         public int Speed;
         public int Rate;
@@ -32,11 +33,11 @@ namespace Model
         public int AmmoLevel = 1;
         public int ReloadLevel = 1;
 
-        public Dictionary<int, int> SpeedLevelSteps;
-        public Dictionary<int, int> RateLevelSteps;
-        public Dictionary<int, int> DamageLevelSteps;
-        public Dictionary<int, int> AmmoLevelSteps;
-        public Dictionary<int, int> ReloadLevelSteps;
+        public readonly Dictionary<int, int> SpeedLevelSteps;
+        public readonly Dictionary<int, int> RateLevelSteps;
+        public readonly Dictionary<int, int> DamageLevelSteps;
+        public readonly Dictionary<int, int> AmmoLevelSteps;
+        public readonly Dictionary<int, int> ReloadLevelSteps;
 
         private readonly int _speedBaseCost;
         private readonly int _rateBaseCost;
@@ -61,16 +62,16 @@ namespace Model
             Name = name;
             Sprite = sprite;
             FireClip = fireClip;
-            BaseSpeed = baseSpeed;
-            BaseRate = baseRate;
-            BaseDamage = baseDamage;
-            BaseAmmo = baseAmmo;
-            BaseReload = baseReload;
-            Speed = BaseSpeed;
-            Rate = BaseRate;
-            Damage = BaseDamage;
-            Ammo = BaseAmmo;
-            Reload = BaseReload;
+            _baseSpeed = baseSpeed;
+            _baseRate = baseRate;
+            _baseDamage = baseDamage;
+            _baseAmmo = baseAmmo;
+            _baseReload = baseReload;
+            Speed = _baseSpeed;
+            Rate = _baseRate;
+            Damage = _baseDamage;
+            Ammo = _baseAmmo;
+            Reload = _baseReload;
             SpeedLevelSteps = speedLevelSteps;
             RateLevelSteps = rateLevelSteps;
             DamageLevelSteps = damageLevelSteps;
@@ -91,6 +92,7 @@ namespace Model
             {
                 GameManager.Money -= SpeedCost;
                 Speed += SpeedLevelSteps.Where(entry => entry.Key >= SpeedLevel).ElementAt(0).Value;
+                ++SpeedLevel;
             }
         }
 
@@ -100,6 +102,7 @@ namespace Model
             {
                 GameManager.Money -= RateCost;
                 Rate += RateLevelSteps.Where(entry => entry.Key >= RateLevel).ElementAt(0).Value;
+                ++RateLevel;
             }
         }
 
@@ -109,6 +112,7 @@ namespace Model
             {
                 GameManager.Money -= DamageCost;
                 Damage += DamageLevelSteps.Where(entry => entry.Key >= DamageLevel).ElementAt(0).Value;
+                ++DamageLevel;
             }
         }
 
@@ -118,6 +122,7 @@ namespace Model
             {
                 GameManager.Money -= AmmoCost;
                 Ammo += AmmoLevelSteps.Where(entry => entry.Key >= AmmoLevel).ElementAt(0).Value;
+                ++AmmoLevel;
             }
         }
 
@@ -127,6 +132,7 @@ namespace Model
             {
                 GameManager.Money -= ReloadCost;
                 Reload += ReloadLevelSteps.Where(entry => entry.Key >= ReloadLevel).ElementAt(0).Value;
+                ++ReloadLevel;
             }
         }
 

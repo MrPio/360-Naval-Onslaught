@@ -30,7 +30,7 @@ public class ShopMenu : MonoBehaviour
         for (var i = 0; i < cannonsLocks.Length; i++)
             cannonsLocks[i].SetActive(Data.Cannons[i].IsLocked);
         for (var i = 0; i < turretsLocks.Length; i++)
-            cannonsLocks[i].SetActive(Data.Turrets[i].IsLocked);
+            turretsLocks[i].SetActive(Data.Turrets[i].IsLocked);
         for (var i = 0; i < cannonSlots.Length; i++)
             cannonSlots[i].sprite = Game.CurrentCannon == i ? slotOn : slotOff;
         for (var i = 0; i < turretSlots.Length; i++)

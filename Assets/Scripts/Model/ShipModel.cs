@@ -7,7 +7,8 @@ namespace Model
 {
     public class ShipModel
     {
-        public string Name;
+        private static GameManager Game => GameManager.Instance;
+        public readonly string Name;
         public readonly string Sprite;
         public readonly string[] FireClip;
         public readonly string ExplodeClip;
@@ -16,18 +17,18 @@ namespace Model
         public readonly Action<GameObject> StartCallback,EndPathCallback;
         public readonly int ExplosionsCount;
 
-        public readonly int BaseSpeed;
-        public readonly int BaseRate;
-        public readonly int BaseDamage;
-        public readonly int BaseHealth;
-        public readonly int BaseMoney;
+        private readonly int _baseSpeed;
+        private readonly int _baseRate;
+        private readonly int _baseDamage;
+        private readonly int _baseHealth;
+        private readonly int _baseMoney;
 
-        public float Delay => Mathf.Max(2f,5f - 0.125f * GameManager.Instance.Wave);
-        public int Speed => (int)(BaseSpeed * (1f + 0.1f * GameManager.Instance.Wave));
-        public int Rate => (int)(BaseRate * (1f + 0.1f * GameManager.Instance.Wave));
-        public int Damage => (int)(BaseDamage * (1f + 0.1f * GameManager.Instance.Wave));
-        public int Health => (int)(BaseHealth * (1f + 0.1f * GameManager.Instance.Wave));
-        public int Money => (int)(BaseHealth * (1f + 0.05f * GameManager.Instance.Wave));
+        public float Delay => 3.5f+Mathf.Max(0f,1f -  Game.WaveFactor)*3f;
+        public int Speed => (int)(_baseSpeed * (1f + 0.1f * Game.Wave));
+        public int Rate => (int)(_baseRate * (1f + 0.1f * Game.Wave));
+        public int Damage => (int)(_baseDamage * (1f + 0.1f * Game.Wave));
+        public int Health => (int)(_baseHealth * (1f + 0.1f * Game.Wave));
+        public int Money => (int)(_baseMoney * (1f + 0.05f * Game.Wave));
 
         public ShipModel(string name, string sprite, string[] fireClip, string explodeClip, int baseSpeed, int baseRate,
             int baseDamage, int baseHealth, int baseMoney, bool hasPath, string missileSprite, int explosionsCount=1, Action<GameObject> startCallback=null, Action<GameObject> endPathCallback=null)
@@ -36,11 +37,11 @@ namespace Model
             Sprite = sprite;
             FireClip = fireClip;
             ExplodeClip = explodeClip;
-            BaseSpeed = baseSpeed;
-            BaseRate = baseRate;
-            BaseDamage = baseDamage;
-            BaseHealth = baseHealth;
-            BaseMoney = baseMoney;
+            _baseSpeed = baseSpeed;
+            _baseRate = baseRate;
+            _baseDamage = baseDamage;
+            _baseHealth = baseHealth;
+            _baseMoney = baseMoney;
             HasPath = hasPath;
             MissileSprite = missileSprite;
             ExplosionsCount = explosionsCount;

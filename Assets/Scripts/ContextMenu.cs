@@ -24,7 +24,9 @@ public class ContextMenu : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         TurretDamage,
         TurretReload,
         TurretAmmo,
-        TurretRate
+        TurretRate,
+        NextWave,
+
     }
 
     [SerializeField] private GameObject contextMenu, lockedContextMenu, canvas;
@@ -48,6 +50,9 @@ public class ContextMenu : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
     public void OnPointerEnter(PointerEventData eventData)
     {
+        if(type==ContextMenuType.NextWave || contextMenu == null)
+            return;
+        
         void InstantiateContextMenu(GameObject menu)
         {
             _contextMenu = Instantiate(
@@ -173,11 +178,16 @@ public class ContextMenu : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         MainCamera.AudioSource.PlayOneShot(_hover);
     }
 
-    public void OnPointerExit(PointerEventData eventData) =>
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        if(type==ContextMenuType.NextWave|| contextMenu is null)
+            return;
         Destroy(_contextMenu.gameObject);
+    }
 
     public void OnPointerMove(PointerEventData eventData)
     {
+        if(type==ContextMenuType.NextWave)return;
         if (followMouse)
         {
             _contextMenu.transform.position =
@@ -187,6 +197,13 @@ public class ContextMenu : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
     public void OnPointerClick(PointerEventData eventData)
     {
+        if(type==ContextMenuType.NextWave)
+        {
+            GameObject.FindWithTag("wave_spawner").GetComponent<WaveSpawner>().BeginWave();
+            return;
+        }
+
+        
         if (contextMenu.name == "upgrade_context_menu")
         {
             var cost = type switch

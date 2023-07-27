@@ -62,6 +62,7 @@
      <Compile Include="Assets\Scripts\MoneyCounter.cs" />
      <Compile Include="Assets\Scripts\CloudSpawner.cs" />
      <Compile Include="Assets\Scripts\CannonBall.cs" />
+     <Compile Include="Assets\Scripts\SmallCannonBall.cs" />
      <Compile Include="Assets\Scripts\ReloadBar.cs" />
      <Compile Include="Assets\Scripts\Missile.cs" />
      <Compile Include="Assets\Scripts\Model\TurretModel.cs" />
@@ -71,7 +72,7 @@
      <Compile Include="Assets\Scripts\Managers\DataManager.cs" />
      <Compile Include="Assets\Scripts\ExtensionsFunctions\ListExtensions.cs" />
      <Compile Include="Assets\Scripts\Bullet.cs" />
-     <Compile Include="Assets\Scripts\SmallCannonBall.cs" />
+     <Compile Include="Assets\NewWave.cs" />
      <Folder Include="Assets" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />

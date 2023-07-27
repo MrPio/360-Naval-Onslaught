@@ -1,4 +1,3 @@
-using System;
 using ExtensionsFunctions;
 using Managers;
 using Model;
@@ -19,14 +18,14 @@ public class Turret : MonoBehaviour
     private float _fireAccumulator=9999f;
     private AudioClip _fireClip;
 
-    private void Awake()
+    private void OnEnable()
     {
         spriteRenderer.sprite = Resources.Load<Sprite>(Model.Sprite);
         _fireClip = Resources.Load<AudioClip>(Model.FireClip);
         _ammoCounter = GameObject.FindWithTag("ammo_counter").GetComponent<AmmoCounter>();
     }
 
-    void Update()
+    private void Update()
     {
         _fireAccumulator += Time.deltaTime;
         if (Input.GetMouseButtonDown(0) && Game.Ammo <= 0)

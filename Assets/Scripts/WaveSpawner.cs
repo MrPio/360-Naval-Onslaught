@@ -4,57 +4,96 @@ using System.Linq;
 using ExtensionsFunctions;
 using Managers;
 using Model;
+using TMPro;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
 public class WaveSpawner : MonoBehaviour
 {
-    [SerializeField] private GameObject ship;
-    private float _waveStart, _accumulator, _nextSpawn = 1f * 0f;
-    private WaveModel _model;
-    [SerializeField] private int pathsSize=1;
-    [NonSerialized] public List<int> PathsOrder;
+    private static GameManager Game => GameManager.Instance;
+    private static DataManager Data => DataManager.Instance;
 
-    void Start()
+    [SerializeField] private GameObject ship;
+    private float _waveStart, _accumulator, _nextSpawn;
+    private WaveModel _model;
+    [SerializeField] private int pathsSize = 1;
+    [NonSerialized] public List<int> PathsOrder;
+    private static readonly int Start1 = Animator.StringToHash("start");
+
+
+    [SerializeField] private GameObject waveCounter,
+        baseMain,
+        ammoContainer,
+        moneyContainer,
+        waveContainer,
+        shopMenu,
+        newWave,
+        baseHealthSlider;
+
+    private void Start()
     {
-        PathsOrder=Enumerable.Range(0, pathsSize).ToList();
+        EndWave();
         BeginWave();
     }
 
-    void FixedUpdate()
+    private void FixedUpdate()
     {
         if (_model != null)
         {
             _accumulator += Time.fixedDeltaTime;
-            if (!GameManager.Instance.CurrentWave.HasMore())
+
+            if (!Game.CurrentWave.HasMore() && _accumulator > 4f &&
+                Game.CurrentWave.Destroyed >= Game.CurrentWave.ShipsCount)
                 EndWave();
-            else if (_accumulator >= _nextSpawn)
+            else if (!Game.CurrentWave.HasMore() && Game.CurrentWave.Destroyed < Game.CurrentWave.ShipsCount)
+                _accumulator = 0;
+            else if (Game.CurrentWave.HasMore() && _accumulator >= _nextSpawn)
+            {
+                _accumulator = 0;
                 SpawnShip();
+            }
         }
     }
 
     private void SpawnShip()
     {
-        Instantiate(ship);
-        _nextSpawn = Random.Range(0, 2) switch
-        {
-            0 => 0f,
-            _ => 0f+Random.Range(0, 1f * Mathf.Max(0, 1 - GameManager.Instance.Wave / DataManager.Instance.Waves.Length)),
-        };
-        _accumulator = 0;
+        Instantiate(ship).GetComponent<Ship>().CurrentIndex = Game.CurrentWave.Spawned;
+        ++Game.CurrentWave.Spawned;
+
+        var immediateSpawnChance = 0.1 + 0.3 * Game.WaveFactor;
+
+        _nextSpawn = Random.Range(0f, 1f) < immediateSpawnChance
+            ? 0f
+            : 3f + Random.Range(0, 6f * (1 - Game.WaveFactor));
     }
 
     private void EndWave()
     {
         _model = null;
-        ++GameManager.Instance.Wave;
+        ++Game.Wave;
+        baseMain.SetActive(false);
+        ammoContainer.SetActive(false);
+        moneyContainer.SetActive(false);
+        waveContainer.SetActive(false);
+        shopMenu.SetActive(true);
     }
 
-    private void BeginWave()
+    public void BeginWave()
     {
-        _model = GameManager.Instance.CurrentWave;
+        waveCounter.GetComponent<TextMeshProUGUI>().text = (Game.Wave+1).ToString();
+        ammoContainer.SetActive(true);
+        moneyContainer.SetActive(true);
+        waveContainer.SetActive(true);
+        shopMenu.SetActive(false);
+        baseHealthSlider.SetActive(false);
+        _model = Game.CurrentWave;
         _waveStart = Time.time;
         _accumulator = 0;
+        _nextSpawn = 7f;
+        PathsOrder = Enumerable.Range(0, pathsSize).ToList();
         PathsOrder.Shuffle();
+        newWave.SetActive(true);
+        newWave.transform.Find("new_wave_text").GetComponent<TextMeshProUGUI>().text = $"Wave {Game.Wave+1}";
+        newWave.GetComponent<Animator>().SetTrigger(Start1);
     }
 }

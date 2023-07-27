@@ -4,6 +4,8 @@ namespace Managers
 {
     public class GameManager
     {
+        private static DataManager Data => DataManager.Instance;
+
         private static GameManager _instance;
 
         private GameManager()
@@ -21,18 +23,19 @@ namespace Managers
         private int _healthBaseCost = 500;
         private int _repairLevel = 1;
         public int HealthLevel = 1;
-        public int Wave = 0;
+        public int Wave = -1;
         public int Ammo, CannonAmmo;
         public int Money = 0;
-        public int CurrentTurret = 3;
+        public int CurrentTurret = 0;
         public int CurrentCannon = 0;
         public int HealthStep => (int)(_healthBaseStep * (1f + 0.35f * HealthLevel));
         public int HealthCost => (int)(_healthBaseCost * (1f + 0.25f * HealthLevel));
-        public int RepairCost => (int)((MaxHealth - Health) * (1f + 0.35f * _repairLevel));
+        public int RepairCost => (int)(0.28f*(MaxHealth - Health) * (1f + 0.15f * _repairLevel));
 
-        public TurretModel CurrentTurretModel => DataManager.Instance.Turrets[CurrentTurret];
-        public CannonModel CurrentCannonModel => DataManager.Instance.Cannons[CurrentCannon];
-        public WaveModel CurrentWave => DataManager.Instance.Waves[Wave];
+        public TurretModel CurrentTurretModel => Data.Turrets[CurrentTurret];
+        public CannonModel CurrentCannonModel => Data.Cannons[CurrentCannon];
+        public WaveModel CurrentWave => Data.Waves[Wave];
+        public float WaveFactor => Wave / (float)Data.Waves.Length;
 
         public void BuyHealth()
         {
@@ -44,9 +47,10 @@ namespace Managers
                 HealthLevel++;
             }
         }
+
         public void BuyRepair()
         {
-            if (Money >= RepairCost && Health<MaxHealth)
+            if (Money >= RepairCost && Health < MaxHealth)
             {
                 Money -= RepairCost;
                 Health = MaxHealth;

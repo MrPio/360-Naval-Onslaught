@@ -12,7 +12,9 @@ using Random = UnityEngine.Random;
 
 public class Ship : MonoBehaviour
 {
-    public static List<int[]> Collisions = new();
+    private static GameManager Game => GameManager.Instance;
+
+    private static readonly List<int[]> Collisions = new();
     private static readonly int ShipDamage = Animator.StringToHash("ship_damage");
     private static readonly int ShipDestroy = Animator.StringToHash("ship_destroy");
     [SerializeField] private HealthBar healthBar;
@@ -29,12 +31,11 @@ public class Ship : MonoBehaviour
     private int _health;
     private bool _hasDelay = true;
     private float _accumulator;
-    public bool Invincible;
-    public int currentIndex;
+    [NonSerialized] public bool Invincible;
+    [NonSerialized] public int CurrentIndex;
 
     private void Awake()
     {
-        currentIndex = WaveModel.Spawned;
         _model = GameManager.Instance.CurrentWave.Spawn();
         spriteRenderer.sprite = Resources.Load<Sprite>(_model.Sprite);
         boxCollider.size = spriteRenderer.bounds.size;
@@ -62,7 +63,7 @@ public class Ship : MonoBehaviour
             );
     }
 
-    void Start()
+    private void Start()
     {
         _health = _model.Health;
         healthBar.gameObject.SetActive(false);
@@ -89,7 +90,7 @@ public class Ship : MonoBehaviour
 
     private void Fire()
     {
-        const float range = 0.82f;
+        const float range = 0.9f;
         var currentPos = (Vector2)transform.position;
         var destination = new Vector2(
             x: Random.Range(-range, range),
@@ -133,6 +134,7 @@ public class Ship : MonoBehaviour
     private void Explode(bool reward = true)
     {
         if (GetComponent<ShipPath>().Dead || Invincible) return;
+        ++Game.CurrentWave.Destroyed;
 
         GetComponent<ShipPath>().Dead = true;
         MainCamera.AudioSource.PlayOneShot(_explodeClip);
@@ -185,9 +187,9 @@ public class Ship : MonoBehaviour
         else if (other.CompareTag("ship"))
         {
             var otherShip = other.GetComponent<Ship>();
-            if (!Collisions.Exists(it => it.Contains(currentIndex) && it.Contains(otherShip.currentIndex)))
+            if (!Collisions.Exists(it => it.Contains(CurrentIndex) && it.Contains(otherShip.CurrentIndex)))
             {
-                Collisions.Add(new[] { currentIndex, otherShip.currentIndex });
+                Collisions.Add(new[] { CurrentIndex, otherShip.CurrentIndex });
                 GetComponent<ShipPath>().Wait = true;
             }
         }
@@ -198,7 +200,7 @@ public class Ship : MonoBehaviour
         if (other.CompareTag("ship"))
         {
             var otherShip = other.GetComponent<Ship>();
-            Collisions.RemoveAll(it => it.Contains(currentIndex) && it.Contains(otherShip.currentIndex));
+            Collisions.RemoveAll(it => it.Contains(CurrentIndex) && it.Contains(otherShip.CurrentIndex));
             GetComponent<ShipPath>().Wait = false;
         }
     }

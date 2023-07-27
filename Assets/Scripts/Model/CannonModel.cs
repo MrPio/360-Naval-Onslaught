@@ -78,6 +78,7 @@ namespace Model
             {
                 GameManager.Money -= SpeedCost;
                 Speed += SpeedLevelSteps.Where(entry => entry.Key >= SpeedLevel).ElementAt(0).Value;
+                ++SpeedLevel;
             }
         }
 
@@ -87,6 +88,7 @@ namespace Model
             {
                 GameManager.Money -= DamageCost;
                 Damage += DamageLevelSteps.Where(entry => entry.Key >= DamageLevel).ElementAt(0).Value;
+                ++DamageLevel;
             }
         }
 
@@ -96,6 +98,7 @@ namespace Model
             {
                 GameManager.Money -= ReloadCost;
                 Reload += ReloadLevelSteps.Where(entry => entry.Key >= ReloadLevel).ElementAt(0).Value;
+                ++ReloadLevel;
             }
         }        
         public void BuyRadius()
@@ -104,6 +107,7 @@ namespace Model
             {
                 GameManager.Money -= RadiusCost;
                 Radius += RadiusLevelSteps.Where(entry => entry.Key >= RadiusLevel).ElementAt(0).Value;
+                ++RadiusLevel;
             }
         }
         public bool IsLocked => GameManager.Wave < WaveUnlock;

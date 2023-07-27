@@ -25,19 +25,16 @@ public class Cannon : MonoBehaviour
     private float _maxDistance;
     private Sprite _cannonBallSprite;
 
-    private void Awake()
+    private void OnEnable()
     {
         spriteRenderer.sprite = Resources.Load<Sprite>(Model.Sprite);
         _fireClip = Resources.Load<AudioClip>(Model.FireClip);
         _cannonBallSprite = Resources.Load<Sprite>(Model.CannonBallSprite);
-    }
-
-    private void Start()
-    {
         _maxDistance = Mathf.Min(MainCamera.Height, MainCamera.Width) * 1.15f;
     }
 
-    void Update()
+
+    private void Update()
     {
         _fireAccumulator += Time.deltaTime;
         if (Input.GetKeyDown(KeyCode.Space))
