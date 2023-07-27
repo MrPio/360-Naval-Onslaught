@@ -21,7 +21,6 @@ public class Turret : MonoBehaviour
 
     private void Awake()
     {
-        print(Model.Sprite);
         spriteRenderer.sprite = Resources.Load<Sprite>(Model.Sprite);
         _fireClip = Resources.Load<AudioClip>(Model.FireClip);
         _ammoCounter = GameObject.FindWithTag("ammo_counter").GetComponent<AmmoCounter>();

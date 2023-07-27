@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using System.Linq;
 using ExtensionsFunctions;
 using JetBrains.Annotations;
@@ -19,6 +20,7 @@ public class Bullet : MonoBehaviour
 
     private void Start()
     {
+        // 0.030 ms
         var sprite = Game.CurrentTurretModel.BulletSprite;
         sr.sprite = Resources.Load<Sprite>(sprite);
         transform.Find("fire").gameObject.SetActive(sprite.Contains("missile"));
@@ -33,7 +35,7 @@ public class Bullet : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (_target is { } || !Game.CurrentTurretModel.BulletSprite.Contains("missile"))
+        if (_target is { } || !(Game.CurrentTurretModel.BulletSprite.Contains("missile") ||Game.CurrentTurretModel.Name.Contains("Auto-Locking")))
             return;
 
         //Search for target

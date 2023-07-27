@@ -10,9 +10,9 @@ namespace Model
         private static GameManager GameManager => GameManager.Instance;
 
         public string Name;
-        public string Sprite,BulletSprite;
+        public string Sprite, BulletSprite;
         public string FireClip;
-        public bool Locked;
+        public int WaveUnlock;
 
         public int BaseSpeed;
         public int BaseRate;
@@ -26,11 +26,11 @@ namespace Model
         public int Ammo;
         public int Reload;
 
-        public int SpeedLevel=1;
-        public int RateLevel=1;
-        public int DamageLevel=1;
-        public int AmmoLevel=1;
-        public int ReloadLevel=1;
+        public int SpeedLevel = 1;
+        public int RateLevel = 1;
+        public int DamageLevel = 1;
+        public int AmmoLevel = 1;
+        public int ReloadLevel = 1;
 
         public Dictionary<int, int> SpeedLevelSteps;
         public Dictionary<int, int> RateLevelSteps;
@@ -55,7 +55,8 @@ namespace Model
             Dictionary<int, int> speedLevelSteps, Dictionary<int, int> rateLevelSteps,
             Dictionary<int, int> damageLevelSteps, Dictionary<int, int> ammoLevelSteps,
             Dictionary<int, int> reloadLevelSteps, int speedBaseCost,
-            int rateBaseCost, int damageBaseCost, int ammoBaseCost, int reloadBaseCost, string bulletSprite, bool locked=true)
+            int rateBaseCost, int damageBaseCost, int ammoBaseCost, int reloadBaseCost, string bulletSprite,
+            int waveUnlock = 0)
         {
             Name = name;
             Sprite = sprite;
@@ -81,7 +82,7 @@ namespace Model
             _ammoBaseCost = ammoBaseCost;
             _reloadBaseCost = reloadBaseCost;
             BulletSprite = bulletSprite;
-            Locked = locked;
+            WaveUnlock = waveUnlock;
         }
 
         public void BuySpeed()
@@ -119,7 +120,7 @@ namespace Model
                 Ammo += AmmoLevelSteps.Where(entry => entry.Key >= AmmoLevel).ElementAt(0).Value;
             }
         }
-        
+
         public void BuyReload()
         {
             if (GameManager.Money >= ReloadCost)
@@ -128,5 +129,7 @@ namespace Model
                 Reload += ReloadLevelSteps.Where(entry => entry.Key >= ReloadLevel).ElementAt(0).Value;
             }
         }
+
+        public bool IsLocked => GameManager.Wave < WaveUnlock;
     }
 }

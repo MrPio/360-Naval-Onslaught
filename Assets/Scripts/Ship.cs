@@ -185,10 +185,8 @@ public class Ship : MonoBehaviour
         else if (other.CompareTag("ship"))
         {
             var otherShip = other.GetComponent<Ship>();
-            print(string.Join(',', Collisions.Select(it => string.Join('|', it))));
             if (!Collisions.Exists(it => it.Contains(currentIndex) && it.Contains(otherShip.currentIndex)))
             {
-                print("mi fermo");
                 Collisions.Add(new[] { currentIndex, otherShip.currentIndex });
                 GetComponent<ShipPath>().Wait = true;
             }

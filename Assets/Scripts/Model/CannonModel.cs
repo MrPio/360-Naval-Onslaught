@@ -11,8 +11,8 @@ namespace Model
 
         public string Name;
         public string Sprite;
-        public string FireClip;
-        public bool Locked;
+        public string FireClip,CannonBallSprite;
+        public int WaveUnlock;
 
         public int BaseSpeed;
         public int BaseDamage;
@@ -47,7 +47,7 @@ namespace Model
         public CannonModel(string name, string sprite, string fireClip, int baseSpeed, int baseDamage,
             int baseReload, int baseRadius, Dictionary<int, int> speedLevelSteps, Dictionary<int, int> damageLevelSteps,
             Dictionary<int, int> reloadLevelSteps, Dictionary<int, int> radiusLevelSteps, int speedBaseCost,
-            int damageBaseCost, int reloadBaseCost, int radiusBaseCost, bool locked=true)
+            int damageBaseCost, int reloadBaseCost, int radiusBaseCost, string cannonBallSprite, int waveUnlock=0)
         {
             Name = name;
             Sprite = sprite;
@@ -68,7 +68,8 @@ namespace Model
             _damageBaseCost = damageBaseCost;
             _reloadBaseCost = reloadBaseCost;
             _radiusBaseCost = radiusBaseCost;
-            Locked = locked;
+            CannonBallSprite = cannonBallSprite;
+            WaveUnlock = waveUnlock;
         }
 
         public void BuySpeed()
@@ -96,6 +97,15 @@ namespace Model
                 GameManager.Money -= ReloadCost;
                 Reload += ReloadLevelSteps.Where(entry => entry.Key >= ReloadLevel).ElementAt(0).Value;
             }
+        }        
+        public void BuyRadius()
+        {
+            if (GameManager.Money >= RadiusCost)
+            {
+                GameManager.Money -= RadiusCost;
+                Radius += RadiusLevelSteps.Where(entry => entry.Key >= RadiusLevel).ElementAt(0).Value;
+            }
         }
+        public bool IsLocked => GameManager.Wave < WaveUnlock;
     }
 }

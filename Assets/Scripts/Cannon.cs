@@ -8,6 +8,7 @@ using UnityEngine;
 public class Cannon : MonoBehaviour
 {
     private static readonly int Fire1 = Animator.StringToHash("fire");
+    private static readonly int Speed = Animator.StringToHash("speed");
     private static GameManager Game => GameManager.Instance;
     private static CannonModel Model => Game.CurrentCannonModel;
     [SerializeField] private Transform spawnPoint;
@@ -22,13 +23,13 @@ public class Cannon : MonoBehaviour
     private bool _isAiming;
     private GameObject _crosshair;
     private float _maxDistance;
-    private static readonly int Speed = Animator.StringToHash("speed");
+    private Sprite _cannonBallSprite;
 
     private void Awake()
     {
-        print(Model.Sprite);
         spriteRenderer.sprite = Resources.Load<Sprite>(Model.Sprite);
         _fireClip = Resources.Load<AudioClip>(Model.FireClip);
+        _cannonBallSprite = Resources.Load<Sprite>(Model.CannonBallSprite);
     }
 
     private void Start()
@@ -89,10 +90,14 @@ public class Cannon : MonoBehaviour
             rotation: MainCamera.MainCam.AngleToMouse(from: spawnPos)
         );
         var speedMultiplier = 1f + 2f * (1f - destination.magnitude / _maxDistance);
+        newCannonBall.GetComponent<SpriteRenderer>().sprite = _cannonBallSprite;
+        newCannonBall.transform.localScale = Vector3.one * (0.7f / _cannonBallSprite.bounds.size.x);
+
         var script = newCannonBall.GetComponent<CannonBall>();
         script.Destination = destination;
         script.StartPos = spawnPos;
         script.Duration /= speedMultiplier;
+        script.SmallCannonBall = Model.Name == "Artillery";
         newCannonBall.GetComponent<Animator>().SetFloat(Speed, speedMultiplier);
         --Game.CannonAmmo;
 

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Managers;
@@ -5,7 +6,8 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class ContextMenu : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerMoveHandler
+public class ContextMenu : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerMoveHandler,
+    IPointerClickHandler
 {
     private static GameManager Game => GameManager.Instance;
     private static DataManager Data => DataManager.Instance;
@@ -25,24 +27,42 @@ public class ContextMenu : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         TurretRate
     }
 
-    [SerializeField] private GameObject contextMenu, canvas;
+    [SerializeField] private GameObject contextMenu, lockedContextMenu, canvas;
     [SerializeField] private bool followMouse = true;
     [SerializeField] private ContextMenuType type;
     [SerializeField] private int turretIndex = -1, cannonIndex = -1;
     private Transform _contextMenu;
+    private static AudioClip _buy, _noBuy, _weaponSelect,_click,_hover;
+
+    private void Awake()
+    {
+        if (_buy is null)
+        {
+            _buy = Resources.Load<AudioClip>("Audio/buy");
+            _noBuy = Resources.Load<AudioClip>("Audio/no_buy");
+            _weaponSelect = Resources.Load<AudioClip>("Audio/menu_weapon_select");
+            _click = Resources.Load<AudioClip>("Audio/menu_click");
+            _hover = Resources.Load<AudioClip>("Audio/menu_click_2");
+        }
+    }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        _contextMenu = Instantiate(
-            original: contextMenu,
-            position: (followMouse
-                ? (Vector2)MainCamera.MainCam.ScreenToWorldPoint(Input.mousePosition)
-                : transform.position) + Vector2.up * 0.215f,
-            rotation: Quaternion.identity,
-            canvas.transform
-        ).transform;
+        void InstantiateContextMenu(GameObject menu)
+        {
+            _contextMenu = Instantiate(
+                original: menu,
+                position: (followMouse
+                    ? (Vector2)MainCamera.MainCam.ScreenToWorldPoint(Input.mousePosition)
+                    : transform.position) + Vector2.up * 0.215f,
+                rotation: Quaternion.identity,
+                canvas.transform
+            ).transform;
+        }
+
         if (contextMenu.name == "upgrade_context_menu")
         {
+            InstantiateContextMenu(contextMenu);
             var title = new Dictionary<ContextMenuType, string>
             {
                 { ContextMenuType.Repair, "repair" },
@@ -112,26 +132,46 @@ public class ContextMenu : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         if (contextMenu.name == "turret_context_menu")
         {
             var turret = Data.Turrets[turretIndex];
-            _contextMenu.Find("title").GetComponent<TextMeshProUGUI>().text = $"( {turret.Name} )";
-            _contextMenu.Find("speed_text").GetComponent<TextMeshProUGUI>().text = turret.Speed.ToString("N0");
-            _contextMenu.Find("ammo_text").GetComponent<TextMeshProUGUI>().text = turret.Ammo.ToString("N0");
-            _contextMenu.Find("damage_text").GetComponent<TextMeshProUGUI>().text = turret.Damage.ToString("N0");
-            _contextMenu.Find("rate_text").GetComponent<TextMeshProUGUI>().text = turret.Rate.ToString("N0");
-            _contextMenu.Find("reload_text").GetComponent<TextMeshProUGUI>().text = turret.Reload.ToString("N0");
+            if (turret.IsLocked)
+            {
+                InstantiateContextMenu(lockedContextMenu);
+                _contextMenu.Find("title_text").GetComponent<TextMeshProUGUI>().text = $"( {turret.Name} )";
+                _contextMenu.Find("wave_text").GetComponent<TextMeshProUGUI>().text = turret.WaveUnlock.ToString();
+            }
+            else
+            {
+                InstantiateContextMenu(contextMenu);
+                _contextMenu.Find("title").GetComponent<TextMeshProUGUI>().text = $"( {turret.Name} )";
+                _contextMenu.Find("speed_text").GetComponent<TextMeshProUGUI>().text = turret.Speed.ToString("N0");
+                _contextMenu.Find("ammo_text").GetComponent<TextMeshProUGUI>().text = turret.Ammo.ToString("N0");
+                _contextMenu.Find("damage_text").GetComponent<TextMeshProUGUI>().text = turret.Damage.ToString("N0");
+                _contextMenu.Find("rate_text").GetComponent<TextMeshProUGUI>().text = turret.Rate.ToString("N0");
+                _contextMenu.Find("reload_text").GetComponent<TextMeshProUGUI>().text = turret.Reload.ToString("N0");
+            }
         }
 
         if (contextMenu.name == "cannon_context_menu")
         {
             var cannon = Data.Cannons[cannonIndex];
-            _contextMenu.Find("title").GetComponent<TextMeshProUGUI>().text = $"( {cannon.Name} )";
-            _contextMenu.Find("speed_text").GetComponent<TextMeshProUGUI>().text = cannon.Speed.ToString("N0");
-            _contextMenu.Find("damage_text").GetComponent<TextMeshProUGUI>().text = cannon.Damage.ToString("N0");
-            _contextMenu.Find("radius_text").GetComponent<TextMeshProUGUI>().text = cannon.Radius.ToString("N0");
-            _contextMenu.Find("reload_text").GetComponent<TextMeshProUGUI>().text = cannon.Reload.ToString("N0");
-
+            if (cannon.IsLocked)
+            {
+                InstantiateContextMenu(lockedContextMenu);
+                _contextMenu.Find("title_text").GetComponent<TextMeshProUGUI>().text = $"( {cannon.Name} )";
+                _contextMenu.Find("wave_text").GetComponent<TextMeshProUGUI>().text = cannon.WaveUnlock.ToString();
+            }
+            else
+            {
+                InstantiateContextMenu(contextMenu);
+                _contextMenu.Find("title").GetComponent<TextMeshProUGUI>().text = $"( {cannon.Name} )";
+                _contextMenu.Find("speed_text").GetComponent<TextMeshProUGUI>().text = cannon.Speed.ToString("N0");
+                _contextMenu.Find("damage_text").GetComponent<TextMeshProUGUI>().text = cannon.Damage.ToString("N0");
+                _contextMenu.Find("radius_text").GetComponent<TextMeshProUGUI>().text = cannon.Radius.ToString("N0");
+                _contextMenu.Find("reload_text").GetComponent<TextMeshProUGUI>().text = cannon.Reload.ToString("N0");
+            }
         }
+        
+        MainCamera.AudioSource.PlayOneShot(_hover);
     }
-    //funzioni di onclick da collegare da inspector + parametri
 
     public void OnPointerExit(PointerEventData eventData) =>
         Destroy(_contextMenu.gameObject);
@@ -143,5 +183,110 @@ public class ContextMenu : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
             _contextMenu.transform.position =
                 ((Vector2)MainCamera.MainCam.ScreenToWorldPoint(Input.mousePosition)) + Vector2.up * 0.3f;
         }
+    }
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        if (contextMenu.name == "upgrade_context_menu")
+        {
+            var cost = type switch
+            {
+                ContextMenuType.Repair => Game.RepairCost,
+                ContextMenuType.UpgradeHealth => Game.HealthCost,
+
+                ContextMenuType.CannonDamage => Game.CurrentCannonModel.DamageCost,
+                ContextMenuType.CannonRadius => Game.CurrentCannonModel.RadiusCost,
+                ContextMenuType.CannonReload => Game.CurrentCannonModel.ReloadCost,
+                ContextMenuType.CannonSpeed => Game.CurrentCannonModel.SpeedCost,
+
+                ContextMenuType.TurretDamage => Game.CurrentTurretModel.DamageCost,
+                ContextMenuType.TurretAmmo => Game.CurrentTurretModel.AmmoCost,
+                ContextMenuType.TurretRate => Game.CurrentTurretModel.RateCost,
+                ContextMenuType.TurretReload => Game.CurrentTurretModel.ReloadCost,
+                ContextMenuType.TurretSpeed => Game.CurrentTurretModel.SpeedCost,
+
+                _ => 0
+            };
+            if (cost > Game.Money || cost==0)
+            {
+                MainCamera.AudioSource.PlayOneShot(_noBuy);
+                return;
+            }
+
+            switch (type)
+            {
+                case ContextMenuType.Repair:
+                    Game.BuyRepair();
+                    break;
+                case ContextMenuType.UpgradeHealth:
+                    Game.BuyHealth();
+                    break;
+                case ContextMenuType.CannonDamage:
+                    Game.CurrentCannonModel.BuyDamage();
+                    break;
+                case ContextMenuType.CannonRadius:
+                    Game.CurrentCannonModel.BuyRadius();
+                    break;
+                case ContextMenuType.CannonReload:
+                    Game.CurrentCannonModel.BuyReload();
+                    break;
+                case ContextMenuType.CannonSpeed:
+                    Game.CurrentCannonModel.BuySpeed();
+                    break;
+                case ContextMenuType.TurretDamage:
+                    Game.CurrentTurretModel.BuyDamage();
+                    break;
+                case ContextMenuType.TurretAmmo:
+                    Game.CurrentTurretModel.BuyAmmo();
+                    break;
+                case ContextMenuType.TurretRate:
+                    Game.CurrentTurretModel.BuyRate();
+                    break;
+                case ContextMenuType.TurretReload:
+                    Game.CurrentTurretModel.BuyReload();
+                    break;
+                case ContextMenuType.TurretSpeed:
+                    Game.CurrentTurretModel.BuySpeed();
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+            MainCamera.AudioSource.PlayOneShot(_buy);
+        }
+
+        if (contextMenu.name == "turret_context_menu")
+        {
+            var turret = Data.Turrets[turretIndex];
+            if (turret.IsLocked )
+            {
+                MainCamera.AudioSource.PlayOneShot(_noBuy);
+            }
+            else
+            {
+                Game.CurrentTurret = turretIndex;
+                MainCamera.AudioSource.PlayOneShot(_weaponSelect);
+            }
+        }
+
+        if (contextMenu.name == "cannon_context_menu")
+        {
+            var cannon = Data.Cannons[cannonIndex];
+            if (cannon.IsLocked )
+            {
+                MainCamera.AudioSource.PlayOneShot(_noBuy);
+            }
+            else
+            {
+                Game.CurrentCannon = cannonIndex;
+                MainCamera.AudioSource.PlayOneShot(_weaponSelect);
+            }
+        }
+        
+        // Update the context menu
+        OnPointerExit(null);
+        OnPointerEnter(null);
+        
+        // Update the shop menu
+        GameObject.FindWithTag("shop_menu").GetComponent<ShopMenu>().UpdateUI();
     }
 }

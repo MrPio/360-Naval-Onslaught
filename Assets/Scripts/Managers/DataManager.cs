@@ -22,7 +22,6 @@ namespace Managers
                 bulletSprite: "Sprites/bullet_1",
                 baseSpeed: 400 * 5, baseRate: 300 * 8, baseDamage: 20, baseAmmo: 26 * 2, baseReload: 75 * 3,
                 speedBaseCost: 100, rateBaseCost: 180, damageBaseCost: 150, ammoBaseCost: 125, reloadBaseCost: 115,
-                locked: false,
                 speedLevelSteps: new Dictionary<int, int>
                 {
                     { 0, 20 },
@@ -84,6 +83,7 @@ namespace Managers
                 bulletSprite: "Sprites/bullet_2",
                 baseSpeed: 500, baseRate: 800, baseDamage: 26, baseAmmo: 46, baseReload: 115,
                 speedBaseCost: 200, rateBaseCost: 260, damageBaseCost: 360, ammoBaseCost: 185, reloadBaseCost: 225,
+                waveUnlock:5,
                 speedLevelSteps: new Dictionary<int, int>
                 {
                     { 0, 20 },
@@ -145,6 +145,131 @@ namespace Managers
                 bulletSprite: "Sprites/missile_2",
                 baseSpeed: 200, baseRate: 40, baseDamage: 200, baseAmmo: 2, baseReload: 45,
                 speedBaseCost: 420, rateBaseCost: 430, damageBaseCost: 550, ammoBaseCost: 780, reloadBaseCost: 475,
+                waveUnlock:10,
+                speedLevelSteps: new Dictionary<int, int>
+                {
+                    { 0, 20 },
+                    { 5, 25 },
+                    { 10, 35 },
+                    { 15, 50 },
+                    { 20, 70 },
+                    { 25, 85 },
+                    { 30, 100 },
+                    { 35, 125 },
+                },
+                rateLevelSteps: new Dictionary<int, int>
+                {
+                    { 0, 4 },
+                    { 5, 6 },
+                    { 10, 8 },
+                    { 15, 10 },
+                    { 20, 12 },
+                    { 25, 14 },
+                    { 30, 16 },
+                    { 35, 18 },
+                },
+                damageLevelSteps: new Dictionary<int, int>
+                {
+                    { 0, 10 },
+                    { 5, 12 },
+                    { 10, 14 },
+                    { 15, 16 },
+                    { 20, 18 },
+                    { 25, 20 },
+                    { 30, 24 },
+                    { 35, 28 },
+                },
+                ammoLevelSteps: new Dictionary<int, int>
+                {
+                    { 0, 1 },
+                    { 5, 1 },
+                    { 10, 2 },
+                    { 15, 2 },
+                    { 20, 2 },
+                    { 25, 4 },
+                    { 30, 4 },
+                    { 35, 4 },
+                },
+                reloadLevelSteps: new Dictionary<int, int>
+                {
+                    { 0, 8 },
+                    { 5, 12 },
+                    { 10, 16 },
+                    { 15, 20 },
+                    { 20, 30 },
+                    { 25, 35 },
+                    { 30, 40 },
+                    { 35, 50 },
+                }
+            ),
+                        new(
+                name: "Piercing Gun", sprite: "Sprites/turret_4", fireClip: "Audio/turret_fire_2",
+                bulletSprite: "Sprites/bullet_2",
+                baseSpeed: 1250, baseRate: 2000, baseDamage: 22, baseAmmo: 77, baseReload: 46,
+                speedBaseCost: 420, rateBaseCost: 430, damageBaseCost: 550, ammoBaseCost: 780, reloadBaseCost: 475,
+                waveUnlock:15,
+                speedLevelSteps: new Dictionary<int, int>
+                {
+                    { 0, 20 },
+                    { 5, 25 },
+                    { 10, 35 },
+                    { 15, 50 },
+                    { 20, 70 },
+                    { 25, 85 },
+                    { 30, 100 },
+                    { 35, 125 },
+                },
+                rateLevelSteps: new Dictionary<int, int>
+                {
+                    { 0, 4 },
+                    { 5, 6 },
+                    { 10, 8 },
+                    { 15, 10 },
+                    { 20, 12 },
+                    { 25, 14 },
+                    { 30, 16 },
+                    { 35, 18 },
+                },
+                damageLevelSteps: new Dictionary<int, int>
+                {
+                    { 0, 10 },
+                    { 5, 12 },
+                    { 10, 14 },
+                    { 15, 16 },
+                    { 20, 18 },
+                    { 25, 20 },
+                    { 30, 24 },
+                    { 35, 28 },
+                },
+                ammoLevelSteps: new Dictionary<int, int>
+                {
+                    { 0, 1 },
+                    { 5, 1 },
+                    { 10, 2 },
+                    { 15, 2 },
+                    { 20, 2 },
+                    { 25, 4 },
+                    { 30, 4 },
+                    { 35, 4 },
+                },
+                reloadLevelSteps: new Dictionary<int, int>
+                {
+                    { 0, 8 },
+                    { 5, 12 },
+                    { 10, 16 },
+                    { 15, 20 },
+                    { 20, 30 },
+                    { 25, 35 },
+                    { 30, 40 },
+                    { 35, 50 },
+                }
+            ),
+                                    new(
+                name: "Auto-Locking Gun", sprite: "Sprites/turret_5", fireClip: "Audio/turret_fire_1",
+                bulletSprite: "Sprites/bullet_2",
+                baseSpeed: 365, baseRate: 480, baseDamage: 70, baseAmmo: 19, baseReload: 37,
+                speedBaseCost: 420, rateBaseCost: 430, damageBaseCost: 550, ammoBaseCost: 780, reloadBaseCost: 475,
+                waveUnlock:20,
                 speedLevelSteps: new Dictionary<int, int>
                 {
                     { 0, 20 },
@@ -206,10 +331,10 @@ namespace Managers
         public readonly CannonModel[] Cannons =
         {
             new(
-                name: "Base Cannon", sprite: "Sprites/cannon_1", fireClip: "Audio/cannon_fire_1",
+                name: "Base Cannon", sprite: "Sprites/cannon_1", fireClip: "Audio/cannon_fire_2"
+                ,cannonBallSprite: "Sprites/cannon_ball_1",
                 baseSpeed: 50, baseDamage: 200, baseReload: 20 * 5, baseRadius: 20,
                 speedBaseCost: 450, damageBaseCost: 300, reloadBaseCost: 350, radiusBaseCost: 250,
-                locked: false,
                 speedLevelSteps: new Dictionary<int, int>
                 {
                     { 0, 15 },
@@ -252,8 +377,10 @@ namespace Managers
             ),
             new(
                 name: "Artillery", sprite: "Sprites/cannon_2", fireClip: "Audio/cannon_fire_1",
-                baseSpeed: 120, baseDamage: 500, baseReload: 24, baseRadius: 22,
+                cannonBallSprite: "Sprites/cannon_ball_2",
+                baseSpeed: 65, baseDamage: 500, baseReload: 24, baseRadius: 22,
                 speedBaseCost: 550, damageBaseCost: 540, reloadBaseCost: 615, radiusBaseCost: 520,
+                waveUnlock: 5,
                 speedLevelSteps: new Dictionary<int, int>
                 {
                     { 0, 15 },
@@ -295,9 +422,103 @@ namespace Managers
                 }
             ),
             new(
-                name: "EMP Cannon", sprite: "Sprites/cannon_3", fireClip: "Audio/cannon_fire_1",
-                baseSpeed: 150, baseDamage: 760, baseReload: 18, baseRadius: 18,
+                name: "EMP Cannon", sprite: "Sprites/cannon_3", fireClip: "Audio/cannon_fire_3",
+                baseSpeed: 85, baseDamage: 760, baseReload: 18, baseRadius: 18,
+                cannonBallSprite: "Sprites/cannon_ball_3",
                 speedBaseCost: 572, damageBaseCost: 620, reloadBaseCost: 842, radiusBaseCost: 715,
+                waveUnlock:10,
+                speedLevelSteps: new Dictionary<int, int>
+                {
+                    { 0, 15 },
+                    { 5, 20 },
+                    { 10, 25 },
+                    { 15, 30 },
+                    { 20, 40 },
+                    { 25, 55 },
+                    { 30, 60 },
+                    { 35, 75 },
+                },
+                damageLevelSteps: new Dictionary<int, int>
+                {
+                    { 0, 40 },
+                    { 5, 46 },
+                    { 10, 54 },
+                    { 15, 52 },
+                    { 20, 60 },
+                    { 25, 70 },
+                    { 30, 75 },
+                    { 35, 75 },
+                },
+                reloadLevelSteps: new Dictionary<int, int>
+                {
+                    { 0, 3 },
+                    { 3, 4 },
+                    { 10, 6 },
+                    { 15, 6 },
+                    { 20, 8 },
+                    { 25, 10 },
+                    { 30, 12 },
+                    { 35, 15 },
+                },
+                radiusLevelSteps: new Dictionary<int, int>
+                {
+                    { 0, 3 },
+                    { 15, 4 },
+                    { 30, 5 },
+                }
+            ),
+            new(
+                name: "Blizzard Cannon", sprite: "Sprites/cannon_4", fireClip: "Audio/cannon_fire_1",
+                baseSpeed: 95, baseDamage: 1175, baseReload: 18, baseRadius: 22,
+                cannonBallSprite: "Sprites/cannon_ball_4",
+                speedBaseCost: 572, damageBaseCost: 620, reloadBaseCost: 842, radiusBaseCost: 715,
+                waveUnlock:15,
+                speedLevelSteps: new Dictionary<int, int>
+                {
+                    { 0, 15 },
+                    { 5, 20 },
+                    { 10, 25 },
+                    { 15, 30 },
+                    { 20, 40 },
+                    { 25, 55 },
+                    { 30, 60 },
+                    { 35, 75 },
+                },
+                damageLevelSteps: new Dictionary<int, int>
+                {
+                    { 0, 40 },
+                    { 5, 46 },
+                    { 10, 54 },
+                    { 15, 52 },
+                    { 20, 60 },
+                    { 25, 70 },
+                    { 30, 75 },
+                    { 35, 75 },
+                },
+                reloadLevelSteps: new Dictionary<int, int>
+                {
+                    { 0, 3 },
+                    { 3, 4 },
+                    { 10, 6 },
+                    { 15, 6 },
+                    { 20, 8 },
+                    { 25, 10 },
+                    { 30, 12 },
+                    { 35, 15 },
+                },
+                radiusLevelSteps: new Dictionary<int, int>
+                {
+                    { 0, 3 },
+                    { 15, 4 },
+                    { 30, 5 },
+                }
+            ),
+            new(
+                name: "Rocket Launcher", sprite: "Sprites/cannon_5", fireClip: "Audio/cannon_fire_1",
+                baseSpeed: 115, baseDamage: 2000, baseReload: 20, baseRadius: 28,
+                cannonBallSprite: "Sprites/cannon_ball_5",
+                speedBaseCost: 572, damageBaseCost: 620, reloadBaseCost: 842, radiusBaseCost: 715,
+                waveUnlock:20,
                 speedLevelSteps: new Dictionary<int, int>
                 {
                     { 0, 15 },
