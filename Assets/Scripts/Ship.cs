@@ -30,7 +30,7 @@ public class Ship : MonoBehaviour
     private ShipModel _model;
     private int _health;
     private bool _hasDelay = true;
-    public bool IsFreezed;
+    [NonSerialized]public bool IsFreezed;
     private float _accumulator;
     [NonSerialized] public bool Invincible;
     [NonSerialized] public int CurrentIndex;
@@ -40,7 +40,7 @@ public class Ship : MonoBehaviour
     {
         _model = Game.CurrentWave.Spawn();
         spriteRenderer.sprite = Resources.Load<Sprite>(_model.Sprite);
-        boxCollider.size = spriteRenderer.bounds.size;
+        boxCollider.size = spriteRenderer.bounds.size * 1.05f;
         if (_model.ExplodeClip != null)
             _explodeClip = Resources.Load<AudioClip>(_model.ExplodeClip);
         if (_model.FireClip != null)
@@ -219,10 +219,23 @@ public class Ship : MonoBehaviour
             var otherShip = other.GetComponent<Ship>();
             if (!Collisions.Exists(it => it.Contains(CurrentIndex) && it.Contains(otherShip.CurrentIndex)))
             {
+                // Handling collision with another ship
                 Collisions.Add(new[] { CurrentIndex, otherShip.CurrentIndex });
-                GetComponent<ShipPath>().Wait = true;
+
+                // Determine who should stop
+                var bow = transform.Find("bow").position * spriteRenderer.bounds.size.x;
+                if (Physics2D.OverlapCircleAll(bow, 0.5f).ToList().Exists(it => it.gameObject == other.gameObject))
+                    GetComponent<ShipPath>().Wait = true;
+                else
+                    other.GetComponent<ShipPath>().Wait = true;
             }
         }
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.cyan;
+        Gizmos.DrawWireSphere(transform.Find("bow").position * spriteRenderer.bounds.size.x, 0.5f);
     }
 
     private void OnTriggerExit2D(Collider2D other)
@@ -232,6 +245,7 @@ public class Ship : MonoBehaviour
             var otherShip = other.GetComponent<Ship>();
             Collisions.RemoveAll(it => it.Contains(CurrentIndex) && it.Contains(otherShip.CurrentIndex));
             GetComponent<ShipPath>().Wait = false;
+            other.gameObject.GetComponent<ShipPath>().Wait = false;
         }
     }
 

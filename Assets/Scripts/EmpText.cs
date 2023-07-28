@@ -16,7 +16,7 @@ public class EmpText : MonoBehaviour
         _accumulator = 0;
         _duration = 0;
         _lastSecond = 0;
-        shipPath.Wait = true;
+        shipPath.IsFreezed = true;
         shipPath.gameObject.GetComponent<Renderer>().material.color = new Color(0.5f, 0.55f, 0.9f, 0.65f);
         EMP();
     }
@@ -40,9 +40,9 @@ public class EmpText : MonoBehaviour
 
         if (_accumulator >= _duration)
         {
-            shipPath.Wait = false;
             shipPath.gameObject.GetComponent<Renderer>().material.color = new Color(1f, 1f, 1, 1f);
             shipPath.gameObject.GetComponent<Ship>().IsFreezed = false;
+            shipPath.IsFreezed = false;
             gameObject.SetActive(false);
         }
     }

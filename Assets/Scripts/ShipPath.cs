@@ -13,7 +13,7 @@ public class ShipPath : MonoBehaviour
     [SerializeField] private List<Transform> paths;
     [NonSerialized] public static int SpawnIndex;
     [NonSerialized] public ShipModel Model;
-    [NonSerialized] public bool IsDead,Wait;
+    [NonSerialized] public bool IsDead, Wait, IsFreezed;
 
     private int _pointIndex;
     private List<Vector2> _points = new();
@@ -37,7 +37,7 @@ public class ShipPath : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (Model is { } && !IsDead && _pointIndex < _points.Count && !Wait)
+        if (Model is { } && _pointIndex < _points.Count && !IsDead && !Wait && !IsFreezed)
         {
             var currentPos = (Vector2)transform.position;
             var newPos = Vector2.MoveTowards(

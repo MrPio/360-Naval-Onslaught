@@ -21,7 +21,7 @@ namespace Managers
             new(
                 name: "Base Turret", sprite: "Sprites/turret_1", fireClip: "Audio/turret_fire_1",
                 bulletSprite: "Sprites/bullet_1",
-                baseSpeed: 400 , baseRate: 300 , baseDamage: 20, baseAmmo: 26 , baseReload: 75 ,
+                baseSpeed: 400 , baseRate: 300 , baseDamage: 20, baseAmmo: 38 , baseReload: 75 ,
                 speedBaseCost: 100, rateBaseCost: 180, damageBaseCost: 150, ammoBaseCost: 125, reloadBaseCost: 115,
                 speedLevelSteps: new Dictionary<int, int>
                 {
@@ -82,7 +82,7 @@ namespace Managers
             new(
                 name: "Gatling Gun", sprite: "Sprites/turret_2", fireClip: "Audio/turret_fire_2",
                 bulletSprite: "Sprites/bullet_2",
-                baseSpeed: 500, baseRate: 800, baseDamage: 26, baseAmmo: 46, baseReload: 115,
+                baseSpeed: 500, baseRate: 800, baseDamage: 26, baseAmmo: 100, baseReload: 115,
                 speedBaseCost: 200, rateBaseCost: 260, damageBaseCost: 360, ammoBaseCost: 185, reloadBaseCost: 225,
                 waveUnlock: 5,
                 speedLevelSteps: new Dictionary<int, int>
@@ -206,7 +206,7 @@ namespace Managers
             new(
                 name: "Piercing Gun", sprite: "Sprites/turret_4", fireClip: "Audio/turret_fire_2",
                 bulletSprite: "Sprites/bullet_2",
-                baseSpeed: 1250, baseRate: 2000, baseDamage: 22, baseAmmo: 72, baseReload: 46,
+                baseSpeed: 1250, baseRate: 2000, baseDamage: 22, baseAmmo: 240, baseReload: 46,
                 speedBaseCost: 420, rateBaseCost: 430, damageBaseCost: 550, ammoBaseCost: 780, reloadBaseCost: 475,
                 waveUnlock: 15,
                 speedLevelSteps: new Dictionary<int, int>
@@ -268,7 +268,7 @@ namespace Managers
             new(
                 name: "Auto-Locking Gun", sprite: "Sprites/turret_5", fireClip: "Audio/turret_fire_1",
                 bulletSprite: "Sprites/bullet_2",
-                baseSpeed: 365, baseRate: 480, baseDamage: 70, baseAmmo: 20, baseReload: 37,
+                baseSpeed: 365, baseRate: 480, baseDamage: 70, baseAmmo: 54, baseReload: 37,
                 speedBaseCost: 420, rateBaseCost: 430, damageBaseCost: 550, ammoBaseCost: 780, reloadBaseCost: 475,
                 waveUnlock: 20,
                 speedLevelSteps: new Dictionary<int, int>
@@ -613,7 +613,7 @@ namespace Managers
 
         public readonly WaveModel[] Waves =
         {
-            new(shipsChances: new List<float> { 0.75f, 1f, 1f, 1f, 1f },shipsCount:7),
+            new(shipsChances: new List<float> { 0.15f, 0.15f, 1f, 1f, 1f },shipsCount:17),
             new(shipsChances: new List<float> { 0.65f, 0.9f, 1f, 1f , 1f},shipsCount:9),
             new(shipsChances: new List<float> { 0.5f, 0.8f, 1f, 1f , 1f},shipsCount:12),
             new(shipsChances: new List<float> { 0.4f, 0.65f, 0.9f, 1f, 1f },shipsCount:13),

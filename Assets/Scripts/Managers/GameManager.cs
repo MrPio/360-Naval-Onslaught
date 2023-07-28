@@ -19,7 +19,7 @@ namespace Managers
         public static GameManager Instance => _instance ??= new GameManager();
 
         public int Health;
-        public int MaxHealth = 10;
+        public int MaxHealth = 3500;
         private int _healthBaseStep = 175;
         private int _healthBaseCost = 500;
         private int _repairLevel = 1;
@@ -27,7 +27,7 @@ namespace Managers
         public int Wave = 0;
         public int Ammo, CannonAmmo;
         public int Money = 0;
-        public int CurrentTurret = 0;
+        public int CurrentTurret = 3;
         public int CurrentCannon = 2;
         public float Score;
         public int HealthStep => (int)(_healthBaseStep * (1f + 0.35f * HealthLevel));
