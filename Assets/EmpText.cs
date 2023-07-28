@@ -42,6 +42,7 @@ public class EmpText : MonoBehaviour
         {
             shipPath.Wait = false;
             shipPath.gameObject.GetComponent<Renderer>().material.color = new Color(1f, 1f, 1, 1f);
+            shipPath.gameObject.GetComponent<Ship>().IsFreezed = false;
             gameObject.SetActive(false);
         }
     }

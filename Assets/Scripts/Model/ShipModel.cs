@@ -16,6 +16,7 @@ namespace Model
         public readonly bool HasPath;
         public readonly Action<GameObject> StartCallback,EndPathCallback;
         public readonly int ExplosionsCount;
+        public readonly float DelayMultiplier;
 
         private readonly int _baseSpeed;
         private readonly int _baseRate;
@@ -23,7 +24,7 @@ namespace Model
         private readonly int _baseHealth;
         private readonly int _baseMoney;
 
-        public float Delay => 3.5f+Mathf.Max(0f,1f -  Game.WaveFactor)*3f;
+        public float Delay => 5f+Mathf.Max(0f,1f -  Game.WaveFactor)*2.25f;
         public int Speed => (int)(_baseSpeed * (1f + 0.1f * Game.Wave));
         public int Rate => (int)(_baseRate * (1f + 0.1f * Game.Wave));
         public int Damage => (int)(_baseDamage * (1f + 0.1f * Game.Wave));
@@ -31,7 +32,7 @@ namespace Model
         public int Money => (int)(_baseMoney * (1f + 0.05f * Game.Wave));
 
         public ShipModel(string name, string sprite, string[] fireClip, string explodeClip, int baseSpeed, int baseRate,
-            int baseDamage, int baseHealth, int baseMoney, bool hasPath, string missileSprite, int explosionsCount=1, Action<GameObject> startCallback=null, Action<GameObject> endPathCallback=null)
+            int baseDamage, int baseHealth, int baseMoney, bool hasPath, string missileSprite, float delayMultiplier=1f, int explosionsCount=1, Action<GameObject> startCallback=null, Action<GameObject> endPathCallback=null)
         {
             Name = name;
             Sprite = sprite;
@@ -44,6 +45,7 @@ namespace Model
             _baseMoney = baseMoney;
             HasPath = hasPath;
             MissileSprite = missileSprite;
+            DelayMultiplier = delayMultiplier;
             ExplosionsCount = explosionsCount;
             StartCallback = startCallback;
             EndPathCallback = endPathCallback;

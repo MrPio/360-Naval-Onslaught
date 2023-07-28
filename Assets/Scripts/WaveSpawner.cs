@@ -43,11 +43,15 @@ public class WaveSpawner : MonoBehaviour
     }
     private void Start()
     {
-        baseMain.SetActive(false);
+        // TODO UNCOMMENT
+        /*baseMain.SetActive(false);
         baseHealthSlider.SetActive(false);
         newWave.SetActive(true);
         mainMenu.SetActive(true);
-        gameOver.SetActive(false);
+        gameOver.SetActive(false);*/
+        
+        // TODO COMMENT
+        BeginWave();
     }
 
     private void FixedUpdate()
@@ -107,8 +111,10 @@ public class WaveSpawner : MonoBehaviour
         _nextSpawn = 7f;
         PathsOrder = Enumerable.Range(0, pathsSize).ToList();
         PathsOrder.Shuffle();
-        newWave.SetActive(true);
+        
+        // TODO UNCOMMENT
+        /*newWave.SetActive(true);
         newWave.transform.Find("new_wave_text").GetComponent<TextMeshProUGUI>().text = $"Wave {Game.Wave+1}";
-        newWave.GetComponent<Animator>().SetTrigger(Start1);
+        newWave.GetComponent<Animator>().SetTrigger(Start1);*/
     }
 }

@@ -22,7 +22,7 @@ public class Ship : MonoBehaviour
     [SerializeField] private Animator animator;
     [SerializeField] private SpriteRenderer spriteRenderer;
     [SerializeField] private BoxCollider2D boxCollider;
-    [SerializeField] private GameObject floatingTextBig, missile, empExplosion, empText;
+    [SerializeField] private GameObject floatingTextBig, missile, empExplosion, empText, militaryPlane;
     private Sprite _missileSprite;
     private List<AudioClip> _fireClip;
     private MoneyCounter _moneyCounter;
@@ -30,9 +30,11 @@ public class Ship : MonoBehaviour
     private ShipModel _model;
     private int _health;
     private bool _hasDelay = true;
+    public bool IsFreezed;
     private float _accumulator;
     [NonSerialized] public bool Invincible;
     [NonSerialized] public int CurrentIndex;
+    private static readonly int MilitaryPlaneTakeoff = Animator.StringToHash("military_plane_takeoff");
 
     private void Awake()
     {
@@ -74,7 +76,7 @@ public class Ship : MonoBehaviour
     {
         if (_model.Rate <= 0.001f)
             return;
-        if (!Invincible)
+        if (!Invincible && !IsFreezed)
             _accumulator += Time.deltaTime;
         if (_hasDelay && _accumulator >= _model.Delay)
         {
@@ -88,8 +90,20 @@ public class Ship : MonoBehaviour
         }
     }
 
+    private void OnBecameVisible()
+    {
+        if (_hasDelay)
+            _accumulator = 0;
+    }
+
     private void Fire()
     {
+        if (_model.Name == "Aircraft Carrier")
+        {
+            animator.SetTrigger(MilitaryPlaneTakeoff);
+            return;
+        }
+
         const float range = 0.9f;
         var currentPos = (Vector2)transform.position;
         var destination = new Vector2(
@@ -129,6 +143,7 @@ public class Ship : MonoBehaviour
 
             if (EMP)
             {
+                IsFreezed = true;
                 if (empText.activeSelf)
                     empText.GetComponent<EmpText>().EMP();
                 else
@@ -218,5 +233,10 @@ public class Ship : MonoBehaviour
             Collisions.RemoveAll(it => it.Contains(CurrentIndex) && it.Contains(otherShip.CurrentIndex));
             GetComponent<ShipPath>().Wait = false;
         }
+    }
+
+    public void SpawnMilitaryPlane()
+    {
+        Instantiate(militaryPlane);
     }
 }

@@ -603,6 +603,12 @@ namespace Managers
                     MainCamera.AudioSource.PlayOneShot(Resources.Load<AudioClip>("Audio/submarine_up"));
                 }
             ),
+            new(
+                name: "Aircraft Carrier", sprite: "Sprites/ship_5", missileSprite: "Sprites/missile_1",
+                fireClip: new[] { "Audio/cannon_fire_4", "Audio/missile_coming" }, explodeClip: "Audio/ship_destroy",
+                baseSpeed: 55, baseRate: 15, baseDamage: 625, baseHealth: 1820, baseMoney: 2760,delayMultiplier:1.5f,
+                hasPath: true, explosionsCount: 9
+                ),
         };
 
         public readonly WaveModel[] Waves =
