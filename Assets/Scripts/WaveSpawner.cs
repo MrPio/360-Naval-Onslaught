@@ -6,6 +6,7 @@ using Managers;
 using Model;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
 
 public class WaveSpawner : MonoBehaviour
@@ -30,10 +31,23 @@ public class WaveSpawner : MonoBehaviour
         newWave,
         baseHealthSlider;
 
+    public GameObject howToPlayMenu,overlay,mainMenu,gameOver;
+
+    public void RestartGame()
+    {
+        GameManager.Reset();
+        DataManager.Reset();
+        ShipPath.SpawnIndex = 0;
+        Ship.Collisions.Clear();
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
     private void Start()
     {
-        EndWave();
-        BeginWave();
+        baseMain.SetActive(false);
+        baseHealthSlider.SetActive(false);
+        newWave.SetActive(true);
+        mainMenu.SetActive(true);
+        gameOver.SetActive(false);
     }
 
     private void FixedUpdate()
@@ -64,12 +78,13 @@ public class WaveSpawner : MonoBehaviour
 
         _nextSpawn = Random.Range(0f, 1f) < immediateSpawnChance
             ? 0f
-            : 3f + Random.Range(0, 6f * (1 - Game.WaveFactor));
+            : 3f + Random.Range(0, 8f * (1 - Game.WaveFactor));
     }
 
     private void EndWave()
     {
         _model = null;
+        Game.Score += 1000;
         ++Game.Wave;
         baseMain.SetActive(false);
         ammoContainer.SetActive(false);

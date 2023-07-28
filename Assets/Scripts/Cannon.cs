@@ -56,6 +56,7 @@ public class Cannon : MonoBehaviour
                     position: spawnPoint.position,
                     rotation: Quaternion.identity
                 );
+                crosshair.transform.localScale = Vector3.one * (Mathf.Pow(Model.Radius / 26f,0.75f));
             }
 
             // Crosshair Movement
@@ -94,8 +95,8 @@ public class Cannon : MonoBehaviour
         script.Destination = destination;
         script.StartPos = spawnPos;
         script.Duration /= speedMultiplier;
-        script.SmallCannonBall = Model.Name == "Artillery";
         newCannonBall.GetComponent<Animator>().SetFloat(Speed, speedMultiplier);
+        script.hasEMP = Model.Name == "EMP Cannon";
         --Game.CannonAmmo;
 
         // Reload if no more ammo

@@ -18,7 +18,7 @@ public class CannonBall : MonoBehaviour
     [SerializeField] private GameObject smallCannonBall;
     private float _accumulator;
     [NonSerialized] public Vector2 Destination, StartPos;
-    [NonSerialized] public bool SmallCannonBall;
+    [NonSerialized] public bool SmallCannonBall, hasEMP;
 
     private void Update()
     {
@@ -57,7 +57,7 @@ public class CannonBall : MonoBehaviour
                     )
             {
                 hit = true;
-                ship.GetComponent<Ship>().TakeDamage(GameManager.Instance.CurrentCannonModel.Damage);
+                ship.GetComponent<Ship>().TakeDamage(GameManager.Instance.CurrentCannonModel.Damage,hasEMP);
             }
 
             MainCamera.AudioSource.PlayOneShot(hit ? cannonHit : cannonMiss);

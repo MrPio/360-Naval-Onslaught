@@ -17,6 +17,8 @@ TagManager:
   - shop_menu
   - wave_counter
   - new_wave
+  - overlay
+  - how_to_play_menu
   layers:
   - Default
   - TransparentFX

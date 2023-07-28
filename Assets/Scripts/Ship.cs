@@ -14,15 +14,15 @@ public class Ship : MonoBehaviour
 {
     private static GameManager Game => GameManager.Instance;
 
-    private static readonly List<int[]> Collisions = new();
     private static readonly int ShipDamage = Animator.StringToHash("ship_damage");
     private static readonly int ShipDestroy = Animator.StringToHash("ship_destroy");
+    public static readonly List<int[]> Collisions = new();
     [SerializeField] private HealthBar healthBar;
     [SerializeField] private List<GameObject> explosions;
     [SerializeField] private Animator animator;
     [SerializeField] private SpriteRenderer spriteRenderer;
     [SerializeField] private BoxCollider2D boxCollider;
-    [SerializeField] private GameObject floatingTextBig, missile;
+    [SerializeField] private GameObject floatingTextBig, missile, empExplosion, empText;
     private Sprite _missileSprite;
     private List<AudioClip> _fireClip;
     private MoneyCounter _moneyCounter;
@@ -36,7 +36,7 @@ public class Ship : MonoBehaviour
 
     private void Awake()
     {
-        _model = GameManager.Instance.CurrentWave.Spawn();
+        _model = Game.CurrentWave.Spawn();
         spriteRenderer.sprite = Resources.Load<Sprite>(_model.Sprite);
         boxCollider.size = spriteRenderer.bounds.size;
         if (_model.ExplodeClip != null)
@@ -119,13 +119,27 @@ public class Ship : MonoBehaviour
         newMissile.Damage = _model.Damage;
     }
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(int damage, bool EMP = false)
     {
         if (!Invincible && _health > 0)
         {
             _health -= damage;
             animator.SetTrigger(ShipDamage);
             healthBar.SetValue(_health / (float)_model.Health);
+
+            if (EMP)
+            {
+                if (empText.activeSelf)
+                    empText.GetComponent<EmpText>().EMP();
+                else
+                    empText.SetActive(true);
+                Instantiate(
+                    original: empExplosion,
+                    position: transform.position,
+                    rotation: Quaternion.identity
+                );
+            }
+
             if (_health <= 0)
                 Explode();
         }
@@ -133,10 +147,10 @@ public class Ship : MonoBehaviour
 
     private void Explode(bool reward = true)
     {
-        if (GetComponent<ShipPath>().Dead || Invincible) return;
+        if (GetComponent<ShipPath>().IsDead || Invincible) return;
         ++Game.CurrentWave.Destroyed;
 
-        GetComponent<ShipPath>().Dead = true;
+        GetComponent<ShipPath>().IsDead = true;
         MainCamera.AudioSource.PlayOneShot(_explodeClip);
         animator.SetTrigger(ShipDestroy);
 
@@ -159,10 +173,11 @@ public class Ship : MonoBehaviour
         // Money Reward
         if (reward)
         {
+            Game.Score += _model.Health;
             var floatingTextBig = Instantiate(this.floatingTextBig, GameObject.FindWithTag("canvas").transform);
             floatingTextBig.transform.Find("Text").GetComponent<TextMeshProUGUI>().text = $"+ {_model.Money} $";
             floatingTextBig.transform.position = transform.position + Vector3.up * 0.5f;
-            GameManager.Instance.Money += _model.Money;
+            Game.Money += _model.Money;
             _moneyCounter.UpdateUI();
         }
 

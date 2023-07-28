@@ -8,7 +8,7 @@ namespace Managers
     {
         private static readonly int Ship4 = Animator.StringToHash("ship_4");
         private static DataManager _instance;
-
+        public static void Reset() => _instance = new DataManager();
         private DataManager()
         {
         }
@@ -334,7 +334,7 @@ namespace Managers
             new(
                 name: "Base Cannon", sprite: "Sprites/cannon_1", fireClip: "Audio/cannon_fire_2"
                 , cannonBallSprite: "Sprites/cannon_ball_1",
-                baseSpeed: 50, baseDamage: 200, baseReload: 20, baseRadius: 20,
+                baseSpeed: 40, baseDamage: 200, baseReload: 28, baseRadius: 20,
                 speedBaseCost: 450, damageBaseCost: 300, reloadBaseCost: 350, radiusBaseCost: 250,
                 speedLevelSteps: new Dictionary<int, int>
                 {
@@ -379,7 +379,7 @@ namespace Managers
             new(
                 name: "Artillery", sprite: "Sprites/cannon_2", fireClip: "Audio/cannon_fire_1",
                 cannonBallSprite: "Sprites/cannon_ball_2",
-                baseSpeed: 65, baseDamage: 500, baseReload: 24, baseRadius: 22,
+                baseSpeed: 45, baseDamage: 500, baseReload: 24, baseRadius: 22,
                 speedBaseCost: 550, damageBaseCost: 540, reloadBaseCost: 615, radiusBaseCost: 520,
                 waveUnlock: 5,
                 speedLevelSteps: new Dictionary<int, int>
@@ -424,7 +424,7 @@ namespace Managers
             ),
             new(
                 name: "EMP Cannon", sprite: "Sprites/cannon_3", fireClip: "Audio/cannon_fire_3",
-                baseSpeed: 85, baseDamage: 760, baseReload: 18, baseRadius: 18,
+                baseSpeed: 50, baseDamage: 760/34, baseReload: 18, baseRadius: 20,
                 cannonBallSprite: "Sprites/cannon_ball_3",
                 speedBaseCost: 572, damageBaseCost: 620, reloadBaseCost: 842, radiusBaseCost: 715,
                 waveUnlock: 10,
@@ -470,7 +470,7 @@ namespace Managers
             ),
             new(
                 name: "Blizzard Cannon", sprite: "Sprites/cannon_4", fireClip: "Audio/cannon_fire_1",
-                baseSpeed: 95, baseDamage: 1175, baseReload: 18, baseRadius: 22,
+                baseSpeed: 60, baseDamage: 1175, baseReload: 18, baseRadius: 22,
                 cannonBallSprite: "Sprites/cannon_ball_4",
                 speedBaseCost: 572, damageBaseCost: 620, reloadBaseCost: 842, radiusBaseCost: 715,
                 waveUnlock: 15,
@@ -516,7 +516,7 @@ namespace Managers
             ),
             new(
                 name: "Rocket Launcher", sprite: "Sprites/cannon_5", fireClip: "Audio/cannon_fire_1",
-                baseSpeed: 115, baseDamage: 2000, baseReload: 20, baseRadius: 28,
+                baseSpeed: 65, baseDamage: 2000, baseReload: 20, baseRadius: 28,
                 cannonBallSprite: "Sprites/cannon_ball_5",
                 speedBaseCost: 572, damageBaseCost: 620, reloadBaseCost: 842, radiusBaseCost: 715,
                 waveUnlock: 20,

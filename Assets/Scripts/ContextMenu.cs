@@ -26,7 +26,10 @@ public class ContextMenu : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         TurretAmmo,
         TurretRate,
         NextWave,
-
+        CloseHowToPlay,
+        MainMenuPlay,
+        MainMenuHowToPlay,
+        GameOverGotoMainMenu,
     }
 
     [SerializeField] private GameObject contextMenu, lockedContextMenu, canvas;
@@ -34,7 +37,7 @@ public class ContextMenu : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     [SerializeField] private ContextMenuType type;
     [SerializeField] private int turretIndex = -1, cannonIndex = -1;
     private Transform _contextMenu;
-    private static AudioClip _buy, _noBuy, _weaponSelect,_click,_hover;
+    private static AudioClip _buy, _noBuy, _weaponSelect, _click, _hover;
 
     private void Awake()
     {
@@ -50,9 +53,11 @@ public class ContextMenu : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if(type==ContextMenuType.NextWave || contextMenu == null)
-            return;
+        MainCamera.AudioSource.PlayOneShot(_hover);
         
+        if (contextMenu == null)
+            return;
+
         void InstantiateContextMenu(GameObject menu)
         {
             _contextMenu = Instantiate(
@@ -174,20 +179,20 @@ public class ContextMenu : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
                 _contextMenu.Find("reload_text").GetComponent<TextMeshProUGUI>().text = cannon.Reload.ToString("N0");
             }
         }
-        
-        MainCamera.AudioSource.PlayOneShot(_hover);
+
+
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        if(type==ContextMenuType.NextWave|| contextMenu is null)
+        if (contextMenu == null)
             return;
         Destroy(_contextMenu.gameObject);
     }
 
     public void OnPointerMove(PointerEventData eventData)
     {
-        if(type==ContextMenuType.NextWave)return;
+        if (contextMenu == null) return;
         if (followMouse)
         {
             _contextMenu.transform.position =
@@ -197,13 +202,23 @@ public class ContextMenu : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        if(type==ContextMenuType.NextWave)
-        {
+        if (type == ContextMenuType.NextWave)
             GameObject.FindWithTag("wave_spawner").GetComponent<WaveSpawner>().BeginWave();
+        else if (type == ContextMenuType.CloseHowToPlay)
+            GameObject.FindWithTag("how_to_play_menu").SetActive(false);
+        else if (type == ContextMenuType.MainMenuPlay)
+            GameObject.FindWithTag("wave_spawner").GetComponent<WaveSpawner>().overlay.SetActive(true);
+        else if (type == ContextMenuType.MainMenuHowToPlay)
+            GameObject.FindWithTag("wave_spawner").GetComponent<WaveSpawner>().howToPlayMenu.SetActive(true);
+        else if (type == ContextMenuType.GameOverGotoMainMenu)
+            GameObject.FindWithTag("wave_spawner").GetComponent<WaveSpawner>().RestartGame();
+        if (contextMenu == null)
+        {
+            MainCamera.AudioSource.PlayOneShot(_click);
             return;
         }
 
-        
+
         if (contextMenu.name == "upgrade_context_menu")
         {
             var cost = type switch
@@ -224,7 +239,7 @@ public class ContextMenu : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
                 _ => 0
             };
-            if (cost > Game.Money || cost==0)
+            if (cost > Game.Money || cost == 0)
             {
                 MainCamera.AudioSource.PlayOneShot(_noBuy);
                 return;
@@ -268,13 +283,14 @@ public class ContextMenu : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
                 default:
                     throw new ArgumentOutOfRangeException();
             }
+
             MainCamera.AudioSource.PlayOneShot(_buy);
         }
 
         if (contextMenu.name == "turret_context_menu")
         {
             var turret = Data.Turrets[turretIndex];
-            if (turret.IsLocked )
+            if (turret.IsLocked)
             {
                 MainCamera.AudioSource.PlayOneShot(_noBuy);
             }
@@ -288,7 +304,7 @@ public class ContextMenu : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         if (contextMenu.name == "cannon_context_menu")
         {
             var cannon = Data.Cannons[cannonIndex];
-            if (cannon.IsLocked )
+            if (cannon.IsLocked)
             {
                 MainCamera.AudioSource.PlayOneShot(_noBuy);
             }
@@ -298,11 +314,11 @@ public class ContextMenu : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
                 MainCamera.AudioSource.PlayOneShot(_weaponSelect);
             }
         }
-        
+
         // Update the context menu
         OnPointerExit(null);
         OnPointerEnter(null);
-        
+
         // Update the shop menu
         GameObject.FindWithTag("shop_menu").GetComponent<ShopMenu>().UpdateUI();
     }
