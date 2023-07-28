@@ -30,12 +30,15 @@ public class ContextMenu : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         MainMenuPlay,
         MainMenuHowToPlay,
         GameOverGotoMainMenu,
+        OpenSpecialsMenu,
+        CloseSpecialsMenu,
+        BuySpecial,
     }
 
     [SerializeField] private GameObject contextMenu, lockedContextMenu, canvas;
     [SerializeField] private bool followMouse = true;
     [SerializeField] private ContextMenuType type;
-    [SerializeField] private int turretIndex = -1, cannonIndex = -1;
+    [SerializeField] private int turretIndex = -1, cannonIndex = -1, specialIndex = 0;
     private Transform _contextMenu;
     private static AudioClip _buy, _noBuy, _weaponSelect, _click, _hover;
 
@@ -54,7 +57,7 @@ public class ContextMenu : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     public void OnPointerEnter(PointerEventData eventData)
     {
         MainCamera.AudioSource.PlayOneShot(_hover);
-        
+
         if (contextMenu == null)
             return;
 
@@ -88,6 +91,8 @@ public class ContextMenu : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
                 { ContextMenuType.TurretRate, "rate" },
                 { ContextMenuType.TurretReload, "reload" },
                 { ContextMenuType.TurretSpeed, "speed" },
+
+                { ContextMenuType.BuySpecial, Game.SpecialsName[specialIndex < 0 ? 0 : specialIndex] },
             };
             var increment = type switch
             {
@@ -114,6 +119,8 @@ public class ContextMenu : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
                 ContextMenuType.TurretSpeed => Game.CurrentTurretModel.SpeedLevelSteps
                     .Where(entry => entry.Key >= Game.CurrentTurretModel.SpeedLevel).ElementAt(0).Value,
 
+                ContextMenuType.BuySpecial => 1,
+
                 _ => 0
             };
 
@@ -132,6 +139,8 @@ public class ContextMenu : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
                 ContextMenuType.TurretRate => Game.CurrentTurretModel.RateCost,
                 ContextMenuType.TurretReload => Game.CurrentTurretModel.ReloadCost,
                 ContextMenuType.TurretSpeed => Game.CurrentTurretModel.SpeedCost,
+
+                ContextMenuType.BuySpecial => Game.SpecialCost(specialIndex),
 
                 _ => 0
             };
@@ -179,8 +188,6 @@ public class ContextMenu : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
                 _contextMenu.Find("reload_text").GetComponent<TextMeshProUGUI>().text = cannon.Reload.ToString("N0");
             }
         }
-
-
     }
 
     public void OnPointerExit(PointerEventData eventData)
@@ -212,6 +219,10 @@ public class ContextMenu : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
             GameObject.FindWithTag("wave_spawner").GetComponent<WaveSpawner>().howToPlayMenu.SetActive(true);
         else if (type == ContextMenuType.GameOverGotoMainMenu)
             GameObject.FindWithTag("wave_spawner").GetComponent<WaveSpawner>().RestartGame();
+        else if (type == ContextMenuType.CloseSpecialsMenu)
+            GameObject.FindWithTag("specials_menu").SetActive(false);
+        else if (type == ContextMenuType.OpenSpecialsMenu)
+            GameObject.FindWithTag("wave_spawner").GetComponent<WaveSpawner>().specialsMenu.SetActive(true);
         if (contextMenu == null)
         {
             MainCamera.AudioSource.PlayOneShot(_click);
@@ -236,6 +247,8 @@ public class ContextMenu : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
                 ContextMenuType.TurretRate => Game.CurrentTurretModel.RateCost,
                 ContextMenuType.TurretReload => Game.CurrentTurretModel.ReloadCost,
                 ContextMenuType.TurretSpeed => Game.CurrentTurretModel.SpeedCost,
+
+                ContextMenuType.BuySpecial => Game.SpecialCost(specialIndex),
 
                 _ => 0
             };
@@ -280,6 +293,9 @@ public class ContextMenu : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
                 case ContextMenuType.TurretSpeed:
                     Game.CurrentTurretModel.BuySpeed();
                     break;
+                case ContextMenuType.BuySpecial:
+                    Game.BuySpecial(specialIndex);
+                    break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
@@ -321,5 +337,7 @@ public class ContextMenu : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
         // Update the shop menu
         GameObject.FindWithTag("shop_menu").GetComponent<ShopMenu>().UpdateUI();
+        if (type == ContextMenuType.BuySpecial)
+            GameObject.FindWithTag("specials_menu").GetComponent<SpecialsMenu>().UpdateUI();
     }
 }

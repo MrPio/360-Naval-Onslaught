@@ -6,12 +6,16 @@ using UnityEngine;
 public class MoneyCounter : MonoBehaviour
 {
     private static GameManager Game => GameManager.Instance;
+    private int _model=>isScore?Game.Score:Game.Money;
+    
+    
     [SerializeField] private TextMeshProUGUI textMeshPro;
     [SerializeField] private Animator animator;
     private static readonly int Bounce = Animator.StringToHash("bounce");
     private int _lastMoney;
     private float _accumulator;
     private bool _animate;
+    [SerializeField] public bool isScore = false;
     [SerializeField] private float animationDuration = 2;
 
 
@@ -21,18 +25,23 @@ public class MoneyCounter : MonoBehaviour
         UpdateUI();
     }
 
+    private void OnEnable()
+    {
+        UpdateUI();
+    }
+
     private void Update()
     {
         if (!_animate) return;
 
         _accumulator += Time.deltaTime;
-        var currentMoney = (int)(_lastMoney + (Game.Money - _lastMoney) * _accumulator / animationDuration);
+        var currentMoney = (int)(_lastMoney + (_model - _lastMoney) * _accumulator / animationDuration);
         textMeshPro.text = currentMoney.ToString("N0");
 
-        if (currentMoney >= Game.Money)
+        if (currentMoney >= _model)
         {
-            _lastMoney = Game.Money;
-            textMeshPro.text = Game.Money.ToString("N0");
+            _lastMoney = _model;
+            textMeshPro.text = _model.ToString("N0");
             _animate = false;
         }
     }

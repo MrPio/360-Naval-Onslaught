@@ -26,12 +26,14 @@ public class WaveSpawner : MonoBehaviour
         baseMain,
         ammoContainer,
         moneyContainer,
+        specialsContainer,
+        scoreContainer,
         waveContainer,
         shopMenu,
         newWave,
         baseHealthSlider;
 
-    public GameObject howToPlayMenu,overlay,mainMenu,gameOver;
+    public GameObject howToPlayMenu, overlay, mainMenu, gameOver,specialsMenu;
 
     public void RestartGame()
     {
@@ -41,6 +43,7 @@ public class WaveSpawner : MonoBehaviour
         Ship.Collisions.Clear();
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
+
     private void Start()
     {
         // TODO UNCOMMENT
@@ -48,8 +51,9 @@ public class WaveSpawner : MonoBehaviour
         baseHealthSlider.SetActive(false);
         newWave.SetActive(true);
         mainMenu.SetActive(true);
-        gameOver.SetActive(false);*/
-        
+        gameOver.SetActive(false);
+        specialsMenu.SetActive(false)*/
+
         // TODO COMMENT
         BeginWave();
     }
@@ -75,7 +79,9 @@ public class WaveSpawner : MonoBehaviour
 
     private void SpawnShip()
     {
-        Instantiate(ship).GetComponent<Ship>().CurrentIndex = Game.CurrentWave.Spawned;
+        var pos = MainCamera.MainCam.RandomBoundaryPoint() * 1.25f;
+
+        Instantiate(ship, pos, pos.ToQuaternion()).GetComponent<Ship>().CurrentIndex = Game.CurrentWave.Spawned;
         ++Game.CurrentWave.Spawned;
 
         var immediateSpawnChance = 0.1 + 0.3 * Game.WaveFactor;
@@ -93,26 +99,33 @@ public class WaveSpawner : MonoBehaviour
         baseMain.SetActive(false);
         ammoContainer.SetActive(false);
         moneyContainer.SetActive(false);
+        specialsContainer.SetActive(false);
+        scoreContainer.SetActive(false);
         waveContainer.SetActive(false);
         shopMenu.SetActive(true);
     }
 
     public void BeginWave()
     {
-        waveCounter.GetComponent<TextMeshProUGUI>().text = (Game.Wave+1).ToString();
+        waveCounter.GetComponent<TextMeshProUGUI>().text = (Game.Wave + 1).ToString();
         ammoContainer.SetActive(true);
         moneyContainer.SetActive(true);
+        specialsContainer.SetActive(true);
+        scoreContainer.SetActive(true);
         waveContainer.SetActive(true);
         shopMenu.SetActive(false);
         baseHealthSlider.SetActive(false);
+        baseMain.SetActive(true);
         _model = Game.CurrentWave;
         _waveStart = Time.time;
         _accumulator = 0;
-        _nextSpawn = 7f;
+        _nextSpawn = 0f; //TODO 7f
         PathsOrder = Enumerable.Range(0, pathsSize).ToList();
         PathsOrder.Shuffle();
-        
+        Game.Ammo = Game.CurrentTurretModel.Ammo;
+
         // TODO UNCOMMENT
+        // New Wave Sign
         /*newWave.SetActive(true);
         newWave.transform.Find("new_wave_text").GetComponent<TextMeshProUGUI>().text = $"Wave {Game.Wave+1}";
         newWave.GetComponent<Animator>().SetTrigger(Start1);*/

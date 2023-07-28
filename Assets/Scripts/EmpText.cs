@@ -40,6 +40,7 @@ public class EmpText : MonoBehaviour
 
         if (_accumulator >= _duration)
         {
+            print("emp");
             shipPath.gameObject.GetComponent<Renderer>().material.color = new Color(1f, 1f, 1, 1f);
             shipPath.gameObject.GetComponent<Ship>().IsFreezed = false;
             shipPath.IsFreezed = false;

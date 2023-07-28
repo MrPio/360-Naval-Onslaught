@@ -12,6 +12,11 @@ public class AmmoCounter : MonoBehaviour
     [SerializeField] private Animator animator;
     private static readonly int Bounce = Animator.StringToHash("bounce");
 
+    private void OnEnable()
+    {
+        UpdateUI();
+    }
+
     private void Start()
     {
         UpdateUI();

@@ -19,6 +19,8 @@ TagManager:
   - new_wave
   - overlay
   - how_to_play_menu
+  - score_counter
+  - specials_menu
   layers:
   - Default
   - TransparentFX

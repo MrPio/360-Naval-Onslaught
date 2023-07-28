@@ -25,15 +25,16 @@ public class Ship : MonoBehaviour
     [SerializeField] private GameObject floatingTextBig, missile, empExplosion, empText, militaryPlane;
     private Sprite _missileSprite;
     private List<AudioClip> _fireClip;
-    private MoneyCounter _moneyCounter;
+    private MoneyCounter _moneyCounter,_scoreCounter;
     private AudioClip _explodeClip;
     private ShipModel _model;
     private int _health;
     private bool _hasDelay = true;
-    [NonSerialized]public bool IsFreezed;
+    [NonSerialized] public bool IsFreezed=true;
     private float _accumulator;
     [NonSerialized] public bool Invincible;
     [NonSerialized] public int CurrentIndex;
+    private float _randomAdditionalDelay;
     private static readonly int MilitaryPlaneTakeoff = Animator.StringToHash("military_plane_takeoff");
 
     private void Awake()
@@ -46,9 +47,8 @@ public class Ship : MonoBehaviour
         if (_model.FireClip != null)
             _fireClip = _model.FireClip.Select(Resources.Load<AudioClip>).ToList();
         _moneyCounter = GameObject.FindWithTag("money_counter").GetComponent<MoneyCounter>();
+        _scoreCounter = GameObject.FindWithTag("score_counter").GetComponent<MoneyCounter>();
         GetComponent<ShipPath>().Model = _model;
-        var pos = MainCamera.MainCam.RandomBoundaryPoint() * 1.15f;
-        transform.SetPositionAndRotation(pos, pos.ToQuaternion());
         if (_model.MissileSprite is { })
             _missileSprite = Resources.Load<Sprite>(_model.MissileSprite);
 
@@ -59,10 +59,11 @@ public class Ship : MonoBehaviour
                     ? new List<Vector2> { Vector2.zero }
                     : new List<Vector2>
                     {
-                        Quaternion.AngleAxis(Random.Range(-20f, 20f), Vector3.forward) * pos,
+                        Quaternion.AngleAxis(Random.Range(-20f, 20f), Vector3.forward) * transform.position,
                         Vector2.zero
                     }
             );
+        _randomAdditionalDelay = Random.Range(0f, 1f);
     }
 
     private void Start()
@@ -78,12 +79,12 @@ public class Ship : MonoBehaviour
             return;
         if (!Invincible && !IsFreezed)
             _accumulator += Time.deltaTime;
-        if (_hasDelay && _accumulator >= _model.Delay)
+        if (_hasDelay && _accumulator >= _model.Delay + _randomAdditionalDelay)
         {
             _accumulator = 0;
             _hasDelay = false;
         }
-        else if (!Invincible && _accumulator >= 100f / _model.Rate)
+        else if (!_hasDelay&&!Invincible && _accumulator >= 100f / _model.Rate)
         {
             _accumulator = 0;
             Fire();
@@ -92,8 +93,7 @@ public class Ship : MonoBehaviour
 
     private void OnBecameVisible()
     {
-        if (_hasDelay)
-            _accumulator = 0;
+            IsFreezed = false;
     }
 
     private void Fire()
@@ -194,6 +194,7 @@ public class Ship : MonoBehaviour
             floatingTextBig.transform.position = transform.position + Vector3.up * 0.5f;
             Game.Money += _model.Money;
             _moneyCounter.UpdateUI();
+            _scoreCounter.UpdateUI();
         }
 
         IEnumerator scheduleDestroy()
