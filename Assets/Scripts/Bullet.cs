@@ -4,6 +4,7 @@ using System.Linq;
 using ExtensionsFunctions;
 using JetBrains.Annotations;
 using Managers;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Bullet : MonoBehaviour
@@ -58,7 +59,7 @@ public class Bullet : MonoBehaviour
 
     private void Update()
     {
-        if (_target is null)
+        if (gameObject.IsDestroyed() || _target is null)
             return;
         var _transform = transform;
         transform.rotation = Quaternion.Lerp((_target.transform.position - transform.position).ToQuaternion(),

@@ -82,7 +82,7 @@ namespace Managers
             new(
                 name: "Gatling Gun", sprite: "Sprites/turret_2", fireClip: "Audio/turret_fire_2",
                 bulletSprite: "Sprites/bullet_2",
-                baseSpeed: 500, baseRate: 800, baseDamage: 26, baseAmmo: 80, baseReload: 115,
+                baseSpeed: 500, baseRate: 1200, baseDamage: 16, baseAmmo: 80, baseReload: 115,
                 speedBaseCost: 200, rateBaseCost: 260, damageBaseCost: 360, ammoBaseCost: 185, reloadBaseCost: 225,
                 waveUnlock: 5,
                 speedLevelSteps: new Dictionary<int, int>
@@ -144,7 +144,7 @@ namespace Managers
             new(
                 name: "Missile Launcher", sprite: "Sprites/turret_3", fireClip: "Audio/cannon_fire_3",
                 bulletSprite: "Sprites/missile_2",
-                baseSpeed: 200, baseRate: 40, baseDamage: 200, baseAmmo: 2, baseReload: 45,
+                baseSpeed: 200, baseRate: 40, baseDamage: 600, baseAmmo: 2, baseReload: 45,
                 speedBaseCost: 420, rateBaseCost: 430, damageBaseCost: 550, ammoBaseCost: 780, reloadBaseCost: 475,
                 waveUnlock: 10,
                 speedLevelSteps: new Dictionary<int, int>
@@ -204,9 +204,9 @@ namespace Managers
                 }
             ),
             new(
-                name: "Piercing Gun", sprite: "Sprites/turret_4", fireClip: "Audio/turret_fire_2",
-                bulletSprite: "Sprites/bullet_2",
-                baseSpeed: 1250, baseRate: 2000, baseDamage: 22, baseAmmo: 120, baseReload: 46,
+                name: "Laser Gun", sprite: "Sprites/turret_4", fireClip: "Audio/laser",
+                bulletSprite: "",
+                baseSpeed: 1250, baseRate: 2000, baseDamage: 22, baseAmmo: 140, baseReload: 46,
                 speedBaseCost: 420, rateBaseCost: 430, damageBaseCost: 550, ammoBaseCost: 780, reloadBaseCost: 475,
                 waveUnlock: 15,
                 speedLevelSteps: new Dictionary<int, int>
@@ -268,7 +268,7 @@ namespace Managers
             new(
                 name: "Auto-Locking Gun", sprite: "Sprites/turret_5", fireClip: "Audio/turret_fire_1",
                 bulletSprite: "Sprites/bullet_2",
-                baseSpeed: 365, baseRate: 480, baseDamage: 70, baseAmmo: 38, baseReload: 37,
+                baseSpeed: 365, baseRate: 580, baseDamage: 74, baseAmmo: 38, baseReload: 37,
                 speedBaseCost: 420, rateBaseCost: 430, damageBaseCost: 550, ammoBaseCost: 780, reloadBaseCost: 475,
                 waveUnlock: 20,
                 speedLevelSteps: new Dictionary<int, int>

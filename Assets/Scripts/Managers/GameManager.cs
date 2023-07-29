@@ -30,7 +30,7 @@ namespace Managers
         public int Ammo, CannonAmmo;
         public int Money = 9990;
         public int CurrentTurret = 3;
-        public int CurrentCannon = 2;
+        public int CurrentCannon = 4;
         public int Score;
         public int HealthStep => (int)(_healthBaseStep * (1f + 0.35f * HealthLevel));
         public int HealthCost => (int)(_healthBaseCost * (1f + 0.25f * HealthLevel));
