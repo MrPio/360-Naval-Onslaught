@@ -23,19 +23,21 @@ public class Ship : MonoBehaviour
     [SerializeField] private SpriteRenderer spriteRenderer;
     [SerializeField] private BoxCollider2D boxCollider;
     [SerializeField] private GameObject floatingTextBig, missile, empExplosion, empText, militaryPlane;
+    [SerializeField] private AudioClip empHitClip;
     private Sprite _missileSprite;
     private List<AudioClip> _fireClip;
-    private MoneyCounter _moneyCounter,_scoreCounter;
+    private MoneyCounter _moneyCounter, _scoreCounter;
     private AudioClip _explodeClip;
     private ShipModel _model;
     private int _health;
     private bool _hasDelay = true;
-    [NonSerialized] public bool IsFreezed=true;
+    [NonSerialized] public bool IsFreezed = true;
     private float _accumulator;
-    [NonSerialized] public bool Invincible;
+    [NonSerialized] public bool Invincible=true;
     [NonSerialized] public int CurrentIndex;
     private float _randomAdditionalDelay;
     private static readonly int MilitaryPlaneTakeoff = Animator.StringToHash("military_plane_takeoff");
+    [NonSerialized] public bool isVisible;
 
     private void Awake()
     {
@@ -84,7 +86,7 @@ public class Ship : MonoBehaviour
             _accumulator = 0;
             _hasDelay = false;
         }
-        else if (!_hasDelay&&!Invincible && _accumulator >= 100f / _model.Rate)
+        else if (!_hasDelay && !Invincible && _accumulator >= 100f / _model.Rate)
         {
             _accumulator = 0;
             Fire();
@@ -93,7 +95,8 @@ public class Ship : MonoBehaviour
 
     private void OnBecameVisible()
     {
-            IsFreezed = false;
+        isVisible = true;
+        Invincible = false;
     }
 
     private void Fire()
@@ -143,6 +146,7 @@ public class Ship : MonoBehaviour
 
             if (EMP)
             {
+                MainCamera.AudioSource.PlayOneShot(empHitClip,0.9f);
                 IsFreezed = true;
                 if (empText.activeSelf)
                     empText.GetComponent<EmpText>().EMP();

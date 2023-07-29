@@ -8,10 +8,12 @@ public class DropBomb : MonoBehaviour
 {
     [SerializeField] private AudioClip cannonMiss, cannonHit;
     [SerializeField] private GameObject explosion, splash;
+    [SerializeField] private bool isAlly;
+    [SerializeField] private float radius;
 
     public void End()
     {
-        var currentPos=transform.position;
+        var currentPos = transform.position;
 
         // Explosion + Splash
         Instantiate(
@@ -28,14 +30,17 @@ public class DropBomb : MonoBehaviour
         var hit = false;
         // Check collisions
         foreach (var mainBase in Physics2D
-                     .OverlapCircleAll(currentPos, GameManager.Instance.CurrentCannonModel.Radius / 100f)
-                     .Where(col => col.CompareTag("base")))
+                     .OverlapCircleAll(currentPos, radius)
+                     .Where(col => col.CompareTag(isAlly ? "ship" : "base")))
         {
             hit = true;
-            mainBase.GetComponent<Base>().TakeDamage(DataManager.Instance.Ships[4].Damage);
+            if (isAlly)
+                mainBase.GetComponent<Ship>().TakeDamage(GameManager.Instance.SpecialDamage1);
+            else
+                mainBase.GetComponent<Base>().TakeDamage(DataManager.Instance.Ships[4].Damage);
         }
 
-        MainCamera.AudioSource.PlayOneShot(hit ? cannonHit : cannonMiss);
+        MainCamera.AudioSource.PlayOneShot(hit ? cannonHit : cannonMiss,0.9f);
 
         Destroy(gameObject);
     }

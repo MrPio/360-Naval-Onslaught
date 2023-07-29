@@ -613,7 +613,7 @@ namespace Managers
 
         public readonly WaveModel[] Waves =
         {
-            new(shipsChances: new List<float> { 0.75f, 1f, 1f, 1f, 1f },shipsCount:1),//7
+            new(shipsChances: new List<float> { 0.75f, 1f, 1f, 1f, 1f },shipsCount:7),//7
             new(shipsChances: new List<float> { 0.65f, 0.9f, 1f, 1f , 1f},shipsCount:9),
             new(shipsChances: new List<float> { 0.5f, 0.8f, 1f, 1f , 1f},shipsCount:12),
             new(shipsChances: new List<float> { 0.4f, 0.65f, 0.9f, 1f, 1f },shipsCount:13),

@@ -11,7 +11,7 @@ public class SpecialsCounter : MonoBehaviour
     private List<int> SpecialsCount => GameManager.Instance.SpecialsCount;
     [SerializeField] private List<TextMeshProUGUI> counters;
 
-    private void UpdateUI()
+    public void UpdateUI()
     {
         for (var i = 0; i < SpecialsCount.Count; i++)
         {

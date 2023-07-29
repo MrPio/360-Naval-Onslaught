@@ -40,11 +40,11 @@ namespace Managers
         public CannonModel CurrentCannonModel => Data.Cannons[CurrentCannon];
         public WaveModel CurrentWave => Data.Waves[Wave];
         public float WaveFactor => Wave / (float)Data.Waves.Length;
-        public List<int> SpecialsCount = new() { 0, 0, 0, 0 };
+        public List<int> SpecialsCount = new() { 4, 4,4, 4 };
         private List<int> _specialsBought = new() { 0, 0, 0, 0 };
         private List<int> _specialsBaseCosts = new() { 1000, 2000, 2500, 3000 };
         public List<string> SpecialsName = new() { "Air Assault", "Shield", "EMP", "Health" };
-
+        public int SpecialDamage1 = 750;
         public int SpecialCost(int index) =>
             (int)(_specialsBaseCosts[index] * Mathf.Pow(1.06f, _specialsBought[index]));
 

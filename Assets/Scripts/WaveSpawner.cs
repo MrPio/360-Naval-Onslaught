@@ -20,7 +20,10 @@ public class WaveSpawner : MonoBehaviour
     [SerializeField] private int pathsSize = 1;
     [NonSerialized] public List<int> PathsOrder;
     private static readonly int Start1 = Animator.StringToHash("start");
+    [SerializeField] private AudioSource audioSource;
 
+    [SerializeField] private AudioClip winClip, mainMenuClip;
+    [SerializeField] private List<AudioClip> levelsClip;
 
     [SerializeField] private GameObject waveCounter,
         baseMain,
@@ -33,7 +36,7 @@ public class WaveSpawner : MonoBehaviour
         newWave,
         baseHealthSlider;
 
-    public GameObject howToPlayMenu, overlay, mainMenu, gameOver,specialsMenu;
+    public GameObject howToPlayMenu, overlay, mainMenu, gameOver, specialsMenu;
 
     public void RestartGame()
     {
@@ -52,7 +55,13 @@ public class WaveSpawner : MonoBehaviour
         newWave.SetActive(true);
         mainMenu.SetActive(true);
         gameOver.SetActive(false);
-        specialsMenu.SetActive(false)*/
+        specialsMenu.SetActive(false)
+        
+        audioSource.Stop();
+        audioSource.clip = mainMenuClip;
+        audioSource.Play();
+
+        */
 
         // TODO COMMENT
         BeginWave();
@@ -79,7 +88,7 @@ public class WaveSpawner : MonoBehaviour
 
     private void SpawnShip()
     {
-        var pos = MainCamera.MainCam.RandomBoundaryPoint() * 1.25f;
+        var pos = MainCamera.MainCam.RandomBoundaryPoint() * 1.3f;
 
         Instantiate(ship, pos, pos.ToQuaternion()).GetComponent<Ship>().CurrentIndex = Game.CurrentWave.Spawned;
         ++Game.CurrentWave.Spawned;
@@ -103,10 +112,15 @@ public class WaveSpawner : MonoBehaviour
         scoreContainer.SetActive(false);
         waveContainer.SetActive(false);
         shopMenu.SetActive(true);
+
+        audioSource.Stop();
+        audioSource.clip = winClip;
+        audioSource.Play();
     }
 
     public void BeginWave()
     {
+        Game.Ammo = Game.CurrentTurretModel.Ammo;
         waveCounter.GetComponent<TextMeshProUGUI>().text = (Game.Wave + 1).ToString();
         ammoContainer.SetActive(true);
         moneyContainer.SetActive(true);
@@ -122,12 +136,15 @@ public class WaveSpawner : MonoBehaviour
         _nextSpawn = 0f; //TODO 7f
         PathsOrder = Enumerable.Range(0, pathsSize).ToList();
         PathsOrder.Shuffle();
-        Game.Ammo = Game.CurrentTurretModel.Ammo;
 
         // TODO UNCOMMENT
         // New Wave Sign
         /*newWave.SetActive(true);
         newWave.transform.Find("new_wave_text").GetComponent<TextMeshProUGUI>().text = $"Wave {Game.Wave+1}";
         newWave.GetComponent<Animator>().SetTrigger(Start1);*/
+
+        audioSource.Stop();
+        audioSource.clip = levelsClip.RandomItem();
+        audioSource.Play();
     }
 }
