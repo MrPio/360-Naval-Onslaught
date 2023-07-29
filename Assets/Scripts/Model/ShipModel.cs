@@ -28,8 +28,8 @@ namespace Model
         public int Speed => (int)(_baseSpeed * (1f + 0.1f * Game.Wave));
         public int Rate => (int)(_baseRate * (1f + 0.1f * Game.Wave));
         public int Damage => (int)(_baseDamage * (1f + 0.1f * Game.Wave));
-        public int Health => (int)(_baseHealth * (1f + 0.35f * Game.Wave));
-        public int Money => (int)(_baseMoney * (1f + 0.05f * Game.Wave));
+        public int Health => (int)(_baseHealth * (1f + 0.1f * Game.Wave));
+        public int Money => (int)(_baseMoney * (1f + 0.1f * Game.Wave));
 
         public ShipModel(string name, string sprite, string[] fireClip, string explodeClip, int baseSpeed, int baseRate,
             int baseDamage, int baseHealth, int baseMoney, bool hasPath, string missileSprite, float delayMultiplier=1f, int explosionsCount=1, Action<GameObject> startCallback=null, Action<GameObject> endPathCallback=null)

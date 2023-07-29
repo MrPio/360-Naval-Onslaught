@@ -471,7 +471,7 @@ namespace Managers
             new(
                 name: "Blizzard Cannon", sprite: "Sprites/cannon_4", fireClip: "Audio/cannon_fire_1",
                 baseSpeed: 60, baseDamage: 1175, baseReload: 18, baseRadius: 22,
-                cannonBallSprite: "Sprites/cannon_ball_4",
+                cannonBallSprite: "Sprites/cannon_ball_4_2",
                 speedBaseCost: 572, damageBaseCost: 620, reloadBaseCost: 842, radiusBaseCost: 715,
                 waveUnlock: 15,
                 speedLevelSteps: new Dictionary<int, int>
@@ -515,9 +515,9 @@ namespace Managers
                 }
             ),
             new(
-                name: "Rocket Launcher", sprite: "Sprites/cannon_5", fireClip: "Audio/cannon_fire_1",
-                baseSpeed: 65, baseDamage: 2000, baseReload: 20, baseRadius: 28,
-                cannonBallSprite: "Sprites/cannon_ball_5",
+                name: "Rocket Launcher", sprite: "Sprites/cannon_5", fireClip: "Audio/missile_launch",
+                baseSpeed: 65, baseDamage: 1000, baseReload: 20, baseRadius: 34,
+                cannonBallSprite: "Sprites/cannon_ball_5_2",
                 speedBaseCost: 572, damageBaseCost: 620, reloadBaseCost: 842, radiusBaseCost: 715,
                 waveUnlock: 20,
                 speedLevelSteps: new Dictionary<int, int>

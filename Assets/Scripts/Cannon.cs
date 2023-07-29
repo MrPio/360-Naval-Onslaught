@@ -1,9 +1,11 @@
 using System;
+using System.Collections;
 using ExtensionsFunctions;
 using Managers;
 using Model;
 using Unity.VisualScripting;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class Cannon : MonoBehaviour
 {
@@ -37,7 +39,6 @@ public class Cannon : MonoBehaviour
         _maxDistance = Mathf.Min(MainCamera.Height, MainCamera.Width) * 1.15f;
     }
 
-
     private void Update()
     {
         _fireAccumulator += Time.deltaTime;
@@ -60,7 +61,7 @@ public class Cannon : MonoBehaviour
                     position: spawnPoint.position,
                     rotation: Quaternion.identity
                 );
-                crosshair.transform.localScale = Vector3.one * (Mathf.Pow(Model.Radius / 26f,0.75f));
+                crosshair.transform.localScale = Vector3.one * (Mathf.Pow(Model.Radius / 26f, 0.75f));
             }
 
             // Crosshair Movement
@@ -83,24 +84,45 @@ public class Cannon : MonoBehaviour
 
     private void Fire(Vector2 destination)
     {
-        MainCamera.AudioSource.PlayOneShot(_fireClip);
-        animator.SetTrigger(Fire1);
-        var spawnPos = spawnPoint.position;
-        var newCannonBall = Instantiate(
-            original: cannonBall,
-            position: spawnPos,
-            rotation: MainCamera.MainCam.AngleToMouse(from: spawnPos)
-        );
-        var speedMultiplier = 1f + 2f * (1f - destination.magnitude / _maxDistance);
-        newCannonBall.GetComponent<SpriteRenderer>().sprite = _cannonBallSprite;
-        newCannonBall.transform.localScale = Vector3.one * (0.7f / _cannonBallSprite.bounds.size.x);
+        IEnumerator FireLoop()
+        {
+            var startMousePos = MainCamera.MainCam.ScreenToWorldPoint(Input.mousePosition);
+            for (var i = 0; i < (Model.Name == "Rocket Launcher" ? 7 : 1); i++)
+            {
+                MainCamera.AudioSource.PlayOneShot(_fireClip);
 
-        var script = newCannonBall.GetComponent<CannonBall>();
-        script.Destination = destination;
-        script.StartPos = spawnPos;
-        script.Duration /= speedMultiplier;
-        newCannonBall.GetComponent<Animator>().SetFloat(Speed, speedMultiplier);
-        script.hasEMP = Model.Name == "EMP Cannon";
+                // Vector2 dest = (MainCamera.MainCam.AngleToMouse(startMousePos)) * destination;
+                var newDestination = Model.Name == "Rocket Launcher"
+                    ? destination + new Vector2(Random.Range(-1.0f, 1.0f), Random.Range(-1.0f, 1.0f))
+                    : destination;
+                
+                animator.SetTrigger(Fire1);
+                Vector2 spawnPos = spawnPoint.position;
+                var newCannonBall = Instantiate(
+                    original: cannonBall,
+                    position: spawnPos,
+                    rotation: (newDestination- spawnPos).ToQuaternion()
+                              // * (MainCamera.MainCam.AngleToMouse(startMousePos))
+                );
+                var speedMultiplier = 1f + 2f * (1f - destination.magnitude / _maxDistance);
+                newCannonBall.GetComponent<SpriteRenderer>().sprite = _cannonBallSprite;
+                newCannonBall.transform.localScale = Vector3.one * (0.7f / _cannonBallSprite.bounds.size.x);
+
+                var script = newCannonBall.GetComponent<CannonBall>();
+                script.StartPos = spawnPos;
+                script.Duration /= speedMultiplier;
+                script.Destination = newDestination;
+                newCannonBall.GetComponent<Animator>().SetFloat(Speed, speedMultiplier);
+                script.hasEMP = Model.Name == "EMP Cannon";
+                if (Model.Name == "Blizzard Cannon")
+                    script.SmallCannonBall = true;
+
+                yield return new WaitForSeconds(0.1f);
+            }
+        }
+
+        StartCoroutine(FireLoop());
+
         --Game.CannonAmmo;
 
         // Reload if no more ammo

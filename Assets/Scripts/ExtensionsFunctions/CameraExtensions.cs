@@ -12,7 +12,7 @@ namespace ExtensionsFunctions
             var angle = Mathf.Atan2(directionToMouse.y, directionToMouse.x) * Mathf.Rad2Deg;
             return Quaternion.Euler(0f, 0f, angle);
         }
-
+        
         public static Vector3 RandomBoundaryPoint(this Camera camera)
         {
             var width = MainCamera.Width;
