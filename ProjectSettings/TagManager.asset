@@ -22,6 +22,8 @@ TagManager:
   - score_counter
   - specials_menu
   - pause_menu
+  - accuracy_menu
+  - bonus_menu
   layers:
   - Default
   - TransparentFX

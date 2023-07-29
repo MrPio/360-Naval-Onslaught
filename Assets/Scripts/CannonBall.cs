@@ -57,6 +57,7 @@ public class CannonBall : MonoBehaviour
                     )
             {
                 hit = true;
+                ++GameManager.Instance.CurrentWaveCannonHit;
                 ship.GetComponent<Ship>().TakeDamage(GameManager.Instance.CurrentCannonModel.Damage,hasEMP);
             }
 

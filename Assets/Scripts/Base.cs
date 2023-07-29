@@ -56,6 +56,11 @@ public class Base : MonoBehaviour
         }
     }
 
+    private void OnEnable()
+    {
+        healthBar.SetValue(Game.Health / (float)Game.MaxHealth);
+    }
+
     public void TakeDamage(int damage)
     {
         if (Game.Health > 0 && !_invincible)
@@ -86,9 +91,9 @@ public class Base : MonoBehaviour
 
         // Show GameOver Menu
         var gameOverMenu = GameObject.FindWithTag("wave_spawner").GetComponent<WaveSpawner>().gameOver;
+        gameOverMenu.SetActive(true);
         gameOverMenu.transform.Find("score_text").GetComponent<TextMeshProUGUI>().text =
             Game.Score.ToString("N0") + " pts";
-        gameOverMenu.SetActive(true);
     }
 
     private void UseSpecial(int index)

@@ -20,8 +20,8 @@ public class Ship : MonoBehaviour
     [SerializeField] private HealthBar healthBar;
     [SerializeField] private List<GameObject> explosions;
     [SerializeField] private Animator animator;
-    [SerializeField] private SpriteRenderer spriteRenderer;
-    [SerializeField] private BoxCollider2D boxCollider;
+    [SerializeField] public SpriteRenderer spriteRenderer;
+    [SerializeField] public BoxCollider2D boxCollider;
     [SerializeField] private GameObject floatingTextBig, missile, empExplosion, empText, militaryPlane;
     [SerializeField] private AudioClip empHitClip;
     private Sprite _missileSprite;
@@ -31,9 +31,9 @@ public class Ship : MonoBehaviour
     private ShipModel _model;
     private int _health;
     private bool _hasDelay = true;
-    [NonSerialized] public bool IsFreezed = true;
+    [NonSerialized] public bool IsFreezed;
     private float _accumulator;
-    [NonSerialized] public bool Invincible=true;
+    [NonSerialized] public bool Invincible = true;
     [NonSerialized] public int CurrentIndex;
     private float _randomAdditionalDelay;
     private static readonly int MilitaryPlaneTakeoff = Animator.StringToHash("military_plane_takeoff");
@@ -43,7 +43,6 @@ public class Ship : MonoBehaviour
     {
         _model = Game.CurrentWave.Spawn();
         spriteRenderer.sprite = Resources.Load<Sprite>(_model.Sprite);
-        boxCollider.size = spriteRenderer.bounds.size * 1.05f;
         if (_model.ExplodeClip != null)
             _explodeClip = Resources.Load<AudioClip>(_model.ExplodeClip);
         if (_model.FireClip != null)
@@ -83,7 +82,7 @@ public class Ship : MonoBehaviour
             _accumulator += Time.deltaTime;
         if (_hasDelay && _accumulator >= _model.Delay + _randomAdditionalDelay)
         {
-            _accumulator = 0;
+            // _accumulator = 0;
             _hasDelay = false;
         }
         else if (!_hasDelay && !Invincible && _accumulator >= 100f / _model.Rate)
@@ -96,7 +95,11 @@ public class Ship : MonoBehaviour
     private void OnBecameVisible()
     {
         isVisible = true;
-        Invincible = false;
+        if (_model.Name != "Submarine")
+            Invincible = false;
+        
+        if(_model.Name!="SpeedBoat")
+            print(Invincible);
     }
 
     private void Fire()
@@ -107,7 +110,7 @@ public class Ship : MonoBehaviour
             return;
         }
 
-        const float range = 0.9f;
+        const float range = 0.95f;
         var currentPos = (Vector2)transform.position;
         var destination = new Vector2(
             x: Random.Range(-range, range),
@@ -138,6 +141,7 @@ public class Ship : MonoBehaviour
 
     public void TakeDamage(int damage, bool EMP = false)
     {
+        print($"ship took damage => {damage}");
         if (!Invincible && _health > 0)
         {
             _health -= damage;
@@ -146,7 +150,7 @@ public class Ship : MonoBehaviour
 
             if (EMP)
             {
-                MainCamera.AudioSource.PlayOneShot(empHitClip,0.9f);
+                MainCamera.AudioSource.PlayOneShot(empHitClip, 0.9f);
                 IsFreezed = true;
                 if (empText.activeSelf)
                     empText.GetComponent<EmpText>().EMP();

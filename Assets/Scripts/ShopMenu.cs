@@ -23,7 +23,7 @@ public class ShopMenu : MonoBehaviour
     public void UpdateUI()
     {
         moneyText.text = Game.Money.ToString("N0");
-        waveText.text = (Game.Wave + 1).ToString();
+        waveText.text = (Game.Wave ).ToString();
         healthSlider.maxValue = Game.MaxHealth;
         healthSlider.value = Game.Health;
         hpText.text = $"{Game.Health} / {Game.MaxHealth}";

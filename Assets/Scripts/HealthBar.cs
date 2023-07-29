@@ -15,6 +15,7 @@ public class HealthBar : MonoBehaviour
         transform.position = target.position + Vector3.up * offset;
     }
 
+    
     private void Update()
     {
         if (adjustRotationAndPosition)

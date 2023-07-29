@@ -33,13 +33,14 @@ public class WaveSpawner : MonoBehaviour
         specialsContainer,
         scoreContainer,
         waveContainer,
-        shopMenu,
         newWave,
-        baseHealthSlider;
+        baseHealthSlider,
+        accuracyMenu,
+        winMenu;
 
     [NonSerialized] public bool isPaused;
 
-    public GameObject howToPlayMenu, overlay, mainMenu, gameOver, specialsMenu;
+    public GameObject howToPlayMenu, overlay, mainMenu, gameOver, specialsMenu, shopMenu, bonusMenu;
 
     public void RestartGame()
     {
@@ -54,21 +55,20 @@ public class WaveSpawner : MonoBehaviour
     private void Start()
     {
         // TODO UNCOMMENT
-        /*baseMain.SetActive(false);
+        baseMain.SetActive(false);
         baseHealthSlider.SetActive(false);
         newWave.SetActive(true);
         mainMenu.SetActive(true);
         gameOver.SetActive(false);
-        specialsMenu.SetActive(false)
-        
+        specialsMenu.SetActive(false);
+
         audioSource.Stop();
         audioSource.clip = mainMenuClip;
         audioSource.Play();
 
-        */
 
         // TODO COMMENT
-        BeginWave();
+        // BeginWave();
     }
 
     private void FixedUpdate()
@@ -95,17 +95,21 @@ public class WaveSpawner : MonoBehaviour
     {
         var pos = MainCamera.MainCam.RandomBoundaryPoint() * 1.3f;
 
-        Instantiate(ship, pos, pos.ToQuaternion()).GetComponent<Ship>().CurrentIndex = Game.CurrentWave.Spawned;
+        var newShip = Instantiate(ship).GetComponent<Ship>();
+        newShip.boxCollider.size = newShip.spriteRenderer.bounds.size;
+        newShip.transform.SetPositionAndRotation(pos, pos.ToQuaternion());
+        newShip.CurrentIndex = Game.CurrentWave.Spawned;
+
         ++Game.CurrentWave.Spawned;
 
-        var immediateSpawnChance = 0.1 + 0.3 * Game.WaveFactor;
+        var immediateSpawnChance = 0.1 + 0.25 * Game.WaveFactor;
 
         _nextSpawn = Random.Range(0f, 1f) < immediateSpawnChance
             ? 0f
-            : 3f + Random.Range(0, 8f * (1 - Game.WaveFactor));
+            : (1.5f + Random.Range(0, 5f * (1 - 0.65f*Game.WaveFactor))) / _model.SpawnSpeedMultiply;
     }
 
-    private void EndWave()
+    private void EndWave()  
     {
         _model = null;
         Game.Score += 1000;
@@ -116,7 +120,19 @@ public class WaveSpawner : MonoBehaviour
         specialsContainer.SetActive(false);
         scoreContainer.SetActive(false);
         waveContainer.SetActive(false);
-        shopMenu.SetActive(true);
+        shopMenu.SetActive(false);
+        bonusMenu.SetActive(false);
+        winMenu.SetActive(false);
+
+        if (Game.Wave >= Data.Waves.Length)
+        {
+            // Show Win Menu
+            winMenu.SetActive(true);
+            winMenu.transform.Find("score_text").GetComponent<TextMeshProUGUI>().text =
+                Game.Score.ToString("N0") + " pts";
+        }
+        else
+            accuracyMenu.SetActive(true);
 
         audioSource.Stop();
         audioSource.clip = winClip;
@@ -133,20 +149,27 @@ public class WaveSpawner : MonoBehaviour
         scoreContainer.SetActive(true);
         waveContainer.SetActive(true);
         shopMenu.SetActive(false);
+        accuracyMenu.SetActive(false);
+        bonusMenu.SetActive(false);
+        winMenu.SetActive(false);
         baseHealthSlider.SetActive(false);
-        baseMain.SetActive(true);
+        // baseMain.SetActive(true);
         _model = Game.CurrentWave;
         _waveStart = Time.time;
         _accumulator = 0;
-        _nextSpawn = 0f; //TODO 7f
+        _nextSpawn = 2f; //TODO 2f 
         PathsOrder = Enumerable.Range(0, pathsSize).ToList();
         PathsOrder.Shuffle();
+        Game.CurrentWaveTurretFired = 0;
+        Game.CurrentWaveTurretHit = 0;
+        Game.CurrentWaveCannonFired = 0;
+        Game.CurrentWaveCannonHit = 0;
 
         // TODO UNCOMMENT
         // New Wave Sign
-        /*newWave.SetActive(true);
-        newWave.transform.Find("new_wave_text").GetComponent<TextMeshProUGUI>().text = $"Wave {Game.Wave+1}";
-        newWave.GetComponent<Animator>().SetTrigger(Start1);*/
+        newWave.SetActive(true);
+        newWave.transform.Find("new_wave_text").GetComponent<TextMeshProUGUI>().text = $"Wave {Game.Wave + 1}";
+        newWave.GetComponent<Animator>().SetTrigger(Start1);
 
         audioSource.Stop();
         audioSource.clip = levelsClip.RandomItem();

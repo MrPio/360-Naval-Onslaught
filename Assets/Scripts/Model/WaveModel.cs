@@ -13,11 +13,13 @@ namespace Model
         private readonly List<float> _shipsChances;
         public readonly int ShipsCount;
         public int Spawned,Destroyed;
+        public float SpawnSpeedMultiply;
 
-        public WaveModel(List<float> shipsChances,int shipsCount)
+        public WaveModel(List<float> shipsChances,int shipsCount, float spawnSpeedMultiply=1)
         {
             _shipsChances = shipsChances;
             ShipsCount = shipsCount;
+            SpawnSpeedMultiply = spawnSpeedMultiply;
         }
 
         public bool HasMore() => Spawned < ShipsCount;
@@ -28,7 +30,7 @@ namespace Model
             
             // Choose ship
             var choice = Random.Range(0f, 1f);
-            return Data.Ships.Where((t, i) => choice <= _shipsChances[i]).FirstOrDefault();
+            return Data.Ships.Where((_, i) => choice <= _shipsChances[i]).FirstOrDefault();
         }
     }
 }

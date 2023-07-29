@@ -123,6 +123,7 @@ public class Cannon : MonoBehaviour
 
         StartCoroutine(FireLoop());
 
+        ++Game.CurrentWaveCannonFired;
         --Game.CannonAmmo;
 
         // Reload if no more ammo

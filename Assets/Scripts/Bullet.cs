@@ -77,6 +77,8 @@ public class Bullet : MonoBehaviour
         if (col.gameObject.tag.Contains("ship") && !col.GetComponent<Ship>().Invincible)
         {
             col.GetComponent<Ship>().TakeDamage(Game.CurrentTurretModel.Damage);
+            ++GameManager.Instance.CurrentWaveTurretHit;
+
             Instantiate(
                 original: Game.CurrentTurretModel.BulletSprite.Contains("missile")?bigExplosion:explosion,
                 position: transform.position,

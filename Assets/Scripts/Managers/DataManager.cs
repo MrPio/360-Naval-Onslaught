@@ -21,7 +21,7 @@ namespace Managers
             new(
                 name: "Base Turret", sprite: "Sprites/turret_1", fireClip: "Audio/turret_fire_1",
                 bulletSprite: "Sprites/bullet_1",
-                baseSpeed: 400 , baseRate: 300 , baseDamage: 20, baseAmmo: 32 , baseReload: 75 ,
+                baseSpeed: 380 , baseRate: 300 , baseDamage: 20, baseAmmo: 32 , baseReload: 75 ,
                 speedBaseCost: 100, rateBaseCost: 180, damageBaseCost: 150, ammoBaseCost: 125, reloadBaseCost: 115,
                 speedLevelSteps: new Dictionary<int, int>
                 {
@@ -36,14 +36,14 @@ namespace Managers
                 },
                 rateLevelSteps: new Dictionary<int, int>
                 {
-                    { 0, 60 },
-                    { 5, 70 },
-                    { 10, 80 },
-                    { 15, 100 },
-                    { 20, 120 },
-                    { 25, 150 },
-                    { 30, 180 },
-                    { 35, 220 },
+                    { 0, 20 },
+                    { 5, 30 },
+                    { 10, 40 },
+                    { 15, 50 },
+                    { 20, 60 },
+                    { 25, 70 },
+                    { 30, 80 },
+                    { 35, 100 },
                 },
                 damageLevelSteps: new Dictionary<int, int>
                 {
@@ -82,7 +82,7 @@ namespace Managers
             new(
                 name: "Gatling Gun", sprite: "Sprites/turret_2", fireClip: "Audio/turret_fire_2",
                 bulletSprite: "Sprites/bullet_2",
-                baseSpeed: 500, baseRate: 1200, baseDamage: 16, baseAmmo: 80, baseReload: 115,
+                baseSpeed: 600, baseRate: 1200, baseDamage: 16, baseAmmo: 80, baseReload: 115,
                 speedBaseCost: 200, rateBaseCost: 260, damageBaseCost: 360, ammoBaseCost: 185, reloadBaseCost: 225,
                 waveUnlock: 5,
                 speedLevelSteps: new Dictionary<int, int>
@@ -120,14 +120,14 @@ namespace Managers
                 },
                 ammoLevelSteps: new Dictionary<int, int>
                 {
-                    { 0, 2 },
-                    { 5, 2 },
-                    { 10, 4 },
-                    { 15, 4 },
-                    { 20, 6 },
-                    { 25, 6 },
-                    { 30, 6 },
-                    { 35, 6 },
+                    { 0, 4 },
+                    { 5, 6 },
+                    { 10, 6 },
+                    { 15, 6 },
+                    { 20, 8 },
+                    { 25, 8 },
+                    { 30, 8 },
+                    { 35, 8 },
                 },
                 reloadLevelSteps: new Dictionary<int, int>
                 {
@@ -144,7 +144,7 @@ namespace Managers
             new(
                 name: "Missile Launcher", sprite: "Sprites/turret_3", fireClip: "Audio/cannon_fire_3",
                 bulletSprite: "Sprites/missile_2",
-                baseSpeed: 200, baseRate: 40, baseDamage: 600, baseAmmo: 2, baseReload: 45,
+                baseSpeed: 220, baseRate: 40, baseDamage: 600, baseAmmo: 2, baseReload: 45,
                 speedBaseCost: 420, rateBaseCost: 430, damageBaseCost: 550, ammoBaseCost: 780, reloadBaseCost: 475,
                 waveUnlock: 10,
                 speedLevelSteps: new Dictionary<int, int>
@@ -184,7 +184,7 @@ namespace Managers
                 {
                     { 0, 1 },
                     { 5, 1 },
-                    { 10, 2 },
+                    { 10, 1 },
                     { 15, 2 },
                     { 20, 2 },
                     { 25, 4 },
@@ -222,14 +222,14 @@ namespace Managers
                 },
                 rateLevelSteps: new Dictionary<int, int>
                 {
-                    { 0, 4 },
-                    { 5, 6 },
-                    { 10, 8 },
-                    { 15, 10 },
-                    { 20, 12 },
-                    { 25, 14 },
-                    { 30, 16 },
-                    { 35, 18 },
+                    { 0, 100 },
+                    { 5, 200 },
+                    { 10, 300 },
+                    { 15, 400 },
+                    { 20, 400 },
+                    { 25, 400 },
+                    { 30, 400 },
+                    { 35, 500 },
                 },
                 damageLevelSteps: new Dictionary<int, int>
                 {
@@ -244,14 +244,14 @@ namespace Managers
                 },
                 ammoLevelSteps: new Dictionary<int, int>
                 {
-                    { 0, 2 },
-                    { 5, 2 },
-                    { 10, 4 },
-                    { 15, 4 },
-                    { 20, 6 },
-                    { 25, 6 },
-                    { 30, 6 },
-                    { 35, 6 },
+                    { 0, 8 },
+                    { 5, 10 },
+                    { 10, 12 },
+                    { 15, 14 },
+                    { 20, 16 },
+                    { 25, 18 },
+                    { 30, 20 },
+                    { 35, 22 },
                 },
                 reloadLevelSteps: new Dictionary<int, int>
                 {
@@ -268,7 +268,7 @@ namespace Managers
             new(
                 name: "Auto-Locking Gun", sprite: "Sprites/turret_5", fireClip: "Audio/turret_fire_1",
                 bulletSprite: "Sprites/bullet_2",
-                baseSpeed: 365, baseRate: 580, baseDamage: 74, baseAmmo: 38, baseReload: 37,
+                baseSpeed: 395, baseRate: 580, baseDamage: 74, baseAmmo: 38, baseReload: 37,
                 speedBaseCost: 420, rateBaseCost: 430, damageBaseCost: 550, ammoBaseCost: 780, reloadBaseCost: 475,
                 waveUnlock: 20,
                 speedLevelSteps: new Dictionary<int, int>
@@ -284,14 +284,14 @@ namespace Managers
                 },
                 rateLevelSteps: new Dictionary<int, int>
                 {
-                    { 0, 4 },
-                    { 5, 6 },
-                    { 10, 8 },
-                    { 15, 10 },
-                    { 20, 12 },
-                    { 25, 14 },
-                    { 30, 16 },
-                    { 35, 18 },
+                    { 0, 20 },
+                    { 5, 30 },
+                    { 10, 40 },
+                    { 15, 50 },
+                    { 20, 60 },
+                    { 25, 70 },
+                    { 30, 70 },
+                    { 35, 80 },
                 },
                 damageLevelSteps: new Dictionary<int, int>
                 {
@@ -306,25 +306,25 @@ namespace Managers
                 },
                 ammoLevelSteps: new Dictionary<int, int>
                 {
-                    { 0, 2 },
-                    { 5, 2 },
-                    { 10, 2 },
+                    { 0, 4 },
+                    { 5, 4 },
+                    { 10, 4 },
                     { 15, 4 },
-                    { 20, 4 },
-                    { 25, 4 },
+                    { 20, 6 },
+                    { 25, 6 },
                     { 30, 6 },
                     { 35, 6 },
                 },
                 reloadLevelSteps: new Dictionary<int, int>
                 {
-                    { 0, 8 },
-                    { 5, 12 },
-                    { 10, 16 },
-                    { 15, 20 },
-                    { 20, 30 },
-                    { 25, 35 },
-                    { 30, 40 },
-                    { 35, 50 },
+                    { 0, 2 },
+                    { 5, 3 },
+                    { 10, 4 },
+                    { 15, 5 },
+                    { 20, 6 },
+                    { 25, 7 },
+                    { 30, 8 },
+                    { 35, 9 },
                 }
             ),
         };
@@ -334,7 +334,7 @@ namespace Managers
             new(
                 name: "Base Cannon", sprite: "Sprites/cannon_1", fireClip: "Audio/cannon_fire_2"
                 , cannonBallSprite: "Sprites/cannon_ball_1",
-                baseSpeed: 40, baseDamage: 200, baseReload: 28, baseRadius: 20,
+                baseSpeed: 40, baseDamage: 200, baseReload: 28, baseRadius: 14,
                 speedBaseCost: 450, damageBaseCost: 300, reloadBaseCost: 350, radiusBaseCost: 250,
                 speedLevelSteps: new Dictionary<int, int>
                 {
@@ -379,7 +379,7 @@ namespace Managers
             new(
                 name: "Artillery", sprite: "Sprites/cannon_2", fireClip: "Audio/cannon_fire_1",
                 cannonBallSprite: "Sprites/cannon_ball_2",
-                baseSpeed: 45, baseDamage: 500, baseReload: 24, baseRadius: 22,
+                baseSpeed: 45, baseDamage: 500, baseReload: 24, baseRadius: 16,
                 speedBaseCost: 550, damageBaseCost: 540, reloadBaseCost: 615, radiusBaseCost: 520,
                 waveUnlock: 5,
                 speedLevelSteps: new Dictionary<int, int>
@@ -424,7 +424,7 @@ namespace Managers
             ),
             new(
                 name: "EMP Cannon", sprite: "Sprites/cannon_3", fireClip: "Audio/cannon_fire_3",
-                baseSpeed: 50, baseDamage: 760/34, baseReload: 18, baseRadius: 20,
+                baseSpeed: 50, baseDamage: 760/34, baseReload: 18, baseRadius: 18,
                 cannonBallSprite: "Sprites/cannon_ball_3",
                 speedBaseCost: 572, damageBaseCost: 620, reloadBaseCost: 842, radiusBaseCost: 715,
                 waveUnlock: 10,
@@ -470,7 +470,7 @@ namespace Managers
             ),
             new(
                 name: "Blizzard Cannon", sprite: "Sprites/cannon_4", fireClip: "Audio/cannon_fire_1",
-                baseSpeed: 60, baseDamage: 1175, baseReload: 18, baseRadius: 22,
+                baseSpeed: 60, baseDamage: 1175, baseReload: 18, baseRadius: 20,
                 cannonBallSprite: "Sprites/cannon_ball_4_2",
                 speedBaseCost: 572, damageBaseCost: 620, reloadBaseCost: 842, radiusBaseCost: 715,
                 waveUnlock: 15,
@@ -566,25 +566,25 @@ namespace Managers
         {
             new(
                 name: "SpeedBoat", sprite: "Sprites/ship_1", fireClip: null, explodeClip: "Audio/ship_destroy",
-                baseSpeed: 130 * 1, baseRate: 0, baseDamage: 350, baseHealth: 90, baseMoney: 103,
+                baseSpeed: 100 , baseRate: 0, baseDamage: 350, baseHealth: 90, baseMoney: 103,
                 hasPath: false, missileSprite: null
             ),
             new(
                 name: "Vessel", sprite: "Sprites/ship_2", missileSprite: "Sprites/missile_2",
                 fireClip: new[] { "Audio/cannon_fire_4", "Audio/missile_coming" }, explodeClip: "Audio/ship_destroy",
-                baseSpeed: 92, baseRate: 10, baseDamage: 375, baseHealth: 220, baseMoney: 258,
+                baseSpeed: 92, baseRate: 10, baseDamage: 275, baseHealth: 220, baseMoney: 258,
                 hasPath: true, explosionsCount: 2
             ),
             new(
                 name: "Military", sprite: "Sprites/ship_3", missileSprite: "Sprites/missile_3",
                 fireClip: new[] { "Audio/cannon_fire_4", "Audio/missile_coming" }, explodeClip: "Audio/ship_destroy",
-                baseSpeed: 70, baseRate: 14, baseDamage: 485, baseHealth: 460, baseMoney: 681,
+                baseSpeed: 70, baseRate: 16, baseDamage: 385, baseHealth: 460, baseMoney: 681,
                 hasPath: true, explosionsCount: 5
             ),
             new(
                 name: "Submarine", sprite: "Sprites/ship_4", missileSprite: "Sprites/missile_1",
                 fireClip: new[] { "Audio/cannon_fire_4", "Audio/missile_coming" }, explodeClip: "Audio/ship_destroy",
-                baseSpeed: 65, baseRate: 13, baseDamage: 725, baseHealth: 782, baseMoney: 1460,
+                baseSpeed: 65, baseRate: 10, baseDamage: 525, baseHealth: 782, baseMoney: 1460,
                 hasPath: true, explosionsCount: 4,
                 startCallback: go =>
                 {
@@ -606,18 +606,43 @@ namespace Managers
             new(
                 name: "Aircraft Carrier", sprite: "Sprites/ship_5", missileSprite: "Sprites/missile_1",
                 fireClip: new[] { "Audio/cannon_fire_4", "Audio/missile_coming" }, explodeClip: "Audio/ship_destroy",
-                baseSpeed: 55, baseRate: 15, baseDamage: 625, baseHealth: 1820, baseMoney: 2760,delayMultiplier:1.5f,
+                baseSpeed: 55, baseRate: 5, baseDamage: 625, baseHealth: 1820, baseMoney: 2760,delayMultiplier:1.5f,
                 hasPath: true, explosionsCount: 9
                 ),
         };
 
         public readonly WaveModel[] Waves =
         {
-            new(shipsChances: new List<float> { 0.75f, 1f, 1f, 1f, 1f },shipsCount:7),//7
+            // new(shipsChances: new List<float> { 0.75f, 1f, 1f, 1f, 1f },shipsCount:7),
+            new(shipsChances: new List<float> { 0f, 0f, 0f, 0f, 1f },shipsCount:7),
             new(shipsChances: new List<float> { 0.65f, 0.9f, 1f, 1f , 1f},shipsCount:9),
             new(shipsChances: new List<float> { 0.5f, 0.8f, 1f, 1f , 1f},shipsCount:12),
             new(shipsChances: new List<float> { 0.4f, 0.65f, 0.9f, 1f, 1f },shipsCount:13),
             new(shipsChances: new List<float> { 0.35f, 0.5f, 0.8f, 1f, 1f },shipsCount:18),
+            
+            new(shipsChances: new List<float> { 0.55f, 0.7f, 0.8f, 0.9f, 1f },shipsCount:12),
+            new(shipsChances: new List<float> { 0.45f, 0.6f, 0.8f, 0.9f, 1f },shipsCount:15),
+            new(shipsChances: new List<float> { 0.35f, 0.5f, 0.7f, 0.9f, 1f },shipsCount:17),
+            new(shipsChances: new List<float> { 0.25f, 0.4f, 0.6f, 0.85f, 1f },shipsCount:14),
+            new(shipsChances: new List<float> { 0.15f, 0.3f, 0.4f, 0.8f, 1f },shipsCount:22),
+
+            new(shipsChances: new List<float> { 0.15f, 0.3f, 0.4f, 0.8f, 1f },shipsCount:14),
+            new(shipsChances: new List<float> { 1f, 1f, 1f, 1f, 1f },shipsCount:11,spawnSpeedMultiply:1.8f),
+            new(shipsChances: new List<float> { 0.35f, 0.4f, 0.75f, 0.9f, 1f },shipsCount:16),
+            new(shipsChances: new List<float> { 0.1f, 0.2f, 0.3f, 0.75f, 1f },shipsCount:18),
+            new(shipsChances: new List<float> { 0.15f, 0.25f, 0.35f, 0.85f, 1f },shipsCount:22),
+
+            new(shipsChances: new List<float> { 0.15f, 0.3f, 0.4f, 0.8f, 1f },shipsCount:17),
+            new(shipsChances: new List<float> { 0.8f, 0.8f, 0.8f, 0.8f, 1f },shipsCount:16,spawnSpeedMultiply:2.5f),
+            new(shipsChances: new List<float> { 0.35f, 0.4f, 0.75f, 0.9f, 1f },shipsCount:22),
+            new(shipsChances: new List<float> { 0.1f, 0.2f, 0.3f, 0.75f, 1f },shipsCount:17),
+            new(shipsChances: new List<float> { 0.15f, 0.25f, 0.35f, 0.85f, 1f },shipsCount:24),
+
+            new(shipsChances: new List<float> { 0.15f, 0.2f, 0.65f, 0.8f, 1f },shipsCount:11),
+            new(shipsChances: new List<float> { 0.15f, 0.2f, 0.65f, 0.8f, 1f },shipsCount:17),
+            new(shipsChances: new List<float> { 0.35f, 0.4f, 0.75f, 0.9f, 1f },shipsCount:22),
+            new(shipsChances: new List<float> { 0.1f, 0.2f, 0.3f, 0.75f, 1f },shipsCount:26),
+            new(shipsChances: new List<float> { 0.15f, 0.25f, 0.35f, 0.85f, 1f },shipsCount:34),
         };
     }
 }

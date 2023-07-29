@@ -79,6 +79,7 @@ public class Turret : MonoBehaviour
         }
         newBullet.GetComponent<Rigidbody2D>().velocity = newBullet.transform.right * Model.Speed / 100f;
         --Game.Ammo;
+        ++Game.CurrentWaveTurretFired;
         _ammoCounter.UpdateUI();
 
         // Reload if no more ammo

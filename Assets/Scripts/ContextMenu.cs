@@ -34,9 +34,12 @@ public class ContextMenu : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         CloseSpecialsMenu,
         BuySpecial,
         ClosePauseMenu,
+        CloseAccuracyMenu,
+        BonusStop,
+        BonusContinue,
     }
 
-    [SerializeField] private GameObject contextMenu, lockedContextMenu, canvas,mainBase;
+    [SerializeField] private GameObject contextMenu, lockedContextMenu, canvas, mainBase;
     [SerializeField] private bool followMouse = true;
     [SerializeField] private ContextMenuType type;
     [SerializeField] private int turretIndex = -1, cannonIndex = -1, specialIndex = 0;
@@ -235,14 +238,34 @@ public class ContextMenu : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
                 ship.GetComponent<ShipPath>().IsFreezed = false;
             }
         }
+        else if (type == ContextMenuType.CloseAccuracyMenu)
+        {
+            print(Game.CurrentWaveCannonAccuracy);
+            print(Game.CurrentWaveTurretAccuracy);
+            if (Game.HasBonus)
+                GameObject.FindWithTag("wave_spawner").GetComponent<WaveSpawner>().bonusMenu.SetActive(true);
+            else
+                GameObject.FindWithTag("wave_spawner").GetComponent<WaveSpawner>().shopMenu.SetActive(true);
+            GameObject.FindWithTag("accuracy_menu").SetActive(false);
+        }
+        else if (type == ContextMenuType.BonusStop)
+        {
+            type = ContextMenuType.BonusContinue;
+            transform.Find("Text").GetComponent<TextMeshProUGUI>().text = "Continue";
+            GameObject.FindWithTag("bonus_menu").GetComponent<BonusMenu>().Stop = true;
+        }
+        else if (type == ContextMenuType.BonusContinue)
+        {
+            GameObject.FindWithTag("bonus_menu").GetComponent<BonusMenu>().Redeem();
+            GameObject.FindWithTag("wave_spawner").GetComponent<WaveSpawner>().shopMenu.SetActive(true);
+            GameObject.FindWithTag("bonus_menu").SetActive(false);
+        }
 
-        
         if (contextMenu == null)
         {
             MainCamera.AudioSource.PlayOneShot(_click);
             return;
         }
-
 
         if (contextMenu.name == "upgrade_context_menu")
         {

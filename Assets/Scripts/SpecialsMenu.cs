@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Managers;
@@ -8,6 +9,11 @@ public class SpecialsMenu : MonoBehaviour
 {
     private List<int> SpecialsCount => GameManager.Instance.SpecialsCount;
     [SerializeField] private List<TextMeshProUGUI> counters;
+
+    private void OnEnable()
+    {
+        UpdateUI();
+    }
 
     public void UpdateUI()
     {
