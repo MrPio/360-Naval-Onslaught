@@ -22,7 +22,7 @@ public class Plane : MonoBehaviour
     {
         var pos = MainCamera.MainCam.RandomBoundaryPoint() * 1.15f;
         transform.SetPositionAndRotation(pos, (-pos).ToQuaternion());
-        rb.velocity = -(pos - Vector3.up * 1.25f) * speed*Random.Range(0.85f,1.25f);
+        rb.velocity = -(pos - Vector3.up * 1.25f) * speed * Random.Range(0.85f, 1.25f);
         MainCamera.AudioSource.PlayOneShot(planeClip);
     }
 
@@ -36,7 +36,7 @@ public class Plane : MonoBehaviour
             Vector2 dropPos = transform.position + Vector3.down * 0.15f;
             Instantiate(
                 original: dropBomb,
-                position: dropPos + dropPos.Perpendicular1() *
+                position: dropPos + new Vector2(dropPos.y, -dropPos.x) *
                 Random.Range(-dispersionHorizontal, dispersionHorizontal),
                 rotation: Quaternion.identity
             );

@@ -4225,6 +4225,19 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3135331640516479209, guid: 16c244378441df54ca0c33f6b8032563, type: 3}
+      propertyPath: m_text
+      value: "Survive as many waves as possible to earn money and upgrade your weaponary.
+        \nNote: Accuracy will be rewarded!"
+      objectReference: {fileID: 0}
+    - target: {fileID: 3135331640516479209, guid: 16c244378441df54ca0c33f6b8032563, type: 3}
+      propertyPath: m_lineSpacing
+      value: 12.53
+      objectReference: {fileID: 0}
+    - target: {fileID: 3135331640516479210, guid: 16c244378441df54ca0c33f6b8032563, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -298.96
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 16c244378441df54ca0c33f6b8032563, type: 3}
 --- !u!1001 &3619217913302027977
