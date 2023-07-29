@@ -33,9 +33,10 @@ public class ContextMenu : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         OpenSpecialsMenu,
         CloseSpecialsMenu,
         BuySpecial,
+        ClosePauseMenu,
     }
 
-    [SerializeField] private GameObject contextMenu, lockedContextMenu, canvas;
+    [SerializeField] private GameObject contextMenu, lockedContextMenu, canvas,mainBase;
     [SerializeField] private bool followMouse = true;
     [SerializeField] private ContextMenuType type;
     [SerializeField] private int turretIndex = -1, cannonIndex = -1, specialIndex = 0;
@@ -223,6 +224,19 @@ public class ContextMenu : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
             GameObject.FindWithTag("specials_menu").SetActive(false);
         else if (type == ContextMenuType.OpenSpecialsMenu)
             GameObject.FindWithTag("wave_spawner").GetComponent<WaveSpawner>().specialsMenu.SetActive(true);
+        else if (type == ContextMenuType.ClosePauseMenu)
+        {
+            mainBase.SetActive(true);
+            GameObject.FindWithTag("pause_menu").SetActive(false);
+            GameObject.FindWithTag("wave_spawner").GetComponent<WaveSpawner>().isPaused = false;
+            foreach (var ship in GameObject.FindGameObjectsWithTag("ship"))
+            {
+                ship.GetComponent<Ship>().IsFreezed = false;
+                ship.GetComponent<ShipPath>().IsFreezed = false;
+            }
+        }
+
+        
         if (contextMenu == null)
         {
             MainCamera.AudioSource.PlayOneShot(_click);

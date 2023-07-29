@@ -13,6 +13,7 @@ public class WaveSpawner : MonoBehaviour
 {
     private static GameManager Game => GameManager.Instance;
     private static DataManager Data => DataManager.Instance;
+    public static float GameStarted;
 
     [SerializeField] private GameObject ship;
     private float _waveStart, _accumulator, _nextSpawn;
@@ -36,10 +37,13 @@ public class WaveSpawner : MonoBehaviour
         newWave,
         baseHealthSlider;
 
+    [NonSerialized] public bool isPaused;
+
     public GameObject howToPlayMenu, overlay, mainMenu, gameOver, specialsMenu;
 
     public void RestartGame()
     {
+        GameStarted = Time.realtimeSinceStartup;
         GameManager.Reset();
         DataManager.Reset();
         ShipPath.SpawnIndex = 0;
@@ -71,7 +75,8 @@ public class WaveSpawner : MonoBehaviour
     {
         if (_model != null)
         {
-            _accumulator += Time.fixedDeltaTime;
+            if (!isPaused)
+                _accumulator += Time.fixedDeltaTime;
 
             if (!Game.CurrentWave.HasMore() && _accumulator > 4f &&
                 Game.CurrentWave.Destroyed >= Game.CurrentWave.ShipsCount)

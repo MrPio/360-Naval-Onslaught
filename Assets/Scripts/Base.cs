@@ -21,6 +21,7 @@ public class Base : MonoBehaviour
     [SerializeField] private AudioClip gameOverClip, noSpecialClip, shieldClip, empClip, heartClip;
     [SerializeField] private Animator chromaticAberration;
     [SerializeField] private SpecialsCounter specialsCounter;
+    [SerializeField] private GameObject pauseMenu;
     private bool _invincible;
     private float lastSpecialUsed;
 
@@ -29,7 +30,7 @@ public class Base : MonoBehaviour
         shield.SetActive(false);
     }
 
-    void Update()
+    private void Update()
     {
         transform.rotation = MainCamera.MainCam.AngleToMouse(transform.position);
 
@@ -41,6 +42,18 @@ public class Base : MonoBehaviour
             UseSpecial(2);
         if (Input.GetKeyDown(KeyCode.Alpha4))
             UseSpecial(3);
+
+        if (Input.GetKeyDown(KeyCode.P) || Input.GetKeyDown(KeyCode.Escape))
+        {
+            pauseMenu.SetActive(true);
+            GameObject.FindWithTag("wave_spawner").GetComponent<WaveSpawner>().isPaused = true;
+            foreach (var ship in GameObject.FindGameObjectsWithTag("ship"))
+            {
+                ship.GetComponent<Ship>().IsFreezed = true;
+                ship.GetComponent<ShipPath>().IsFreezed = true;
+            }
+            gameObject.SetActive(false);
+        }
     }
 
     public void TakeDamage(int damage)
@@ -57,7 +70,7 @@ public class Base : MonoBehaviour
         }
     }
 
-    IEnumerator GameOver()
+    private IEnumerator GameOver()
     {
         yield return new WaitForSeconds(1.5f);
 
