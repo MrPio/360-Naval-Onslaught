@@ -38,7 +38,7 @@ public class Ship : MonoBehaviour
     private float _randomAdditionalDelay;
     private static readonly int MilitaryPlaneTakeoff = Animator.StringToHash("military_plane_takeoff");
     [NonSerialized] public bool isVisible;
-
+    private bool _withBaseCollided;
     private void Awake()
     {
         _model = Game.CurrentWave.Spawn();
@@ -97,9 +97,6 @@ public class Ship : MonoBehaviour
         isVisible = true;
         if (_model.Name != "Submarine")
             Invincible = false;
-        
-        if(_model.Name!="SpeedBoat")
-            print(Invincible);
     }
 
     private void Fire()
@@ -110,7 +107,7 @@ public class Ship : MonoBehaviour
             return;
         }
 
-        const float range = 0.95f;
+        const float range = 0.915f;
         var currentPos = (Vector2)transform.position;
         var destination = new Vector2(
             x: Random.Range(-range, range),
@@ -218,8 +215,9 @@ public class Ship : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("base"))
+        if (other.CompareTag("base") && !_withBaseCollided)
         {
+            _withBaseCollided = true;
             GameObject.FindWithTag("base").GetComponent<Base>().TakeDamage(_model.Damage);
             Explode(false);
         }

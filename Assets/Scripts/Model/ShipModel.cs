@@ -24,12 +24,12 @@ namespace Model
         private readonly int _baseHealth;
         private readonly int _baseMoney;
 
-        public float Delay => 6f+Mathf.Max(0f,1f -  Game.WaveFactor)*6f;
+        public float Delay => 5f+Mathf.Max(0f,1f -  Game.WaveFactor)*6f;
         public int Speed => (int)(_baseSpeed * (1f + 0.05f * Game.Wave));
         public int Rate => (int)(_baseRate * (1f + 0.075f * Game.Wave));
         public int Damage => (int)(_baseDamage * (1f + 0.1f * Game.Wave));
-        public int Health => (int)(_baseHealth * (1f + 0.1f * Game.Wave));
-        public int Money => (int)(_baseMoney * (1f + 0.05f * Game.Wave));
+        public int Health => (int)(_baseHealth * (1f + 0.2f * Game.Wave));
+        public int Money => (int)(_baseMoney * (1f + 0.02f * Game.Wave));
 
         public ShipModel(string name, string sprite, string[] fireClip, string explodeClip, int baseSpeed, int baseRate,
             int baseDamage, int baseHealth, int baseMoney, bool hasPath, string missileSprite, float delayMultiplier=1f, int explosionsCount=1, Action<GameObject> startCallback=null, Action<GameObject> endPathCallback=null)

@@ -6,6 +6,7 @@ using ExtensionsFunctions;
 using Managers;
 using Model;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
@@ -15,6 +16,7 @@ public class Base : MonoBehaviour
     private static readonly int DamageHeavy = Animator.StringToHash("damage_heavy");
     private static readonly int Start1 = Animator.StringToHash("start");
     private static GameManager Game => GameManager.Instance;
+    private static InputManager In => InputManager.Instance;
     [SerializeField] private GameObject cannon, turret, allyPlane, shield;
     [SerializeField] private List<Animator> damageAnimators;
     [SerializeField] private HealthBar healthBar;
@@ -24,6 +26,7 @@ public class Base : MonoBehaviour
     [SerializeField] private GameObject pauseMenu;
     private bool _invincible;
     private float lastSpecialUsed;
+    private bool[] _lastSpecialInput = new[] { false, false, false, false };
 
     private void Start()
     {
@@ -32,18 +35,17 @@ public class Base : MonoBehaviour
 
     private void Update()
     {
-        transform.rotation = MainCamera.MainCam.AngleToMouse(transform.position);
+        transform.rotation = In.GetInput().ToQuaternion();
+        //MainCamera.MainCam.AngleToMouse(transform.position);
 
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-            UseSpecial(0);
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-            UseSpecial(1);
-        if (Input.GetKeyDown(KeyCode.Alpha3))
-            UseSpecial(2);
-        if (Input.GetKeyDown(KeyCode.Alpha4))
-            UseSpecial(3);
+        for (var i = 0; i < 4; i++)
+        {
+            if (In.SpecialDown(i) && !_lastSpecialInput[i])
+                UseSpecial(i);
+            _lastSpecialInput[i] = In.SpecialDown(i);
+        }
 
-        if (Input.GetKeyDown(KeyCode.P) || Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.P) || Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.Joystick1Button6))
         {
             pauseMenu.SetActive(true);
             GameObject.FindWithTag("wave_spawner").GetComponent<WaveSpawner>().isPaused = true;
@@ -52,6 +54,7 @@ public class Base : MonoBehaviour
                 ship.GetComponent<Ship>().IsFreezed = true;
                 ship.GetComponent<ShipPath>().IsFreezed = true;
             }
+
             gameObject.SetActive(false);
         }
     }
@@ -59,6 +62,8 @@ public class Base : MonoBehaviour
     private void OnEnable()
     {
         healthBar.SetValue(Game.Health / (float)Game.MaxHealth);
+        shield.SetActive(false);
+        _invincible = false;
     }
 
     public void TakeDamage(int damage)
@@ -136,7 +141,7 @@ public class Base : MonoBehaviour
         }
         else if (index == 2)
         {
-            bool found=false;
+            bool found = false;
             foreach (var ship in GameObject.FindGameObjectsWithTag("ship").Select(it => it.GetComponent<Ship>()))
                 if (ship.isVisible)
                 {
@@ -160,7 +165,7 @@ public class Base : MonoBehaviour
             Game.Health = Game.MaxHealth;
             healthBar.SetValue(1);
         }
-        
+
         --Game.SpecialsCount[index];
         specialsCounter.UpdateUI();
         lastSpecialUsed = Time.time;

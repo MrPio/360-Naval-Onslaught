@@ -106,7 +106,7 @@ public class WaveSpawner : MonoBehaviour
 
         _nextSpawn = Random.Range(0f, 1f) < immediateSpawnChance
             ? 0f
-            : (1.5f + Random.Range(0, 5f * (1 - 0.65f*Game.WaveFactor))) / _model.SpawnSpeedMultiply;
+            : (2f + Random.Range(0, 6f * (1 - 0.45f*Game.WaveFactor))) / _model.SpawnSpeedMultiply;
     }
 
     private void EndWave()  
@@ -153,11 +153,11 @@ public class WaveSpawner : MonoBehaviour
         bonusMenu.SetActive(false);
         winMenu.SetActive(false);
         baseHealthSlider.SetActive(false);
-        // baseMain.SetActive(true);
+        // baseMain.SetActive(true);//TODO comment
         _model = Game.CurrentWave;
         _waveStart = Time.time;
         _accumulator = 0;
-        _nextSpawn = 2f; //TODO 2f 
+        _nextSpawn = 2f;
         PathsOrder = Enumerable.Range(0, pathsSize).ToList();
         PathsOrder.Shuffle();
         Game.CurrentWaveTurretFired = 0;

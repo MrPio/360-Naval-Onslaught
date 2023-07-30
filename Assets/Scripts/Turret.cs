@@ -7,6 +7,8 @@ public class Turret : MonoBehaviour
 {
     private static GameManager Game => GameManager.Instance;
     private static TurretModel Model => Game.CurrentTurretModel;
+    private static InputManager In => InputManager.Instance;
+
     [SerializeField] private GameObject leftSpawnPoint;
     [SerializeField] private GameObject rightSpawnPoint;
     [SerializeField] private GameObject bullet,laser;
@@ -17,7 +19,7 @@ public class Turret : MonoBehaviour
     private AmmoCounter _ammoCounter;
     private float _fireAccumulator=9999f;
     private AudioClip _fireClip;
-    private bool _isLaserFiring;
+    private bool _isLaserFiring,_lastFireInput;
 
     private void OnEnable()
     {
@@ -28,10 +30,11 @@ public class Turret : MonoBehaviour
 
     private void Update()
     {
+        var currentFireInput = In.GetTurret();
         _fireAccumulator += Time.deltaTime;
-        if (Input.GetMouseButtonDown(0) && Game.Ammo <= 0)
+        if (currentFireInput&& !_lastFireInput && Game.Ammo <= 0)
             MainCamera.AudioSource.PlayOneShot(noAmmo);
-        if (Input.GetMouseButton(0) && Game.Ammo > 0 && _fireAccumulator > 100f / Model.Rate && !reloadBar.IsReloading &&(Model.Name != "Laser Gun" || !_isLaserFiring))
+        if (currentFireInput && Game.Ammo > 0 && _fireAccumulator > 100f / Model.Rate && !reloadBar.IsReloading &&(Model.Name != "Laser Gun" || !_isLaserFiring))
         {
             _fireAccumulator = 0;
             if (Game.CurrentTurret == 2)
@@ -47,18 +50,20 @@ public class Turret : MonoBehaviour
             bulletAudioSource.PlayOneShot(_fireClip);
         }
 
-        if (Input.GetMouseButtonUp(0))
+        if (_lastFireInput && !currentFireInput)
         {
             bulletAudioSource.Stop();
             _isLaserFiring = false;
             _fireAccumulator += 99999f;
         }
 
-        if (!reloadBar.IsReloading && Input.GetKeyDown(KeyCode.R))
+        if (!reloadBar.IsReloading && In.GetReloadingDown())
             if (Game.Ammo < Game.CurrentTurretModel.Ammo)
                 Reload();
             else
                 MainCamera.AudioSource.PlayOneShot(reloadMiss);
+
+        _lastFireInput = currentFireInput;
     }
 
     private void Fire(GameObject arm)
@@ -67,7 +72,7 @@ public class Turret : MonoBehaviour
         var newBullet = Instantiate(
             original: Model.Name=="Laser Gun"?laser:bullet,
             position: armPos,
-            rotation: MainCamera.MainCam.AngleToMouse(transform.position)
+            rotation: In.GetInput().ToQuaternion()//MainCamera.MainCam.AngleToMouse(transform.position)
         );
         if (Model.Name == "Laser Gun")
         {

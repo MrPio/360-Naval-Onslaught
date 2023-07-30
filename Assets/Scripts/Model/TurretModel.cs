@@ -45,11 +45,11 @@ namespace Model
         private readonly int _ammoBaseCost;
         private readonly int _reloadBaseCost;
 
-        public int SpeedCost => (int)(_speedBaseCost * (1f + 0.35f * SpeedLevel));
-        public int RateCost => (int)(_rateBaseCost * (1f + 0.35f * RateLevel));
-        public int DamageCost => (int)(_damageBaseCost * (1f + 0.35f * DamageLevel));
-        public int AmmoCost => (int)(_ammoBaseCost * (1f + 0.35f * AmmoLevel));
-        public int ReloadCost => (int)(_reloadBaseCost * (1f + 0.35f * ReloadLevel));
+        public int SpeedCost => (int)(_speedBaseCost * (1f + 0.425f * SpeedLevel));
+        public int RateCost => (int)(_rateBaseCost * (1f + 0.425f * RateLevel));
+        public int DamageCost => (int)(_damageBaseCost * (1f + 0.425f * DamageLevel));
+        public int AmmoCost => (int)(_ammoBaseCost * (1f + 0.425f * AmmoLevel));
+        public int ReloadCost => (int)(_reloadBaseCost * (1f + 0.425f * ReloadLevel));
 
         public TurretModel(string name, string sprite, string fireClip, int baseSpeed, int baseRate, int baseDamage,
             int baseAmmo, int baseReload,

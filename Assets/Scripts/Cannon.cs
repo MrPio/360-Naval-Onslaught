@@ -12,6 +12,8 @@ public class Cannon : MonoBehaviour
     private static readonly int Fire1 = Animator.StringToHash("fire");
     private static readonly int Speed = Animator.StringToHash("speed");
     private static GameManager Game => GameManager.Instance;
+    private static InputManager In => InputManager.Instance;
+
     private static CannonModel Model => Game.CurrentCannonModel;
     [SerializeField] private Transform spawnPoint;
     [SerializeField] private GameObject cannonBall;
@@ -36,13 +38,13 @@ public class Cannon : MonoBehaviour
 
     private void Start()
     {
-        _maxDistance = Mathf.Min(MainCamera.Height, MainCamera.Width) * 1.15f;
+        _maxDistance = Mathf.Min(MainCamera.Height, MainCamera.Width) * 1.22f;
     }
 
     private void Update()
     {
         _fireAccumulator += Time.deltaTime;
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (In.GetCannonDown())
         {
             if (Game.CannonAmmo <= 0)
                 MainCamera.AudioSource.PlayOneShot(noAmmoClip);
@@ -65,11 +67,11 @@ public class Cannon : MonoBehaviour
             }
 
             // Crosshair Movement
-            var direction = ((Vector2)MainCamera.MainCam.ScreenToWorldPoint(Input.mousePosition)).normalized;
+            var direction = In.GetInput().normalized;
             _crosshair.transform.position =
                 direction * (_maxDistance * Mathf.Min(1f, 0.12f + _fireAccumulator / (100f / Model.Speed)));
 
-            if (Input.GetKeyUp(KeyCode.Space))
+            if (In.GetCannonUp())
             {
                 _isAiming = false;
                 var pos = _crosshair.transform.position;
@@ -78,7 +80,7 @@ public class Cannon : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyUp(KeyCode.Space))
+        if (In.GetCannonUp())
             _isAiming = false;
     }
 

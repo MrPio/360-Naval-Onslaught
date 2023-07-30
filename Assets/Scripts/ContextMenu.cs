@@ -240,8 +240,6 @@ public class ContextMenu : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         }
         else if (type == ContextMenuType.CloseAccuracyMenu)
         {
-            print(Game.CurrentWaveCannonAccuracy);
-            print(Game.CurrentWaveTurretAccuracy);
             if (Game.HasBonus)
                 GameObject.FindWithTag("wave_spawner").GetComponent<WaveSpawner>().bonusMenu.SetActive(true);
             else
@@ -256,6 +254,7 @@ public class ContextMenu : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         }
         else if (type == ContextMenuType.BonusContinue)
         {
+            type = ContextMenuType.BonusStop;
             GameObject.FindWithTag("bonus_menu").GetComponent<BonusMenu>().Redeem();
             GameObject.FindWithTag("wave_spawner").GetComponent<WaveSpawner>().shopMenu.SetActive(true);
             GameObject.FindWithTag("bonus_menu").SetActive(false);

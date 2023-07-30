@@ -23,7 +23,7 @@ namespace Managers
         public int Health;
         public int MaxHealth = 3500;
         private int _healthBaseStep = 175;
-        private int _healthBaseCost = 500;
+        private int _healthBaseCost = 400;
         private int _repairLevel = 1;
         public int HealthLevel = 1;
         public int Wave = 0;
@@ -32,9 +32,9 @@ namespace Managers
         public int CurrentTurret = 0;
         public int CurrentCannon = 0;
         public int Score;
-        public int HealthStep => (int)(_healthBaseStep * (1f + 0.35f * HealthLevel));
-        public int HealthCost => (int)(_healthBaseCost * (1f + 0.25f * HealthLevel));
-        public int RepairCost => (int)(0.28f * (MaxHealth - Health) * (1f + 0.15f * _repairLevel));
+        public int HealthStep => (int)(_healthBaseStep * (1f + 0.25f * HealthLevel));
+        public int HealthCost => (int)(_healthBaseCost * (1f + 0.35f * HealthLevel));
+        public int RepairCost => (int)(0.28f * (MaxHealth - Health) * (1f + 0.25f * _repairLevel));
 
         public int CurrentWaveTurretFired = 0,
             CurrentWaveTurretHit = 0,
@@ -49,7 +49,7 @@ namespace Managers
         public CannonModel CurrentCannonModel => Data.Cannons[CurrentCannon];
         public WaveModel CurrentWave => Data.Waves[Wave];
         public float WaveFactor => Wave / (float)Data.Waves.Length;
-        public List<int> SpecialsCount = new() { 0, 0, 0, 0 };
+        public List<int> SpecialsCount = new() { 1, 1, 1, 1 };
         private List<int> _specialsBought = new() { 0, 0, 0, 0 };
         private List<int> _specialsBaseCosts = new() { 1000, 2000, 2500, 3000 };
         public List<string> SpecialsName = new() { "Air Assault", "Shield", "EMP", "Health" };
