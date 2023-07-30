@@ -38,7 +38,7 @@ public class Cannon : MonoBehaviour
 
     private void Start()
     {
-        _maxDistance = Mathf.Min(MainCamera.Height, MainCamera.Width) * 1.22f;
+        _maxDistance = Mathf.Min(MainCamera.Height, MainCamera.Width) * 1.3f;
     }
 
     private void Update()

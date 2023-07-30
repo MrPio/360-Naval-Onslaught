@@ -435,7 +435,7 @@ namespace Managers
                 reloadLevelSteps: new Dictionary<int, int>
                 {
                     { 3, 3 },
-                    { 3, 4 },
+                    { 5, 4 },
                     { 10, 6 },
                     { 15, 6 },
                     { 20, 8 },
@@ -478,7 +478,7 @@ namespace Managers
                 reloadLevelSteps: new Dictionary<int, int>
                 {
                     { 3, 3 },
-                    { 3, 4 },
+                    { 5, 4 },
                     { 10, 6 },
                     { 15, 6 },
                     { 20, 8 },
@@ -520,7 +520,7 @@ namespace Managers
                 reloadLevelSteps: new Dictionary<int, int>
                 {
                     { 3, 3 },
-                    { 3, 4 },
+                    { 5, 4 },
                     { 10, 6 },
                     { 15, 6 },
                     { 20, 8 },
