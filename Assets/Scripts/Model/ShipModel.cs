@@ -28,7 +28,7 @@ namespace Model
         public int Speed => (int)(_baseSpeed * (1f + 0.05f * Game.Wave));
         public int Rate => (int)(_baseRate * (1f + 0.075f * Game.Wave));
         public int Damage => (int)(_baseDamage * (1f + 0.1f * Game.Wave));
-        public int Health => (int)(_baseHealth * (1f + 0.2f * Game.Wave));
+        public int Health => (int)(_baseHealth * (1f + (4f * Game.WaveFactor)+ (0.3f * (int)(Game.Wave / 5))));
         public int Money => (int)(_baseMoney * (1f + 0.02f * Game.Wave));
 
         public ShipModel(string name, string sprite, string[] fireClip, string explodeClip, int baseSpeed, int baseRate,

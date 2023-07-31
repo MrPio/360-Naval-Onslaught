@@ -1,12 +1,15 @@
-﻿using System;
+﻿using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
+using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace Managers
 {
     public class InputManager
     {
+        public static void Reset() => _instance = new InputManager();
+
         private static InputManager _instance;
 
         private InputManager()
@@ -16,14 +19,24 @@ namespace Managers
         public static InputManager Instance => _instance ??= new InputManager();
 
         private bool? _hasJoystick = null;
+        private Vector2 _lastJoystickInput = Vector2.zero;
 
-        public Vector2 GetInput() =>
-            HasJoystick()
-                ? new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"))
+        public Vector2 GetInput()
+        {
+            if (HasJoystick())
+            {
+                var newInput = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+                if (newInput.sqrMagnitude > 0.3f)
+                    _lastJoystickInput = newInput;
+            }
+
+            return HasJoystick()
+                ? _lastJoystickInput
                 : MainCamera.MainCam.ScreenToWorldPoint(Input.mousePosition);
+        }
 
-        private bool HasJoystick() => _hasJoystick ??=
-            Input.GetJoystickNames().Length > 0;
+        public bool HasJoystick() => _hasJoystick ??=
+            Gamepad.current is { };
 
         private List<KeyCode> _specialsKeyboard = new()
             { KeyCode.Alpha1, KeyCode.Alpha2, KeyCode.Alpha3, KeyCode.Alpha4 };
@@ -51,17 +64,31 @@ namespace Managers
         }
 
         public bool GetTurretDown() =>
-            HasJoystick() ? Input.GetAxis("Triggers")>0.3 : Input.GetMouseButtonDown(0);
-        public bool GetTurretUp() =>
-            HasJoystick() ? Input.GetAxis("Triggers")>0.3 : Input.GetMouseButtonUp(0);
-        public bool GetTurret() =>
-            HasJoystick() ? Input.GetAxis("Triggers")>0.3 : Input.GetMouseButton(0);
-        public bool GetReloadingDown() =>
-            Input.GetKeyDown(HasJoystick()?KeyCode.Joystick1Button2:KeyCode.R);
-        public bool GetCannonDown() =>
-            Input.GetKeyDown(HasJoystick()?KeyCode.Joystick1Button0:KeyCode.Space);
-        public bool GetCannonUp() =>
-            Input.GetKeyUp(HasJoystick()?KeyCode.Joystick1Button0:KeyCode.Space);
+            HasJoystick() ? Input.GetAxis("Triggers") > 0.3 : Input.GetMouseButtonDown(0);
 
+        public bool GetTurretUp() =>
+            HasJoystick() ? Input.GetAxis("Triggers") > 0.3 : Input.GetMouseButtonUp(0);
+
+        public bool GetTurret() =>
+            HasJoystick() ? Input.GetAxis("Triggers") > 0.3 : Input.GetMouseButton(0);
+
+        public bool GetReloadingDown() =>
+            Input.GetKeyDown(HasJoystick() ? KeyCode.Joystick1Button2 : KeyCode.R);
+
+        public bool GetCannonDown() =>
+            Input.GetKeyDown(HasJoystick() ? KeyCode.Joystick1Button0 : KeyCode.Space);
+
+        public bool GetCannonUp() =>
+            Input.GetKeyUp(HasJoystick() ? KeyCode.Joystick1Button0 : KeyCode.Space);
+
+        public IEnumerator Vibrate(float duration = 0.35f)
+        {
+            if (HasJoystick())
+            {
+                Gamepad.current.SetMotorSpeeds(1f, 1f);
+                yield return new WaitForSeconds(duration);
+                Gamepad.current.ResetHaptics();
+            }
+        }
     }
 }

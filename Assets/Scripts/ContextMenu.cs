@@ -37,6 +37,7 @@ public class ContextMenu : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         CloseAccuracyMenu,
         BonusStop,
         BonusContinue,
+        CloseGame,
     }
 
     [SerializeField] private GameObject contextMenu, lockedContextMenu, canvas, mainBase;
@@ -259,6 +260,8 @@ public class ContextMenu : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
             GameObject.FindWithTag("wave_spawner").GetComponent<WaveSpawner>().shopMenu.SetActive(true);
             GameObject.FindWithTag("bonus_menu").SetActive(false);
         }
+        else if(type==ContextMenuType.CloseGame)
+            Application.Quit();
 
         if (contextMenu == null)
         {

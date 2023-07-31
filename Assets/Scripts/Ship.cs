@@ -107,7 +107,7 @@ public class Ship : MonoBehaviour
             return;
         }
 
-        const float range = 0.915f;
+        const float range = 0.85f;
         var currentPos = (Vector2)transform.position;
         var destination = new Vector2(
             x: Random.Range(-range, range),

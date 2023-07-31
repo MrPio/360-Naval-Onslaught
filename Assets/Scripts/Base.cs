@@ -1,15 +1,11 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using ExtensionsFunctions;
 using Managers;
-using Model;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Serialization;
-using Random = UnityEngine.Random;
+using UnityEngine.InputSystem;
 
 public class Base : MonoBehaviour
 {
@@ -70,6 +66,7 @@ public class Base : MonoBehaviour
     {
         if (Game.Health > 0 && !_invincible)
         {
+            StartCoroutine(In.Vibrate());
             Game.Health -= damage;
             damageAnimators.ForEach(animator => animator.SetTrigger(DamageHeavy));
             chromaticAberration.SetTrigger(Start1);

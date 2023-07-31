@@ -22,12 +22,12 @@ namespace Managers
                 name: "Base Turret", sprite: "Sprites/turret_1", fireClip: "Audio/turret_fire_1",
                 bulletSprite: "Sprites/bullet_1",
                 baseSpeed: 380 , baseRate: 300 , baseDamage: 20, baseAmmo: 32 , baseReload: 75 ,
-                speedBaseCost: 100, rateBaseCost: 160, damageBaseCost: 210, ammoBaseCost: 125, reloadBaseCost: 115,
+                speedBaseCost: 90, rateBaseCost: 140, damageBaseCost: 170, ammoBaseCost: 125, reloadBaseCost: 115,
                 speedLevelSteps: new Dictionary<int, int>
                 {
-                    { 3, 20 },
-                    { 5, 25 },
-                    { 10, 35 },
+                    { 3, 35 },
+                    { 5, 40 },
+                    { 10, 45 },
                     { 15, 50 },
                     { 20, 70 },
                     { 25, 85 },
@@ -36,15 +36,15 @@ namespace Managers
                 },
                 rateLevelSteps: new Dictionary<int, int>
                 {
-                    { 3, 2 },
-                    { 5, 3 },
-                    { 10, 4 },
+                    { 3, 20 },
+                    { 5, 30 },
+                    { 30, 40 },
 
                 },
                 damageLevelSteps: new Dictionary<int, int>
                 {
-                    { 3, 1 },
-                    { 5, 2 },
+                    { 3, 2 },
+                    { 5, 3 },
                     { 10, 3 },
                     { 15, 3 },
                     { 20, 4 },
@@ -79,25 +79,25 @@ namespace Managers
                 name: "Gatling Gun", sprite: "Sprites/turret_2", fireClip: "Audio/turret_fire_2",
                 bulletSprite: "Sprites/bullet_2",
                 baseSpeed: 600, baseRate: 1200, baseDamage: 12, baseAmmo: 80, baseReload: 115,
-                speedBaseCost: 200, rateBaseCost: 460, damageBaseCost: 580, ammoBaseCost: 185, reloadBaseCost: 225,
+                speedBaseCost: 200, rateBaseCost: 460, damageBaseCost: 430, ammoBaseCost: 185, reloadBaseCost: 225,
                 waveUnlock: 5,
                 speedLevelSteps: new Dictionary<int, int>
                 {
-                    { 3, 20 },
-                    { 5, 25 },
-                    { 10, 35 },
-                    { 15, 50 },
-                    { 20, 70 },
+                    { 3, 60 },
+                    { 5, 65 },
+                    { 10, 70 },
+                    { 15, 75 },
+                    { 20, 80 },
                     { 25, 85 },
                     { 30, 100 },
                     { 35, 125 },
                 },
                 rateLevelSteps: new Dictionary<int, int>
                 {
-                    { 3, 60 },
-                    { 5, 70 },
-                    { 10, 80 },
-                    { 15, 100 },
+                    { 3, 80 },
+                    { 5, 85 },
+                    { 10, 90 },
+                    { 15, 105 },
                     { 20, 120 },
                     { 25, 150 },
                     { 30, 180 },
@@ -218,7 +218,7 @@ namespace Managers
                 },
                 rateLevelSteps: new Dictionary<int, int>
                 {
-                    { 3, 100 },
+                    { 3, 150 },
                     { 5, 200 },
                     { 10, 300 },
                     { 15, 400 },
@@ -269,9 +269,9 @@ namespace Managers
                 waveUnlock: 20,
                 speedLevelSteps: new Dictionary<int, int>
                 {
-                    { 3, 2 },
-                    { 5, 3 },
-                    { 10, 4 },
+                    { 3, 35 },
+                    { 5, 40 },
+                    { 30, 50 },
                 },
                 rateLevelSteps: new Dictionary<int, int>
                 {
@@ -331,14 +331,14 @@ namespace Managers
                 {
                     { 3, 2 },
                     { 5, 3 },
-                    { 10, 4 },
+                    { 30, 4 },
 
 
                 },
                 damageLevelSteps: new Dictionary<int, int>
                 {
-                    { 3, 10 },
-                    { 5, 16 },
+                    { 3, 14 },
+                    { 5, 20 },
                     { 10, 24 },
                     { 15, 32 },
                     { 20, 40 },
@@ -374,7 +374,7 @@ namespace Managers
                 {
                     { 3, 2 },
                     { 5, 3 },
-                    { 10, 4 },
+                    { 30, 4 },
 
 
                 },
@@ -417,7 +417,7 @@ namespace Managers
                 {
                     { 3, 2 },
                     { 5, 3 },
-                    { 10, 4 },
+                    { 30, 4 },
 
 
                 },
@@ -460,7 +460,7 @@ namespace Managers
                 {
                     { 3, 2 },
                     { 5, 3 },
-                    { 10, 4 },
+                    { 30, 4 },
 
 
                 },
@@ -503,7 +503,7 @@ namespace Managers
                 {
                     { 3, 2 },
                     { 5, 3 },
-                    { 10, 4 },
+                    { 30, 4 },
 
                 },
                 damageLevelSteps: new Dictionary<int, int>
@@ -559,7 +559,7 @@ namespace Managers
             new(
                 name: "Submarine", sprite: "Sprites/ship_4", missileSprite: "Sprites/missile_1",
                 fireClip: new[] { "Audio/cannon_fire_4", "Audio/missile_coming" }, explodeClip: "Audio/ship_destroy",
-                baseSpeed: 65, baseRate: 7, baseDamage: 485, baseHealth: 782, baseMoney: 392,
+                baseSpeed: 65, baseRate: 9, baseDamage: 485, baseHealth: 712, baseMoney: 392,
                 hasPath: true, explosionsCount: 4,
                 startCallback: go =>
                 {
@@ -581,42 +581,43 @@ namespace Managers
             new(
                 name: "Aircraft Carrier", sprite: "Sprites/ship_5", missileSprite: "Sprites/missile_1",
                 fireClip: new[] { "Audio/cannon_fire_4", "Audio/missile_coming" }, explodeClip: "Audio/ship_destroy",
-                baseSpeed: 55, baseRate: 5, baseDamage: 625, baseHealth: 1820, baseMoney: 722,delayMultiplier:1.5f,
+                baseSpeed: 55, baseRate: 6, baseDamage: 625, baseHealth: 1820, baseMoney: 722,delayMultiplier:1.5f,
                 hasPath: true, explosionsCount: 9
                 ),
         };
 
         public readonly WaveModel[] Waves =
         {
+            // new(shipsChances: new List<float> { 0f, 0f, 0f, 0f, 1f },shipsCount:7),
             new(shipsChances: new List<float> { 0.75f, 1f, 1f, 1f, 1f },shipsCount:7),
             new(shipsChances: new List<float> { 0.65f, 0.9f, 1f, 1f , 1f},shipsCount:9),
             new(shipsChances: new List<float> { 0.5f, 0.8f, 1f, 1f , 1f},shipsCount:12),
-            new(shipsChances: new List<float> { 1f, 1f, 1f, 1f, 1f },shipsCount:11,spawnSpeedMultiply:1.8f),
-            new(shipsChances: new List<float> { 0.35f, 0.5f, 0.8f, 1f, 1f },shipsCount:18),
+            new(shipsChances: new List<float> { 1f, 1f, 1f, 1f, 1f },shipsCount:12,spawnSpeedMultiply:1.8f),
+            new(shipsChances: new List<float> { 0.35f, 0.5f, 0.885f, 1f, 1f },shipsCount:17),
             
             new(shipsChances: new List<float> { 0.55f, 0.7f, 0.8f, 0.94f, 1f },shipsCount:12),
-            new(shipsChances: new List<float> { 1f, 1f, 1f, 1f, 1f },shipsCount:14,spawnSpeedMultiply:2f),
+            new(shipsChances: new List<float> { 1f, 1f, 1f, 1f, 1f },shipsCount:22,spawnSpeedMultiply:2f),
             new(shipsChances: new List<float> { 0.45f, 0.6f, 0.86f, 0.92f, 1f },shipsCount:15),
             new(shipsChances: new List<float> { 0.25f, 0.4f, 0.75f, 0.88f, 1f },shipsCount:14),
-            new(shipsChances: new List<float> { 0.35f, 0.45f, 0.66f, 0.88f, 1f },shipsCount:22),
+            new(shipsChances: new List<float> { 0.35f, 0.45f, 0.66f, 0.88f, 1f },shipsCount:21),
 
             new(shipsChances: new List<float> { 0.15f, 0.3f, 0.65f, 0.88f, 1f },shipsCount:14),
-            new(shipsChances: new List<float> { 1f, 1f, 1f, 1f, 1f },shipsCount:19,spawnSpeedMultiply:2.25f),
+            new(shipsChances: new List<float> { 1f, 1f, 1f, 1f, 1f },shipsCount:24,spawnSpeedMultiply:2.55f),
             new(shipsChances: new List<float> { 0.35f, 0.4f, 0.75f, 0.9f, 1f },shipsCount:16),
             new(shipsChances: new List<float> { 0.1f, 0.2f, 0.8f, 0.85f, 1f },shipsCount:18),
-            new(shipsChances: new List<float> { 0.15f, 0.25f, 0.65f, 0.85f, 1f },shipsCount:22),
+            new(shipsChances: new List<float> { 0.15f, 0.25f, 0.75f, 0.85f, 1f },shipsCount:22),
 
             new(shipsChances: new List<float> { 0.15f, 0.3f, 0.4f, 0.8f, 1f },shipsCount:17),
             new(shipsChances: new List<float> { 0.8f, 0.8f, 0.8f, 0.8f, 1f },shipsCount:16,spawnSpeedMultiply:2.5f),
             new(shipsChances: new List<float> { 0.35f, 0.4f, 0.75f, 0.9f, 1f },shipsCount:22),
             new(shipsChances: new List<float> { 0.1f, 0.2f, 0.3f, 0.75f, 1f },shipsCount:17),
-            new(shipsChances: new List<float> { 0.15f, 0.25f, 0.35f, 0.85f, 1f },shipsCount:24),
+            new(shipsChances: new List<float> { 0.15f, 0.25f, 0.7f, 0.85f, 1f },shipsCount:24),
 
-            new(shipsChances: new List<float> { 0.15f, 0.2f, 0.65f, 0.85f, 1f },shipsCount:11),
-            new(shipsChances: new List<float> { 0.15f, 0.2f, 0.65f, 0.85f, 1f },shipsCount:17),
-            new(shipsChances: new List<float> { 0.35f, 0.4f, 0.75f, 0.9f, 1f },shipsCount:22),
+            new(shipsChances: new List<float> { 0.25f, 0.38f, 0.885f, 0.925f, 1f },shipsCount:11),
+            new(shipsChances: new List<float> { 0.25f, 0.38f, 0.885f, 0.925f, 1f },shipsCount:16),
+            new(shipsChances: new List<float> { 0.35f, 0.4f, 0.85f, 0.9f, 1f },shipsCount:22),
             new(shipsChances: new List<float> { 0.1f, 0.2f, 0.65f, 0.75f, 1f },shipsCount:26),
-            new(shipsChances: new List<float> { 0.15f, 0.25f, 0.6f, 0.85f, 1f },shipsCount:34),
+            new(shipsChances: new List<float> { 0.15f, 0.25f, 0.7f, 0.85f, 1f },shipsCount:50),
         };
     }
 }
