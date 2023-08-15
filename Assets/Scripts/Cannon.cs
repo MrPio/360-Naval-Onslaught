@@ -43,6 +43,9 @@ public class Cannon : MonoBehaviour
 
     private void Update()
     {
+        // Rotate with mouse movement
+        transform.rotation = In.GetInput().ToQuaternion();
+        
         _fireAccumulator += Time.deltaTime;
         if (In.GetCannonDown())
         {

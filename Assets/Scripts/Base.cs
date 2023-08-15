@@ -31,8 +31,7 @@ public class Base : MonoBehaviour
 
     private void Update()
     {
-        transform.rotation = In.GetInput().ToQuaternion();
-        //MainCamera.MainCam.AngleToMouse(transform.position);
+        // transform.rotation = In.GetInput().ToQuaternion();
 
         for (var i = 0; i < 4; i++)
         {

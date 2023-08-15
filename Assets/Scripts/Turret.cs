@@ -30,6 +30,9 @@ public class Turret : MonoBehaviour
 
     private void Update()
     {
+        // Rotate with mouse movement
+        transform.rotation = In.GetInput().ToQuaternion();
+
         var currentFireInput = In.GetTurret();
         _fireAccumulator += Time.deltaTime;
         if (currentFireInput&& !_lastFireInput && Game.Ammo <= 0)
@@ -46,12 +49,13 @@ public class Turret : MonoBehaviour
                 Fire(leftSpawnPoint);
                 Fire(rightSpawnPoint);
             }
-
+            print(_fireClip.name);
             bulletAudioSource.PlayOneShot(_fireClip);
         }
 
         if (_lastFireInput && !currentFireInput)
         {
+            if(_isLaserFiring)
             bulletAudioSource.Stop();
             _isLaserFiring = false;
             _fireAccumulator += 99999f;

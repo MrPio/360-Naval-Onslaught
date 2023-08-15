@@ -39,6 +39,7 @@ public class Ship : MonoBehaviour
     private static readonly int MilitaryPlaneTakeoff = Animator.StringToHash("military_plane_takeoff");
     [NonSerialized] public bool isVisible;
     private bool _withBaseCollided;
+
     private void Awake()
     {
         _model = Game.CurrentWave.Spawn();
@@ -224,6 +225,8 @@ public class Ship : MonoBehaviour
         else if (other.CompareTag("ship"))
         {
             var otherShip = other.GetComponent<Ship>();
+            if (Invincible || otherShip.Invincible)
+                return;
             if (!Collisions.Exists(it => it.Contains(CurrentIndex) && it.Contains(otherShip.CurrentIndex)))
             {
                 // Handling collision with another ship

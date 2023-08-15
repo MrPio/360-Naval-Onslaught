@@ -39,6 +39,7 @@ public class WaveSpawner : MonoBehaviour
         winMenu;
 
     [NonSerialized] public bool isPaused;
+    [SerializeField] private bool isDebug;
 
     public GameObject howToPlayMenu, overlay, mainMenu, gameOver, specialsMenu, shopMenu, bonusMenu;
 
@@ -55,21 +56,22 @@ public class WaveSpawner : MonoBehaviour
 
     private void Start()
     {
-        // TODO UNCOMMENT
-        baseMain.SetActive(false);
-        baseHealthSlider.SetActive(false);
-        newWave.SetActive(true);
-        mainMenu.SetActive(true);
-        gameOver.SetActive(false);
-        specialsMenu.SetActive(false);
+        if (!isDebug)
+        {
+            baseMain.SetActive(false);
+            baseHealthSlider.SetActive(false);
+            newWave.SetActive(true);
+            mainMenu.SetActive(true);
+            gameOver.SetActive(false);
+            specialsMenu.SetActive(false);
+        }
 
         audioSource.Stop();
         audioSource.clip = mainMenuClip;
         audioSource.Play();
 
-
-        // TODO COMMENT
-        // BeginWave();
+        if (isDebug)
+            BeginWave();
     }
 
     private void FixedUpdate()
@@ -103,14 +105,14 @@ public class WaveSpawner : MonoBehaviour
 
         ++Game.CurrentWave.Spawned;
 
-        var immediateSpawnChance = 0.1 + 0.25 * Game.WaveFactor;
+        var immediateSpawnChance = 0.1 + 0.185 * Game.WaveFactor;
 
         _nextSpawn = Random.Range(0f, 1f) < immediateSpawnChance
             ? 0f
-            : (2f + Random.Range(0, 6f * (1 - 0.45f*Game.WaveFactor))) / _model.SpawnSpeedMultiply;
+            : (2.25f + Random.Range(0, 6f * (1 - 0.35f * Game.WaveFactor))) / _model.SpawnSpeedMultiply;
     }
 
-    private void EndWave()  
+    private void EndWave()
     {
         _model = null;
         Game.Score += 1000;
@@ -154,7 +156,8 @@ public class WaveSpawner : MonoBehaviour
         bonusMenu.SetActive(false);
         winMenu.SetActive(false);
         baseHealthSlider.SetActive(false);
-        // baseMain.SetActive(true);//TODO comment
+        if (isDebug)
+            baseMain.SetActive(true);
         _model = Game.CurrentWave;
         _waveStart = Time.time;
         _accumulator = 0;
@@ -166,11 +169,13 @@ public class WaveSpawner : MonoBehaviour
         Game.CurrentWaveCannonFired = 0;
         Game.CurrentWaveCannonHit = 0;
 
-        // TODO UNCOMMENT
         // New Wave Sign
-        newWave.SetActive(true);
-        newWave.transform.Find("new_wave_text").GetComponent<TextMeshProUGUI>().text = $"Wave {Game.Wave + 1}";
-        newWave.GetComponent<Animator>().SetTrigger(Start1);
+        if (!isDebug)
+        {
+            newWave.SetActive(true);
+            newWave.transform.Find("new_wave_text").GetComponent<TextMeshProUGUI>().text = $"Wave {Game.Wave + 1}";
+            newWave.GetComponent<Animator>().SetTrigger(Start1);
+        }
 
         audioSource.Stop();
         audioSource.clip = levelsClip.RandomItem();
