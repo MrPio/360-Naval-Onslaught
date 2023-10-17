@@ -19,6 +19,7 @@ public class AmmoCounter : MonoBehaviour
 
     private void Start()
     {
+        Game.Ammo = TurretModel.Ammo;
         UpdateUI();
     }
 

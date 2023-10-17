@@ -13,7 +13,6 @@ namespace Managers
 
         private GameManager()
         {
-            Ammo = CurrentTurretModel.Ammo;
             CannonAmmo = 1;
             Health = MaxHealth;
         }
@@ -27,10 +26,11 @@ namespace Managers
         private int _repairLevel = 1;
         public int HealthLevel = 1;
         public int Wave = 0;
+        public int SpecialWave = -1;
         public int Ammo, CannonAmmo;
         public int Money = 0;
-        public int CurrentTurret = 3;
-        public int CurrentCannon = 2;
+        public int CurrentTurret = 4;
+        public int CurrentCannon = 4;
         public int Score;
         public int HealthStep => (int)(_healthBaseStep * (1f + 0.25f * HealthLevel));
         public int HealthCost => (int)(_healthBaseCost * (1f + 0.35f * HealthLevel));
@@ -44,6 +44,7 @@ namespace Managers
         public float CurrentWaveTurretAccuracy => CurrentWaveTurretHit / (float)CurrentWaveTurretFired;
         public float CurrentWaveCannonAccuracy => CurrentWaveCannonHit / (float)CurrentWaveCannonFired;
         public bool HasBonus => CurrentWaveCannonAccuracy >= 0.75 && CurrentWaveTurretAccuracy >= 0.75f;
+        public bool IsSpecialWave => SpecialWave >= 0;
 
         public TurretModel CurrentTurretModel => Data.Turrets[CurrentTurret];
         public CannonModel CurrentCannonModel => Data.Cannons[CurrentCannon];

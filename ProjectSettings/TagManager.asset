@@ -24,6 +24,7 @@ TagManager:
   - pause_menu
   - accuracy_menu
   - bonus_menu
+  - laser
   layers:
   - Default
   - TransparentFX

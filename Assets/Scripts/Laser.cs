@@ -16,6 +16,7 @@ public class Laser : MonoBehaviour
     private List<Ship> _strickenShips = new List<Ship>();
     private AmmoCounter _ammoCounter;
     [NonSerialized] public Transform Arm = null, Turret = null;
+    [NonSerialized] public bool IsFreezed = false;
 
     private void Start()
     {
@@ -24,6 +25,8 @@ public class Laser : MonoBehaviour
 
     private void Update()
     {
+        if(IsFreezed)
+            return;
         if (Arm is { })
             transform.SetPositionAndRotation(Arm.position, MainCamera.MainCam.AngleToMouse(Turret.position));
 
@@ -55,6 +58,8 @@ public class Laser : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D col)
     {
+        if(IsFreezed)
+            return;
         if (col.gameObject.CompareTag("ship"))
         {
             var ship = col.gameObject.GetComponent<Ship>();
@@ -65,6 +70,8 @@ public class Laser : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D col)
     {
+        if(IsFreezed)
+            return;
         if (col.gameObject.CompareTag("ship"))
         {
             var ship = col.gameObject.GetComponent<Ship>();

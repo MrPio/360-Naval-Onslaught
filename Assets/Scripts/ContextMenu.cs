@@ -238,6 +238,10 @@ public class ContextMenu : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
                 ship.GetComponent<Ship>().IsFreezed = false;
                 ship.GetComponent<ShipPath>().IsFreezed = false;
             }
+            foreach (var bullet in GameObject.FindGameObjectsWithTag("bullet"))
+                bullet.GetComponent<Bullet>().IsFrozen = false;
+            foreach (var laser in GameObject.FindGameObjectsWithTag("laser"))
+                laser.GetComponent<Laser>().IsFreezed = false;
         }
         else if (type == ContextMenuType.CloseAccuracyMenu)
         {

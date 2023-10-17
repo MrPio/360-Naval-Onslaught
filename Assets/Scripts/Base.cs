@@ -20,6 +20,7 @@ public class Base : MonoBehaviour
     [SerializeField] private Animator chromaticAberration;
     [SerializeField] private SpecialsCounter specialsCounter;
     [SerializeField] private GameObject pauseMenu;
+    [SerializeField] private LowHealthHUD lowHealthHUD;
     private bool _invincible;
     private float lastSpecialUsed;
     private bool[] _lastSpecialInput = new[] { false, false, false, false };
@@ -40,7 +41,8 @@ public class Base : MonoBehaviour
             _lastSpecialInput[i] = In.SpecialDown(i);
         }
 
-        if (Input.GetKeyDown(KeyCode.P) || Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.Joystick1Button6))
+        if (Input.GetKeyDown(KeyCode.P) || Input.GetKeyDown(KeyCode.Escape) ||
+            Input.GetKeyDown(KeyCode.Joystick1Button6))
         {
             pauseMenu.SetActive(true);
             GameObject.FindWithTag("wave_spawner").GetComponent<WaveSpawner>().isPaused = true;
@@ -49,6 +51,11 @@ public class Base : MonoBehaviour
                 ship.GetComponent<Ship>().IsFreezed = true;
                 ship.GetComponent<ShipPath>().IsFreezed = true;
             }
+
+            foreach (var bullet in GameObject.FindGameObjectsWithTag("bullet"))
+                bullet.GetComponent<Bullet>().IsFrozen = true;
+            foreach (var laser in GameObject.FindGameObjectsWithTag("laser"))
+                laser.GetComponent<Laser>().IsFreezed = true;
 
             gameObject.SetActive(false);
         }
@@ -67,10 +74,12 @@ public class Base : MonoBehaviour
         {
             StartCoroutine(In.Vibrate());
             Game.Health -= damage;
+            var fraction = Game.Health / (float)Game.MaxHealth;
             damageAnimators.ForEach(animator => animator.SetTrigger(DamageHeavy));
             chromaticAberration.SetTrigger(Start1);
             healthBar.gameObject.SetActive(true);
-            healthBar.SetValue(Game.Health / (float)Game.MaxHealth);
+            healthBar.SetValue(fraction);
+            lowHealthHUD.Evaluate(fraction);
             if (Game.Health <= 0)
                 StartCoroutine(GameOver());
         }

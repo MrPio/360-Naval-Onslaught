@@ -7,7 +7,7 @@ namespace Model
 {
     public class TurretModel
     {
-        private static GameManager GameManager => GameManager.Instance;
+        private static GameManager Game => GameManager.Instance;
 
         public readonly string Name;
         public readonly string Sprite;
@@ -21,10 +21,12 @@ namespace Model
         private int _baseAmmo;
         private int _baseReload;
 
+        private int ammo;
+        private int rate;
         public int Speed;
-        public int Rate;
+        public int Rate => (int)(rate * (Game.IsSpecialWave ? 3f : 1f));
         public int Damage;
-        public int Ammo;
+        public int Ammo => Game.IsSpecialWave ? 9999 : ammo;
         public int Reload;
 
         public int SpeedLevel = 1;
@@ -68,9 +70,9 @@ namespace Model
             _baseAmmo = baseAmmo;
             _baseReload = baseReload;
             Speed = _baseSpeed;
-            Rate = _baseRate;
+            rate = _baseRate;
             Damage = _baseDamage;
-            Ammo = _baseAmmo;
+            ammo = _baseAmmo;
             Reload = _baseReload;
             SpeedLevelSteps = speedLevelSteps;
             RateLevelSteps = rateLevelSteps;
@@ -88,9 +90,9 @@ namespace Model
 
         public void BuySpeed()
         {
-            if (GameManager.Money >= SpeedCost)
+            if (Game.Money >= SpeedCost)
             {
-                GameManager.Money -= SpeedCost;
+                Game.Money -= SpeedCost;
                 Speed += SpeedLevelSteps.Where(entry => entry.Key >= SpeedLevel).ElementAt(0).Value;
                 ++SpeedLevel;
             }
@@ -98,19 +100,19 @@ namespace Model
 
         public void BuyRate()
         {
-            if (GameManager.Money >= RateCost)
+            if (Game.Money >= RateCost)
             {
-                GameManager.Money -= RateCost;
-                Rate += RateLevelSteps.Where(entry => entry.Key >= RateLevel).ElementAt(0).Value;
+                Game.Money -= RateCost;
+                rate += RateLevelSteps.Where(entry => entry.Key >= RateLevel).ElementAt(0).Value;
                 ++RateLevel;
             }
         }
 
         public void BuyDamage()
         {
-            if (GameManager.Money >= DamageCost)
+            if (Game.Money >= DamageCost)
             {
-                GameManager.Money -= DamageCost;
+                Game.Money -= DamageCost;
                 Damage += DamageLevelSteps.Where(entry => entry.Key >= DamageLevel).ElementAt(0).Value;
                 ++DamageLevel;
             }
@@ -118,24 +120,24 @@ namespace Model
 
         public void BuyAmmo()
         {
-            if (GameManager.Money >= AmmoCost)
+            if (Game.Money >= AmmoCost)
             {
-                GameManager.Money -= AmmoCost;
-                Ammo += AmmoLevelSteps.Where(entry => entry.Key >= AmmoLevel).ElementAt(0).Value;
+                Game.Money -= AmmoCost;
+                ammo += AmmoLevelSteps.Where(entry => entry.Key >= AmmoLevel).ElementAt(0).Value;
                 ++AmmoLevel;
             }
         }
 
         public void BuyReload()
         {
-            if (GameManager.Money >= ReloadCost)
+            if (Game.Money >= ReloadCost)
             {
-                GameManager.Money -= ReloadCost;
+                Game.Money -= ReloadCost;
                 Reload += ReloadLevelSteps.Where(entry => entry.Key >= ReloadLevel).ElementAt(0).Value;
                 ++ReloadLevel;
             }
         }
 
-        public bool IsLocked => GameManager.Wave < WaveUnlock;
+        public bool IsLocked => Game.Wave < WaveUnlock;
     }
 }

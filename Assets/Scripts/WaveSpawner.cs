@@ -21,10 +21,10 @@ public class WaveSpawner : MonoBehaviour
     [SerializeField] private int pathsSize = 1;
     [NonSerialized] public List<int> PathsOrder;
     private static readonly int Start1 = Animator.StringToHash("start");
-    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioSource audioSource, specialAudioSource;
 
     [SerializeField] private AudioClip winClip, mainMenuClip;
-    [SerializeField] private List<AudioClip> levelsClip;
+    [SerializeField] private List<AudioClip> levelsClip, specialLevelsClip;
 
     [SerializeField] private GameObject waveCounter,
         baseMain,
@@ -40,6 +40,12 @@ public class WaveSpawner : MonoBehaviour
 
     [NonSerialized] public bool isPaused;
     [SerializeField] private bool isDebug;
+    [SerializeField] private List<Transform> specialPaths;
+    [NonSerialized] private List<Transform> currentSpecialPoints;
+    [NonSerialized] private int specialSpawned = 0;
+    [SerializeField] private GameObject WarningPanel;
+    [SerializeField] private Animator CameraAnimator;
+
 
     public GameObject howToPlayMenu, overlay, mainMenu, gameOver, specialsMenu, shopMenu, bonusMenu;
 
@@ -81,17 +87,88 @@ public class WaveSpawner : MonoBehaviour
             if (!isPaused)
                 _accumulator += Time.fixedDeltaTime;
 
-            if (!Game.CurrentWave.HasMore() && _accumulator > 4f &&
-                Game.CurrentWave.Destroyed >= Game.CurrentWave.ShipsCount)
-                EndWave();
-            else if (!Game.CurrentWave.HasMore() && Game.CurrentWave.Destroyed < Game.CurrentWave.ShipsCount)
-                _accumulator = 0;
-            else if (Game.CurrentWave.HasMore() && _accumulator >= _nextSpawn)
+            if (!Game.IsSpecialWave)
             {
-                _accumulator = 0;
-                SpawnShip();
+                if (!Game.CurrentWave.HasMore() && _accumulator > 4f &&
+                    Game.CurrentWave.Destroyed >= Game.CurrentWave.ShipsCount)
+                    EndWave();
+                else if (!Game.CurrentWave.HasMore() && Game.CurrentWave.Destroyed < Game.CurrentWave.ShipsCount)
+                    _accumulator = 0;
+                else if (Game.CurrentWave.HasMore() && _accumulator >= _nextSpawn)
+                {
+                    _accumulator = 0;
+                    SpawnShip();
+                }
+            }
+            else
+            {
+                // Spawn ship in special wave
+                if (_accumulator >= 0.5 - 0.25f * ((float)specialSpawned / currentSpecialPoints.Count) &&
+                    specialSpawned < currentSpecialPoints.Count)
+                {
+                    SpawnSpecial();
+                    _accumulator = 0;
+                }
+                // End special wave
+                else if (_accumulator >= 7f && specialSpawned >= currentSpecialPoints.Count)
+                {
+                    _accumulator = -4f;
+                    Game.SpecialWave = -1;
+                    specialSpawned = 0;
+                    specialAudioSource.Stop();
+                    audioSource.Play();
+                    WarningPanel.SetActive(false);
+                    Game.Ammo = Game.CurrentTurretModel.Ammo;
+                    ammoContainer.GetComponentsInChildren<AmmoCounter>()[0].UpdateUI();
+                    CameraAnimator.SetTrigger("stop_shake");
+                    MainCamera.MainCam.GetComponent<MainCamera>().TransitionTo(Vector2.zero);
+                }
             }
         }
+
+        if (Input.GetKeyDown(KeyCode.L))
+            BeginSpecialWave();
+    }
+
+    public void BeginSpecialWave()
+    {
+        if (Game.IsSpecialWave)
+            return;
+
+        WarningPanel.SetActive(true);
+        var specialWave = Random.Range(0, specialPaths.Count);
+        var path = specialPaths[specialWave];
+        currentSpecialPoints = path.GetComponentsInChildren<Transform>()
+            .Where(tr => tr != path)
+            .ToList();
+
+        if (specialWave == 1)
+            MainCamera.MainCam.GetComponent<MainCamera>().TransitionTo(Vector2.up * 3f);
+        // Destroy current ships
+        foreach (var ship in GameObject.FindGameObjectsWithTag("ship").Select(it => it.GetComponent<Ship>()))
+            if (ship.Invincible)
+                Destroy(ship.gameObject);
+            else
+                ship.TakeDamage(int.MaxValue);
+        CameraAnimator.SetTrigger("shake");
+
+        _accumulator = -3f;
+        Game.SpecialWave = specialWave;
+        Game.Ammo = Game.CurrentTurretModel.Ammo;
+        ammoContainer.GetComponentsInChildren<AmmoCounter>()[0].UpdateUI();
+
+        audioSource.Pause();
+        specialAudioSource.clip = specialLevelsClip.RandomItem();
+        specialAudioSource.Play();
+    }
+
+    private void SpawnSpecial()
+    {
+        var pos = currentSpecialPoints[specialSpawned].position;
+        var newShip = Instantiate(ship).GetComponent<Ship>();
+        newShip.boxCollider.size = newShip.spriteRenderer.bounds.size;
+        newShip.transform.SetPositionAndRotation(pos, pos.ToQuaternion());
+        ++specialSpawned;
     }
 
     private void SpawnShip()

@@ -105,7 +105,7 @@ public class Turret : MonoBehaviour
             {
                 MainCamera.AudioSource.PlayOneShot(reloadFinish);
                 Game.Ammo = Game.CurrentTurretModel.Ammo;
-                GameObject.FindWithTag("ammo_counter").GetComponent<AmmoCounter>().UpdateUI();
+                GameObject.FindWithTag("ammo_counter")?.GetComponent<AmmoCounter>()?.UpdateUI();
             });
     }
 }

@@ -56,7 +56,7 @@ public class Cannon : MonoBehaviour
 
         if (_isAiming && Game.CannonAmmo > 0)
         {
-            // La prima volta creo il crosshair
+            // The first time I create the crosshair
             if (_crosshair is null || _crosshair.IsDestroyed())
             {
                 _fireAccumulator = 0;
@@ -66,7 +66,7 @@ public class Cannon : MonoBehaviour
                     position: spawnPoint.position,
                     rotation: Quaternion.identity
                 );
-                crosshair.transform.localScale = Vector3.one * (Mathf.Pow(Model.Radius / 26f, 0.75f));
+                _crosshair.transform.localScale = Vector3.one * (Mathf.Pow(Model.Radius / 26f, 0.75f));
             }
 
             // Crosshair Movement

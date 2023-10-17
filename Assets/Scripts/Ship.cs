@@ -34,7 +34,7 @@ public class Ship : MonoBehaviour
     [NonSerialized] public bool IsFreezed;
     private float _accumulator;
     [NonSerialized] public bool Invincible = true;
-    [NonSerialized] public int CurrentIndex;
+    [NonSerialized] public int CurrentIndex=-1;
     private float _randomAdditionalDelay;
     private static readonly int MilitaryPlaneTakeoff = Animator.StringToHash("military_plane_takeoff");
     [NonSerialized] public bool isVisible;
@@ -42,7 +42,7 @@ public class Ship : MonoBehaviour
 
     private void Awake()
     {
-        _model = Game.CurrentWave.Spawn();
+        _model = Game.IsSpecialWave?DataManager.Instance.Ships[0]:Game.CurrentWave.Spawn();
         spriteRenderer.sprite = Resources.Load<Sprite>(_model.Sprite);
         if (_model.ExplodeClip != null)
             _explodeClip = Resources.Load<AudioClip>(_model.ExplodeClip);
@@ -57,7 +57,7 @@ public class Ship : MonoBehaviour
         // Custom Path for SpeedBoat
         if (_model.Name == "SpeedBoat")
             GetComponent<ShipPath>().AddPath(
-                Random.Range(0, 2) == 0
+                Game.IsSpecialWave || Random.Range(0, 2) == 0
                     ? new List<Vector2> { Vector2.zero }
                     : new List<Vector2>
                     {
@@ -222,7 +222,7 @@ public class Ship : MonoBehaviour
             GameObject.FindWithTag("base").GetComponent<Base>().TakeDamage(_model.Damage);
             Explode(false);
         }
-        else if (other.CompareTag("ship"))
+        else if (CurrentIndex!=-1 && other.CompareTag("ship"))
         {
             var otherShip = other.GetComponent<Ship>();
             if (Invincible || otherShip.Invincible)
@@ -250,7 +250,7 @@ public class Ship : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        if (other.CompareTag("ship"))
+        if (CurrentIndex!=-1 && other.CompareTag("ship"))
         {
             var otherShip = other.GetComponent<Ship>();
             Collisions.RemoveAll(it => it.Contains(CurrentIndex) && it.Contains(otherShip.CurrentIndex));
