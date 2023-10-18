@@ -125,18 +125,15 @@ public class WaveSpawner : MonoBehaviour
                 }
             }
         }
-
-        if (Input.GetKeyDown(KeyCode.L))
-            BeginSpecialWave();
     }
 
     public void BeginSpecialWave()
     {
         if (Game.IsSpecialWave)
             return;
-
-        WarningPanel.SetActive(true);
+        
         var specialWave = Random.Range(0, specialPaths.Count);
+        Game.SpecialWave = specialWave;
         var path = specialPaths[specialWave];
         currentSpecialPoints = path.GetComponentsInChildren<Transform>()
             .Where(tr => tr != path)
@@ -153,9 +150,9 @@ public class WaveSpawner : MonoBehaviour
         CameraAnimator.SetTrigger("shake");
 
         _accumulator = -3f;
-        Game.SpecialWave = specialWave;
         Game.Ammo = Game.CurrentTurretModel.Ammo;
         ammoContainer.GetComponentsInChildren<AmmoCounter>()[0].UpdateUI();
+        WarningPanel.SetActive(true);
 
         audioSource.Pause();
         specialAudioSource.clip = specialLevelsClip.RandomItem();

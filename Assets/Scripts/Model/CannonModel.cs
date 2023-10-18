@@ -22,10 +22,10 @@ namespace Model
         private int speed;
         private int reload;
         private int radius;
-        public int Speed => (int)(speed * (Game.IsSpecialWave ? 2.5f : 1f));
+        public int Speed => (int)(speed * (Game.IsSpecialWave ? 3f : 1f));
         public int Damage;
-        public int Reload => (int)(reload * (Game.IsSpecialWave ? 3f : 1f));
-        public int Radius => (int)(radius * (Game.IsSpecialWave ? 2.25f : 1f));
+        public int Reload => (int)(reload * (Game.IsSpecialWave ? 5f : 1f));
+        public int Radius => (int)(radius * (Game.IsSpecialWave ? 3.25f : 1f));
 
         public int SpeedLevel = 1;
         public int DamageLevel = 1;

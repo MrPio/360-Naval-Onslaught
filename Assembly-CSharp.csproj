@@ -42,6 +42,7 @@
   </PropertyGroup>
   <ItemGroup>
      <Compile Include="Assets\Scripts\Laser.cs" />
+     <Compile Include="Assets\Scripts\Enableable.cs" />
      <Compile Include="Assets\Scripts\Cloud.cs" />
      <Compile Include="Assets\Scripts\ExtensionsFunctions\CameraExtensions.cs" />
      <Compile Include="Assets\Scripts\Cannon.cs" />
@@ -58,6 +59,7 @@
      <Compile Include="Assets\Scripts\NewWave.cs" />
      <Compile Include="Assets\Scripts\MoneyCounter.cs" />
      <Compile Include="Assets\Scripts\CloudSpawner.cs" />
+     <Compile Include="Assets\Scripts\Destroyable.cs" />
      <Compile Include="Assets\Scripts\ReloadBar.cs" />
      <Compile Include="Assets\Scripts\Model\TurretModel.cs" />
      <Compile Include="Assets\Scripts\WaveSpawner.cs" />
@@ -65,6 +67,7 @@
      <Compile Include="Assets\Scripts\ExtensionsFunctions\ListExtensions.cs" />
      <Compile Include="Assets\Scripts\Ship.cs" />
      <Compile Include="Assets\Scripts\HealthBar.cs" />
+     <Compile Include="Assets\Scripts\LowHealthHUD.cs" />
      <Compile Include="Assets\Scripts\AmmoCounter.cs" />
      <Compile Include="Assets\Scripts\Model\CannonModel.cs" />
      <Compile Include="Assets\Scripts\ExtensionsFunctions\VectorExtensions.cs" />
@@ -80,16 +83,11 @@
      <Compile Include="Assets\Scripts\Plane.cs" />
      <Compile Include="Assets\Scripts\CannonBall.cs" />
      <Compile Include="Assets\Scripts\SmallCannonBall.cs" />
-     <Compile Include="Assets\AssetStore\Simple Water Shader\Info\Scripts\Readme.cs" />
      <Compile Include="Assets\Scripts\Missile.cs" />
      <Compile Include="Assets\Scripts\Explosion.cs" />
-     <Compile Include="Assets\AssetStore\Simple Water Shader\Resources\WaterReflection.cs" />
      <Compile Include="Assets\Scripts\Model\WaveModel.cs" />
      <Compile Include="Assets\Scripts\Managers\DataManager.cs" />
      <Compile Include="Assets\Scripts\Bullet.cs" />
-     <Compile Include="Assets\Destroyable.cs" />
-     <Compile Include="Assets\Enableable.cs" />
-     <Compile Include="Assets\LowHealthHUD.cs" />
      <Folder Include="Assets" />
      <Folder Include="Assets\Resources\Sprites\hud" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
@@ -104,11 +102,9 @@
      <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap.shader" />
      <Folder Include="Assets\Scripts" />
      <Folder Include="Assets\Resources\Sprites\inputs\Others\Amazon Luna" />
-     <Folder Include="Assets\AssetStore" />
      <Folder Include="Assets\Scenes" />
      <Folder Include="Assets\Prefabs\Paths" />
      <Folder Include="Assets\Resources\Fonts" />
-     <Folder Include="Assets\AssetStore\Simple Water Shader\Info" />
      <Folder Include="Assets\TextMesh Pro\Resources\Fonts &amp; Materials" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro_Mobile.cginc" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF SSD.shader" />
@@ -117,7 +113,6 @@
      <Folder Include="Assets\Resources\Sprites\inputs\Others\VR\Oculus" />
      <Folder Include="Assets\Resources\Sprites\inputs\Keyboard &amp; Mouse" />
      <Folder Include="Assets\Resources\Sprites\inputs\Xbox Series X" />
-     <Folder Include="Assets\AssetStore\Simple Water Shader\Prefabs" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Surface-Mobile.shader" />
      <Folder Include="Assets\Scenes\SampleScene" />
      <Folder Include="Assets\TextMesh Pro" />
@@ -133,7 +128,6 @@
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Surface.shader" />
      <None Include="Assets\TextMesh Pro\Sprites\EmojiOne Attribution.txt" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap-Custom-Atlas.shader" />
-     <Folder Include="Assets\AssetStore\Simple Water Shader" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF.shader" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile SSD.shader" />
      <None Include="Assets\TextMesh Pro\Resources\LineBreaking Leading Characters.txt" />
@@ -145,17 +139,14 @@
      <Folder Include="Assets\TextMesh Pro\Shaders" />
      <Folder Include="Assets\Resources\Sprites\inputs" />
      <Folder Include="Assets\TextMesh Pro\Resources\Style Sheets" />
-     <Folder Include="Assets\AssetStore\Simple Water Shader\Info\Scripts" />
      <Folder Include="Assets\TextMesh Pro\Fonts" />
      <Folder Include="Assets\Scripts\Model" />
-     <Folder Include="Assets\AssetStore\Simple Water Shader\Info\Icons" />
      <None Include="Assets\TextMesh Pro\Resources\LineBreaking Following Characters.txt" />
      <Folder Include="Assets\Resources\Audio\cfm" />
      <Folder Include="Assets\Scripts\Managers" />
      <Folder Include="Assets\Resources\Sprites" />
      <Folder Include="Assets\Scenes\SampleScene_Profiles" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Masking.shader" />
-     <Folder Include="Assets\AssetStore\Simple Water Shader\Resources" />
      <Folder Include="Assets\Resources\Audio" />
      <Folder Include="Assets\Prefabs" />
      <Folder Include="Assets\Scripts\ExtensionsFunctions" />

@@ -11,6 +11,7 @@ public class MainCamera : MonoBehaviour
     private float _transitionAcc;
     private Vector2? transitionTo, transitionFrom;
     [SerializeField] private float transitionDuration = 3f;
+    private Vector2 basePos = Vector2.zero;
 
     private void Start()
     {
@@ -61,10 +62,14 @@ public class MainCamera : MonoBehaviour
 
     private void FixedUpdate()
     {
+        // Mouse movement following
+        var direction = ((Vector2)MainCam.ScreenToViewportPoint(Input.mousePosition) - new Vector2(0.5f, 0.5f));
+        var biased = direction.normalized * (Mathf.Pow(direction.magnitude, 2) * 0.55f);
+
         if (transitionTo is { } && transitionFrom is { })
         {
-            transform.position = (Vector3)Vector2.Lerp((Vector2)transitionFrom, (Vector2)transitionTo,
-                transitionCurve.Evaluate(_transitionAcc / transitionDuration)) + new Vector3(0, 0, -10);
+            basePos = Vector2.Lerp((Vector2)transitionFrom, (Vector2)transitionTo,
+                transitionCurve.Evaluate(_transitionAcc / transitionDuration));
             _transitionAcc += Time.fixedDeltaTime;
             if (_transitionAcc >= transitionDuration)
             {
@@ -72,6 +77,8 @@ public class MainCamera : MonoBehaviour
                 transitionFrom = null;
             }
         }
+
+        transform.position = (Vector3)(basePos + biased) + new Vector3(0, 0, -10);
     }
 
     public void TransitionTo(Vector2 to)

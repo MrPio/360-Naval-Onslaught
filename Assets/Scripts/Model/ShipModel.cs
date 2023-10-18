@@ -10,6 +10,7 @@ namespace Model
         private static GameManager Game => GameManager.Instance;
         public readonly string Name;
         public readonly string Sprite;
+        public readonly string FoamAnim;
         public readonly string[] FireClip;
         public readonly string ExplodeClip;
         public readonly string MissileSprite;
@@ -31,11 +32,12 @@ namespace Model
         public int Health => (int)(_baseHealth * (1f + (4f * Game.WaveFactor)+ (0.3f * (int)(Game.Wave / 5))));
         public int Money => (int)(_baseMoney * (1f + 0.025f * Game.Wave)*(Game.IsSpecialWave?0.333f:1f));
 
-        public ShipModel(string name, string sprite, string[] fireClip, string explodeClip, int baseSpeed, int baseRate,
+        public ShipModel(string name, string sprite,string foamAnim, string[] fireClip, string explodeClip, int baseSpeed, int baseRate,
             int baseDamage, int baseHealth, int baseMoney, bool hasPath, string missileSprite, float delayMultiplier=1f, int explosionsCount=1, Action<GameObject> startCallback=null, Action<GameObject> endPathCallback=null)
         {
             Name = name;
             Sprite = sprite;
+            FoamAnim = foamAnim;
             FireClip = fireClip;
             ExplodeClip = explodeClip;
             _baseSpeed = baseSpeed;

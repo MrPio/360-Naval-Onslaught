@@ -61,7 +61,7 @@ public class Turret : MonoBehaviour
             _fireAccumulator += 99999f;
         }
 
-        if (!reloadBar.IsReloading && In.GetReloadingDown())
+        if (!reloadBar.IsReloading && !Game.IsSpecialWave && In.GetReloadingDown())
             if (Game.Ammo < Game.CurrentTurretModel.Ammo)
                 Reload();
             else

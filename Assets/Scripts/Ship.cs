@@ -19,7 +19,7 @@ public class Ship : MonoBehaviour
     public static readonly List<int[]> Collisions = new();
     [SerializeField] private HealthBar healthBar;
     [SerializeField] private List<GameObject> explosions;
-    [SerializeField] private Animator animator;
+    [SerializeField] private Animator animator, foamAnimator;
     [SerializeField] public SpriteRenderer spriteRenderer;
     [SerializeField] public BoxCollider2D boxCollider;
     [SerializeField] private GameObject floatingTextBig, missile, empExplosion, empText, militaryPlane;
@@ -34,15 +34,19 @@ public class Ship : MonoBehaviour
     [NonSerialized] public bool IsFreezed;
     private float _accumulator;
     [NonSerialized] public bool Invincible = true;
-    [NonSerialized] public int CurrentIndex=-1;
+    [NonSerialized] public int CurrentIndex = -1;
     private float _randomAdditionalDelay;
     private static readonly int MilitaryPlaneTakeoff = Animator.StringToHash("military_plane_takeoff");
     [NonSerialized] public bool isVisible;
     private bool _withBaseCollided;
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip specialAudioClip;
+    [SerializeField] private GameObject glow;
+    private bool isSpecialShip;
 
     private void Awake()
     {
-        _model = Game.IsSpecialWave?DataManager.Instance.Ships[0]:Game.CurrentWave.Spawn();
+        _model = Game.IsSpecialWave ? DataManager.Instance.Ships[0] : Game.CurrentWave.Spawn();
         spriteRenderer.sprite = Resources.Load<Sprite>(_model.Sprite);
         if (_model.ExplodeClip != null)
             _explodeClip = Resources.Load<AudioClip>(_model.ExplodeClip);
@@ -55,9 +59,12 @@ public class Ship : MonoBehaviour
             _missileSprite = Resources.Load<Sprite>(_model.MissileSprite);
 
         // Custom Path for SpeedBoat
+
         if (_model.Name == "SpeedBoat")
+        {
+            var specialBoat = !Game.IsSpecialWave && Random.Range(0, 100) < 99;
             GetComponent<ShipPath>().AddPath(
-                Game.IsSpecialWave || Random.Range(0, 2) == 0
+                Game.IsSpecialWave || specialBoat || Random.Range(0, 2) == 0
                     ? new List<Vector2> { Vector2.zero }
                     : new List<Vector2>
                     {
@@ -65,7 +72,18 @@ public class Ship : MonoBehaviour
                         Vector2.zero
                     }
             );
+            if (specialBoat)
+            {
+                audioSource.PlayOneShot(specialAudioClip);
+                GetComponent<ShipPath>().SpeedSpecialMultiplier = 3.65f;
+                animator.SetTrigger("special_ship");
+                glow.SetActive(true);
+                isSpecialShip = true;
+            }
+        }
+
         _randomAdditionalDelay = Random.Range(0f, 1f);
+        foamAnimator.Play(_model.FoamAnim);
     }
 
     private void Start()
@@ -139,7 +157,6 @@ public class Ship : MonoBehaviour
 
     public void TakeDamage(int damage, bool EMP = false)
     {
-        print($"ship took damage => {damage}");
         if (!Invincible && _health > 0)
         {
             _health -= damage;
@@ -198,9 +215,11 @@ public class Ship : MonoBehaviour
             var floatingTextBig = Instantiate(this.floatingTextBig, GameObject.FindWithTag("canvas").transform);
             floatingTextBig.transform.Find("Text").GetComponent<TextMeshProUGUI>().text = $"+ {_model.Money} $";
             floatingTextBig.transform.position = transform.position + Vector3.up * 0.5f;
-            Game.Money += _model.Money;
+            Game.Money += (int)(_model.Money * (isSpecialShip ? 2f : 1f));
             _moneyCounter.UpdateUI();
             _scoreCounter.UpdateUI();
+            if (isSpecialShip)
+                GameObject.FindWithTag("wave_spawner").GetComponent<WaveSpawner>().BeginSpecialWave();
         }
 
         IEnumerator scheduleDestroy()
@@ -222,7 +241,7 @@ public class Ship : MonoBehaviour
             GameObject.FindWithTag("base").GetComponent<Base>().TakeDamage(_model.Damage);
             Explode(false);
         }
-        else if (CurrentIndex!=-1 && other.CompareTag("ship"))
+        else if (CurrentIndex != -1 && other.CompareTag("ship"))
         {
             var otherShip = other.GetComponent<Ship>();
             if (Invincible || otherShip.Invincible)
@@ -250,7 +269,7 @@ public class Ship : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        if (CurrentIndex!=-1 && other.CompareTag("ship"))
+        if (CurrentIndex != -1 && other.CompareTag("ship"))
         {
             var otherShip = other.GetComponent<Ship>();
             Collisions.RemoveAll(it => it.Contains(CurrentIndex) && it.Contains(otherShip.CurrentIndex));

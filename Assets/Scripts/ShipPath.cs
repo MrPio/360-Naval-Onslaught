@@ -14,6 +14,7 @@ public class ShipPath : MonoBehaviour
     [NonSerialized] public static int SpawnIndex;
     [NonSerialized] public ShipModel Model;
     [NonSerialized] public bool IsDead, Wait, IsFreezed;
+    [NonSerialized] public float SpeedSpecialMultiplier = 1;
 
     private int _pointIndex;
     private List<Vector2> _points = new();
@@ -43,7 +44,7 @@ public class ShipPath : MonoBehaviour
             var newPos = Vector2.MoveTowards(
                 current: currentPos,
                 target: _points[_pointIndex],
-                maxDistanceDelta: Model.Speed / 100f * Time.deltaTime
+                maxDistanceDelta: Model.Speed * SpeedSpecialMultiplier / 100f * Time.deltaTime
             );
             var newRotation = (currentPos - _points[_pointIndex]).ToQuaternion();
             transform.SetPositionAndRotation(

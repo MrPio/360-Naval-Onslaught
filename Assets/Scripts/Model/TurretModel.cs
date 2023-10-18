@@ -21,11 +21,12 @@ namespace Model
         private int _baseAmmo;
         private int _baseReload;
 
-        private int ammo;
         private int rate;
+        private int damage;
+        private int ammo;
         public int Speed;
-        public int Rate => (int)(rate * (Game.IsSpecialWave ? 3f : 1f));
-        public int Damage;
+        public int Rate => (int)(rate * (Game.IsSpecialWave ? 3.5f : 1f));
+        public int Damage=> (int)(damage * (Game.IsSpecialWave ? 1.5f : 1f));
         public int Ammo => Game.IsSpecialWave ? 9999 : ammo;
         public int Reload;
 
@@ -49,7 +50,7 @@ namespace Model
 
         public int SpeedCost => (int)(_speedBaseCost * (1f + 0.425f * SpeedLevel));
         public int RateCost => (int)(_rateBaseCost * (1f + 0.425f * RateLevel));
-        public int DamageCost => (int)(_damageBaseCost * (1f + 0.425f * DamageLevel));
+        public int DamageCost => (int)(_damageBaseCost * (1f + 0.55f * DamageLevel));
         public int AmmoCost => (int)(_ammoBaseCost * (1f + 0.425f * AmmoLevel));
         public int ReloadCost => (int)(_reloadBaseCost * (1f + 0.425f * ReloadLevel));
 
@@ -71,7 +72,7 @@ namespace Model
             _baseReload = baseReload;
             Speed = _baseSpeed;
             rate = _baseRate;
-            Damage = _baseDamage;
+            damage = _baseDamage;
             ammo = _baseAmmo;
             Reload = _baseReload;
             SpeedLevelSteps = speedLevelSteps;
@@ -113,7 +114,7 @@ namespace Model
             if (Game.Money >= DamageCost)
             {
                 Game.Money -= DamageCost;
-                Damage += DamageLevelSteps.Where(entry => entry.Key >= DamageLevel).ElementAt(0).Value;
+                damage += DamageLevelSteps.Where(entry => entry.Key >= DamageLevel).ElementAt(0).Value;
                 ++DamageLevel;
             }
         }

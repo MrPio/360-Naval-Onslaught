@@ -531,26 +531,26 @@ namespace Managers
         public readonly ShipModel[] Ships =
         {
             new(
-                name: "SpeedBoat", sprite: "Sprites/my/ship_1", fireClip: null, explodeClip: "Audio/ship_destroy",
-                baseSpeed: 100 , baseRate: 0, baseDamage: 350, baseHealth: 90, baseMoney: 103,
+                name: "SpeedBoat", sprite: "Sprites/my/ship_1",foamAnim:"foam_1", fireClip: null, explodeClip: "Audio/ship_destroy",
+                baseSpeed: 100 , baseRate: 0, baseDamage: 350, baseHealth: 90, baseMoney: 72,
                 hasPath: false, missileSprite: null
             ),
             new(
-                name: "Vessel", sprite: "Sprites/my/ship_2", missileSprite: "Sprites/missile_2",
+                name: "Vessel", sprite: "Sprites/my/ship_2",foamAnim:"foam_2", missileSprite: "Sprites/missile_2",
                 fireClip: new[] { "Audio/cannon_fire_4", "Audio/missile_coming" }, explodeClip: "Audio/ship_destroy",
-                baseSpeed: 92, baseRate: 20, baseDamage: 145, baseHealth: 220, baseMoney: 168,
+                baseSpeed: 92, baseRate: 20, baseDamage: 145, baseHealth: 220, baseMoney: 118,
                 hasPath: true, explosionsCount: 2
             ),
             new(
-                name: "Military", sprite: "Sprites/my/ship_3", missileSprite: "Sprites/missile_3",
+                name: "Military", sprite: "Sprites/my/ship_3",foamAnim:"foam_3", missileSprite: "Sprites/missile_3",
                 fireClip: new[] { "Audio/cannon_fire_4", "Audio/missile_coming" }, explodeClip: "Audio/ship_destroy",
-                baseSpeed: 70, baseRate: 10, baseDamage: 365, baseHealth: 460, baseMoney: 241,
+                baseSpeed: 70, baseRate: 10, baseDamage: 365, baseHealth: 460, baseMoney: 168,
                 hasPath: true, explosionsCount: 5
             ),
             new(
-                name: "Submarine", sprite: "Sprites/my/ship_4", missileSprite: "Sprites/missile_1",
+                name: "Submarine", sprite: "Sprites/my/ship_4",foamAnim:"foam_4", missileSprite: "Sprites/missile_1",
                 fireClip: new[] { "Audio/cannon_fire_4", "Audio/missile_coming" }, explodeClip: "Audio/ship_destroy",
-                baseSpeed: 65, baseRate: 9, baseDamage: 485, baseHealth: 712, baseMoney: 392,
+                baseSpeed: 65, baseRate: 9, baseDamage: 485, baseHealth: 562, baseMoney: 274,
                 hasPath: true, explosionsCount: 4,
                 startCallback: go =>
                 {
@@ -570,16 +570,17 @@ namespace Managers
                 }
             ),
             new(
-                name: "Aircraft Carrier", sprite: "Sprites/my/ship_5", missileSprite: "Sprites/missile_1",
+                name: "Aircraft Carrier", sprite: "Sprites/my/ship_5",foamAnim:"foam_5", missileSprite: "Sprites/missile_1",
                 fireClip: new[] { "Audio/cannon_fire_4", "Audio/missile_coming" }, explodeClip: "Audio/ship_destroy",
-                baseSpeed: 55, baseRate: 6, baseDamage: 625, baseHealth: 1820, baseMoney: 722,delayMultiplier:1.5f,
+                baseSpeed: 55, baseRate: 6, baseDamage: 625, baseHealth: 1220, baseMoney: 505,delayMultiplier:1.5f,
                 hasPath: true, explosionsCount: 9
                 ),
         };
 
         public readonly WaveModel[] Waves =
         {
-            // new(shipsChances: new List<float> { 0f, 0.4f, 0.6f, 0.8f, 1f },shipsCount:71),
+            // new(shipsChances: new List<float> { 0f, 0.1f, 0.1f, 1f, 1f },shipsCount:71),
+            
             new(shipsChances: new List<float> { 0.75f, 1f, 1f, 1f, 1f },shipsCount:7),
             new(shipsChances: new List<float> { 0.65f, 0.9f, 1f, 1f , 1f},shipsCount:9),
             new(shipsChances: new List<float> { 0.5f, 0.8f, 1f, 1f , 1f},shipsCount:12),
@@ -598,17 +599,17 @@ namespace Managers
             new(shipsChances: new List<float> { 0.1f, 0.2f, 0.86f, 0.92f, 1f },shipsCount:18),
             new(shipsChances: new List<float> { 0.35f, 0.6f, 0.87f, 0.94f, 1f },shipsCount:20,spawnSpeedMultiply:0.8f),
 
-            new(shipsChances: new List<float> { 0.15f, 0.3f, 0.4f, 0.85f, 1f },shipsCount:17),
+            new(shipsChances: new List<float> { 0.15f, 0.3f, 0.65f, 0.92f, 1f },shipsCount:17),
             new(shipsChances: new List<float> { 1f, 1f, 1f, 1f, 1f },shipsCount:16,spawnSpeedMultiply:2.5f),
-            new(shipsChances: new List<float> { 0.35f, 0.4f, 0.75f, 0.9f, 1f },shipsCount:22),
-            new(shipsChances: new List<float> { 0.1f, 0.2f, 0.63f, 0.85f, 1f },shipsCount:17),
-            new(shipsChances: new List<float> { 0.15f, 0.25f, 0.7f, 0.9f, 1f },shipsCount:24,spawnSpeedMultiply:0.8f),
+            new(shipsChances: new List<float> { 0.35f, 0.4f, 0.75f, 0.92f, 1f },shipsCount:22),
+            new(shipsChances: new List<float> { 0.1f, 0.2f, 0.85f, 0.92f, 1f },shipsCount:17),
+            new(shipsChances: new List<float> { 0.15f, 0.25f, 0.785f, 0.92f, 1f },shipsCount:24,spawnSpeedMultiply:0.8f),
 
             new(shipsChances: new List<float> { 0.25f, 0.38f, 0.885f, 0.925f, 1f },shipsCount:11),
             new(shipsChances: new List<float> { 0.25f, 0.38f, 0.885f, 0.925f, 1f },shipsCount:16),
             new(shipsChances: new List<float> { 0.35f, 0.4f, 0.85f, 0.9f, 1f },shipsCount:22),
-            new(shipsChances: new List<float> { 0.1f, 0.2f, 0.65f, 0.75f, 1f },shipsCount:26),
-            new(shipsChances: new List<float> { 0.25f, 0.45f, 0.75f, 0.9f, 1f },shipsCount:50,spawnSpeedMultiply:0.825f),
+            new(shipsChances: new List<float> { 0.1f, 0.2f, 0.85f, 0.92f, 1f },shipsCount:26),
+            new(shipsChances: new List<float> { 0.25f, 0.45f, 0.75f, 0.92f, 1f },shipsCount:50,spawnSpeedMultiply:0.825f),
         };
     }
 }
