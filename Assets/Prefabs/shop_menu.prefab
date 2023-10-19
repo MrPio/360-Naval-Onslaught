@@ -408,10 +408,12 @@ MonoBehaviour:
   contextMenu: {fileID: 3142106153216320828, guid: faa7f29c8d612854eaf4c1efb8bab19d, type: 3}
   lockedContextMenu: {fileID: 0}
   canvas: {fileID: 0}
+  mainBase: {fileID: 0}
   followMouse: 0
   type: 2
   turretIndex: -1
   cannonIndex: -1
+  specialIndex: 0
 --- !u!1 &4626825608626315213
 GameObject:
   m_ObjectHideFlags: 0
@@ -550,10 +552,12 @@ MonoBehaviour:
   contextMenu: {fileID: 3142106153216320828, guid: faa7f29c8d612854eaf4c1efb8bab19d, type: 3}
   lockedContextMenu: {fileID: 0}
   canvas: {fileID: 0}
+  mainBase: {fileID: 0}
   followMouse: 0
   type: 8
   turretIndex: -1
   cannonIndex: -1
+  specialIndex: 0
 --- !u!1 &4626825608720709757
 GameObject:
   m_ObjectHideFlags: 0
@@ -1588,10 +1592,12 @@ MonoBehaviour:
   contextMenu: {fileID: 3142106153216320828, guid: faa7f29c8d612854eaf4c1efb8bab19d, type: 3}
   lockedContextMenu: {fileID: 0}
   canvas: {fileID: 0}
+  mainBase: {fileID: 0}
   followMouse: 0
   type: 1
   turretIndex: -1
   cannonIndex: -1
+  specialIndex: 0
 --- !u!1 &4626825609042620108
 GameObject:
   m_ObjectHideFlags: 0
@@ -1820,10 +1826,12 @@ MonoBehaviour:
   contextMenu: {fileID: 3142106153216320828, guid: faa7f29c8d612854eaf4c1efb8bab19d, type: 3}
   lockedContextMenu: {fileID: 0}
   canvas: {fileID: 0}
+  mainBase: {fileID: 0}
   followMouse: 0
   type: 7
   turretIndex: -1
   cannonIndex: -1
+  specialIndex: 0
 --- !u!1 &4626825609196137977
 GameObject:
   m_ObjectHideFlags: 0
@@ -2840,10 +2848,12 @@ MonoBehaviour:
   contextMenu: {fileID: 3142106153216320828, guid: faa7f29c8d612854eaf4c1efb8bab19d, type: 3}
   lockedContextMenu: {fileID: 0}
   canvas: {fileID: 0}
+  mainBase: {fileID: 0}
   followMouse: 0
   type: 9
   turretIndex: -1
   cannonIndex: -1
+  specialIndex: 0
 --- !u!1 &4626825609426319725
 GameObject:
   m_ObjectHideFlags: 0
@@ -3058,10 +3068,12 @@ MonoBehaviour:
   contextMenu: {fileID: 3142106153216320828, guid: faa7f29c8d612854eaf4c1efb8bab19d, type: 3}
   lockedContextMenu: {fileID: 0}
   canvas: {fileID: 0}
+  mainBase: {fileID: 0}
   followMouse: 0
   type: 0
   turretIndex: -1
   cannonIndex: -1
+  specialIndex: 0
 --- !u!1 &4626825609459162671
 GameObject:
   m_ObjectHideFlags: 0
@@ -3757,10 +3769,12 @@ MonoBehaviour:
   contextMenu: {fileID: 3142106153216320828, guid: faa7f29c8d612854eaf4c1efb8bab19d, type: 3}
   lockedContextMenu: {fileID: 0}
   canvas: {fileID: 0}
+  mainBase: {fileID: 0}
   followMouse: 0
   type: 10
   turretIndex: -1
   cannonIndex: -1
+  specialIndex: 0
 --- !u!1 &4626825609574569370
 GameObject:
   m_ObjectHideFlags: 0
@@ -4358,10 +4372,12 @@ MonoBehaviour:
   contextMenu: {fileID: 3142106153216320828, guid: faa7f29c8d612854eaf4c1efb8bab19d, type: 3}
   lockedContextMenu: {fileID: 0}
   canvas: {fileID: 0}
+  mainBase: {fileID: 0}
   followMouse: 0
   type: 6
   turretIndex: -1
   cannonIndex: -1
+  specialIndex: 0
 --- !u!1 &4626825609868190845
 GameObject:
   m_ObjectHideFlags: 0
@@ -6057,10 +6073,12 @@ MonoBehaviour:
   contextMenu: {fileID: 3142106153216320828, guid: faa7f29c8d612854eaf4c1efb8bab19d, type: 3}
   lockedContextMenu: {fileID: 0}
   canvas: {fileID: 0}
+  mainBase: {fileID: 0}
   followMouse: 0
   type: 4
   turretIndex: -1
   cannonIndex: -1
+  specialIndex: 0
 --- !u!1 &4626825610362541431
 GameObject:
   m_ObjectHideFlags: 0
@@ -6199,10 +6217,12 @@ MonoBehaviour:
   contextMenu: {fileID: 3142106153216320828, guid: faa7f29c8d612854eaf4c1efb8bab19d, type: 3}
   lockedContextMenu: {fileID: 0}
   canvas: {fileID: 0}
+  mainBase: {fileID: 0}
   followMouse: 0
   type: 3
   turretIndex: -1
   cannonIndex: -1
+  specialIndex: 0
 --- !u!1 &4626825610452647875
 GameObject:
   m_ObjectHideFlags: 0
@@ -6476,10 +6496,12 @@ MonoBehaviour:
   contextMenu: {fileID: 3142106153216320828, guid: faa7f29c8d612854eaf4c1efb8bab19d, type: 3}
   lockedContextMenu: {fileID: 0}
   canvas: {fileID: 0}
+  mainBase: {fileID: 0}
   followMouse: 0
   type: 5
   turretIndex: -1
   cannonIndex: -1
+  specialIndex: 0
 --- !u!1 &4626825610585364482
 GameObject:
   m_ObjectHideFlags: 0
@@ -6924,10 +6946,12 @@ MonoBehaviour:
   contextMenu: {fileID: 5656856625636845985, guid: 340a2178d9930b14c9893518b5a36656, type: 3}
   lockedContextMenu: {fileID: 3142106153216320828, guid: 53e67050b43209b4ea52a196cd4c25c8, type: 3}
   canvas: {fileID: 0}
+  mainBase: {fileID: 0}
   followMouse: 1
   type: 0
   turretIndex: 1
   cannonIndex: -1
+  specialIndex: 0
 --- !u!1 &8367115499614606085
 GameObject:
   m_ObjectHideFlags: 0
@@ -7022,10 +7046,12 @@ MonoBehaviour:
   contextMenu: {fileID: 5656856625636845985, guid: 340a2178d9930b14c9893518b5a36656, type: 3}
   lockedContextMenu: {fileID: 3142106153216320828, guid: 53e67050b43209b4ea52a196cd4c25c8, type: 3}
   canvas: {fileID: 0}
+  mainBase: {fileID: 0}
   followMouse: 1
   type: 0
   turretIndex: 2
   cannonIndex: -1
+  specialIndex: 0
 --- !u!1 &8367115499614606086
 GameObject:
   m_ObjectHideFlags: 0
@@ -7120,10 +7146,12 @@ MonoBehaviour:
   contextMenu: {fileID: 5656856625636845985, guid: 340a2178d9930b14c9893518b5a36656, type: 3}
   lockedContextMenu: {fileID: 3142106153216320828, guid: 53e67050b43209b4ea52a196cd4c25c8, type: 3}
   canvas: {fileID: 0}
+  mainBase: {fileID: 0}
   followMouse: 1
   type: 0
   turretIndex: 3
   cannonIndex: -1
+  specialIndex: 0
 --- !u!1 &8367115499614606087
 GameObject:
   m_ObjectHideFlags: 0
@@ -7218,10 +7246,12 @@ MonoBehaviour:
   contextMenu: {fileID: 5656856625636845985, guid: 340a2178d9930b14c9893518b5a36656, type: 3}
   lockedContextMenu: {fileID: 3142106153216320828, guid: 53e67050b43209b4ea52a196cd4c25c8, type: 3}
   canvas: {fileID: 0}
+  mainBase: {fileID: 0}
   followMouse: 1
   type: 0
   turretIndex: 4
   cannonIndex: -1
+  specialIndex: 0
 --- !u!1 &8367115499614606088
 GameObject:
   m_ObjectHideFlags: 0
@@ -7316,10 +7346,12 @@ MonoBehaviour:
   contextMenu: {fileID: 3360438453393701698, guid: a2c1b245fe17df7498da9fd4f999f40e, type: 3}
   lockedContextMenu: {fileID: 3142106153216320828, guid: 53e67050b43209b4ea52a196cd4c25c8, type: 3}
   canvas: {fileID: 0}
+  mainBase: {fileID: 0}
   followMouse: 1
   type: 0
   turretIndex: -1
   cannonIndex: 2
+  specialIndex: 0
 --- !u!1 &8367115499614606089
 GameObject:
   m_ObjectHideFlags: 0
@@ -7414,10 +7446,12 @@ MonoBehaviour:
   contextMenu: {fileID: 3360438453393701698, guid: a2c1b245fe17df7498da9fd4f999f40e, type: 3}
   lockedContextMenu: {fileID: 3142106153216320828, guid: 53e67050b43209b4ea52a196cd4c25c8, type: 3}
   canvas: {fileID: 0}
+  mainBase: {fileID: 0}
   followMouse: 1
   type: 0
   turretIndex: -1
   cannonIndex: 3
+  specialIndex: 0
 --- !u!1 &8367115499614606090
 GameObject:
   m_ObjectHideFlags: 0
@@ -7512,10 +7546,12 @@ MonoBehaviour:
   contextMenu: {fileID: 3360438453393701698, guid: a2c1b245fe17df7498da9fd4f999f40e, type: 3}
   lockedContextMenu: {fileID: 3142106153216320828, guid: 53e67050b43209b4ea52a196cd4c25c8, type: 3}
   canvas: {fileID: 0}
+  mainBase: {fileID: 0}
   followMouse: 1
   type: 0
   turretIndex: -1
   cannonIndex: 4
+  specialIndex: 0
 --- !u!1 &8367115499614606091
 GameObject:
   m_ObjectHideFlags: 0
@@ -7610,10 +7646,12 @@ MonoBehaviour:
   contextMenu: {fileID: 5656856625636845985, guid: 340a2178d9930b14c9893518b5a36656, type: 3}
   lockedContextMenu: {fileID: 3142106153216320828, guid: 53e67050b43209b4ea52a196cd4c25c8, type: 3}
   canvas: {fileID: 0}
+  mainBase: {fileID: 0}
   followMouse: 1
   type: 0
   turretIndex: 0
   cannonIndex: -1
+  specialIndex: 0
 --- !u!1 &8367115499614606094
 GameObject:
   m_ObjectHideFlags: 0
@@ -7708,10 +7746,12 @@ MonoBehaviour:
   contextMenu: {fileID: 3360438453393701698, guid: a2c1b245fe17df7498da9fd4f999f40e, type: 3}
   lockedContextMenu: {fileID: 3142106153216320828, guid: 53e67050b43209b4ea52a196cd4c25c8, type: 3}
   canvas: {fileID: 0}
+  mainBase: {fileID: 0}
   followMouse: 1
   type: 0
   turretIndex: -1
   cannonIndex: 0
+  specialIndex: 0
 --- !u!1 &8367115499614606095
 GameObject:
   m_ObjectHideFlags: 0
@@ -7806,7 +7846,9 @@ MonoBehaviour:
   contextMenu: {fileID: 3360438453393701698, guid: a2c1b245fe17df7498da9fd4f999f40e, type: 3}
   lockedContextMenu: {fileID: 3142106153216320828, guid: 53e67050b43209b4ea52a196cd4c25c8, type: 3}
   canvas: {fileID: 0}
+  mainBase: {fileID: 0}
   followMouse: 1
   type: 0
   turretIndex: -1
   cannonIndex: 1
+  specialIndex: 0

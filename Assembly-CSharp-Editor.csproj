@@ -41,14 +41,9 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
-     <Compile Include="Assets\AssetStore\Simple Water Shader\Info\Scripts\Editor\ReadmeEditor.cs" />
-     <Compile Include="Assets\AssetStore\StylizedWater\Scripts\Editor\SWS_ASEDepthNode.cs" />
-     <Compile Include="Assets\AssetStore\StylizedWater\Scripts\Editor\StylizedWaterCore.cs" />
-     <Compile Include="Assets\AssetStore\StylizedWater\Scripts\Editor\StylizedWaterInspector.cs" />
-     <Folder Include="Assets\AssetStore\StylizedWater\Scripts\Editor" />
-     <Folder Include="Assets\AssetStore\Simple Water Shader\Info\Scripts\Editor" />
-     <None Include="Assets\AssetStore\StylizedWater\Scripts\Editor\SWS_NormalMapRenderer.shader" />
-     <None Include="Assets\AssetStore\StylizedWater\Scripts\Editor\SWS_ShaderMapRenderer.shader" />
+     <Compile Include="Assets\Third Party\Glitch\Editor\DigitalGlitchEditor.cs" />
+     <Compile Include="Assets\Third Party\Glitch\Editor\AnalogGlitchEditor.cs" />
+     <Folder Include="Assets\Third Party\Glitch\Editor" />
      <Reference Include="UnityEngine">
      <HintPath>D:\Programmi-\Unity\2021.3.16f1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
      </Reference>

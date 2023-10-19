@@ -2451,5 +2451,6 @@ MonoBehaviour:
   cannonFiredText: {fileID: 4658689282813902107}
   cannonHitText: {fileID: 4658689283575789402}
   cannonAccuracyText: {fileID: 4658689283018962760}
+  closeButton: {fileID: 0}
   turretImage: {fileID: 4658689281778627919}
   cannonImage: {fileID: 4658689283353631677}

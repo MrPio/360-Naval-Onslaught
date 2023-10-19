@@ -150,6 +150,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   textMeshPro: {fileID: 724994575210392532}
   animator: {fileID: 4795454378219983210, guid: 82b04eaf621d8de46b0ae55cb81d4ff3, type: 3}
+  isScore: 0
   animationDuration: 1.25
 --- !u!1 &2180258424385517213
 GameObject:

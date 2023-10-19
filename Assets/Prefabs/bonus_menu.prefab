@@ -515,6 +515,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 7c6024e62f3ff3546b37b7aa52d9659a, type: 3}
   - {fileID: 21300000, guid: 986dae5145e417c46a9becd97a8b8d89, type: 3}
   step: 0.2
+  specialsCounter: {fileID: 0}
 --- !u!1 &9142729720274974138
 GameObject:
   m_ObjectHideFlags: 0

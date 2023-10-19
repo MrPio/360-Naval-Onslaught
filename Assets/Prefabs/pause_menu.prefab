@@ -644,6 +644,7 @@ MonoBehaviour:
   contextMenu: {fileID: 0}
   lockedContextMenu: {fileID: 0}
   canvas: {fileID: 0}
+  mainBase: {fileID: 0}
   followMouse: 0
   type: 15
   turretIndex: -1
@@ -1057,6 +1058,7 @@ MonoBehaviour:
   contextMenu: {fileID: 0}
   lockedContextMenu: {fileID: 0}
   canvas: {fileID: 0}
+  mainBase: {fileID: 0}
   followMouse: 0
   type: 17
   turretIndex: -1

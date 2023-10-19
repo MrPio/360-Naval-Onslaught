@@ -295,5 +295,3 @@ MonoBehaviour:
   target: {fileID: 0}
   offset: 0.85
   slider: {fileID: 8155106205414592339}
-  ammoCounter: {fileID: 0}
-  reloadFinish: {fileID: 8300000, guid: 6b783d866c9e8a744b1128eedbedd814, type: 3}

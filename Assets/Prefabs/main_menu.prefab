@@ -139,10 +139,12 @@ MonoBehaviour:
   contextMenu: {fileID: 3142106153216320828, guid: faa7f29c8d612854eaf4c1efb8bab19d, type: 3}
   lockedContextMenu: {fileID: 0}
   canvas: {fileID: 0}
+  mainBase: {fileID: 0}
   followMouse: 0
   type: 0
   turretIndex: -1
   cannonIndex: -1
+  specialIndex: 0
 --- !u!114 &1501511184549052077
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -432,10 +434,12 @@ MonoBehaviour:
   contextMenu: {fileID: 3142106153216320828, guid: faa7f29c8d612854eaf4c1efb8bab19d, type: 3}
   lockedContextMenu: {fileID: 0}
   canvas: {fileID: 0}
+  mainBase: {fileID: 0}
   followMouse: 0
   type: 0
   turretIndex: -1
   cannonIndex: -1
+  specialIndex: 0
 --- !u!114 &1501511185546968732
 MonoBehaviour:
   m_ObjectHideFlags: 0

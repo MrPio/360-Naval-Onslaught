@@ -140,10 +140,12 @@ MonoBehaviour:
   contextMenu: {fileID: 0}
   lockedContextMenu: {fileID: 0}
   canvas: {fileID: 0}
+  mainBase: {fileID: 0}
   followMouse: 0
   type: 12
   turretIndex: -1
   cannonIndex: -1
+  specialIndex: 0
 --- !u!114 &1488692822953597815
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -174,10 +176,12 @@ MonoBehaviour:
   contextMenu: {fileID: 0}
   lockedContextMenu: {fileID: 0}
   canvas: {fileID: 0}
+  mainBase: {fileID: 0}
   followMouse: 1
   type: 15
   turretIndex: -1
   cannonIndex: -1
+  specialIndex: 0
 --- !u!1 &1488692823028574051
 GameObject:
   m_ObjectHideFlags: 0

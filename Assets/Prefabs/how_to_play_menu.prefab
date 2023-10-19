@@ -937,10 +937,12 @@ MonoBehaviour:
   contextMenu: {fileID: 0}
   lockedContextMenu: {fileID: 0}
   canvas: {fileID: 0}
+  mainBase: {fileID: 0}
   followMouse: 0
   type: 12
   turretIndex: -1
   cannonIndex: -1
+  specialIndex: 0
 --- !u!1 &3135331640170922711
 GameObject:
   m_ObjectHideFlags: 0
