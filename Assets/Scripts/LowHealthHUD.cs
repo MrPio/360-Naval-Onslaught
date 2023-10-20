@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class LowHealthHUD : MonoBehaviour
 {
-    private const float LowHealthLimit = 0.4f;
+    private const float LowHealthLimit = 0.5f;
     [SerializeField] private CanvasGroup canvasGroup;
 
     // Set the alpha according to the player's current health

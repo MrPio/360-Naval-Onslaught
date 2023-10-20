@@ -11,6 +11,8 @@ using Vector2 = UnityEngine.Vector2;
 
 public class CannonBall : MonoBehaviour
 {
+    private static GameManager Game => GameManager.Instance;
+
     public float Duration = 1;
     [SerializeField] private AudioClip cannonMiss, cannonHit;
     [SerializeField] private GameObject explosion, splash;
@@ -62,6 +64,9 @@ public class CannonBall : MonoBehaviour
             }
 
             MainCamera.AudioSource.PlayOneShot(hit ? cannonHit : cannonMiss);
+            if (!Game.IsSpecialWave && hit)
+                GameObject.FindWithTag("camera_container").GetComponent<Animator>().SetTrigger("one_shake");
+
 
             Destroy(gameObject);
         }

@@ -62,7 +62,7 @@ public class Ship : MonoBehaviour
 
         if (_model.Name == "SpeedBoat")
         {
-            var specialBoat = !Game.IsSpecialWave && Random.Range(0, 100) < 99;
+            var specialBoat = !Game.IsSpecialWave && Random.Range(0, 100) < 5;
             GetComponent<ShipPath>().AddPath(
                 Game.IsSpecialWave || specialBoat || Random.Range(0, 2) == 0
                     ? new List<Vector2> { Vector2.zero }
@@ -212,6 +212,8 @@ public class Ship : MonoBehaviour
         if (reward)
         {
             Game.Score += _model.Health;
+            if (!Game.IsSpecialWave)
+                GameObject.FindWithTag("camera_container").GetComponent<Animator>().SetTrigger("one_shake");
             var floatingTextBig = Instantiate(this.floatingTextBig, GameObject.FindWithTag("canvas").transform);
             floatingTextBig.transform.Find("Text").GetComponent<TextMeshProUGUI>().text = $"+ {_model.Money} $";
             floatingTextBig.transform.position = transform.position + Vector3.up * 0.5f;

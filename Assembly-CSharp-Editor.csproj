@@ -41,8 +41,8 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
-     <Compile Include="Assets\Third Party\Glitch\Editor\DigitalGlitchEditor.cs" />
      <Compile Include="Assets\Third Party\Glitch\Editor\AnalogGlitchEditor.cs" />
+     <Compile Include="Assets\Third Party\Glitch\Editor\DigitalGlitchEditor.cs" />
      <Folder Include="Assets\Third Party\Glitch\Editor" />
      <Reference Include="UnityEngine">
      <HintPath>D:\Programmi-\Unity\2021.3.16f1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>

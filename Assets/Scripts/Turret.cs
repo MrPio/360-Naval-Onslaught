@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using ExtensionsFunctions;
 using Managers;
 using Model;
@@ -11,15 +13,17 @@ public class Turret : MonoBehaviour
 
     [SerializeField] private GameObject leftSpawnPoint;
     [SerializeField] private GameObject rightSpawnPoint;
-    [SerializeField] private GameObject bullet,laser;
+    [SerializeField] private GameObject bullet, laser;
     [SerializeField] private SpriteRenderer spriteRenderer;
     [SerializeField] public ReloadBar reloadBar;
     [SerializeField] private AudioClip reloadStart, reloadMiss, reloadFinish, noAmmo;
     [SerializeField] private AudioSource bulletAudioSource;
+    [SerializeField] private List<AudioClip> clatchAudioClips;
     private AmmoCounter _ammoCounter;
-    private float _fireAccumulator=9999f;
+    private float _fireAccumulator = 9999f;
     private AudioClip _fireClip;
-    private bool _isLaserFiring,_lastFireInput;
+    private bool _isLaserFiring, _lastFireInput;
+    private int _fireCount = 0;
 
     private void OnEnable()
     {
@@ -35,30 +39,36 @@ public class Turret : MonoBehaviour
 
         var currentFireInput = In.GetTurret();
         _fireAccumulator += Time.deltaTime;
-        if (currentFireInput&& !_lastFireInput && Game.Ammo <= 0)
+        if (currentFireInput && !_lastFireInput && Game.Ammo <= 0)
             MainCamera.AudioSource.PlayOneShot(noAmmo);
-        if (currentFireInput && Game.Ammo > 0 && _fireAccumulator > 100f / Model.Rate && !reloadBar.IsReloading &&(Model.Name != "Laser Gun" || !_isLaserFiring))
+        if (currentFireInput && Game.Ammo > 0 && _fireAccumulator > 100f / Model.Rate && !reloadBar.IsReloading &&
+            (Model.Name != "Laser Gun" || !_isLaserFiring))
         {
             _fireAccumulator = 0;
+            ++_fireCount;
             if (Game.CurrentTurret == 2)
             {
-                Fire(Game.Ammo % 2 == 0 ? leftSpawnPoint: rightSpawnPoint);
+                Fire(Game.Ammo % 2 == 0 ? leftSpawnPoint : rightSpawnPoint);
             }
             else
             {
                 Fire(leftSpawnPoint);
                 Fire(rightSpawnPoint);
             }
+
             print(_fireClip.name);
             bulletAudioSource.PlayOneShot(_fireClip);
         }
 
         if (_lastFireInput && !currentFireInput)
         {
-            if(_isLaserFiring)
-            bulletAudioSource.Stop();
+            if (_isLaserFiring)
+                bulletAudioSource.Stop();
             _isLaserFiring = false;
             _fireAccumulator += 99999f;
+            if (_fireCount>7 && new[] { 0, 1, 4 }.Contains(Game.CurrentTurret))
+                bulletAudioSource.PlayOneShot(clatchAudioClips.RandomItem());
+            _fireCount=0;
         }
 
         if (!reloadBar.IsReloading && !Game.IsSpecialWave && In.GetReloadingDown())
@@ -74,18 +84,19 @@ public class Turret : MonoBehaviour
     {
         var armPos = arm.transform.position;
         var newBullet = Instantiate(
-            original: Model.Name=="Laser Gun"?laser:bullet,
+            original: Model.Name == "Laser Gun" ? laser : bullet,
             position: armPos,
-            rotation: In.GetInput().ToQuaternion()//MainCamera.MainCam.AngleToMouse(transform.position)
+            rotation: In.GetInput().ToQuaternion() //MainCamera.MainCam.AngleToMouse(transform.position)
         );
         if (Model.Name == "Laser Gun")
         {
-            var laser=newBullet.GetComponent<Laser>();
+            var laser = newBullet.GetComponent<Laser>();
             laser.Arm = arm.transform;
             laser.Turret = transform;
-            _isLaserFiring = true;   
+            _isLaserFiring = true;
             return;
         }
+
         newBullet.GetComponent<Rigidbody2D>().velocity = newBullet.transform.right * Model.Speed / 100f;
         --Game.Ammo;
         ++Game.CurrentWaveTurretFired;
@@ -96,7 +107,7 @@ public class Turret : MonoBehaviour
             Reload();
     }
 
-    public  void Reload()
+    public void Reload()
     {
         MainCamera.AudioSource.PlayOneShot(reloadStart);
         reloadBar.Reload(

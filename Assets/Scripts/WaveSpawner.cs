@@ -73,6 +73,7 @@ public class WaveSpawner : MonoBehaviour
         }
 
         audioSource.Stop();
+        audioSource.volume = 1;
         audioSource.clip = mainMenuClip;
         audioSource.Play();
 
@@ -116,6 +117,7 @@ public class WaveSpawner : MonoBehaviour
                     Game.SpecialWave = -1;
                     specialSpawned = 0;
                     specialAudioSource.Stop();
+                    audioSource.volume = 0.5f;
                     audioSource.Play();
                     WarningPanel.SetActive(false);
                     Game.Ammo = Game.CurrentTurretModel.Ammo;
@@ -141,12 +143,7 @@ public class WaveSpawner : MonoBehaviour
 
         if (specialWave == 1)
             MainCamera.MainCam.GetComponent<MainCamera>().TransitionTo(Vector2.up * 3f);
-        // Destroy current ships
-        foreach (var ship in GameObject.FindGameObjectsWithTag("ship").Select(it => it.GetComponent<Ship>()))
-            if (ship.Invincible)
-                Destroy(ship.gameObject);
-            else
-                ship.TakeDamage(int.MaxValue);
+        DestroyAllShips();
         CameraAnimator.SetTrigger("shake");
 
         _accumulator = -3f;
@@ -157,6 +154,16 @@ public class WaveSpawner : MonoBehaviour
         audioSource.Pause();
         specialAudioSource.clip = specialLevelsClip.RandomItem();
         specialAudioSource.Play();
+    }
+
+    private void DestroyAllShips()
+    {
+        // Destroy current ships
+        foreach (var ship in GameObject.FindGameObjectsWithTag("ship").Select(it => it.GetComponent<Ship>()))
+            if (ship.Invincible)
+                Destroy(ship.gameObject);
+            else
+                ship.TakeDamage(int.MaxValue);
     }
 
     private void SpawnSpecial()
@@ -191,6 +198,7 @@ public class WaveSpawner : MonoBehaviour
         _model = null;
         Game.Score += 1000;
         ++Game.Wave;
+        DestroyAllShips();
         baseMain.SetActive(false);
         ammoContainer.SetActive(false);
         moneyContainer.SetActive(false);
@@ -212,6 +220,7 @@ public class WaveSpawner : MonoBehaviour
             accuracyMenu.SetActive(true);
 
         audioSource.Stop();
+        audioSource.volume = 1f;
         audioSource.clip = winClip;
         audioSource.Play();
     }
@@ -252,6 +261,7 @@ public class WaveSpawner : MonoBehaviour
         }
 
         audioSource.Stop();
+        audioSource.volume = 0.5f;
         audioSource.clip = levelsClip.RandomItem();
         audioSource.Play();
     }

@@ -21,9 +21,10 @@ public class Base : MonoBehaviour
     [SerializeField] private SpecialsCounter specialsCounter;
     [SerializeField] private GameObject pauseMenu;
     [SerializeField] private LowHealthHUD lowHealthHUD;
+    [SerializeField] private Animator cameraContainerAnimator;
     private bool _invincible;
-    private float lastSpecialUsed;
-    private bool[] _lastSpecialInput = new[] { false, false, false, false };
+    private float _lastSpecialUsed;
+    private bool[] _lastSpecialInput = { false, false, false, false };
 
     private void Start()
     {
@@ -77,6 +78,9 @@ public class Base : MonoBehaviour
             var fraction = Game.Health / (float)Game.MaxHealth;
             damageAnimators.ForEach(animator => animator.SetTrigger(DamageHeavy));
             chromaticAberration.SetTrigger(Start1);
+            GetComponent<GlitchEffect>().Animate();
+            if (!Game.IsSpecialWave)
+                cameraContainerAnimator.SetTrigger("one_shake");
             healthBar.gameObject.SetActive(true);
             healthBar.SetValue(fraction);
             lowHealthHUD.Evaluate(fraction);
@@ -108,7 +112,7 @@ public class Base : MonoBehaviour
 
     private void UseSpecial(int index)
     {
-        if (Game.SpecialsCount[index] <= 0 || Time.time - lastSpecialUsed < 1.8f
+        if (Game.SpecialsCount[index] <= 0 || Time.time - _lastSpecialUsed < 1.8f
                                            || (index == 1 && _invincible)
                                            || (index == 3 && Game.Health >= Game.MaxHealth))
         {
@@ -173,6 +177,6 @@ public class Base : MonoBehaviour
 
         --Game.SpecialsCount[index];
         specialsCounter.UpdateUI();
-        lastSpecialUsed = Time.time;
+        _lastSpecialUsed = Time.time;
     }
 }

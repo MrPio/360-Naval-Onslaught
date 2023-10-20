@@ -25,6 +25,7 @@ TagManager:
   - accuracy_menu
   - bonus_menu
   - laser
+  - camera_container
   layers:
   - Default
   - TransparentFX
