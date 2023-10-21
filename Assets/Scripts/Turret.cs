@@ -56,7 +56,6 @@ public class Turret : MonoBehaviour
                 Fire(rightSpawnPoint);
             }
 
-            print(_fireClip.name);
             bulletAudioSource.PlayOneShot(_fireClip);
         }
 

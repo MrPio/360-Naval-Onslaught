@@ -1,11 +1,10 @@
-using System;
 using System.Collections.Generic;
+using System.Linq;
 using ExtensionsFunctions;
 using Interfaces;
 using Managers;
-using Mono.Cecil;
+using TMPro;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 public class Bubble : MonoBehaviour, IDamageble
 {
@@ -20,26 +19,34 @@ public class Bubble : MonoBehaviour, IDamageble
         Health
     }
 
-    private PowerUp _powerUp = EnumExtensions.RandomItem<PowerUp>();
+    private PowerUp _powerUp;
     private Animator _bubbleAnimator;
     [SerializeField] private Animator containerAnimator, smallBubblesAnimator;
-    [SerializeField] private float health = 120, lifespan = 7;
+    [SerializeField] private float lifespan = 7;
     [SerializeField] private List<GameObject> powerUps;
-    [SerializeField] private GameObject text2X;
+    [SerializeField] private GameObject text2X, floatingTextBig;
     [SerializeField] private AudioClip spawnAudioClip;
+    private float _health;
+    private MoneyCounter _moneyCounter, _scoreCounter;
     private float _acc;
     private bool _idling, _picking;
     private Transform _parent;
     private AudioSource _audioSource;
+    private PowerUpsController _powerUpsController;
     private string _healthRestoreAudioClip = "Audio/health_restore";
 
 
     private void Awake()
     {
+        _powerUp=Random.Range(0f, 1f) < 0.2f ? PowerUp.Satellite : EnumExtensions.RandomItem<PowerUp>();
+        _health = (int)(120 * (1f + 4f * Game.WaveFactor));
         _bubbleAnimator = GetComponent<Animator>();
         _parent = transform.parent;
         _parent.GetComponent<Destroyable>().Condition = false;
         _audioSource = GetComponent<AudioSource>();
+        _powerUpsController = GameObject.FindWithTag("power_ups_controller").GetComponent<PowerUpsController>();
+        _moneyCounter = GameObject.FindWithTag("money_counter").GetComponent<MoneyCounter>();
+        _scoreCounter = GameObject.FindWithTag("score_counter").GetComponent<MoneyCounter>();
 
         // Enable the correct powerUp and 2X accordingly
         powerUps.ForEach(it => it.SetActive(powerUps.IndexOf(it) == (int)_powerUp));
@@ -78,10 +85,10 @@ public class Bubble : MonoBehaviour, IDamageble
 
     public void TakeDamage(int damage, bool _ = false)
     {
-        if (health > 0)
+        if (_health > 0)
         {
-            health -= damage;
-            if (health <= 0)
+            _health -= damage;
+            if (_health <= 0)
                 Explode();
             else
                 _bubbleAnimator.SetTrigger(Animator.StringToHash("damage"));
@@ -99,7 +106,6 @@ public class Bubble : MonoBehaviour, IDamageble
         if (reward)
         {
             _audioSource.Play();
-            Game.PowerUp = _powerUp;
             if (_powerUp == PowerUp.Health)
             {
                 _audioSource.PlayOneShot(Resources.Load(_healthRestoreAudioClip) as AudioClip);
@@ -107,6 +113,24 @@ public class Bubble : MonoBehaviour, IDamageble
                 GameObject.FindWithTag("base").GetComponent<Base>().UpdateUI();
                 GameObject.FindWithTag("restore_health_hud").GetComponent<Animator>()
                     .SetTrigger(Animator.StringToHash("start"));
+            }
+            else if (!Game.HasPowerUp)
+            {
+                Game.PowerUp = _powerUp;
+                if (_powerUp == PowerUp.Satellite)
+                    _powerUpsController.PerformAttack();
+                _powerUpsController.ShowRadialSlider();
+            }
+            else
+            {
+                var money = (int)Random.Range(20, 200 + 400 * Game.WaveFactor);
+                var floatingTextBig = Instantiate(this.floatingTextBig, GameObject.FindWithTag("canvas").transform);
+                floatingTextBig.transform.Find("Text").GetComponent<TextMeshProUGUI>().text = $"+ {money} $";
+                floatingTextBig.transform.position = transform.position + Vector3.up * 0.5f;
+                Game.Money += (int)(money);
+                Game.Score += Game.Money * 2;
+                _moneyCounter.UpdateUI();
+                _scoreCounter.UpdateUI();
             }
         }
     }

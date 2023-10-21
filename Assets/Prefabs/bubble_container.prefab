@@ -767,13 +767,15 @@ MonoBehaviour:
   containerAnimator: {fileID: 4078800433252051350}
   smallBubblesAnimator: {fileID: 4078800432753757278}
   health: 120
-  lifespan: 8
+  lifespan: 10
   powerUps:
   - {fileID: 4078800433955845840}
   - {fileID: 4078800433117760579}
   - {fileID: 4078800433261998574}
   - {fileID: 4078800432586248038}
+  - {fileID: 4610159978914077829}
   text2X: {fileID: 4078800433212624619}
+  floatingTextBig: {fileID: 3642708000545194092, guid: a970b1e306084a740b451410b403ab2e, type: 3}
   spawnAudioClip: {fileID: 8300000, guid: 09f29b41266759e4db17c4feb4b7169a, type: 3}
 --- !u!82 &4078800433552775246
 AudioSource:

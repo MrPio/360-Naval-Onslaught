@@ -23,7 +23,7 @@ public class Ship : MonoBehaviour, IDamageble
     [SerializeField] private Animator animator, foamAnimator;
     [SerializeField] public SpriteRenderer spriteRenderer;
     [SerializeField] public BoxCollider2D boxCollider;
-    [SerializeField] private GameObject floatingTextBig, missile, empExplosion, empText, militaryPlane;
+    [SerializeField] private GameObject floatingTextBig, missile, empExplosion, empText, militaryPlane, bubble;
     [SerializeField] private AudioClip empHitClip;
     private Sprite _missileSprite;
     private List<AudioClip> _fireClip;
@@ -64,7 +64,8 @@ public class Ship : MonoBehaviour, IDamageble
 
         if (_model.Name == "SpeedBoat")
         {
-            var specialBoat = !Game.IsSpecialWave && (alwaysSpecial || Random.Range(0, 100) < 5);
+            var specialBoat = !Game.IsSpecialWave && !Game.SpecialOccurInWave[Game.Wave] &&
+                              (alwaysSpecial || Random.Range(0f, 1f) < .08f);
             GetComponent<ShipPath>().AddPath(
                 Game.IsSpecialWave || specialBoat || Random.Range(0, 2) == 0
                     ? new List<Vector2> { Vector2.zero }
@@ -213,26 +214,40 @@ public class Ship : MonoBehaviour, IDamageble
         // Money Reward
         if (reward)
         {
-            Game.Score += _model.Health;
-            if (!Game.IsSpecialWave)
-                GameObject.FindWithTag("camera_container").GetComponent<Animator>().SetTrigger("one_shake");
+            if (!Game.IsSpecialWave && !isSpecialShip)
+                GameObject.FindWithTag("camera_container").GetComponent<Animator>()
+                    .SetTrigger(Animator.StringToHash("one_shake"));
+            var money = (int)(_model.Money * (isSpecialShip ? 2f : 1f));
             var floatingTextBig = Instantiate(this.floatingTextBig, GameObject.FindWithTag("canvas").transform);
-            floatingTextBig.transform.Find("Text").GetComponent<TextMeshProUGUI>().text = $"+ {_model.Money} $";
+            floatingTextBig.transform.Find("Text").GetComponent<TextMeshProUGUI>().text = $"+ {money} $";
             floatingTextBig.transform.position = transform.position + Vector3.up * 0.5f;
-            Game.Money += (int)(_model.Money * (isSpecialShip ? 2f : 1f));
+            Game.Money += money;
+            Game.Score += _model.Health;
             _moneyCounter.UpdateUI();
             _scoreCounter.UpdateUI();
             if (isSpecialShip)
                 GameObject.FindWithTag("wave_spawner").GetComponent<WaveSpawner>().BeginSpecialWave();
+            if (!Game.HasPowerUp && Random.Range(0f, 1f) < 0.18f)
+            {
+                var bound = new Bounds(
+                    Vector3.zero,
+                    new Vector2(MainCamera.MainCam.GetWidth(), MainCamera.MainCam.GetHeight()) * 2f
+                );
+                Instantiate(bubble).transform.position = transform.position + new Vector3(
+                    Random.Range(-2f, 2f),
+                    Random.Range(-2f, 2f),
+                    0
+                ); //bound.GetRandomPointInBounds();
+            }
         }
 
-        IEnumerator scheduleDestroy()
+        IEnumerator ScheduleDestroy()
         {
             yield return new WaitForSeconds(1f);
             Destroy(gameObject);
         }
 
-        StartCoroutine(scheduleDestroy());
+        StartCoroutine(ScheduleDestroy());
     }
 
     public void End() => Destroy(gameObject);

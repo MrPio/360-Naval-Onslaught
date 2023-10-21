@@ -28,6 +28,8 @@ TagManager:
   - camera_container
   - bubble
   - restore_health_hud
+  - power_up_slider
+  - power_ups_controller
   layers:
   - Default
   - TransparentFX

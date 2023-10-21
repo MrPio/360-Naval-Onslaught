@@ -10,8 +10,10 @@ public class MainCamera : MonoBehaviour
     [SerializeField] private AnimationCurve transitionCurve;
     private float _transitionAcc;
     private Vector2? transitionTo, transitionFrom;
+    private float? _orthoSizeFrom, _orthoSizeTo;
     [SerializeField] private float transitionDuration = 3f;
-    private Vector2 basePos = Vector2.zero;
+    private Vector2 _basePos = Vector2.zero;
+    private float _orthoSize;
 
     private void Start()
     {
@@ -20,6 +22,7 @@ public class MainCamera : MonoBehaviour
         Height = MainCam.GetHeight();
         Width = MainCam.GetWidth();
         SetFixedAspectRatio(16.0f / 9.0f);
+        _orthoSize = MainCam.orthographicSize;
     }
 
     private void SetFixedAspectRatio(float target)
@@ -64,26 +67,33 @@ public class MainCamera : MonoBehaviour
     {
         // Mouse movement following
         var direction = ((Vector2)MainCam.ScreenToViewportPoint(Input.mousePosition) - new Vector2(0.5f, 0.5f));
-        var biased = direction.normalized * (Mathf.Pow(direction.magnitude, 2) * 0.55f);
+        var biased = direction.normalized * (Mathf.Pow(direction.magnitude, 2) * 0.55f); //*0.25f; 
 
         if (transitionTo is { } && transitionFrom is { })
         {
-            basePos = Vector2.Lerp((Vector2)transitionFrom, (Vector2)transitionTo,
-                transitionCurve.Evaluate(_transitionAcc / transitionDuration));
+            var t = transitionCurve.Evaluate(_transitionAcc / transitionDuration);
+            _basePos = Vector2.Lerp((Vector2)transitionFrom, (Vector2)transitionTo, t);
+            if (_orthoSizeFrom is { } && _orthoSizeTo is { })
+                _orthoSize = (float)((1 - t) * _orthoSizeFrom + t * _orthoSizeTo);
+
             _transitionAcc += Time.fixedDeltaTime;
             if (_transitionAcc >= transitionDuration)
             {
                 transitionTo = null;
                 transitionFrom = null;
+                _orthoSizeTo = null;
             }
         }
 
-        transform.localPosition = (Vector3)(basePos + biased) + new Vector3(0, 0, -10);
+        transform.localPosition = (Vector3)(_basePos + biased) + new Vector3(0, 0, -10);
+        MainCam.orthographicSize = _orthoSize;
     }
 
-    public void TransitionTo(Vector2 to)
+    public void TransitionTo(Vector2 to, float? orthoSizeTo = null)
     {
         transitionFrom = transform.position;
+        _orthoSizeFrom = MainCam.orthographicSize;
+        _orthoSizeTo = orthoSizeTo;
         transitionTo = to;
         _transitionAcc = 0;
     }

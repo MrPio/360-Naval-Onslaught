@@ -104,7 +104,10 @@ public class WaveSpawner : MonoBehaviour
             else
             {
                 // Spawn ship in special wave
-                if (_accumulator >= 0.5 - 0.25f * ((float)specialSpawned / currentSpecialPoints.Count) &&
+                var baseDelay = 0.475;
+                if (Game.SpecialWave == 2)
+                    baseDelay = 0.35;
+                if (_accumulator >= baseDelay - 0.25f * ((float)specialSpawned / currentSpecialPoints.Count) &&
                     specialSpawned < currentSpecialPoints.Count)
                 {
                     SpawnSpecial();
@@ -122,7 +125,7 @@ public class WaveSpawner : MonoBehaviour
                     WarningPanel.SetActive(false);
                     Game.Ammo = Game.CurrentTurretModel.Ammo;
                     ammoContainer.GetComponentsInChildren<AmmoCounter>()[0].UpdateUI();
-                    CameraAnimator.SetTrigger("stop_shake");
+                    CameraAnimator.SetTrigger(Animator.StringToHash("stop_shake"));
                     MainCamera.MainCam.GetComponent<MainCamera>().TransitionTo(Vector2.zero);
                 }
             }
@@ -133,18 +136,21 @@ public class WaveSpawner : MonoBehaviour
     {
         if (Game.IsSpecialWave)
             return;
-        
+
         var specialWave = Random.Range(0, specialPaths.Count);
         Game.SpecialWave = specialWave;
+        Game.SpecialOccurInWave[Game.Wave] = true;
         var path = specialPaths[specialWave];
         currentSpecialPoints = path.GetComponentsInChildren<Transform>()
             .Where(tr => tr != path)
             .ToList();
 
         if (specialWave == 1)
-            MainCamera.MainCam.GetComponent<MainCamera>().TransitionTo(Vector2.up * 3f);
+            MainCamera.MainCam.GetComponent<MainCamera>().TransitionTo(Vector2.up * 3.5f);
+        else if(specialWave==2)
+            MainCamera.MainCam.GetComponent<MainCamera>().TransitionTo(Vector2.right * 10f,9.5f);
         DestroyAllShips();
-        CameraAnimator.SetTrigger("shake");
+        CameraAnimator.SetTrigger(Animator.StringToHash("shake"));
 
         _accumulator = -3f;
         Game.Ammo = Game.CurrentTurretModel.Ammo;
@@ -209,6 +215,11 @@ public class WaveSpawner : MonoBehaviour
         bonusMenu.SetActive(false);
         winMenu.SetActive(false);
         GlobalVolumeAnimator.SetTrigger(Animator.StringToHash("fade"));
+        
+        foreach (var bullet in GameObject.FindGameObjectsWithTag("bullet"))
+            Destroy(bullet);
+        foreach (var laser in GameObject.FindGameObjectsWithTag("laser"))
+            Destroy(laser);
 
         if (Game.Wave >= Data.Waves.Length)
         {

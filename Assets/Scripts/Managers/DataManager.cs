@@ -554,18 +554,23 @@ namespace Managers
                 hasPath: true, explosionsCount: 4,
                 startCallback: go =>
                 {
+                    go.transform.Find("foam").gameObject.SetActive(false);
                     var renderer = go.GetComponent<Renderer>();
                     renderer.material.color = new Color(1, 1, 1, 0.5f);
+                    renderer.sortingOrder = -1;
                     go.GetComponent<Ship>().Invincible = true;
                     MainCamera.AudioSource.PlayOneShot(Resources.Load<AudioClip>("Audio/submarine_down"));
                 },
                 endPathCallback: go =>
                 {
+                    go.transform.Find("foam").gameObject.SetActive(true);
+                    go.transform.Find("foam").GetComponent<Animator>().Play("foam_4");
                     go.GetComponent<Ship>().Invincible = false;
                     var overlay = go.transform.Find("overlay");
                     overlay.gameObject.SetActive(true);
                     overlay.GetComponent<Animator>().SetTrigger(Ship4);
                     overlay.GetComponent<SpriteRenderer>().sprite = go.GetComponent<SpriteRenderer>().sprite;
+                    overlay.GetComponent<SpriteRenderer>().sortingOrder = 0;
                     MainCamera.AudioSource.PlayOneShot(Resources.Load<AudioClip>("Audio/submarine_up"));
                 }
             ),

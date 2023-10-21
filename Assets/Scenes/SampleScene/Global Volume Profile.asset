@@ -18,7 +18,7 @@ MonoBehaviour:
     m_Value: 0
   intensity:
     m_OverrideState: 1
-    m_Value: 0.6
+    m_Value: 0.8
   response:
     m_OverrideState: 1
     m_Value: 1
@@ -86,7 +86,7 @@ MonoBehaviour:
   active: 1
   intensity:
     m_OverrideState: 1
-    m_Value: -0.09
+    m_Value: -0.18
   xMultiplier:
     m_OverrideState: 1
     m_Value: 1
@@ -114,13 +114,13 @@ MonoBehaviour:
   active: 1
   color:
     m_OverrideState: 1
-    m_Value: {r: 0.2195338, g: 0, b: 0.4056604, a: 1}
+    m_Value: {r: 0.21494313, g: 0, b: 0.40392157, a: 1}
   center:
     m_OverrideState: 0
     m_Value: {x: 0.5, y: 0.5}
   intensity:
     m_OverrideState: 1
-    m_Value: 0.296
+    m_Value: 0.35
   smoothness:
     m_OverrideState: 1
     m_Value: 0.21

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using ExtensionsFunctions;
+using Interfaces;
 using Managers;
 using Model;
 using Unity.VisualScripting;
@@ -13,7 +14,7 @@ public class Laser : MonoBehaviour
     private static GameManager Game => GameManager.Instance;
     private TurretModel Model => GameManager.Instance.CurrentTurretModel;
     private float _accumulator;
-    private List<Ship> _strickenShips = new List<Ship>();
+    private List<IDamageble> _strickenDamagebles = new ();
     private AmmoCounter _ammoCounter;
     [NonSerialized] public Transform Arm = null, Turret = null;
     [NonSerialized] public bool IsFreezed = false;
@@ -51,8 +52,8 @@ public class Laser : MonoBehaviour
             --Game.Ammo;
             _ammoCounter.UpdateUI();
 
-            foreach (var strickenShip in _strickenShips)
-                strickenShip.TakeDamage(Model.Damage / 2);
+            foreach (var strickenDamageble in _strickenDamagebles)
+                strickenDamageble.TakeDamage(Model.Damage / 2);
         }
     }
 
@@ -60,11 +61,11 @@ public class Laser : MonoBehaviour
     {
         if(IsFreezed)
             return;
-        if (col.gameObject.CompareTag("ship"))
+        if (col.gameObject.CompareTag("ship")|| col.gameObject.tag.Contains("bubble"))
         {
-            var ship = col.gameObject.GetComponent<Ship>();
-            if (!_strickenShips.Contains(ship))
-                _strickenShips.Add(ship);
+            var go = col.gameObject.GetComponent<IDamageble>();
+            if (!_strickenDamagebles.Contains(go))
+                _strickenDamagebles.Add(go);
         }
     }
 
@@ -72,11 +73,11 @@ public class Laser : MonoBehaviour
     {
         if(IsFreezed)
             return;
-        if (col.gameObject.CompareTag("ship"))
+        if (col.gameObject.CompareTag("ship")|| col.gameObject.tag.Contains("bubble"))
         {
-            var ship = col.gameObject.GetComponent<Ship>();
-            if (_strickenShips.Contains(ship))
-                _strickenShips.Remove(ship);
+            var go = col.gameObject.GetComponent<IDamageble>();
+            if (_strickenDamagebles.Contains(go))
+                _strickenDamagebles.Remove(go);
         }
     }
 }

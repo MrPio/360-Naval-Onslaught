@@ -57,6 +57,7 @@
      <Compile Include="Assets\Scripts\Turret.cs" />
      <Compile Include="Assets\Scripts\Base.cs" />
      <Compile Include="Assets\Scripts\SpecialsCounter.cs" />
+     <Compile Include="Assets\Scripts\ExtensionsFunctions\EnumExtensions.cs" />
      <Compile Include="Assets\Scripts\NewWave.cs" />
      <Compile Include="Assets\Scripts\MoneyCounter.cs" />
      <Compile Include="Assets\Scripts\CloudSpawner.cs" />
@@ -64,6 +65,7 @@
      <Compile Include="Assets\Scripts\ReloadBar.cs" />
      <Compile Include="Assets\Scripts\Model\TurretModel.cs" />
      <Compile Include="Assets\Scripts\WaveSpawner.cs" />
+     <Compile Include="Assets\Scripts\PowerUpSlider.cs" />
      <Compile Include="Assets\Scripts\PauseMenu.cs" />
      <Compile Include="Assets\Scripts\ExtensionsFunctions\ListExtensions.cs" />
      <Compile Include="Assets\Scripts\Ship.cs" />
@@ -72,7 +74,7 @@
      <Compile Include="Assets\Scripts\GlitchController.cs" />
      <Compile Include="Assets\Scripts\AmmoCounter.cs" />
      <Compile Include="Assets\Scripts\Model\CannonModel.cs" />
-     <Compile Include="Assets\TransparentParent.cs" />
+     <Compile Include="Assets\Scripts\TransparentParent.cs" />
      <Compile Include="Assets\Scripts\ExtensionsFunctions\VectorExtensions.cs" />
      <Compile Include="Assets\Scripts\FloatingText.cs" />
      <Compile Include="Assets\Scripts\HowToPlayMenu.cs" />
@@ -89,12 +91,12 @@
      <Compile Include="Assets\Scripts\SmallCannonBall.cs" />
      <Compile Include="Assets\Scripts\Missile.cs" />
      <Compile Include="Assets\Scripts\Explosion.cs" />
+     <Compile Include="Assets\Scripts\Interfaces\IDamageble.cs" />
      <Compile Include="Assets\Scripts\Model\WaveModel.cs" />
      <Compile Include="Assets\Scripts\Managers\DataManager.cs" />
+     <Compile Include="Assets\Scripts\Bubble.cs" />
+     <Compile Include="Assets\Scripts\PowerUpsController.cs" />
      <Compile Include="Assets\Scripts\Bullet.cs" />
-     <Compile Include="Assets\Bubble.cs" />
-     <Compile Include="Assets\Scripts\Interfaces\IDamageble.cs" />
-     <Compile Include="Assets\Scripts\ExtensionsFunctions\EnumExtensions.cs" />
      <Folder Include="Assets" />
      <Folder Include="Assets\Resources\Sprites\hud" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

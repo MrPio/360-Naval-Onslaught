@@ -2,12 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using ExtensionsFunctions;
+using Interfaces;
 using Managers;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class Base : MonoBehaviour
+public class Base : MonoBehaviour,IDamageble
 {
     private static readonly int DamageHeavy = Animator.StringToHash("damage_heavy");
     private static readonly int Start1 = Animator.StringToHash("start");
@@ -74,8 +75,7 @@ public class Base : MonoBehaviour
         healthBar.SetValue(Game.Health / (float)Game.MaxHealth);
     }
     
-
-    public void TakeDamage(int damage)
+    public void TakeDamage(int damage,bool _=false)
     {
         if (Game.Health > 0 && !_invincible)
         {
@@ -86,7 +86,7 @@ public class Base : MonoBehaviour
             chromaticAberration.SetTrigger(Start1);
             GetComponent<GlitchEffect>().Animate();
             if (!Game.IsSpecialWave)
-                cameraContainerAnimator.SetTrigger("one_shake");
+                cameraContainerAnimator.SetTrigger(Animator.StringToHash("one_shake"));
             healthBar.gameObject.SetActive(true);
             UpdateUI();
             lowHealthHUD.Evaluate(fraction);
@@ -184,5 +184,11 @@ public class Base : MonoBehaviour
         --Game.SpecialsCount[index];
         specialsCounter.UpdateUI();
         _lastSpecialUsed = Time.time;
+    }
+
+
+    public void Explode(bool reward = true)
+    {
+        throw new System.NotImplementedException();
     }
 }

@@ -959,7 +959,7 @@
     "m_Hidden": false,
     "m_ShaderOutputName": "Scale",
     "m_StageCapability": 3,
-    "m_Value": 6.860000133514404,
+    "m_Value": 17.0,
     "m_DefaultValue": 10.0,
     "m_Labels": []
 }
@@ -2374,7 +2374,7 @@
     "m_Hidden": false,
     "m_ShaderOutputName": "CellDensity",
     "m_StageCapability": 3,
-    "m_Value": 165.0,
+    "m_Value": 360.1000061035156,
     "m_DefaultValue": 5.0,
     "m_Labels": []
 }

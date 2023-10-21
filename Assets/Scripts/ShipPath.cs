@@ -15,6 +15,7 @@ public class ShipPath : MonoBehaviour
     [NonSerialized] public ShipModel Model;
     [NonSerialized] public bool IsDead, Wait, IsFreezed;
     [NonSerialized] public float SpeedSpecialMultiplier = 1;
+    [NonSerialized] public bool IsPathEnded = false;
 
     private int _pointIndex;
     private List<Vector2> _points = new();
@@ -55,7 +56,10 @@ public class ShipPath : MonoBehaviour
             if (currentPos == _points[_pointIndex])
                 ++_pointIndex;
             if (_pointIndex == _points.Count)
+            {
+                IsPathEnded = true;
                 Model.EndPathCallback?.Invoke(gameObject);
+            }
         }
     }
 

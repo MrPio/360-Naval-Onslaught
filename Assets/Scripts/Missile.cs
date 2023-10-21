@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using Interfaces;
 using Managers;
 using UnityEngine;
 
@@ -10,50 +11,48 @@ public class Missile : MonoBehaviour
     [SerializeField] private AudioClip cannonMiss, cannonHit;
     [SerializeField] private GameObject explosion, splash;
     [SerializeField] private SpriteRenderer spriteRenderer;
-
+    [SerializeField] private bool isEnemy = true, destroyWithParent, freezeX, freezeY;
+    [SerializeField] private AnimationCurve animationCurve = AnimationCurve.Linear(0, 0, 1, 1);
+    [SerializeField] private float hitRange = 0.35f;
     private float _accumulator;
     [NonSerialized] public Vector2 Destination, StartPosition;
 
     private void Update()
     {
         _accumulator += Time.deltaTime;
-        var currentPos = Vector2.Lerp(StartPosition, Destination, _accumulator / Duration);
-        transform.position = currentPos;
+        var currentPos = Vector2.Lerp(StartPosition, Destination, animationCurve.Evaluate(_accumulator / Duration));
+        currentPos = new Vector2(
+            freezeX ? transform.localPosition.x : currentPos.x,
+            freezeY ? transform.localPosition.y : currentPos.y
+        );
+        transform.localPosition = currentPos;
         if (_accumulator >= Duration)
         {
             // Explosion + Splash
-            Instantiate(
-                original: splash,
-                position: currentPos,
-                rotation: Quaternion.identity
-            );
+            Instantiate(splash).transform.position = transform.position;
             var hit = false;
 
             // Check collisions
-            foreach (var player in Physics2D
-                         .OverlapCircleAll(currentPos, 0.35f)
-                         .Where(col => col.CompareTag("base"))
+            foreach (var go in Physics2D
+                         .OverlapCircleAll((Vector2)transform.position+ Vector2.down * 0.25f, hitRange)
+                         .Where(col => col.CompareTag(isEnemy ? "base" : "ship"))
                     )
             {
                 hit = true;
-                player.GetComponent<Base>().TakeDamage(Damage);
-                Instantiate(
-                    original: explosion,
-                    position: currentPos,
-                    rotation: Quaternion.identity
-                );
+                go.GetComponent<IDamageble>().TakeDamage(Damage);
+                Instantiate(explosion).transform.position = transform.position;
             }
 
             MainCamera.AudioSource.PlayOneShot(hit ? cannonHit : cannonMiss);
 
-            Destroy(gameObject);
+            Destroy(destroyWithParent ? transform.parent.gameObject : gameObject);
         }
     }
 
     void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, GameManager.Instance.CurrentCannonModel.Radius / 100f);
+        Gizmos.DrawWireSphere((Vector2)transform.position+ Vector2.down * 0.25f, hitRange);
     }
 
     public void SetMissile(Sprite missileSprite)
