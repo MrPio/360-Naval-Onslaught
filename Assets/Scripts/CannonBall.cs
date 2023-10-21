@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
 using ExtensionsFunctions;
+using Interfaces;
 using Managers;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -55,13 +56,14 @@ public class CannonBall : MonoBehaviour
             // Check collisions
             foreach (var ship in Physics2D
                          .OverlapCircleAll(currentPos, GameManager.Instance.CurrentCannonModel.Radius / 100f)
-                         .Where(col => col.CompareTag("ship"))
+                         .Where(col => col.CompareTag("ship") || col.CompareTag("bubble") )
                     )
             {
                 hit = true;
                 ++GameManager.Instance.CurrentWaveCannonHit;
-                ship.GetComponent<Ship>().TakeDamage(GameManager.Instance.CurrentCannonModel.Damage,hasEMP);
+                ship.GetComponent<IDamageble>().TakeDamage(GameManager.Instance.CurrentCannonModel.Damage,hasEMP);
             }
+            
 
             MainCamera.AudioSource.PlayOneShot(hit ? cannonHit : cannonMiss);
             if (!Game.IsSpecialWave && hit)

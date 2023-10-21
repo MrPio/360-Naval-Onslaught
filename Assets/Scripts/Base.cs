@@ -64,10 +64,16 @@ public class Base : MonoBehaviour
 
     private void OnEnable()
     {
-        healthBar.SetValue(Game.Health / (float)Game.MaxHealth);
+        UpdateUI();
         shield.SetActive(false);
         _invincible = false;
     }
+
+    public void UpdateUI()
+    {
+        healthBar.SetValue(Game.Health / (float)Game.MaxHealth);
+    }
+    
 
     public void TakeDamage(int damage)
     {
@@ -82,7 +88,7 @@ public class Base : MonoBehaviour
             if (!Game.IsSpecialWave)
                 cameraContainerAnimator.SetTrigger("one_shake");
             healthBar.gameObject.SetActive(true);
-            healthBar.SetValue(fraction);
+            UpdateUI();
             lowHealthHUD.Evaluate(fraction);
             if (Game.Health <= 0)
                 StartCoroutine(GameOver());
@@ -172,7 +178,7 @@ public class Base : MonoBehaviour
         {
             MainCamera.AudioSource.PlayOneShot(heartClip);
             Game.Health = Game.MaxHealth;
-            healthBar.SetValue(1);
+            UpdateUI();
         }
 
         --Game.SpecialsCount[index];

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using ExtensionsFunctions;
+using Interfaces;
 using JetBrains.Annotations;
 using Managers;
 using Model;
@@ -10,7 +11,7 @@ using TMPro;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class Ship : MonoBehaviour
+public class Ship : MonoBehaviour, IDamageble
 {
     private static GameManager Game => GameManager.Instance;
 
@@ -42,6 +43,7 @@ public class Ship : MonoBehaviour
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private AudioClip specialAudioClip;
     [SerializeField] private GameObject glow;
+    [SerializeField] private bool alwaysSpecial;
     private bool isSpecialShip;
 
     private void Awake()
@@ -62,7 +64,7 @@ public class Ship : MonoBehaviour
 
         if (_model.Name == "SpeedBoat")
         {
-            var specialBoat = !Game.IsSpecialWave && Random.Range(0, 100) < 5;
+            var specialBoat = !Game.IsSpecialWave && (alwaysSpecial || Random.Range(0, 100) < 5);
             GetComponent<ShipPath>().AddPath(
                 Game.IsSpecialWave || specialBoat || Random.Range(0, 2) == 0
                     ? new List<Vector2> { Vector2.zero }
@@ -75,7 +77,7 @@ public class Ship : MonoBehaviour
             if (specialBoat)
             {
                 audioSource.PlayOneShot(specialAudioClip);
-                GetComponent<ShipPath>().SpeedSpecialMultiplier = 3.65f;
+                GetComponent<ShipPath>().SpeedSpecialMultiplier = 3.75f;
                 animator.SetTrigger("special_ship");
                 glow.SetActive(true);
                 isSpecialShip = true;
@@ -183,7 +185,7 @@ public class Ship : MonoBehaviour
         }
     }
 
-    private void Explode(bool reward = true)
+    public void Explode(bool reward = true)
     {
         if (GetComponent<ShipPath>().IsDead || Invincible) return;
         ++Game.CurrentWave.Destroyed;

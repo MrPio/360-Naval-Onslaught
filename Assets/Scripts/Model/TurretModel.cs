@@ -21,13 +21,21 @@ namespace Model
         private int _baseAmmo;
         private int _baseReload;
 
-        private int rate;
-        private int damage;
-        private int ammo;
-        public int Speed;
-        public int Rate => (int)(rate * (Game.IsSpecialWave ? 3.5f : 1f));
-        public int Damage=> (int)(damage * (Game.IsSpecialWave ? 1.5f : 1f));
-        public int Ammo => Game.IsSpecialWave ? 9999 : ammo;
+        private int _rate;
+        private int _damage;
+        private int _ammo;
+        private int _speed;
+
+        public int Speed => (int)(_speed *
+                                  (Game.PowerUp == Bubble.PowerUp.Speed ? 2f : 1f));
+
+        public int Rate => (int)(_rate * (Game.IsSpecialWave ? 3.5f : 1f) *
+                                 (Game.PowerUp == Bubble.PowerUp.Rate ? 2f : 1f));
+
+        public int Damage => (int)(_damage * (Game.IsSpecialWave ? 1.5f : 1f) *
+                                   (Game.PowerUp == Bubble.PowerUp.Damage ? 2f : 1f));
+
+        public int Ammo => Game.IsSpecialWave ? 9999 : _ammo;
         public int Reload;
 
         public int SpeedLevel = 1;
@@ -70,10 +78,10 @@ namespace Model
             _baseDamage = baseDamage;
             _baseAmmo = baseAmmo;
             _baseReload = baseReload;
-            Speed = _baseSpeed;
-            rate = _baseRate;
-            damage = _baseDamage;
-            ammo = _baseAmmo;
+            _speed = _baseSpeed;
+            _rate = _baseRate;
+            _damage = _baseDamage;
+            _ammo = _baseAmmo;
             Reload = _baseReload;
             SpeedLevelSteps = speedLevelSteps;
             RateLevelSteps = rateLevelSteps;
@@ -94,7 +102,7 @@ namespace Model
             if (Game.Money >= SpeedCost)
             {
                 Game.Money -= SpeedCost;
-                Speed += SpeedLevelSteps.Where(entry => entry.Key >= SpeedLevel).ElementAt(0).Value;
+                _speed += SpeedLevelSteps.Where(entry => entry.Key >= SpeedLevel).ElementAt(0).Value;
                 ++SpeedLevel;
             }
         }
@@ -104,7 +112,7 @@ namespace Model
             if (Game.Money >= RateCost)
             {
                 Game.Money -= RateCost;
-                rate += RateLevelSteps.Where(entry => entry.Key >= RateLevel).ElementAt(0).Value;
+                _rate += RateLevelSteps.Where(entry => entry.Key >= RateLevel).ElementAt(0).Value;
                 ++RateLevel;
             }
         }
@@ -114,7 +122,7 @@ namespace Model
             if (Game.Money >= DamageCost)
             {
                 Game.Money -= DamageCost;
-                damage += DamageLevelSteps.Where(entry => entry.Key >= DamageLevel).ElementAt(0).Value;
+                _damage += DamageLevelSteps.Where(entry => entry.Key >= DamageLevel).ElementAt(0).Value;
                 ++DamageLevel;
             }
         }
@@ -124,7 +132,7 @@ namespace Model
             if (Game.Money >= AmmoCost)
             {
                 Game.Money -= AmmoCost;
-                ammo += AmmoLevelSteps.Where(entry => entry.Key >= AmmoLevel).ElementAt(0).Value;
+                _ammo += AmmoLevelSteps.Where(entry => entry.Key >= AmmoLevel).ElementAt(0).Value;
                 ++AmmoLevel;
             }
         }

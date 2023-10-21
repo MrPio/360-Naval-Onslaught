@@ -19,13 +19,14 @@ namespace Model
         public int BaseReload;
         public int BaseRadius;
 
-        private int speed;
-        private int reload;
-        private int radius;
-        public int Speed => (int)(speed * (Game.IsSpecialWave ? 3f : 1f));
-        public int Damage;
-        public int Reload => (int)(reload * (Game.IsSpecialWave ? 5f : 1f));
-        public int Radius => (int)(radius * (Game.IsSpecialWave ? 3.25f : 1f));
+        private int _speed;
+        private int _reload;
+        private int _radius;
+        private int _damage;
+        public int Speed => (int)(_speed * (Game.IsSpecialWave ? 3f : 1f));
+        public int Damage=> (int)(_damage * (Game.PowerUp == Bubble.PowerUp.Damage ? 2f : 1f));
+        public int Reload => (int)(_reload * (Game.IsSpecialWave ? 5f : 1f) * (Game.PowerUp == Bubble.PowerUp.Rate ? 2f : 1f));
+        public int Radius => (int)(_radius * (Game.IsSpecialWave ? 3.25f : 1f));
 
         public int SpeedLevel = 1;
         public int DamageLevel = 1;
@@ -59,10 +60,10 @@ namespace Model
             BaseDamage = baseDamage;
             BaseReload = baseReload;
             BaseRadius = baseRadius;
-            speed = BaseSpeed;
-            Damage = BaseDamage;
-            reload = BaseReload;
-            radius = BaseRadius;
+            _speed = BaseSpeed;
+            _damage = BaseDamage;
+            _reload = BaseReload;
+            _radius = BaseRadius;
             SpeedLevelSteps = speedLevelSteps;
             DamageLevelSteps = damageLevelSteps;
             ReloadLevelSteps = reloadLevelSteps;
@@ -80,7 +81,7 @@ namespace Model
             if (Game.Money >= SpeedCost)
             {
                 Game.Money -= SpeedCost;
-                speed += SpeedLevelSteps.Where(entry => entry.Key >= SpeedLevel).ElementAt(0).Value;
+                _speed += SpeedLevelSteps.Where(entry => entry.Key >= SpeedLevel).ElementAt(0).Value;
                 ++SpeedLevel;
             }
         }
@@ -90,7 +91,7 @@ namespace Model
             if (Game.Money >= DamageCost)
             {
                 Game.Money -= DamageCost;
-                Damage += DamageLevelSteps.Where(entry => entry.Key >= DamageLevel).ElementAt(0).Value;
+                _damage += DamageLevelSteps.Where(entry => entry.Key >= DamageLevel).ElementAt(0).Value;
                 ++DamageLevel;
             }
         }
@@ -100,7 +101,7 @@ namespace Model
             if (Game.Money >= ReloadCost)
             {
                 Game.Money -= ReloadCost;
-                reload += ReloadLevelSteps.Where(entry => entry.Key >= ReloadLevel).ElementAt(0).Value;
+                _reload += ReloadLevelSteps.Where(entry => entry.Key >= ReloadLevel).ElementAt(0).Value;
                 ++ReloadLevel;
             }
         }
@@ -110,7 +111,7 @@ namespace Model
             if (Game.Money >= RadiusCost)
             {
                 Game.Money -= RadiusCost;
-                radius += RadiusLevelSteps.Where(entry => entry.Key >= RadiusLevel).ElementAt(0).Value;
+                _radius += RadiusLevelSteps.Where(entry => entry.Key >= RadiusLevel).ElementAt(0).Value;
                 ++RadiusLevel;
             }
         }

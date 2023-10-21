@@ -72,6 +72,7 @@
      <Compile Include="Assets\Scripts\GlitchController.cs" />
      <Compile Include="Assets\Scripts\AmmoCounter.cs" />
      <Compile Include="Assets\Scripts\Model\CannonModel.cs" />
+     <Compile Include="Assets\TransparentParent.cs" />
      <Compile Include="Assets\Scripts\ExtensionsFunctions\VectorExtensions.cs" />
      <Compile Include="Assets\Scripts\FloatingText.cs" />
      <Compile Include="Assets\Scripts\HowToPlayMenu.cs" />
@@ -91,7 +92,9 @@
      <Compile Include="Assets\Scripts\Model\WaveModel.cs" />
      <Compile Include="Assets\Scripts\Managers\DataManager.cs" />
      <Compile Include="Assets\Scripts\Bullet.cs" />
-     <Compile Include="Assets\TransparentParent.cs" />
+     <Compile Include="Assets\Bubble.cs" />
+     <Compile Include="Assets\Scripts\Interfaces\IDamageble.cs" />
+     <Compile Include="Assets\Scripts\ExtensionsFunctions\EnumExtensions.cs" />
      <Folder Include="Assets" />
      <Folder Include="Assets\Resources\Sprites\hud" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
@@ -144,6 +147,7 @@
      <Folder Include="Assets\TextMesh Pro\Shaders" />
      <Folder Include="Assets\Resources\Sprites\inputs" />
      <Folder Include="Assets\TextMesh Pro\Resources\Style Sheets" />
+     <Folder Include="Assets\Scripts\Interfaces" />
      <Folder Include="Assets\Resources\Sprites\fog" />
      <Folder Include="Assets\TextMesh Pro\Fonts" />
      <Folder Include="Assets\Scripts\Model" />

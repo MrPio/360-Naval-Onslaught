@@ -2,6 +2,7 @@ using System;
 using System.Diagnostics;
 using System.Linq;
 using ExtensionsFunctions;
+using Interfaces;
 using JetBrains.Annotations;
 using Managers;
 using Unity.VisualScripting;
@@ -34,7 +35,7 @@ public class Bullet : MonoBehaviour
             }
             else
             {
-                if (backupVelocity is {})
+                if (backupVelocity is { })
                     rb.velocity = (Vector2)backupVelocity;
                 backupVelocity = null;
             }
@@ -71,7 +72,7 @@ public class Bullet : MonoBehaviour
             _accumulator = 0;
             Physics2D.OverlapCircleNonAlloc(transform.position + (transform.rotation * Vector2.right) * 1f, 1.65f,
                 _collidersArray);
-            foreach (var col in _collidersArray.Where(it => it is { }&& !it.IsDestroyed() && it.CompareTag("ship")))
+            foreach (var col in _collidersArray.Where(it => it is { } && !it.IsDestroyed() && it.CompareTag("ship")))
             {
                 if (!col.GetComponent<Ship>().Invincible)
                 {
@@ -99,9 +100,9 @@ public class Bullet : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D col)
     {
-        if (col.gameObject.tag.Contains("ship") && !col.GetComponent<Ship>().Invincible)
+        if ((col.gameObject.tag.Contains("ship") && !col.GetComponent<Ship>().Invincible) || col.gameObject.tag.Contains("bubble"))
         {
-            col.GetComponent<Ship>().TakeDamage(Game.CurrentTurretModel.Damage);
+            col.GetComponent<IDamageble>().TakeDamage(Game.CurrentTurretModel.Damage);
             ++GameManager.Instance.CurrentWaveTurretHit;
 
             Instantiate(

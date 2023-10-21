@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
+[ExecuteInEditMode]
 public class TransparentParent : MonoBehaviour
 {
     [SerializeField] private float alpha;

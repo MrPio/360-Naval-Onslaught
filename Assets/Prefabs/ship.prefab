@@ -548,6 +548,7 @@ MonoBehaviour:
   audioSource: {fileID: -1933154318848190664}
   specialAudioClip: {fileID: 8300000, guid: 806c7d4948d2ee349a4fc25f3a16560a, type: 3}
   glow: {fileID: 2686755662222433429}
+  alwaysSpecial: 0
 --- !u!61 &1000699228564121690
 BoxCollider2D:
   m_ObjectHideFlags: 0

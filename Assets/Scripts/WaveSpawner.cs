@@ -44,7 +44,7 @@ public class WaveSpawner : MonoBehaviour
     [NonSerialized] private List<Transform> currentSpecialPoints;
     [NonSerialized] private int specialSpawned = 0;
     [SerializeField] private GameObject WarningPanel;
-    [SerializeField] private Animator CameraAnimator;
+    [SerializeField] private Animator CameraAnimator,GlobalVolumeAnimator;
 
 
     public GameObject howToPlayMenu, overlay, mainMenu, gameOver, specialsMenu, shopMenu, bonusMenu;
@@ -208,6 +208,7 @@ public class WaveSpawner : MonoBehaviour
         shopMenu.SetActive(false);
         bonusMenu.SetActive(false);
         winMenu.SetActive(false);
+        GlobalVolumeAnimator.SetTrigger(Animator.StringToHash("fade"));
 
         if (Game.Wave >= Data.Waves.Length)
         {
@@ -251,7 +252,8 @@ public class WaveSpawner : MonoBehaviour
         Game.CurrentWaveTurretHit = 0;
         Game.CurrentWaveCannonFired = 0;
         Game.CurrentWaveCannonHit = 0;
-
+        GlobalVolumeAnimator.SetTrigger(Animator.StringToHash("unfade"));
+            
         // New Wave Sign
         if (!isDebug)
         {

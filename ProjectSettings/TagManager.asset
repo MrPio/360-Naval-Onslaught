@@ -26,6 +26,8 @@ TagManager:
   - bonus_menu
   - laser
   - camera_container
+  - bubble
+  - restore_health_hud
   layers:
   - Default
   - TransparentFX

@@ -32,6 +32,29 @@ namespace Managers
         public int CurrentTurret = 0;
         public int CurrentCannon = 0;
         public int Score;
+        public float PowerUpDuration = 8;
+        private Bubble.PowerUp? _powerUp;
+
+        public Bubble.PowerUp? PowerUp
+        {
+            get
+            {
+                if (Time.time - PowerUpStart >= PowerUpDuration)
+                    _powerUp = null;
+                return _powerUp;
+            }
+            set
+            {
+                if (value is { })
+                {
+                    _powerUp = (Bubble.PowerUp)value;
+                    PowerUpStart = Time.time;
+                }
+            }
+        }
+
+        public float PowerUpStart;
+
         public int HealthStep => (int)(_healthBaseStep * (1f + 0.25f * HealthLevel));
         public int HealthCost => (int)(_healthBaseCost * (1f + 0.35f * HealthLevel));
         public int RepairCost => (int)(0.28f * (MaxHealth - Health) * (1f + 0.25f * _repairLevel));
@@ -45,6 +68,8 @@ namespace Managers
         public float CurrentWaveCannonAccuracy => CurrentWaveCannonHit / (float)CurrentWaveCannonFired;
         public bool HasBonus => CurrentWaveCannonAccuracy >= 0.75 && CurrentWaveTurretAccuracy >= 0.75f;
         public bool IsSpecialWave => SpecialWave >= 0;
+        public bool HasPowerUp => PowerUp is { };
+
 
         public TurretModel CurrentTurretModel => Data.Turrets[CurrentTurret];
         public CannonModel CurrentCannonModel => Data.Cannons[CurrentCannon];

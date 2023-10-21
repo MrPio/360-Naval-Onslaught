@@ -78,7 +78,7 @@ public class MainCamera : MonoBehaviour
             }
         }
 
-        transform.position = (Vector3)(basePos + biased) + new Vector3(0, 0, -10);
+        transform.localPosition = (Vector3)(basePos + biased) + new Vector3(0, 0, -10);
     }
 
     public void TransitionTo(Vector2 to)
