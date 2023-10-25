@@ -1,11 +1,12 @@
 # 360° Naval Onslaught
 
-A tower defence game. Survive increasingly difficult waves and upgrade your weaponry​.
+A tower defence game. Survive increasingly difficult waves and upgrade your weaponry.
 
-![vlcsnap-2023-10-25-07h16m24s090](https://github.com/MrPio/AcquaTurret2/assets/22773005/f96d812b-34d6-4f89-83f2-42cb75ec1029)
-![vlcsnap-2023-10-25-07h18m55s671](https://github.com/MrPio/AcquaTurret2/assets/22773005/0c06f009-2d24-4021-964f-2c43c46850e0)
-![vlcsnap-2023-10-25-07h17m57s788](https://github.com/MrPio/AcquaTurret2/assets/22773005/fe385c34-f4ce-44a6-b81e-9034f272113e)
-![vlcsnap-2023-10-25-07h16m49s624](https://github.com/MrPio/AcquaTurret2/assets/22773005/b190bd77-1eb2-4f19-9800-ccf81283d40a)
-![vlcsnap-2023-10-25-07h20m59s092](https://github.com/MrPio/AcquaTurret2/assets/22773005/0ed5531f-b92d-4acb-8e23-8649891af389)
-![vlcsnap-2023-10-25-07h19m56s844](https://github.com/MrPio/AcquaTurret2/assets/22773005/36d44066-3112-4747-9394-9846ca5215cc)
-![vlcsnap-2023-10-25-07h19m27s322](https://github.com/MrPio/AcquaTurret2/assets/22773005/6dff3320-56df-4e85-b71c-58367873d6cf)
+![vlcsnap-2023-10-25-07h16m24s090 (1)](https://github.com/MrPio/360-Naval-Onslaught/assets/22773005/9da2f7b6-037d-4c5c-bd45-74413e966644)
+![vlcsnap-2023-10-25-07h20m59s092](https://github.com/MrPio/360-Naval-Onslaught/assets/22773005/bbf5c91d-d2e9-492e-a334-8d47b367589d)
+![vlcsnap-2023-10-25-07h19m56s844](https://github.com/MrPio/360-Naval-Onslaught/assets/22773005/a72d9c59-78f4-4f20-bcbb-1c13587addbf)
+![vlcsnap-2023-10-25-07h19m27s322](https://github.com/MrPio/360-Naval-Onslaught/assets/22773005/afe0cd4c-b6de-4157-aec5-11b80645a4ab)
+![vlcsnap-2023-10-25-07h16m49s624](https://github.com/MrPio/360-Naval-Onslaught/assets/22773005/a7748791-4336-4935-8e7f-bbaac990c316)
+![vlcsnap-2023-10-25-07h18m55s671](https://github.com/MrPio/360-Naval-Onslaught/assets/22773005/e700c27e-0364-4eb6-b3f1-40ddc1b4e2e2)
+![vlcsnap-2023-10-25-07h17m57s788](https://github.com/MrPio/360-Naval-Onslaught/assets/22773005/0bb49950-880f-4be4-a1e0-5224dfe75537)
+![vlcsnap-2023-10-25-07h16m41s946](https://github.com/MrPio/360-Naval-Onslaught/assets/22773005/6b6423ee-f952-4f2d-87e0-9bc2c035236a)
