@@ -1,5 +1,8 @@
 # 360° Naval Onslaught
 
+## Demo [HERE](https://youtu.be/EqW0VPKNMzs)
+## Itch.io [HERE](https://mrpio.itch.io/360-naval-onslaught)
+
 A tower defence game. Survive increasingly difficult waves and upgrade your weaponry.
 
 ![vlcsnap-2023-10-25-07h16m24s090 (1)](https://github.com/MrPio/360-Naval-Onslaught/assets/22773005/9da2f7b6-037d-4c5c-bd45-74413e966644)
