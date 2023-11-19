@@ -14,7 +14,8 @@ public class HowToPlayMenu : MonoBehaviour
 
     private void OnEnable()
     {
-        keyboardKeys.ForEach(it => it.SetActive(!InputManager.Instance.HasJoystick()));
-        gamepadKeys.ForEach(it => it.SetActive(InputManager.Instance.HasJoystick()));
+        var isPc = !InputManager.Instance.HasJoystick() && !InputManager.IsMobile;
+        keyboardKeys.ForEach(it => it.SetActive(isPc));
+        gamepadKeys.ForEach(it => it.SetActive(!isPc));
     }
 }

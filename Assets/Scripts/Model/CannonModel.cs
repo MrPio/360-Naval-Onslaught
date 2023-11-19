@@ -19,24 +19,22 @@ namespace Model
         public int BaseReload;
         public int BaseRadius;
 
-        private int _speed;
-        private int _reload;
-        private int _radius;
-        private int _damage;
+        private float _speed;
+        private float _reload;
+        private float _radius;
+        private float _damage;
         public int Speed => (int)(_speed * (Game.IsSpecialWave ? 3f : 1f));
-        public int Damage=> (int)(_damage * (Game.PowerUp == Bubble.PowerUp.Damage ? 2f : 1f));
-        public int Reload => (int)(_reload * (Game.IsSpecialWave ? 5f : 1f) * (Game.PowerUp == Bubble.PowerUp.Rate ? 2f : 1f));
+        public int Damage => (int)(_damage * (Game.PowerUp == Bubble.PowerUp.Damage ? 2f : 1f));
+
+        public int Reload =>
+            (int)(_reload * (Game.IsSpecialWave ? 5f : 1f) * (Game.PowerUp == Bubble.PowerUp.Rate ? 2f : 1f));
+
         public int Radius => (int)(_radius * (Game.IsSpecialWave ? 3.25f : 1f));
 
         public int SpeedLevel = 1;
         public int DamageLevel = 1;
         public int ReloadLevel = 1;
         public int RadiusLevel = 1;
-
-        public Dictionary<int, int> SpeedLevelSteps;
-        public Dictionary<int, int> DamageLevelSteps;
-        public Dictionary<int, int> ReloadLevelSteps;
-        public Dictionary<int, int> RadiusLevelSteps;
 
         private readonly int _speedBaseCost;
         private readonly int _damageBaseCost;
@@ -49,8 +47,7 @@ namespace Model
         public int RadiusCost => (int)(_radiusBaseCost * (1f + 0.35f * RadiusLevel));
 
         public CannonModel(string name, string sprite, string fireClip, int baseSpeed, int baseDamage,
-            int baseReload, int baseRadius, Dictionary<int, int> speedLevelSteps, Dictionary<int, int> damageLevelSteps,
-            Dictionary<int, int> reloadLevelSteps, Dictionary<int, int> radiusLevelSteps, int speedBaseCost,
+            int baseReload, int baseRadius, int speedBaseCost,
             int damageBaseCost, int reloadBaseCost, int radiusBaseCost, string cannonBallSprite, int waveUnlock = 0)
         {
             Name = name;
@@ -64,10 +61,6 @@ namespace Model
             _damage = BaseDamage;
             _reload = BaseReload;
             _radius = BaseRadius;
-            SpeedLevelSteps = speedLevelSteps;
-            DamageLevelSteps = damageLevelSteps;
-            ReloadLevelSteps = reloadLevelSteps;
-            RadiusLevelSteps = radiusLevelSteps;
             _speedBaseCost = speedBaseCost;
             _damageBaseCost = damageBaseCost;
             _reloadBaseCost = reloadBaseCost;
@@ -76,45 +69,10 @@ namespace Model
             WaveUnlock = waveUnlock;
         }
 
-        public void BuySpeed()
-        {
-            if (Game.Money >= SpeedCost)
-            {
-                Game.Money -= SpeedCost;
-                _speed += SpeedLevelSteps.Where(entry => entry.Key >= SpeedLevel).ElementAt(0).Value;
-                ++SpeedLevel;
-            }
-        }
-
-        public void BuyDamage()
-        {
-            if (Game.Money >= DamageCost)
-            {
-                Game.Money -= DamageCost;
-                _damage += DamageLevelSteps.Where(entry => entry.Key >= DamageLevel).ElementAt(0).Value;
-                ++DamageLevel;
-            }
-        }
-
-        public void BuyReload()
-        {
-            if (Game.Money >= ReloadCost)
-            {
-                Game.Money -= ReloadCost;
-                _reload += ReloadLevelSteps.Where(entry => entry.Key >= ReloadLevel).ElementAt(0).Value;
-                ++ReloadLevel;
-            }
-        }
-
-        public void BuyRadius()
-        {
-            if (Game.Money >= RadiusCost)
-            {
-                Game.Money -= RadiusCost;
-                _radius += RadiusLevelSteps.Where(entry => entry.Key >= RadiusLevel).ElementAt(0).Value;
-                ++RadiusLevel;
-            }
-        }
+        public void BuySpeed() => TurretModel.UpgradeWeapon(ref _speed, ref SpeedLevel, SpeedCost);
+        public void BuyDamage() => TurretModel.UpgradeWeapon(ref _damage, ref DamageLevel, DamageCost);
+        public void BuyReload() => TurretModel.UpgradeWeapon(ref _reload, ref ReloadLevel, ReloadCost);
+        public void BuyRadius() => TurretModel.UpgradeWeapon(ref _radius, ref RadiusLevel, RadiusCost);
 
         public bool IsLocked => Game.Wave < WaveUnlock;
     }

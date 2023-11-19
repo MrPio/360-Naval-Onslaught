@@ -155,7 +155,7 @@ MonoBehaviour:
   explosion: {fileID: 3303104708930059665, guid: 4a1925b35adf3794a9b3cb365e54115e, type: 3}
   splash: {fileID: 5067368189887175551, guid: 0bf28d837aa395044aea98c5949864a3, type: 3}
   isAlly: 1
-  radius: 0.55
+  radius: 0.65
 --- !u!1001 &3509956959923976763
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -217,7 +217,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8048472596801378735, guid: 0629e082a8f77284b82f184929a99910, type: 3}
       propertyPath: radius
-      value: 0.55
+      value: 0.65
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0629e082a8f77284b82f184929a99910, type: 3}

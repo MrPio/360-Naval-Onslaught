@@ -150,7 +150,7 @@ MonoBehaviour:
   rb: {fileID: 2033064765144681972}
   speed: 0.95
   isAlly: 1
-  dropAmount: 7
-  dropWait: 0.15
+  dropAmount: 14
+  dropWait: 0.08
   planeClip: {fileID: 8300000, guid: 9c7eace5c9fd89e4aab280d2db48ab64, type: 3}
-  dispersionHorizontal: 0.35
+  dispersionHorizontal: 0.55

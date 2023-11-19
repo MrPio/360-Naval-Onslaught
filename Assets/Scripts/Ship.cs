@@ -78,8 +78,8 @@ public class Ship : MonoBehaviour, IDamageble
             if (specialBoat)
             {
                 audioSource.PlayOneShot(specialAudioClip);
-                GetComponent<ShipPath>().SpeedSpecialMultiplier = 3.75f;
-                animator.SetTrigger("special_ship");
+                GetComponent<ShipPath>().SpeedSpecialMultiplier = ShipModel.SpecialSpeedMultiplier;
+                animator.SetTrigger(Animator.StringToHash("special_ship"));
                 glow.SetActive(true);
                 isSpecialShip = true;
             }

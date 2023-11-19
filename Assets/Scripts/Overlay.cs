@@ -1,17 +1,17 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 public class Overlay : MonoBehaviour
 {
+    public Action OnEnd;
     public void End()
     {
-        GameObject.FindWithTag("wave_spawner").GetComponent<WaveSpawner>().BeginWave();
+        OnEnd.Invoke();
         gameObject.SetActive(false);
     }
 
     public void Middle()
     {
-        Destroy(GameObject.FindWithTag("wave_spawner").GetComponent<WaveSpawner>().mainMenu);
+        GameObject.FindWithTag("wave_spawner").GetComponent<WaveSpawner>().mainMenu.SetActive(false);
     }
 }

@@ -1,10 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using ExtensionsFunctions;
 using Managers;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.Rendering;
 
 public class ContextMenu : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerMoveHandler,
     IPointerClickHandler
@@ -38,6 +40,8 @@ public class ContextMenu : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         BonusStop,
         BonusContinue,
         CloseGame,
+        QualitySetting,
+        MainMenuContinue,
     }
 
     [SerializeField] private GameObject contextMenu, lockedContextMenu, canvas, mainBase;
@@ -57,6 +61,12 @@ public class ContextMenu : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
             _click = Resources.Load<AudioClip>("Audio/menu_click");
             _hover = Resources.Load<AudioClip>("Audio/menu_click_2");
         }
+    }
+
+    private void OnEnable()
+    {
+        if (type is ContextMenuType.QualitySetting)
+            GetComponentInChildren<TextMeshProUGUI>().text = "Quality: " + Game.QualityNames[Game.Quality];
     }
 
     public void OnPointerEnter(PointerEventData eventData)
@@ -219,7 +229,9 @@ public class ContextMenu : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         else if (type == ContextMenuType.CloseHowToPlay)
             GameObject.FindWithTag("how_to_play_menu").SetActive(false);
         else if (type == ContextMenuType.MainMenuPlay)
-            GameObject.FindWithTag("wave_spawner").GetComponent<WaveSpawner>().overlay.SetActive(true);
+            GameObject.FindWithTag("wave_spawner").GetComponent<WaveSpawner>().NewGame();
+        else if (type == ContextMenuType.MainMenuContinue)
+            GameObject.FindWithTag("wave_spawner").GetComponent<WaveSpawner>().LoadGame();
         else if (type == ContextMenuType.MainMenuHowToPlay)
             GameObject.FindWithTag("wave_spawner").GetComponent<WaveSpawner>().howToPlayMenu.SetActive(true);
         else if (type == ContextMenuType.GameOverGotoMainMenu)
@@ -238,6 +250,7 @@ public class ContextMenu : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
                 ship.GetComponent<Ship>().IsFreezed = false;
                 ship.GetComponent<ShipPath>().IsFreezed = false;
             }
+
             foreach (var bullet in GameObject.FindGameObjectsWithTag("bullet"))
                 bullet.GetComponent<Bullet>().IsFrozen = false;
             foreach (var laser in GameObject.FindGameObjectsWithTag("laser"))
@@ -264,8 +277,15 @@ public class ContextMenu : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
             GameObject.FindWithTag("wave_spawner").GetComponent<WaveSpawner>().shopMenu.SetActive(true);
             GameObject.FindWithTag("bonus_menu").SetActive(false);
         }
-        else if(type==ContextMenuType.CloseGame)
+        else if (type == ContextMenuType.CloseGame)
             Application.Quit();
+        else if (type == ContextMenuType.QualitySetting)
+        {
+            Game.Quality = (Game.Quality + 1) % 3;
+            GetComponentInChildren<TextMeshProUGUI>().text = "Quality: " + (Game.QualityNames[Game.Quality]);
+            GameObject.FindWithTag("ocean").GetComponent<Renderer>().material =
+                Resources.Load<Material>(Game.QualityOceanMaterials[Game.Quality]);
+        }
 
         if (contextMenu == null)
         {

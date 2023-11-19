@@ -10,6 +10,7 @@ public class PowerUpsController : MonoBehaviour
     private static GameManager Game => GameManager.Instance;
 
     [SerializeField] private GameObject missileAttack, powerUpUI;
+    [SerializeField] private WaveSpawner waveSpawner;
 
     public void ShowRadialSlider()
     {
@@ -26,6 +27,10 @@ public class PowerUpsController : MonoBehaviour
             );
             for (var i = 0; i < Game.MissileAssaultCount; i++)
             {
+                if (!Game.HasPowerUp)
+                    break;
+                yield return new WaitWhile(() => waveSpawner.isPaused);
+
                 var spawnPoint = bound.GetRandomPointInBounds();
                 var availableShips = GameObject.FindGameObjectsWithTag("ship")
                     .Where(it => bound.Contains(it.transform.position)).ToList();
@@ -47,7 +52,8 @@ public class PowerUpsController : MonoBehaviour
                 missile.StartPosition = new Vector2(0.033f, 17f);
                 missile.Destination = new Vector2(0.033f, 0f);
                 missile.Damage = (int)(200 * (1f + 4f * Game.WaveFactor));
-                yield return new WaitForSeconds(Game.PowerUpDuration/Game.MissileAssaultCount * Random.Range(0.75f, 1.15f));
+                yield return new WaitForSeconds(Game.PowerUpDuration / Game.MissileAssaultCount *
+                                                Random.Range(0.75f, 1.15f));
             }
         }
 

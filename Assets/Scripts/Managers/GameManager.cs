@@ -1,13 +1,35 @@
 ﻿using System.Collections.Generic;
+using JetBrains.Annotations;
 using Model;
 using UnityEngine;
 
 namespace Managers
 {
+    [System.Serializable]
     public class GameManager
     {
+        private static readonly string IOName = "GameManager.json";
+
         private static DataManager Data => DataManager.Instance;
-        public static void Reset() => _instance = new GameManager();
+
+        public static void Reset()
+        {
+            IOManager.Delete(IOName);
+            _instance = new GameManager();
+        }
+
+        public void Save() => IOManager.Save(Instance, IOName);
+
+        public static bool Load()
+        {
+            var instance = IOManager.Load<GameManager>(IOName);
+            if (instance is not null)
+                _instance = instance;
+            return instance is not null;
+        }
+
+        public static bool HasSave() => IOManager.Exist(IOName);
+
 
         private static GameManager _instance;
 
@@ -19,6 +41,12 @@ namespace Managers
 
         public static GameManager Instance => _instance ??= new GameManager();
 
+        public int Quality = InputManager.IsMobile ? 0 : 2;
+        public readonly string[] QualityNames = { "Low", "High", "Ultra" };
+
+        public string[] QualityOceanMaterials =
+            { "Materials/ocean_low", "Materials/ocean_high", "Materials/ocean_ultra" };
+
         public int Health;
         public int MaxHealth = 3500;
         private int _healthBaseStep = 175;
@@ -26,21 +54,22 @@ namespace Managers
         private int _repairLevel = 1;
         public int HealthLevel = 1;
         public int Wave = 0;
-        public int SpecialWave = -1;
+        [System.NonSerialized] public int SpecialWave = -1;
         public int Ammo, CannonAmmo;
-        public int Money = 100;
+        public int Money = 200;
         public int CurrentTurret = 0;
         public int CurrentCannon = 0;
         public int Score;
         public float PowerUpDuration = 20;
         public int MissileAssaultCount = 20;
-        private Bubble.PowerUp? _powerUp;
+        [System.NonSerialized] private Bubble.PowerUp? _powerUp;
+        [System.NonSerialized] public bool HasOverride;
 
         public Bubble.PowerUp? PowerUp
         {
             get
             {
-                if (PowerUpProgress>=1)
+                if (PowerUpProgress >= 1)
                     _powerUp = null;
                 return _powerUp;
             }
@@ -54,7 +83,7 @@ namespace Managers
             }
         }
 
-        public float PowerUpStart;
+        [System.NonSerialized] public float PowerUpStart;
         public float PowerUpProgress => (Time.time - PowerUpStart) / PowerUpDuration;
 
         public int HealthStep => (int)(_healthBaseStep * (1f + 0.25f * HealthLevel));

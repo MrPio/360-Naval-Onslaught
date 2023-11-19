@@ -20,8 +20,8 @@ public class CloudSpawner : MonoBehaviour
             Instantiate(
                 original: cloud,
                 position: new Vector2(
-                    x: -MainCamera.Width - 2f,
-                    y: Random.Range(-MainCamera.Height, MainCamera.Height)
+                    x: -MainCamera.Width - 4f,
+                    y: Random.Range(-MainCamera.Height-1f, MainCamera.Height+1f)
                 ),
                 rotation: Quaternion.identity
             );

@@ -8,7 +8,6 @@ public class Enableable : MonoBehaviour
 
     private void OnEnable()
     {
-        print(gameObject.name);
         foreach (var animator in animators)
             animator.SetTrigger(trigger);
     }

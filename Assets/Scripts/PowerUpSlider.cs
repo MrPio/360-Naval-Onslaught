@@ -9,7 +9,7 @@ public class PowerUpSlider : MonoBehaviour
     [SerializeField] private Slider powerUpSlider;
     [SerializeField] private Image powerUpImage;
     [SerializeField] private List<Sprite> powerUpSprites;
-
+    [SerializeField] private WaveSpawner waveSpawner;
 
     private void OnEnable()
     {
@@ -23,6 +23,8 @@ public class PowerUpSlider : MonoBehaviour
     {
         if (Game.PowerUpProgress > 1)
             gameObject.SetActive(false);
+        else if (waveSpawner.isPaused)
+            Game.PowerUpStart += Time.deltaTime;
         else
             powerUpSlider.value = 1-Game.PowerUpProgress;
     }

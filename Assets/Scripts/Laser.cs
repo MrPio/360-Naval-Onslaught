@@ -1,17 +1,16 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using ExtensionsFunctions;
 using Interfaces;
 using Managers;
 using Model;
-using Unity.VisualScripting;
 using UnityEngine;
-using Vector3 = System.Numerics.Vector3;
 
 public class Laser : MonoBehaviour
 {
     private static GameManager Game => GameManager.Instance;
+    private static InputManager In => InputManager.Instance;
+
     private TurretModel Model => GameManager.Instance.CurrentTurretModel;
     private float _accumulator;
     private List<IDamageble> _strickenDamagebles = new ();
@@ -29,7 +28,7 @@ public class Laser : MonoBehaviour
         if(IsFreezed)
             return;
         if (Arm is { })
-            transform.SetPositionAndRotation(Arm.position, MainCamera.MainCam.AngleToMouse(Turret.position));
+            transform.SetPositionAndRotation(Arm.position, In.GetInput().ToQuaternion());
 
         if (Input.GetMouseButtonUp(0) || Game.Ammo <= 0)
         {
@@ -61,7 +60,7 @@ public class Laser : MonoBehaviour
     {
         if(IsFreezed)
             return;
-        if (col.gameObject.CompareTag("ship")|| col.gameObject.tag.Contains("bubble"))
+        if ((col.gameObject.tag.Contains("ship") && !col.GetComponent<Ship>().Invincible) || col.gameObject.tag.Contains("bubble"))
         {
             var go = col.gameObject.GetComponent<IDamageble>();
             if (!_strickenDamagebles.Contains(go))
@@ -73,7 +72,7 @@ public class Laser : MonoBehaviour
     {
         if(IsFreezed)
             return;
-        if (col.gameObject.CompareTag("ship")|| col.gameObject.tag.Contains("bubble"))
+        if ((col.gameObject.tag.Contains("ship") && !col.GetComponent<Ship>().Invincible) || col.gameObject.tag.Contains("bubble"))
         {
             var go = col.gameObject.GetComponent<IDamageble>();
             if (_strickenDamagebles.Contains(go))

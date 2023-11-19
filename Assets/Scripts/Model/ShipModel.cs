@@ -8,6 +8,7 @@ namespace Model
     public class ShipModel
     {
         private static GameManager Game => GameManager.Instance;
+        public static float SpecialSpeedMultiplier => InputManager.IsMobile ? 3.6f : 3.75f;
         public readonly string Name;
         public readonly string Sprite;
         public readonly string FoamAnim;
@@ -15,7 +16,7 @@ namespace Model
         public readonly string ExplodeClip;
         public readonly string MissileSprite;
         public readonly bool HasPath;
-        public readonly Action<GameObject> StartCallback,EndPathCallback;
+        public readonly Action<GameObject> StartCallback, EndPathCallback;
         public readonly int ExplosionsCount;
         public readonly float DelayMultiplier;
 
@@ -25,15 +26,22 @@ namespace Model
         private readonly int _baseHealth;
         private readonly int _baseMoney;
 
-        public float Delay => 7f+Mathf.Max(0f,1f -  Game.WaveFactor)*4f;
-        public int Speed => (int)(_baseSpeed * (1f + 0.05f * Game.Wave)*(Game.IsSpecialWave?3.35f:1f)*(Game.SpecialWave==2?1.5f:1f));
-        public int Rate => (int)(_baseRate * (1f + 0.025f * Game.Wave));
-        public int Damage => (int)(_baseDamage * (1f + 0.025f * Game.Wave));
-        public int Health => (int)(_baseHealth * (1f + (4f * Game.WaveFactor)+ (0.3f * (int)(Game.Wave / 5))));
-        public int Money => (int)(_baseMoney * (1f + 0.025f * Game.Wave)*(Game.IsSpecialWave?0.333f:1f));
+        public float Delay => 7f + Mathf.Max(0f, 1f - Game.WaveFactor) * 4f;
 
-        public ShipModel(string name, string sprite,string foamAnim, string[] fireClip, string explodeClip, int baseSpeed, int baseRate,
-            int baseDamage, int baseHealth, int baseMoney, bool hasPath, string missileSprite, float delayMultiplier=1f, int explosionsCount=1, Action<GameObject> startCallback=null, Action<GameObject> endPathCallback=null)
+        public int Speed => (int)(_baseSpeed * (1f + 0.05f * Game.Wave) *
+                                  (Game.IsSpecialWave ? (InputManager.IsMobile ? 3f : 3.35f) : 1f) *
+                                  (Game.SpecialWave == 2 ? 1.5f : 1f));
+
+        public int Rate => (int)(_baseRate * (1f + 0.025f * Game.Wave));
+        public int Damage => (int)(_baseDamage * (1f + 0.025f * Game.Wave) * (Game.IsSpecialWave ? 0.6f : 1f));
+        public int Health => (int)(_baseHealth * (1f + (4f * Game.WaveFactor) + (0.3f * (int)(Game.Wave / 5))));
+        public int Money => (int)(_baseMoney * (1f + 0.025f * Game.Wave) * (Game.IsSpecialWave ? 0.333f : 1f));
+
+        public ShipModel(string name, string sprite, string foamAnim, string[] fireClip, string explodeClip,
+            int baseSpeed, int baseRate,
+            int baseDamage, int baseHealth, int baseMoney, bool hasPath, string missileSprite,
+            float delayMultiplier = 1f, int explosionsCount = 1, Action<GameObject> startCallback = null,
+            Action<GameObject> endPathCallback = null)
         {
             Name = name;
             Sprite = sprite;

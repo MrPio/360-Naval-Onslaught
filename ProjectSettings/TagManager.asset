@@ -30,6 +30,8 @@ TagManager:
   - restore_health_hud
   - power_up_slider
   - power_ups_controller
+  - pad_container
+  - global_volume
   layers:
   - Default
   - TransparentFX
@@ -40,7 +42,7 @@ TagManager:
   - 
   - 
   - Post Processing
-  - 
+  - no_post_processing
   - 
   - 
   - 

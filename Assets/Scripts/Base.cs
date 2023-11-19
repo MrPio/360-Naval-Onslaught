@@ -1,12 +1,12 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using ExtensionsFunctions;
 using Interfaces;
 using Managers;
 using TMPro;
 using UnityEngine;
-using UnityEngine.InputSystem;
+using Random = UnityEngine.Random;
 
 public class Base : MonoBehaviour,IDamageble
 {
@@ -26,10 +26,11 @@ public class Base : MonoBehaviour,IDamageble
     private bool _invincible;
     private float _lastSpecialUsed;
     private bool[] _lastSpecialInput = { false, false, false, false };
-
+    private WaveSpawner _waveSpawner;
     private void Start()
     {
         shield.SetActive(false);
+        _waveSpawner = GameObject.FindWithTag("wave_spawner").GetComponent<WaveSpawner>();
     }
 
     private void Update()
@@ -38,16 +39,16 @@ public class Base : MonoBehaviour,IDamageble
 
         for (var i = 0; i < 4; i++)
         {
-            if (In.SpecialDown(i) && !_lastSpecialInput[i])
+            var tmp = In.SpecialDown(i);
+            if (tmp && !_lastSpecialInput[i])
                 UseSpecial(i);
-            _lastSpecialInput[i] = In.SpecialDown(i);
+            _lastSpecialInput[i] = tmp;
         }
 
-        if (Input.GetKeyDown(KeyCode.P) || Input.GetKeyDown(KeyCode.Escape) ||
-            Input.GetKeyDown(KeyCode.Joystick1Button6))
+        if (In.GetPause() && !_waveSpawner.isPaused)
         {
             pauseMenu.SetActive(true);
-            GameObject.FindWithTag("wave_spawner").GetComponent<WaveSpawner>().isPaused = true;
+            _waveSpawner.isPaused = true;
             foreach (var ship in GameObject.FindGameObjectsWithTag("ship"))
             {
                 ship.GetComponent<Ship>().IsFreezed = true;
@@ -72,7 +73,9 @@ public class Base : MonoBehaviour,IDamageble
 
     public void UpdateUI()
     {
-        healthBar.SetValue(Game.Health / (float)Game.MaxHealth);
+        var fraction = Game.Health / (float)Game.MaxHealth;
+        healthBar.SetValue(fraction);
+        lowHealthHUD.Evaluate(fraction);
     }
     
     public void TakeDamage(int damage,bool _=false)
@@ -81,7 +84,6 @@ public class Base : MonoBehaviour,IDamageble
         {
             StartCoroutine(In.Vibrate());
             Game.Health -= damage;
-            var fraction = Game.Health / (float)Game.MaxHealth;
             damageAnimators.ForEach(animator => animator.SetTrigger(DamageHeavy));
             chromaticAberration.SetTrigger(Start1);
             GetComponent<GlitchEffect>().Animate();
@@ -89,7 +91,6 @@ public class Base : MonoBehaviour,IDamageble
                 cameraContainerAnimator.SetTrigger(Animator.StringToHash("one_shake"));
             healthBar.gameObject.SetActive(true);
             UpdateUI();
-            lowHealthHUD.Evaluate(fraction);
             if (Game.Health <= 0)
                 StartCoroutine(GameOver());
         }
@@ -100,7 +101,7 @@ public class Base : MonoBehaviour,IDamageble
         yield return new WaitForSeconds(1.5f);
 
         // Play game over clip on WaveSpawner's audioSource
-        var audioSource = GameObject.FindWithTag("wave_spawner").GetComponent<AudioSource>();
+        var audioSource = _waveSpawner.GetComponent<AudioSource>();
         audioSource.Stop();
         audioSource.clip = gameOverClip;
         audioSource.Play();
@@ -110,7 +111,7 @@ public class Base : MonoBehaviour,IDamageble
             ship.SetActive(false);
 
         // Show GameOver Menu
-        var gameOverMenu = GameObject.FindWithTag("wave_spawner").GetComponent<WaveSpawner>().gameOver;
+        var gameOverMenu = _waveSpawner.gameOver;
         gameOverMenu.SetActive(true);
         gameOverMenu.transform.Find("score_text").GetComponent<TextMeshProUGUI>().text =
             Game.Score.ToString("N0") + " pts";
@@ -189,6 +190,6 @@ public class Base : MonoBehaviour,IDamageble
 
     public void Explode(bool reward = true)
     {
-        throw new System.NotImplementedException();
+        throw new NotImplementedException();
     }
 }

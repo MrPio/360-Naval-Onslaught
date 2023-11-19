@@ -34,11 +34,12 @@ public class Bubble : MonoBehaviour, IDamageble
     private AudioSource _audioSource;
     private PowerUpsController _powerUpsController;
     private string _healthRestoreAudioClip = "Audio/health_restore";
+    private WaveSpawner _waveSpawner;
 
 
     private void Awake()
     {
-        _powerUp=Random.Range(0f, 1f) < 0.2f ? PowerUp.Satellite : EnumExtensions.RandomItem<PowerUp>();
+        _powerUp = Random.Range(0f, 1f) < 0.2f ? PowerUp.Satellite : EnumExtensions.RandomItem<PowerUp>();
         _health = (int)(120 * (1f + 4f * Game.WaveFactor));
         _bubbleAnimator = GetComponent<Animator>();
         _parent = transform.parent;
@@ -47,6 +48,7 @@ public class Bubble : MonoBehaviour, IDamageble
         _powerUpsController = GameObject.FindWithTag("power_ups_controller").GetComponent<PowerUpsController>();
         _moneyCounter = GameObject.FindWithTag("money_counter").GetComponent<MoneyCounter>();
         _scoreCounter = GameObject.FindWithTag("score_counter").GetComponent<MoneyCounter>();
+        _waveSpawner = GameObject.FindWithTag("wave_spawner").GetComponent<WaveSpawner>();
 
         // Enable the correct powerUp and 2X accordingly
         powerUps.ForEach(it => it.SetActive(powerUps.IndexOf(it) == (int)_powerUp));
@@ -62,7 +64,8 @@ public class Bubble : MonoBehaviour, IDamageble
     {
         if (_picking)
             return;
-        _acc += Time.deltaTime;
+        if (!_waveSpawner.isPaused)
+            _acc += Time.deltaTime;
 
         // Fading animation
         if (_acc > lifespan / 2)

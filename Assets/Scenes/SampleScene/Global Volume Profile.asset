@@ -18,7 +18,7 @@ MonoBehaviour:
     m_Value: 0
   intensity:
     m_OverrideState: 1
-    m_Value: 0.8
+    m_Value: 1
   response:
     m_OverrideState: 1
     m_Value: 1
@@ -120,7 +120,7 @@ MonoBehaviour:
     m_Value: {x: 0.5, y: 0.5}
   intensity:
     m_OverrideState: 1
-    m_Value: 0.35
+    m_Value: 0.359
   smoothness:
     m_OverrideState: 1
     m_Value: 0.21
@@ -142,32 +142,32 @@ MonoBehaviour:
   active: 1
   threshold:
     m_OverrideState: 1
-    m_Value: 0.96
+    m_Value: 1.43
   intensity:
     m_OverrideState: 1
-    m_Value: 0.2
+    m_Value: 19.5
   scatter:
     m_OverrideState: 1
-    m_Value: 1
+    m_Value: 0.184
   clamp:
     m_OverrideState: 1
-    m_Value: 1
+    m_Value: 65476.2
   tint:
     m_OverrideState: 1
-    m_Value: {r: 1, g: 0.9930666, b: 0.9213836, a: 1}
+    m_Value: {r: 1, g: 0.85159767, b: 0, a: 1}
   highQualityFiltering:
     m_OverrideState: 1
-    m_Value: 0
+    m_Value: 1
   skipIterations:
     m_OverrideState: 1
     m_Value: 5
   dirtTexture:
-    m_OverrideState: 1
+    m_OverrideState: 0
     m_Value: {fileID: 0}
     dimension: 1
   dirtIntensity:
-    m_OverrideState: 1
-    m_Value: 0
+    m_OverrideState: 0
+    m_Value: 9.07
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -291,7 +291,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ccf1aba9553839d41ae37dd52e9ebcce, type: 3}
   m_Name: MotionBlur
   m_EditorClassIdentifier: 
-  active: 1
+  active: 0
   mode:
     m_OverrideState: 1
     m_Value: 0

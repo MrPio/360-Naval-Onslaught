@@ -30,8 +30,8 @@ public class AccuracyMenu : MonoBehaviour
             : new Color(0.1875f, 0.1875f, 0.1875f);
 
         cannonImage.sprite = Resources.Load<Sprite>(Game.CurrentCannonModel.Sprite);
-        cannonFiredText.text = Game.CurrentWaveCannonHit.ToString("N0");
-        cannonHitText.text = Game.CurrentWaveCannonFired.ToString("N0");
+        cannonFiredText.text = Game.CurrentWaveCannonFired.ToString("N0");
+        cannonHitText.text = Game.CurrentWaveCannonHit.ToString("N0");
         cannonAccuracyText.text = (Game.CurrentWaveCannonAccuracy * 100f).ToString("N0") + " %";
         cannonAccuracyText.color = Game.CurrentWaveCannonAccuracy >= 0.75f
             ? Color.yellow

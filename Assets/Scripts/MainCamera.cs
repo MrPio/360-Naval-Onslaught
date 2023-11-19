@@ -1,5 +1,6 @@
 using System;
 using ExtensionsFunctions;
+using Managers;
 using UnityEngine;
 
 public class MainCamera : MonoBehaviour
@@ -14,6 +15,7 @@ public class MainCamera : MonoBehaviour
     [SerializeField] private float transitionDuration = 3f;
     private Vector2 _basePos = Vector2.zero;
     private float _orthoSize;
+    public static float BaseOrthoSize;
 
     private void Start()
     {
@@ -21,8 +23,16 @@ public class MainCamera : MonoBehaviour
         AudioSource = MainCam.GetComponent<AudioSource>();
         Height = MainCam.GetHeight();
         Width = MainCam.GetWidth();
+        //if (!InputManager.IsMobile)
         SetFixedAspectRatio(16.0f / 9.0f);
+        if (InputManager.IsMobile)
+        {
+            QualitySettings.vSyncCount = 0;
+            Application.targetFrameRate = 60;
+        }
+
         _orthoSize = MainCam.orthographicSize;
+        BaseOrthoSize = _orthoSize;
     }
 
     private void SetFixedAspectRatio(float target)
@@ -66,8 +76,12 @@ public class MainCamera : MonoBehaviour
     private void FixedUpdate()
     {
         // Mouse movement following
-        var direction = ((Vector2)MainCam.ScreenToViewportPoint(Input.mousePosition) - new Vector2(0.5f, 0.5f));
-        var biased = direction.normalized * (Mathf.Pow(direction.magnitude, 2) * 0.55f); //*0.25f; 
+        var biased = Vector2.zero;
+        if (!InputManager.IsMobile)
+        {
+            var direction = ((Vector2)MainCam.ScreenToViewportPoint(Input.mousePosition) - new Vector2(0.5f, 0.5f));
+            biased = direction.normalized * (Mathf.Pow(direction.magnitude, 2) * 0.55f); //*0.25f; 
+        }
 
         if (transitionTo is { } && transitionFrom is { })
         {

@@ -1,8 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using ExtensionsFunctions;
 using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using TouchPhase = UnityEngine.TouchPhase;
 
 namespace Managers
 {
@@ -18,8 +21,20 @@ namespace Managers
 
         public static InputManager Instance => _instance ??= new InputManager();
 
+        public static bool IsMobile =>
+            Application.platform is (RuntimePlatform.Android or RuntimePlatform.IPhonePlayer);
+
         private bool? _hasJoystick = null;
         private Vector2 _lastJoystickInput = Vector2.zero;
+        public Vector2 MobileTurretDirection = Vector2.right;
+
+        public bool IsMobileCannonPadDown,
+            IsMobileCannonPadUp,
+            IsMobileTurretPadDown,
+            IsMobilePausePadDown,
+            IsMobileReloadPadDown;
+
+        public bool[] IsMobileSpecialDown = new bool[4];
 
         public Vector2 GetInput()
         {
@@ -32,7 +47,9 @@ namespace Managers
 
             return HasJoystick()
                 ? _lastJoystickInput
-                : MainCamera.MainCam.ScreenToWorldPoint(Input.mousePosition);
+                : IsMobile
+                    ? MobileTurretDirection
+                    : MainCamera.MainCam.ScreenToWorldPoint(Input.mousePosition);
         }
 
         public bool HasJoystick() => _hasJoystick ??=
@@ -59,27 +76,54 @@ namespace Managers
         {
             if (HasJoystick())
                 return GetDPad() == index;
-            else
-                return Input.GetKeyDown(_specialsKeyboard[index]);
+            if (IsMobile)
+            {
+                if (IsMobileSpecialDown[index])
+                {
+                    IsMobileSpecialDown[index] = false;
+                    return true;
+                }
+
+                return false;
+            }
+
+            return Input.GetKeyDown(_specialsKeyboard[index]);
         }
 
         public bool GetTurretDown() =>
+            IsMobile ? Input.touches.Length > 0 && Input.touches[0].phase == TouchPhase.Began :
             HasJoystick() ? Input.GetAxis("Triggers") > 0.3 : Input.GetMouseButtonDown(0);
 
         public bool GetTurretUp() =>
+            IsMobile ? !IsMobileTurretPadDown :
             HasJoystick() ? Input.GetAxis("Triggers") > 0.3 : Input.GetMouseButtonUp(0);
 
         public bool GetTurret() =>
+            IsMobile ? IsMobileTurretPadDown :
             HasJoystick() ? Input.GetAxis("Triggers") > 0.3 : Input.GetMouseButton(0);
 
         public bool GetReloadingDown() =>
-            Input.GetKeyDown(HasJoystick() ? KeyCode.Joystick1Button2 : KeyCode.R);
-
-        public bool GetCannonDown() =>
-            Input.GetKeyDown(HasJoystick() ? KeyCode.Joystick1Button0 : KeyCode.Space);
+            IsMobile
+                ? IsMobileReloadPadDown.GetAsTrigger()
+                : Input.GetKeyDown(HasJoystick() ? KeyCode.Joystick1Button2 : KeyCode.R);
 
         public bool GetCannonUp() =>
-            Input.GetKeyUp(HasJoystick() ? KeyCode.Joystick1Button0 : KeyCode.Space);
+            IsMobile
+                ? IsMobileCannonPadUp.GetAsTrigger()
+                : Input.GetKeyUp(HasJoystick() ? KeyCode.Joystick1Button0 : KeyCode.Space);
+
+        public bool GetCannonDown() =>
+            IsMobile
+                ? IsMobileCannonPadDown.GetAsTrigger()
+                : Input.GetKeyDown(HasJoystick() ? KeyCode.Joystick1Button0 : KeyCode.Space);
+
+        public bool GetPause() =>
+            IsMobile
+                ? IsMobilePausePadDown.GetAsTrigger()
+                : HasJoystick()
+                    ? Input.GetKeyDown(KeyCode.Joystick1Button6)
+                    : Input.GetKeyDown(KeyCode.P) || Input.GetKeyDown(KeyCode.Escape);
+
 
         public IEnumerator Vibrate(float duration = 0.35f)
         {
@@ -88,6 +132,10 @@ namespace Managers
                 Gamepad.current.SetMotorSpeeds(1f, 1f);
                 yield return new WaitForSeconds(duration);
                 Gamepad.current.ResetHaptics();
+            }
+            else if (IsMobile)
+            {
+                //Handheld.Vibrate();
             }
         }
     }

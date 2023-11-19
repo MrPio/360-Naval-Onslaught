@@ -12,6 +12,7 @@ using Random = UnityEngine.Random;
 public class WaveSpawner : MonoBehaviour
 {
     private static GameManager Game => GameManager.Instance;
+
     private static DataManager Data => DataManager.Instance;
     public static float GameStarted;
 
@@ -36,7 +37,8 @@ public class WaveSpawner : MonoBehaviour
         newWave,
         baseHealthSlider,
         accuracyMenu,
-        winMenu;
+        winMenu,
+        mainMenuContinueGame;
 
     [NonSerialized] public bool isPaused;
     [SerializeField] private bool isDebug;
@@ -44,7 +46,7 @@ public class WaveSpawner : MonoBehaviour
     [NonSerialized] private List<Transform> currentSpecialPoints;
     [NonSerialized] private int specialSpawned = 0;
     [SerializeField] private GameObject WarningPanel;
-    [SerializeField] private Animator CameraAnimator,GlobalVolumeAnimator;
+    [SerializeField] private Animator CameraAnimator, GlobalVolumeAnimator;
 
 
     public GameObject howToPlayMenu, overlay, mainMenu, gameOver, specialsMenu, shopMenu, bonusMenu;
@@ -52,8 +54,8 @@ public class WaveSpawner : MonoBehaviour
     public void RestartGame()
     {
         GameStarted = Time.realtimeSinceStartup;
-        GameManager.Reset();
-        DataManager.Reset();
+        //GameManager.Reset();
+        //DataManager.Reset();
         InputManager.Reset();
         ShipPath.SpawnIndex = 0;
         Ship.Collisions.Clear();
@@ -70,7 +72,13 @@ public class WaveSpawner : MonoBehaviour
             mainMenu.SetActive(true);
             gameOver.SetActive(false);
             specialsMenu.SetActive(false);
+            GameObject.FindWithTag("pad_container").SetActive(InputManager.IsMobile);
+            GameObject.Find("wave_container").GetComponent<RectTransform>().anchoredPosition =
+                Vector2.right * (InputManager.IsMobile ? 150 : 0);
         }
+
+        GameObject.FindWithTag("ocean").GetComponent<Renderer>().material =
+            Resources.Load<Material>(Game.QualityOceanMaterials[Game.Quality]);
 
         audioSource.Stop();
         audioSource.volume = 1;
@@ -79,6 +87,7 @@ public class WaveSpawner : MonoBehaviour
 
         if (isDebug)
             BeginWave();
+        mainMenuContinueGame.SetActive(GameManager.HasSave());
     }
 
     private void FixedUpdate()
@@ -126,7 +135,7 @@ public class WaveSpawner : MonoBehaviour
                     Game.Ammo = Game.CurrentTurretModel.Ammo;
                     ammoContainer.GetComponentsInChildren<AmmoCounter>()[0].UpdateUI();
                     CameraAnimator.SetTrigger(Animator.StringToHash("stop_shake"));
-                    MainCamera.MainCam.GetComponent<MainCamera>().TransitionTo(Vector2.zero);
+                    MainCamera.MainCam.GetComponent<MainCamera>().TransitionTo(Vector2.zero, MainCamera.BaseOrthoSize);
                 }
             }
         }
@@ -146,9 +155,11 @@ public class WaveSpawner : MonoBehaviour
             .ToList();
 
         if (specialWave == 1)
-            MainCamera.MainCam.GetComponent<MainCamera>().TransitionTo(Vector2.up * 3.5f);
-        else if(specialWave==2)
-            MainCamera.MainCam.GetComponent<MainCamera>().TransitionTo(Vector2.right * 10f,9.5f);
+            MainCamera.MainCam.GetComponent<MainCamera>().TransitionTo(Vector2.up * 3.5f, 8.5f);
+        else if (specialWave == 2)
+            MainCamera.MainCam.GetComponent<MainCamera>().TransitionTo(Vector2.right * 10f, 9.5f);
+        else
+            MainCamera.MainCam.GetComponent<MainCamera>().TransitionTo(Vector2.zero, 8.5f);
         DestroyAllShips();
         CameraAnimator.SetTrigger(Animator.StringToHash("shake"));
 
@@ -199,12 +210,38 @@ public class WaveSpawner : MonoBehaviour
             : (2.25f + Random.Range(0, 6f * (1 - 0.35f * Game.WaveFactor))) / _model.SpawnSpeedMultiply;
     }
 
-    private void EndWave()
+    public void LoadGame()
     {
-        _model = null;
-        Game.Score += 1000;
-        ++Game.Wave;
-        DestroyAllShips();
+        GameManager.Load();
+        DataManager.Load();
+        overlay.GetComponent<Overlay>().OnEnd = () => EndWave(true);
+        overlay.SetActive(true);
+    }
+
+    public void NewGame()
+    {
+        GameManager.Reset();
+        DataManager.Reset();
+        overlay.GetComponent<Overlay>().OnEnd = BeginWave;
+        overlay.SetActive(true);
+    }
+
+    private void EndWave(bool isLoading = false)
+    {
+        if (!isLoading)
+        {
+            _model = null;
+            Game.Score += 1000;
+            ++Game.Wave;
+            DestroyAllShips();
+            foreach (var bullet in GameObject.FindGameObjectsWithTag("bullet"))
+                Destroy(bullet);
+            foreach (var laser in GameObject.FindGameObjectsWithTag("laser"))
+                Destroy(laser);
+            Game.Save();
+            Data.Save();
+        }
+
         baseMain.SetActive(false);
         ammoContainer.SetActive(false);
         moneyContainer.SetActive(false);
@@ -215,11 +252,6 @@ public class WaveSpawner : MonoBehaviour
         bonusMenu.SetActive(false);
         winMenu.SetActive(false);
         GlobalVolumeAnimator.SetTrigger(Animator.StringToHash("fade"));
-        
-        foreach (var bullet in GameObject.FindGameObjectsWithTag("bullet"))
-            Destroy(bullet);
-        foreach (var laser in GameObject.FindGameObjectsWithTag("laser"))
-            Destroy(laser);
 
         if (Game.Wave >= Data.Waves.Length)
         {
@@ -264,7 +296,7 @@ public class WaveSpawner : MonoBehaviour
         Game.CurrentWaveCannonFired = 0;
         Game.CurrentWaveCannonHit = 0;
         GlobalVolumeAnimator.SetTrigger(Animator.StringToHash("unfade"));
-            
+
         // New Wave Sign
         if (!isDebug)
         {

@@ -11,16 +11,15 @@ public class Turret : MonoBehaviour
     private static TurretModel Model => Game.CurrentTurretModel;
     private static InputManager In => InputManager.Instance;
 
-    [SerializeField] private GameObject leftSpawnPoint;
-    [SerializeField] private GameObject rightSpawnPoint;
-    [SerializeField] private GameObject bullet, laser;
+    [SerializeField] private GameObject leftSpawnPoint, rightSpawnPoint, bullet, laser;
     [SerializeField] private SpriteRenderer spriteRenderer;
     [SerializeField] public ReloadBar reloadBar;
     [SerializeField] private AudioClip reloadStart, reloadMiss, reloadFinish, noAmmo;
     [SerializeField] private AudioSource bulletAudioSource;
     [SerializeField] private List<AudioClip> clatchAudioClips;
+    [SerializeField] private Animator overrideAnimator;
     private AmmoCounter _ammoCounter;
-    private float _fireAccumulator = 9999f;
+    private float _fireAccumulator = 9999f, _lastFireTriggered;
     private AudioClip _fireClip;
     private bool _isLaserFiring, _lastFireInput;
     private int _fireCount = 0;
@@ -59,15 +58,25 @@ public class Turret : MonoBehaviour
             bulletAudioSource.PlayOneShot(_fireClip);
         }
 
+        // Button DOWN
+        if (!_lastFireInput && currentFireInput)
+        {
+            if (!Game.HasOverride && Time.time - _lastFireTriggered < 0.2)
+                Override(true);
+            _lastFireTriggered = Time.time;
+        }
+
+        // Button UP
         if (_lastFireInput && !currentFireInput)
         {
+            Override(false);
             if (_isLaserFiring)
                 bulletAudioSource.Stop();
             _isLaserFiring = false;
             _fireAccumulator += 99999f;
-            if (_fireCount>7 && new[] { 0, 1, 4 }.Contains(Game.CurrentTurret))
+            if (_fireCount > 4 && new[] { 0, 1, 4 }.Contains(Game.CurrentTurret))
                 bulletAudioSource.PlayOneShot(clatchAudioClips.RandomItem());
-            _fireCount=0;
+            _fireCount = 0;
         }
 
         if (!reloadBar.IsReloading && !Game.IsSpecialWave && In.GetReloadingDown())
@@ -108,6 +117,7 @@ public class Turret : MonoBehaviour
 
     public void Reload()
     {
+        Override(false);
         MainCamera.AudioSource.PlayOneShot(reloadStart);
         reloadBar.Reload(
             duration: 100f / Model.Reload,
@@ -117,5 +127,21 @@ public class Turret : MonoBehaviour
                 Game.Ammo = Game.CurrentTurretModel.Ammo;
                 GameObject.FindWithTag("ammo_counter")?.GetComponent<AmmoCounter>()?.UpdateUI();
             });
+    }
+
+    public void Override(bool value)
+    {
+        if (!value && Game.HasOverride)
+        {
+            overrideAnimator.SetTrigger(Animator.StringToHash("reverse"));
+            Game.HasOverride = false;
+            bulletAudioSource.pitch = 1f;
+        }
+        else if (value && !Game.HasOverride)
+        {
+            overrideAnimator.SetTrigger(Animator.StringToHash("start"));
+            Game.HasOverride = true;
+            bulletAudioSource.pitch = 1.4f;
+        }
     }
 }
