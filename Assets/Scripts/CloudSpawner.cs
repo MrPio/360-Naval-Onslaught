@@ -1,11 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
-using ExtensionsFunctions;
 using UnityEngine;
 
 public class CloudSpawner : MonoBehaviour
 {
-    [Range(0.5f, 4f)] [SerializeField] private float frequency = 4;
+    [Range(0.5f, 12f)] [SerializeField] private float frequency = 4;
     [SerializeField] private GameObject cloud;
     private float _accumulator, _nextSpawn = 1f;
 

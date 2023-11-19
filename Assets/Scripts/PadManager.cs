@@ -49,16 +49,32 @@ public class PadManager : MonoBehaviour
             }
             else if (touchPhase is TouchPhase.Moved)
             {
-                if (turretCollider.OverlapPoint(worldPos))
-                    HandleTurretMovement(worldPos);
+                //right finger
+                if (worldPos.x > 0)
+                {
+                    if (turretCollider.OverlapPoint(worldPos))
+                        HandleTurretMovement(worldPos);
+                    // left finger
+                    else
+                        turretCircleTransform.anchoredPosition = Vector2.zero;
+                }
+                // left finger
                 else
-                    turretCircleTransform.anchoredPosition = Vector2.zero;
-                if (!fireTurretCollider.OverlapPoint(worldPos))
-                    In.IsMobileTurretPadDown = false;
+                {
+                    if (In.IsMobileTurretPadDown && !fireTurretCollider.OverlapPoint(worldPos))
+                        In.IsMobileTurretPadDown = false;
+                    if (!In.IsMobileTurretPadDown && fireTurretCollider.OverlapPoint(worldPos))
+                        In.IsMobileTurretPadDown = true;
+                    
+                    if (In.IsMobileCannonPadDown && !cannonCollider.OverlapPoint(worldPos))
+                        In.IsMobileCannonPadDown = false;
+                    //if (!In.IsMobileCannonPadDown && cannonCollider.OverlapPoint(worldPos))
+                     //   In.IsMobileCannonPadDown = true;
+                }
             }
         }
     }
-
+    
     private void HandleTurretMovement(Vector3 worldPos)
     {
         var dir = turretCircleParentTransform.InverseTransformPoint(worldPos);

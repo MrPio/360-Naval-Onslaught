@@ -3587,7 +3587,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5aeb18fe155bb264dbdaf92a868f7205, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  frequency: 2.78
+  frequency: 5
   cloud: {fileID: 4264005332038465135, guid: 93bdf9525878a2d4d99d4181e2c4fbee, type: 3}
 --- !u!4 &1053942244 stripped
 Transform:
@@ -3981,8 +3981,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   turretCollider: {fileID: 178387632}
-  cannonCollider: {fileID: 0}
-  reloadCollider: {fileID: 0}
+  fireTurretCollider: {fileID: 360507758}
+  cannonCollider: {fileID: 881987664}
+  reloadCollider: {fileID: 1904871892}
   pauseCollider: {fileID: 487891148}
   specialColliders:
   - {fileID: 1681221589}

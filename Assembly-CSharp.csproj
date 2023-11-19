@@ -152,8 +152,6 @@
      <Folder Include="Assets\Prefabs" />
      <Folder Include="Assets\Resources\Sprites\inputs\Android\lineLight" />
      <Folder Include="Assets\Scripts\ExtensionsFunctions" />
-     <Folder Include="Assets\Resources\Audio\original" />
-     <Folder Include="Assets\Resources\Audio\cfm\original" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF Overlay.shader" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap-Mobile.shader" />
      <Folder Include="Assets\Resources\Sprites\explosions" />

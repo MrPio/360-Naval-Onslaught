@@ -1,12 +1,11 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using ExtensionsFunctions;
 using Managers;
+using Model;
 using TMPro;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.Rendering;
 
 public class ContextMenu : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerMoveHandler,
     IPointerClickHandler
@@ -114,25 +113,25 @@ public class ContextMenu : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
                 ContextMenuType.Repair => Game.MaxHealth - Game.Health,
                 ContextMenuType.UpgradeHealth => Game.HealthStep,
 
-                ContextMenuType.CannonDamage => Game.CurrentCannonModel.DamageLevelSteps
-                    .Where(entry => entry.Key >= Game.CurrentCannonModel.DamageLevel).ElementAt(0).Value,
-                ContextMenuType.CannonRadius => Game.CurrentCannonModel.RadiusLevelSteps
-                    .Where(entry => entry.Key >= Game.CurrentCannonModel.RadiusLevel).ElementAt(0).Value,
-                ContextMenuType.CannonReload => Game.CurrentCannonModel.ReloadLevelSteps
-                    .Where(entry => entry.Key >= Game.CurrentCannonModel.ReloadLevel).ElementAt(0).Value,
-                ContextMenuType.CannonSpeed => Game.CurrentCannonModel.SpeedLevelSteps
-                    .Where(entry => entry.Key >= Game.CurrentCannonModel.SpeedLevel).ElementAt(0).Value,
+                ContextMenuType.CannonDamage => math.max(1,
+                    Math.Round((TurretModel.UpgradeStep - 1f) * Game.CurrentCannonModel.Damage,1)),
+                ContextMenuType.CannonRadius => math.max(1,
+                    Math.Round((TurretModel.UpgradeStep - 1f) * Game.CurrentCannonModel.Radius,1)),
+                ContextMenuType.CannonReload => math.max(1,
+                    Math.Round((TurretModel.UpgradeStep - 1f) * Game.CurrentCannonModel.Reload,1)),
+                ContextMenuType.CannonSpeed => math.max(1,
+                    Math.Round((TurretModel.UpgradeStep - 1f) * Game.CurrentCannonModel.Speed,1)),
 
-                ContextMenuType.TurretDamage => Game.CurrentTurretModel.DamageLevelSteps
-                    .Where(entry => entry.Key >= Game.CurrentTurretModel.DamageLevel).ElementAt(0).Value,
-                ContextMenuType.TurretAmmo => Game.CurrentTurretModel.AmmoLevelSteps
-                    .Where(entry => entry.Key >= Game.CurrentTurretModel.AmmoLevel).ElementAt(0).Value,
-                ContextMenuType.TurretRate => Game.CurrentTurretModel.RateLevelSteps
-                    .Where(entry => entry.Key >= Game.CurrentTurretModel.RateLevel).ElementAt(0).Value,
-                ContextMenuType.TurretReload => Game.CurrentTurretModel.ReloadLevelSteps
-                    .Where(entry => entry.Key >= Game.CurrentTurretModel.ReloadLevel).ElementAt(0).Value,
-                ContextMenuType.TurretSpeed => Game.CurrentTurretModel.SpeedLevelSteps
-                    .Where(entry => entry.Key >= Game.CurrentTurretModel.SpeedLevel).ElementAt(0).Value,
+                ContextMenuType.TurretDamage => math.max(1,
+                    Math.Round((TurretModel.UpgradeStep - 1f) * Game.CurrentTurretModel.Damage,1)),
+                ContextMenuType.TurretAmmo => math.max(1,
+                    Math.Round((TurretModel.UpgradeStep - 1f) * Game.CurrentTurretModel.Ammo,1)),
+                ContextMenuType.TurretRate => math.max(1,
+                    Math.Round((TurretModel.UpgradeStep - 1f) * Game.CurrentTurretModel.Rate,1)),
+                ContextMenuType.TurretReload => math.max(1,
+                    Math.Round((TurretModel.UpgradeStep - 1f) * Game.CurrentTurretModel.Reload,1)),
+                ContextMenuType.TurretSpeed => math.max(1,
+                    Math.Round((TurretModel.UpgradeStep - 1f) * Game.CurrentTurretModel.Speed,1)),
 
                 ContextMenuType.BuySpecial => 1,
 

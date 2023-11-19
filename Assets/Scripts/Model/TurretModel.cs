@@ -28,7 +28,7 @@ namespace Model
         private float _speed;
         private float _reload;
 
-        public int Speed => (int)(_speed *
+        public int Speed => (int)(_speed * (Game.IsSpecialWave ? 1.5f : 1f) *
                                   (Game.PowerUp == Bubble.PowerUp.Speed ? 2f : 1f));
 
         public int Rate => (int)(_rate * (Game.IsSpecialWave ? 3.5f : 1f) *

@@ -8,7 +8,7 @@ namespace Model
     public class ShipModel
     {
         private static GameManager Game => GameManager.Instance;
-        public static float SpecialSpeedMultiplier => InputManager.IsMobile ? 3.6f : 3.75f;
+        public static float SpecialSpeedMultiplier => InputManager.IsMobile ? 3.7f : 3.75f;
         public readonly string Name;
         public readonly string Sprite;
         public readonly string FoamAnim;
@@ -33,7 +33,7 @@ namespace Model
                                   (Game.SpecialWave == 2 ? 1.5f : 1f));
 
         public int Rate => (int)(_baseRate * (1f + 0.025f * Game.Wave));
-        public int Damage => (int)(_baseDamage * (1f + 0.025f * Game.Wave) * (Game.IsSpecialWave ? 0.6f : 1f));
+        public int Damage => (int)(_baseDamage * (1f + 0.025f * Game.Wave) * (Game.IsSpecialWave ? 0.75f : 1f));
         public int Health => (int)(_baseHealth * (1f + (4f * Game.WaveFactor) + (0.3f * (int)(Game.Wave / 5))));
         public int Money => (int)(_baseMoney * (1f + 0.025f * Game.Wave) * (Game.IsSpecialWave ? 0.333f : 1f));
 
