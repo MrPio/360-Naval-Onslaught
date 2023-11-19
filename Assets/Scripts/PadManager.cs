@@ -66,8 +66,8 @@ public class PadManager : MonoBehaviour
                     if (!In.IsMobileTurretPadDown && fireTurretCollider.OverlapPoint(worldPos))
                         In.IsMobileTurretPadDown = true;
                     
-                    if (In.IsMobileCannonPadDown && !cannonCollider.OverlapPoint(worldPos))
-                        In.IsMobileCannonPadDown = false;
+                    if (!In.IsMobileCannonPadUp && !cannonCollider.OverlapPoint(worldPos))
+                        In.IsMobileCannonPadUp = true;
                     //if (!In.IsMobileCannonPadDown && cannonCollider.OverlapPoint(worldPos))
                      //   In.IsMobileCannonPadDown = true;
                 }
