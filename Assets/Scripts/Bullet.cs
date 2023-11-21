@@ -18,7 +18,7 @@ public class Bullet : MonoBehaviour
     private const float NextLookup = 0.2f;
     [CanBeNull] private GameObject _target = null;
     private readonly Collider2D[] _collidersArray = new Collider2D[10];
-
+    private bool _isDestroying;
     private bool isFrozen;
 
     public bool IsFrozen
@@ -92,15 +92,13 @@ public class Bullet : MonoBehaviour
         rb.velocity = _transform.right * Game.CurrentTurretModel.Speed / 100f;
     }
 
-    private void OnBecameInvisible()
+    private IEnumerator OnBecameInvisible()
     {
-        IEnumerator DelayDestroy()
-        {
-            yield return new WaitForSeconds(5.0f);
-            Destroy(gameObject);
-        }
-
-        StartCoroutine(DelayDestroy());
+        if (_isDestroying)
+            yield break;
+        _isDestroying = true;
+        yield return new WaitForSeconds(5.0f);
+        Destroy(gameObject);
     }
 
     private void OnTriggerEnter2D(Collider2D col)

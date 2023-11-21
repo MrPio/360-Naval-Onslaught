@@ -60,7 +60,7 @@ namespace Managers
         [System.NonSerialized] public int SpecialWave = -1;
         public int Ammo, CannonAmmo;
         public int Money = 200;
-        public int CurrentTurret = 0;
+        public int CurrentTurret = 3;
         public int CurrentCannon = 0;
         public int Score;
         public float PowerUpDuration = 20;

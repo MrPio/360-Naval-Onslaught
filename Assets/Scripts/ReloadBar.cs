@@ -13,7 +13,7 @@ public class ReloadBar : MonoBehaviour
 
     void Start()
     {
-        transform.position = target.position + (offset > 0 ? Vector3.right : Vector3.up * offset);
+        transform.position = target.position + (offset > 0 ? Vector3.right : Vector3.up) * offset;
         gameObject.SetActive(false);
     }
 
