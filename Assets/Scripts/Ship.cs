@@ -35,7 +35,7 @@ public class Ship : MonoBehaviour, IDamageble
     [NonSerialized] public bool IsFreezed;
     private float _accumulator;
     [NonSerialized] public bool Invincible = true;
-    [NonSerialized] public int CurrentIndex = -1;
+    private int _currentIndex = -1;
     private float _randomAdditionalDelay;
     private static readonly int MilitaryPlaneTakeoff = Animator.StringToHash("military_plane_takeoff");
     [NonSerialized] public bool isVisible;
@@ -48,7 +48,16 @@ public class Ship : MonoBehaviour, IDamageble
 
     private void Awake()
     {
-        _model = Game.IsSpecialWave ? DataManager.Instance.Ships[0] : Game.CurrentWave.Spawn();
+        if (Game.IsSpecialWave)
+            _model = DataManager.Instance.Ships[0];
+        else
+        {
+            var pair = Game.CurrentWave.Spawn();
+            _currentIndex = pair?.Key ?? 0;
+            print("Assegnato indice "+_currentIndex);
+            _model = pair?.Value;
+        }
+
         spriteRenderer.sprite = Resources.Load<Sprite>(_model.Sprite);
         if (_model.ExplodeClip != null)
             _explodeClip = Resources.Load<AudioClip>(_model.ExplodeClip);
@@ -260,15 +269,15 @@ public class Ship : MonoBehaviour, IDamageble
             GameObject.FindWithTag("base").GetComponent<Base>().TakeDamage(_model.Damage);
             Explode(false);
         }
-        else if (CurrentIndex != -1 && other.CompareTag("ship"))
+        else if (_currentIndex != -1 && other.CompareTag("ship"))
         {
             var otherShip = other.GetComponent<Ship>();
             if (Invincible || otherShip.Invincible)
                 return;
-            if (!Collisions.Exists(it => it.Contains(CurrentIndex) && it.Contains(otherShip.CurrentIndex)))
+            if (!Collisions.Exists(it => it.Contains(_currentIndex) && it.Contains(otherShip._currentIndex)))
             {
                 // Handling collision with another ship
-                Collisions.Add(new[] { CurrentIndex, otherShip.CurrentIndex });
+                Collisions.Add(new[] { _currentIndex, otherShip._currentIndex });
 
                 // Determine who should stop
                 var bow = transform.Find("bow").position * spriteRenderer.bounds.size.x;
@@ -288,10 +297,10 @@ public class Ship : MonoBehaviour, IDamageble
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        if (CurrentIndex != -1 && other.CompareTag("ship"))
+        if (_currentIndex != -1 && other.CompareTag("ship"))
         {
             var otherShip = other.GetComponent<Ship>();
-            Collisions.RemoveAll(it => it.Contains(CurrentIndex) && it.Contains(otherShip.CurrentIndex));
+            Collisions.RemoveAll(it => it.Contains(_currentIndex) && it.Contains(otherShip._currentIndex));
             GetComponent<ShipPath>().Wait = false;
             other.gameObject.GetComponent<ShipPath>().Wait = false;
         }

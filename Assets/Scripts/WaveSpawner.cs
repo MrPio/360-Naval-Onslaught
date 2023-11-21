@@ -197,9 +197,6 @@ public class WaveSpawner : MonoBehaviour
         var newShip = Instantiate(ship).GetComponent<Ship>();
         newShip.boxCollider.size = newShip.spriteRenderer.bounds.size;
         newShip.transform.SetPositionAndRotation(pos, pos.ToQuaternion());
-        newShip.CurrentIndex = Game.CurrentWave.Spawned;
-
-        ++Game.CurrentWave.Spawned;
 
         var immediateSpawnChance = 0.1 + 0.185 * Game.WaveFactor;
 
