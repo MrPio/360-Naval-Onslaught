@@ -54,8 +54,6 @@ public class WaveSpawner : MonoBehaviour
     public void RestartGame()
     {
         GameStarted = Time.realtimeSinceStartup;
-        //GameManager.Reset();
-        //DataManager.Reset();
         InputManager.Reset();
         ShipPath.SpawnIndex = 0;
         Ship.Collisions.Clear();

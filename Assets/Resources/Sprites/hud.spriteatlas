@@ -1,0 +1,159 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: hud
+  m_EditorData:
+    serializedVersion: 2
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 1
+    platformSettings:
+    - serializedVersion: 3
+      m_BuildTarget: DefaultTexturePlatform
+      m_MaxTextureSize: 4096
+      m_ResizeAlgorithm: 0
+      m_TextureFormat: -1
+      m_TextureCompression: 1
+      m_CompressionQuality: 100
+      m_CrunchedCompression: 1
+      m_AllowsAlphaSplitting: 0
+      m_Overridden: 0
+      m_AndroidETC2FallbackOverride: 0
+      m_ForceMaximumCompressionQuality_BC6H_BC7: 0
+    - serializedVersion: 3
+      m_BuildTarget: Android
+      m_MaxTextureSize: 4096
+      m_ResizeAlgorithm: 0
+      m_TextureFormat: 65
+      m_TextureCompression: 1
+      m_CompressionQuality: 100
+      m_CrunchedCompression: 1
+      m_AllowsAlphaSplitting: 0
+      m_Overridden: 1
+      m_AndroidETC2FallbackOverride: 0
+      m_ForceMaximumCompressionQuality_BC6H_BC7: 0
+    packingSettings:
+      serializedVersion: 2
+      padding: 4
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 1
+      enableTightPacking: 1
+      enableAlphaDilation: 0
+    secondaryTextureSettings: {}
+    variantMultiplier: 1
+    packables:
+    - {fileID: 102900000, guid: 3020f5cb189ed804e9c4581ee47f284b, type: 3}
+    - {fileID: 102900000, guid: 8c706f6377c74fc44afe70c150372663, type: 3}
+    bindAsDefault: 1
+    isAtlasV2: 0
+    cachedData: {fileID: 0}
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: 986dae5145e417c46a9becd97a8b8d89, type: 3}
+  - {fileID: 21300000, guid: 16ad0081f771e9946ac21fb137fea683, type: 3}
+  - {fileID: 21300000, guid: 726de5a17f52b78468cc45dbfa0cbc46, type: 3}
+  - {fileID: 21300000, guid: 5684e0b2f56ff7349a419fe822d1c309, type: 3}
+  - {fileID: 21300000, guid: ff6605b29e88ba941b0aadd656f44bbf, type: 3}
+  - {fileID: 21300000, guid: 0a59c3c206b82d64086a4e6c28533532, type: 3}
+  - {fileID: 21300000, guid: eea191f2a13b5644e92f6ff78d02c165, type: 3}
+  - {fileID: 21300000, guid: 30d46e034ad92ee4f8a9a86a91070107, type: 3}
+  - {fileID: 21300000, guid: e7e0de0395f52194e89ef335f395bc11, type: 3}
+  - {fileID: 21300000, guid: cf48c313908a7794d81ab89168fdbb24, type: 3}
+  - {fileID: 21300000, guid: b9bb70a320203134bbfc18e760264a8f, type: 3}
+  - {fileID: 21300000, guid: 4d1bc7c3d2fa6db46a44f9582144038b, type: 3}
+  - {fileID: 21300000, guid: b0d78af44cbe0b7499d161c39dcdf160, type: 3}
+  - {fileID: 21300000, guid: 8ea94c25f50a0d1449e4dea11e78fcd5, type: 3}
+  - {fileID: 21300000, guid: cb04c496b92b7d24fa694e8104c21e72, type: 3}
+  - {fileID: 21300000, guid: 7c6024e62f3ff3546b37b7aa52d9659a, type: 3}
+  - {fileID: 21300000, guid: 064f4f17772e79842a1bb3e9badb96ec, type: 3}
+  - {fileID: 21300000, guid: 7cefb897c7b2a0b4a88a2280e763aa29, type: 3}
+  - {fileID: 299993122, guid: 97a26338e539c164f8319f1452a6e0ad, type: 3}
+  - {fileID: -2006687098, guid: 97a26338e539c164f8319f1452a6e0ad, type: 3}
+  - {fileID: -13618019, guid: 97a26338e539c164f8319f1452a6e0ad, type: 3}
+  - {fileID: -2125836897, guid: 97a26338e539c164f8319f1452a6e0ad, type: 3}
+  - {fileID: -1314964397, guid: 97a26338e539c164f8319f1452a6e0ad, type: 3}
+  - {fileID: -1181818422, guid: 97a26338e539c164f8319f1452a6e0ad, type: 3}
+  - {fileID: 1423504516, guid: 97a26338e539c164f8319f1452a6e0ad, type: 3}
+  - {fileID: -1108595084, guid: 97a26338e539c164f8319f1452a6e0ad, type: 3}
+  - {fileID: 21300000, guid: 93567329ae6c4c14a97eef670e4eec7b, type: 3}
+  - {fileID: 295544810, guid: 76024c597eeab0b4eb2ed8b85839ef47, type: 3}
+  - {fileID: -1078211239, guid: 76024c597eeab0b4eb2ed8b85839ef47, type: 3}
+  - {fileID: -2070976244, guid: 76024c597eeab0b4eb2ed8b85839ef47, type: 3}
+  - {fileID: 1131777910, guid: 76024c597eeab0b4eb2ed8b85839ef47, type: 3}
+  - {fileID: 37402425, guid: 76024c597eeab0b4eb2ed8b85839ef47, type: 3}
+  - {fileID: 565609374, guid: 76024c597eeab0b4eb2ed8b85839ef47, type: 3}
+  - {fileID: 21300000, guid: bd7bfef9f8a4c2145aa5e51432000932, type: 3}
+  - {fileID: 21300000, guid: ec90903a006b30740a84d316dfaaf4d3, type: 3}
+  - {fileID: 21300000, guid: 31e1755a45d9e1a448a9b605b554737d, type: 3}
+  - {fileID: 21300000, guid: a51f336af48eea8428a334caadd8ad34, type: 3}
+  - {fileID: 21300000, guid: f867e68a52493714fa81d23bf9602b3e, type: 3}
+  - {fileID: 21300000, guid: 7aba873bf626ae54ab6f5b41d71421d9, type: 3}
+  - {fileID: 21300000, guid: 854acd4c6ccc4264fb89901f5a033593, type: 3}
+  - {fileID: 21300000, guid: 0f78ae6cbda2774459bf05f3cce0eb33, type: 3}
+  - {fileID: 21300000, guid: 42fd1bec07f2e3f4c9e2b626dc0f0ab7, type: 3}
+  - {fileID: 21300000, guid: 232489cd65323e748a23e08b82857162, type: 3}
+  - {fileID: 21300000, guid: 39a3e68e57440444198502472f95a3ff, type: 3}
+  - {fileID: 21300000, guid: 39863f2fb6763a341be8f0185958e179, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - heart
+  - wave
+  - 2x
+  - bubble_2
+  - bombing
+  - speed_bubble
+  - override_2
+  - cash
+  - override_1
+  - button_1
+  - rate_bubble
+  - override_3
+  - bubble_pop_under_water_01
+  - damage_bubble
+  - shield
+  - sonar
+  - button_3
+  - warning_hud
+  - bubble_pop_under_water_spritesheet_2
+  - bubble_pop_under_water_spritesheet_3
+  - bubble_pop_under_water_spritesheet_0
+  - bubble_pop_under_water_spritesheet_1
+  - bubble_pop_under_water_spritesheet_6
+  - bubble_pop_under_water_spritesheet_7
+  - bubble_pop_under_water_spritesheet_4
+  - bubble_pop_under_water_spritesheet_5
+  - hearth_bubble
+  - bubble_pop_one_spritesheet_512px_by_512px_per_frame_2
+  - bubble_pop_one_spritesheet_512px_by_512px_per_frame_3
+  - bubble_pop_one_spritesheet_512px_by_512px_per_frame_0
+  - bubble_pop_one_spritesheet_512px_by_512px_per_frame_1
+  - bubble_pop_one_spritesheet_512px_by_512px_per_frame_4
+  - bubble_pop_one_spritesheet_512px_by_512px_per_frame_5
+  - menu_item_unselected
+  - points
+  - button_2
+  - satellite_bubble
+  - danger_hud
+  - rate_bubble_2
+  - rate_bubble_white
+  - lock
+  - ammo_icon
+  - menu_item_selected
+  - bubble_shadow
+  - speed_bubble_2
+  m_RenderDataMap: {}
+  m_Tag: hud
+  m_IsVariant: 0

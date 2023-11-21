@@ -8,7 +8,7 @@ using TMPro;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class Base : MonoBehaviour,IDamageble
+public class Base : MonoBehaviour, IDamageble
 {
     private static readonly int DamageHeavy = Animator.StringToHash("damage_heavy");
     private static readonly int Start1 = Animator.StringToHash("start");
@@ -27,6 +27,7 @@ public class Base : MonoBehaviour,IDamageble
     private float _lastSpecialUsed;
     private bool[] _lastSpecialInput = { false, false, false, false };
     private WaveSpawner _waveSpawner;
+
     private void Start()
     {
         shield.SetActive(false);
@@ -77,8 +78,8 @@ public class Base : MonoBehaviour,IDamageble
         healthBar.SetValue(fraction);
         lowHealthHUD.Evaluate(fraction);
     }
-    
-    public void TakeDamage(int damage,bool _=false)
+
+    public void TakeDamage(int damage, bool _ = false)
     {
         if (Game.Health > 0 && !_invincible)
         {
@@ -98,6 +99,9 @@ public class Base : MonoBehaviour,IDamageble
 
     private IEnumerator GameOver()
     {
+        GameManager.DeleteSave();
+        DataManager.DeleteSave();
+
         yield return new WaitForSeconds(1.5f);
 
         // Play game over clip on WaveSpawner's audioSource
@@ -186,8 +190,7 @@ public class Base : MonoBehaviour,IDamageble
         specialsCounter.UpdateUI();
         _lastSpecialUsed = Time.time;
     }
-
-
+    
     public void Explode(bool reward = true)
     {
         throw new NotImplementedException();

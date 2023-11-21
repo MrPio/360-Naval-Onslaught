@@ -14,10 +14,11 @@ namespace Managers
 
         public static void Reset()
         {
-            IOManager.Delete(IOName);
+            DeleteSave();
             _instance = new DataManager();
         }
 
+        public static void DeleteSave() => IOManager.Delete(IOName);
         public void Save() => IOManager.Save(Instance, IOName);
 
         public static bool Load()
@@ -46,7 +47,7 @@ namespace Managers
             new(
                 name: "Gatling Gun", sprite: "Sprites/my/turret_2", fireClip: "Audio/turret_fire_2",
                 bulletSprite: "Sprites/bullet_2",
-                baseSpeed: 600, baseRate: 1200, baseDamage: 12, baseAmmo: 80, baseReload: 58,
+                baseSpeed: 600, baseRate: 1200, baseDamage: 14, baseAmmo: 80, baseReload: 58,
                 speedBaseCost: 200, rateBaseCost: 460, damageBaseCost: 430, ammoBaseCost: 185, reloadBaseCost: 225,
                 waveUnlock: 5
             ),

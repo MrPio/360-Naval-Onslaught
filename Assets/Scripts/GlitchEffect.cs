@@ -1,3 +1,4 @@
+using Managers;
 using UnityEngine;
 
 public class GlitchEffect : MonoBehaviour
@@ -11,7 +12,7 @@ public class GlitchEffect : MonoBehaviour
 
     private void Update()
     {
-        if(eachSeconds<0)
+        if (eachSeconds < 0)
             return;
         _acc += Time.deltaTime;
         if (_acc > eachSeconds)
@@ -23,8 +24,10 @@ public class GlitchEffect : MonoBehaviour
 
     public void Animate()
     {
-        glitchAnimator.SetFloat(Speed,speed);
-        glitchAnimator.SetTrigger(Start);
+        if (GameManager.Instance.Quality > 0)
+        {
+            glitchAnimator.SetFloat(Speed, speed);
+            glitchAnimator.SetTrigger(Start);
+        }
     }
-    
 }

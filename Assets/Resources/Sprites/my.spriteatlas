@@ -1,0 +1,120 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: my
+  m_EditorData:
+    serializedVersion: 2
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 1
+    platformSettings:
+    - serializedVersion: 3
+      m_BuildTarget: DefaultTexturePlatform
+      m_MaxTextureSize: 4096
+      m_ResizeAlgorithm: 0
+      m_TextureFormat: -1
+      m_TextureCompression: 1
+      m_CompressionQuality: 100
+      m_CrunchedCompression: 1
+      m_AllowsAlphaSplitting: 0
+      m_Overridden: 0
+      m_AndroidETC2FallbackOverride: 0
+      m_ForceMaximumCompressionQuality_BC6H_BC7: 0
+    - serializedVersion: 3
+      m_BuildTarget: Android
+      m_MaxTextureSize: 4096
+      m_ResizeAlgorithm: 0
+      m_TextureFormat: 65
+      m_TextureCompression: 1
+      m_CompressionQuality: 100
+      m_CrunchedCompression: 1
+      m_AllowsAlphaSplitting: 0
+      m_Overridden: 1
+      m_AndroidETC2FallbackOverride: 0
+      m_ForceMaximumCompressionQuality_BC6H_BC7: 0
+    packingSettings:
+      serializedVersion: 2
+      padding: 4
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 0
+      enableTightPacking: 0
+      enableAlphaDilation: 0
+    secondaryTextureSettings: {}
+    variantMultiplier: 1
+    packables:
+    - {fileID: 102900000, guid: 6030f0adf164b6b4daa6cb4e1ab5d183, type: 3}
+    bindAsDefault: 1
+    isAtlasV2: 0
+    cachedData: {fileID: 0}
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: 41261ae0ec74a2947b3aabc3f1a3a60b, type: 3}
+  - {fileID: 21300000, guid: 8849a7016588e7442b23ae9c06cd0aaa, type: 3}
+  - {fileID: 21300000, guid: aaaa7c81da75c1e4c8cf5d8373dda25b, type: 3}
+  - {fileID: 21300000, guid: c562fab1c15d1774294608c209310805, type: 3}
+  - {fileID: 1515535979, guid: 500c1142296a28949ac2f769f0db04cf, type: 3}
+  - {fileID: -1567520284, guid: 500c1142296a28949ac2f769f0db04cf, type: 3}
+  - {fileID: -666403172, guid: 8a4e2e03e64b9964a88b51e427a99815, type: 3}
+  - {fileID: -1285040612, guid: 8a4e2e03e64b9964a88b51e427a99815, type: 3}
+  - {fileID: 797169164, guid: f6c430a3eca546f4aa3634876c73c410, type: 3}
+  - {fileID: -957562514, guid: f6c430a3eca546f4aa3634876c73c410, type: 3}
+  - {fileID: -1137894714, guid: 7d70f8b3cbfa63c4ba9febdd36739bcf, type: 3}
+  - {fileID: 1565735126, guid: 7d70f8b3cbfa63c4ba9febdd36739bcf, type: 3}
+  - {fileID: 21300000, guid: 93c60944c25714f47a0f2faeb7e04221, type: 3}
+  - {fileID: -2066026973, guid: 21d44a259d14fa345aa0537dcc131871, type: 3}
+  - {fileID: 1681339566, guid: 21d44a259d14fa345aa0537dcc131871, type: 3}
+  - {fileID: 21300000, guid: 6ec7e245b1d6576428d23c79f50656c7, type: 3}
+  - {fileID: 21300000, guid: 0f3419a6642efe24e90c6bb2152197ba, type: 3}
+  - {fileID: 21300000, guid: 969b43c6a5613794e9eb1d8d62cb21f3, type: 3}
+  - {fileID: 21300000, guid: f1ef84183d8044141b6a398e986d7952, type: 3}
+  - {fileID: 21300000, guid: ac721378510627847816c7a5644497d7, type: 3}
+  - {fileID: 21300000, guid: 65229fd997ea5154ba85e367d7683728, type: 3}
+  - {fileID: 21300000, guid: 8873d87ae7312234788b5ee21b78300c, type: 3}
+  - {fileID: 21300000, guid: 7627bd1b6c722d24f95f8fa7fedf2bb9, type: 3}
+  - {fileID: 21300000, guid: cf17367b65fcf4042857df4eb5c22ad6, type: 3}
+  - {fileID: 21300000, guid: eb9372bce5a37b94f8dafae73f23ea9f, type: 3}
+  - {fileID: 21300000, guid: b017e4cf994a7694babbbfd6d8d6b13b, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - cannon_2
+  - turret_3
+  - cannon_4
+  - cannon_3
+  - foam_3_1
+  - foam_3_0
+  - foam_1_1
+  - foam_1_0
+  - foam_5_1
+  - foam_5_0
+  - foam_2_0
+  - foam_2_1
+  - cannon_5
+  - foam_4_0
+  - foam_4_1
+  - ship_2
+  - turret_5
+  - turret_4
+  - turret_2
+  - ship_4
+  - ship_5
+  - turret_1
+  - ship_1
+  - cannon_1
+  - ship_3
+  - main_base
+  m_RenderDataMap: {}
+  m_Tag: my
+  m_IsVariant: 0

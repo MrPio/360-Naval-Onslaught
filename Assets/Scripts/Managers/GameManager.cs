@@ -14,9 +14,12 @@ namespace Managers
 
         public static void Reset()
         {
-            IOManager.Delete(IOName);
+            DeleteSave();
             _instance = new GameManager();
         }
+
+        public static void DeleteSave() => IOManager.Delete(IOName);
+
 
         public void Save() => IOManager.Save(Instance, IOName);
 

@@ -1,0 +1,136 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: inputs
+  m_EditorData:
+    serializedVersion: 2
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 1
+    platformSettings:
+    - serializedVersion: 3
+      m_BuildTarget: DefaultTexturePlatform
+      m_MaxTextureSize: 2048
+      m_ResizeAlgorithm: 0
+      m_TextureFormat: -1
+      m_TextureCompression: 1
+      m_CompressionQuality: 100
+      m_CrunchedCompression: 1
+      m_AllowsAlphaSplitting: 0
+      m_Overridden: 0
+      m_AndroidETC2FallbackOverride: 0
+      m_ForceMaximumCompressionQuality_BC6H_BC7: 0
+    - serializedVersion: 3
+      m_BuildTarget: Android
+      m_MaxTextureSize: 2048
+      m_ResizeAlgorithm: 0
+      m_TextureFormat: 65
+      m_TextureCompression: 1
+      m_CompressionQuality: 100
+      m_CrunchedCompression: 1
+      m_AllowsAlphaSplitting: 0
+      m_Overridden: 1
+      m_AndroidETC2FallbackOverride: 0
+      m_ForceMaximumCompressionQuality_BC6H_BC7: 0
+    packingSettings:
+      serializedVersion: 2
+      padding: 4
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 0
+      enableTightPacking: 0
+      enableAlphaDilation: 0
+    secondaryTextureSettings: {}
+    variantMultiplier: 1
+    packables:
+    - {fileID: 102900000, guid: 2a6967d118373454f9fe96c44e84cb48, type: 3}
+    bindAsDefault: 1
+    isAtlasV2: 0
+    cachedData: {fileID: 0}
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: c8ee1820ebdb91f4eb1ebbc4052a7bd8, type: 3}
+  - {fileID: 21300000, guid: 31e47cd07007ba447a07e14ea177f8e6, type: 3}
+  - {fileID: 21300000, guid: 10628ed111da1224c8e1580ba66a33c2, type: 3}
+  - {fileID: 21300000, guid: d98317f29dd0b5d41a0f9a5501eaf3a2, type: 3}
+  - {fileID: 21300000, guid: 8c44a0b323b33c14b802d3924c478502, type: 3}
+  - {fileID: 21300000, guid: de1a0dd3afa16d44a9b48dc7bc2a9c36, type: 3}
+  - {fileID: 21300000, guid: 0471e6e330fd75f4589376aa5e22a8f5, type: 3}
+  - {fileID: 21300000, guid: cdd07234a0c98fc4bbd343500d0837a0, type: 3}
+  - {fileID: 21300000, guid: d21a194402c19c2429961bfc488f5112, type: 3}
+  - {fileID: 21300000, guid: a91e4cf4b0276c44a9050625ebbfa807, type: 3}
+  - {fileID: 21300000, guid: bd56ff45d741dcb41be9ee857cd40d74, type: 3}
+  - {fileID: 21300000, guid: 6a613df56853ec14ca8508275156eb66, type: 3}
+  - {fileID: 21300000, guid: 928075368174aeb4094e8de9fb04e399, type: 3}
+  - {fileID: 21300000, guid: a9ddcf37005398948855e3940bade9d5, type: 3}
+  - {fileID: 21300000, guid: 81a07fa7974637e4b9f74bd5a35637e4, type: 3}
+  - {fileID: 21300000, guid: 7f220fd7d73e5ba488ac7f017a18f8f1, type: 3}
+  - {fileID: 21300000, guid: 8f267528cba24144c871c8d9f4be38f9, type: 3}
+  - {fileID: 21300000, guid: 9fb646a813c6ab949abba2a4eb9db216, type: 3}
+  - {fileID: 21300000, guid: c92507d880db175488768cda10a7318e, type: 3}
+  - {fileID: 21300000, guid: 1feee609efedb6043bbfa9adf2abe1ba, type: 3}
+  - {fileID: 21300000, guid: c4ad4d0919764c444a4c0149e50ba424, type: 3}
+  - {fileID: 21300000, guid: 435fad29e30b7614fb75dfff377c6f41, type: 3}
+  - {fileID: 21300000, guid: fcc6a389fc212af4680a8e3eb18ad787, type: 3}
+  - {fileID: 21300000, guid: fcd64ada3767eb7438433da20dbc4a38, type: 3}
+  - {fileID: 21300000, guid: dd7be34c0af32724c874a096bff139a5, type: 3}
+  - {fileID: 21300000, guid: 143b2b8c7a632944098e9df8d8529319, type: 3}
+  - {fileID: 21300000, guid: 7dfb7e2d5e6c0714499afb954a11c0c4, type: 3}
+  - {fileID: 21300000, guid: 0639225d4cf9a86448fdad5a600c50c1, type: 3}
+  - {fileID: 21300000, guid: ce91906d0de3c0e468d582e64684eb06, type: 3}
+  - {fileID: 21300000, guid: a5b3437d33c0bb84ca1ec4b66949f514, type: 3}
+  - {fileID: 21300000, guid: 64f10aad4d1dba247b65452520ccee50, type: 3}
+  - {fileID: 21300000, guid: 00a7af6e9d347e84bbc0ac4667a7eadd, type: 3}
+  - {fileID: 21300000, guid: b914366f98330de49a86956397f2298b, type: 3}
+  - {fileID: 21300000, guid: ddf38f8f548bdb14f8b329c35f5c9c18, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - R_Key_Dark
+  - XboxOne_RT
+  - XboxOne_Dpad_Right
+  - XboxOne_B
+  - XboxOne_Y
+  - XboxOne_Right_Stick_Click
+  - shadedLight11
+  - XboxOne_LT
+  - XboxOne_Menu
+  - XboxOne_Left_Stick
+  - Mouse_Left_Key_Dark
+  - lineLight09
+  - XboxOne_Right_Stick
+  - lineLight46
+  - XboxOne_Diagram_Simple
+  - lineLight05
+  - 2_Key_Dark
+  - Space_Key_Dark
+  - XboxOne_Dpad_Left
+  - 3_Key_Dark
+  - 1_Key_Dark
+  - XboxOne_Dpad
+  - XboxOne_Left_Stick_Click
+  - XboxOne_Dpad_Up
+  - XboxOne_X
+  - lineLight14
+  - XboxOne_RB
+  - 4_Key_Dark
+  - lineLight12
+  - lineLight47
+  - XboxOne_Dpad_Down
+  - XboxOne_A
+  - XboxOne_Windows
+  - XboxOne_LB
+  m_RenderDataMap: {}
+  m_Tag: inputs
+  m_IsVariant: 0

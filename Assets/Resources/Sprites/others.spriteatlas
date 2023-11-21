@@ -1,0 +1,150 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: others
+  m_EditorData:
+    serializedVersion: 2
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 1
+    platformSettings:
+    - serializedVersion: 3
+      m_BuildTarget: Android
+      m_MaxTextureSize: 2048
+      m_ResizeAlgorithm: 0
+      m_TextureFormat: 65
+      m_TextureCompression: 1
+      m_CompressionQuality: 50
+      m_CrunchedCompression: 0
+      m_AllowsAlphaSplitting: 0
+      m_Overridden: 1
+      m_AndroidETC2FallbackOverride: 0
+      m_ForceMaximumCompressionQuality_BC6H_BC7: 0
+    - serializedVersion: 3
+      m_BuildTarget: DefaultTexturePlatform
+      m_MaxTextureSize: 2048
+      m_ResizeAlgorithm: 0
+      m_TextureFormat: -1
+      m_TextureCompression: 1
+      m_CompressionQuality: 100
+      m_CrunchedCompression: 1
+      m_AllowsAlphaSplitting: 0
+      m_Overridden: 0
+      m_AndroidETC2FallbackOverride: 0
+      m_ForceMaximumCompressionQuality_BC6H_BC7: 0
+    packingSettings:
+      serializedVersion: 2
+      padding: 4
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 0
+      enableTightPacking: 0
+      enableAlphaDilation: 0
+    secondaryTextureSettings: {}
+    variantMultiplier: 1
+    packables:
+    - {fileID: 2800000, guid: 3b00e080d1a023b4cba03d8ba5ece791, type: 3}
+    - {fileID: 2800000, guid: 563fb7e5ef61f3440a9facacf02c88da, type: 3}
+    - {fileID: 2800000, guid: a21d5cc4e769270449c8ded715eaf812, type: 3}
+    - {fileID: 2800000, guid: 0749217a65104f144bb7b3b160ccb8e8, type: 3}
+    - {fileID: 2800000, guid: bbce419e62763a54a9d25cac0a5cb18b, type: 3}
+    - {fileID: 2800000, guid: 80001d4eeda41d549bbfb729c5db6c9d, type: 3}
+    - {fileID: 2800000, guid: c761ee98d02c964499bd824f7f52966f, type: 3}
+    - {fileID: 2800000, guid: da1627a449d77e84aa34908e9f2f3713, type: 3}
+    - {fileID: 2800000, guid: 1189285b9635b57409a3489deda32618, type: 3}
+    - {fileID: 2800000, guid: 7e3e4d915ba23a344b172f7d40f3da96, type: 3}
+    - {fileID: 2800000, guid: 7f0bd9800a1570a488e82573a33b1023, type: 3}
+    - {fileID: 2800000, guid: 9c3892be48d3cdb4486015b03e903355, type: 3}
+    - {fileID: 2800000, guid: 8a3c2b4ebe5034d4f82c9da812370b1c, type: 3}
+    - {fileID: 2800000, guid: 9ba4d12a301aba54e8e7938e165de108, type: 3}
+    - {fileID: 2800000, guid: 669f815448471d04f95544f39e68f8c0, type: 3}
+    - {fileID: 2800000, guid: e68e0dc614240e64dbaa8bbe5d18def3, type: 3}
+    - {fileID: 2800000, guid: 5b85c35b6ce9d7640b24c98aee4f966e, type: 3}
+    - {fileID: 2800000, guid: eadb859439508be42912251509a2b3b3, type: 3}
+    - {fileID: 2800000, guid: 8428f3ba2d95c1d41a44754c02f2db48, type: 3}
+    - {fileID: 2800000, guid: b12eb0b238e477348a3a88bfbd8f0eff, type: 3}
+    - {fileID: 2800000, guid: 6d48c56fe41bfc742a926fdb015bfa24, type: 3}
+    - {fileID: 2800000, guid: 4dfa667db8f843f4aba900ba6409cbce, type: 3}
+    - {fileID: 2800000, guid: 7914a382144bb5c41b6a6d578e105aab, type: 3}
+    - {fileID: 2800000, guid: 5092d2ab3687d7749a4edf6f0adfb8b0, type: 3}
+    - {fileID: 2800000, guid: 5b0fb3c34d4e0314eb17e84b43fc0a9c, type: 3}
+    - {fileID: 2800000, guid: cff96132f8adf0d46982a2b8bf85c157, type: 3}
+    - {fileID: 2800000, guid: efdadd04ac7a8cb48989f802d1440325, type: 3}
+    bindAsDefault: 1
+    isAtlasV2: 0
+    cachedData: {fileID: 0}
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: 3b00e080d1a023b4cba03d8ba5ece791, type: 3}
+  - {fileID: 21300000, guid: 7f0bd9800a1570a488e82573a33b1023, type: 3}
+  - {fileID: 21300000, guid: 7e3e4d915ba23a344b172f7d40f3da96, type: 3}
+  - {fileID: 21300000, guid: cff96132f8adf0d46982a2b8bf85c157, type: 3}
+  - {fileID: 21300000, guid: 7914a382144bb5c41b6a6d578e105aab, type: 3}
+  - {fileID: 21300000, guid: b12eb0b238e477348a3a88bfbd8f0eff, type: 3}
+  - {fileID: 21300000, guid: 5b0fb3c34d4e0314eb17e84b43fc0a9c, type: 3}
+  - {fileID: 21300000, guid: efdadd04ac7a8cb48989f802d1440325, type: 3}
+  - {fileID: 21300000, guid: 669f815448471d04f95544f39e68f8c0, type: 3}
+  - {fileID: 21300000, guid: eadb859439508be42912251509a2b3b3, type: 3}
+  - {fileID: 21300000, guid: da1627a449d77e84aa34908e9f2f3713, type: 3}
+  - {fileID: 21300000, guid: a21d5cc4e769270449c8ded715eaf812, type: 3}
+  - {fileID: 21300000, guid: 563fb7e5ef61f3440a9facacf02c88da, type: 3}
+  - {fileID: -641303776, guid: e68e0dc614240e64dbaa8bbe5d18def3, type: 3}
+  - {fileID: 1603867663, guid: e68e0dc614240e64dbaa8bbe5d18def3, type: 3}
+  - {fileID: 21300000, guid: c761ee98d02c964499bd824f7f52966f, type: 3}
+  - {fileID: 21300000, guid: 9ba4d12a301aba54e8e7938e165de108, type: 3}
+  - {fileID: 21300000, guid: 0749217a65104f144bb7b3b160ccb8e8, type: 3}
+  - {fileID: 21300000, guid: 8428f3ba2d95c1d41a44754c02f2db48, type: 3}
+  - {fileID: 21300000, guid: 5b85c35b6ce9d7640b24c98aee4f966e, type: 3}
+  - {fileID: 21300000, guid: 1189285b9635b57409a3489deda32618, type: 3}
+  - {fileID: 21300000, guid: 5092d2ab3687d7749a4edf6f0adfb8b0, type: 3}
+  - {fileID: 21300000, guid: 4dfa667db8f843f4aba900ba6409cbce, type: 3}
+  - {fileID: 21300000, guid: 8a3c2b4ebe5034d4f82c9da812370b1c, type: 3}
+  - {fileID: 21300000, guid: 80001d4eeda41d549bbfb729c5db6c9d, type: 3}
+  - {fileID: 21300000, guid: bbce419e62763a54a9d25cac0a5cb18b, type: 3}
+  - {fileID: 21300000, guid: 9c3892be48d3cdb4486015b03e903355, type: 3}
+  - {fileID: 21300000, guid: 6d48c56fe41bfc742a926fdb015bfa24, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - ally_plane
+  - circle
+  - cannon_ball_5_2
+  - missile_fire_2 (2)
+  - missile_fire_1 (4)
+  - missile_fire_1 (1)
+  - missile_fire_2 (1)
+  - missile_fire_2 (3)
+  - flare
+  - missile_2
+  - cannon_ball_4_2
+  - bullet_2
+  - bullet_1
+  - military_plane_0
+  - military_plane_1
+  - cannon_ball_4
+  - drop_bomb_2
+  - cannon_ball_1
+  - missile_3
+  - missile_1
+  - cannon_ball_5
+  - missile_fire_1 (5)
+  - missile_fire_1 (3)
+  - drop_bomb
+  - cannon_ball_3
+  - cannon_ball_2
+  - crosshair
+  - missile_fire_1 (2)
+  m_RenderDataMap: {}
+  m_Tag: others
+  m_IsVariant: 0

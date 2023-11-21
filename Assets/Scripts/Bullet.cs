@@ -1,5 +1,4 @@
-using System;
-using System.Diagnostics;
+using System.Collections;
 using System.Linq;
 using ExtensionsFunctions;
 using Interfaces;
@@ -95,12 +94,19 @@ public class Bullet : MonoBehaviour
 
     private void OnBecameInvisible()
     {
-        // Destroy(gameObject);
+        IEnumerator DelayDestroy()
+        {
+            yield return new WaitForSeconds(5.0f);
+            Destroy(gameObject);
+        }
+
+        StartCoroutine(DelayDestroy());
     }
 
     private void OnTriggerEnter2D(Collider2D col)
     {
-        if ((col.gameObject.tag.Contains("ship") && !col.GetComponent<Ship>().Invincible) || col.gameObject.tag.Contains("bubble"))
+        if ((col.gameObject.tag.Contains("ship") && !col.GetComponent<Ship>().Invincible) ||
+            col.gameObject.tag.Contains("bubble"))
         {
             col.GetComponent<IDamageble>().TakeDamage(Game.CurrentTurretModel.Damage);
             ++GameManager.Instance.CurrentWaveTurretHit;
