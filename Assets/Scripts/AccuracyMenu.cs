@@ -25,7 +25,7 @@ public class AccuracyMenu : MonoBehaviour
         turretFiredText.text = Game.CurrentWaveTurretFired.ToString("N0");
         turretHitText.text = Game.CurrentWaveTurretHit.ToString("N0");
         turretAccuracyText.text = (Game.CurrentWaveTurretAccuracy * 100f).ToString("N0") + " %";
-        turretAccuracyText.color = Game.CurrentWaveTurretAccuracy >= 0.75f
+        turretAccuracyText.color = Game.HasTurretAccuracyBonus
             ? Color.yellow
             : new Color(0.1875f, 0.1875f, 0.1875f);
 
@@ -33,10 +33,10 @@ public class AccuracyMenu : MonoBehaviour
         cannonFiredText.text = Game.CurrentWaveCannonFired.ToString("N0");
         cannonHitText.text = Game.CurrentWaveCannonHit.ToString("N0");
         cannonAccuracyText.text = (Game.CurrentWaveCannonAccuracy * 100f).ToString("N0") + " %";
-        cannonAccuracyText.color = Game.CurrentWaveCannonAccuracy >= 0.75f
+        cannonAccuracyText.color = Game.HasCannonAccuracyBonus
             ? Color.yellow
             : new Color(0.1875f, 0.1875f, 0.1875f);
 
-        closeButton.text = Game.HasBonus ? "Redeem" : "Close";
+        closeButton.text = Game.HasAccuracyBonus ? "Redeem" : "Close";
     }
 }

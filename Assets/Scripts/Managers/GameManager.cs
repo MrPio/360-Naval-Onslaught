@@ -60,7 +60,7 @@ namespace Managers
         [System.NonSerialized] public int SpecialWave = -1;
         public int Ammo, CannonAmmo;
         public int Money = 200;
-        public int CurrentTurret = 3;
+        public int CurrentTurret = 0;
         public int CurrentCannon = 0;
         public int Score;
         public float PowerUpDuration = 20;
@@ -100,7 +100,9 @@ namespace Managers
 
         public float CurrentWaveTurretAccuracy => CurrentWaveTurretHit / (float)CurrentWaveTurretFired;
         public float CurrentWaveCannonAccuracy => CurrentWaveCannonHit / (float)CurrentWaveCannonFired;
-        public bool HasBonus => CurrentWaveCannonAccuracy >= 0.75 && CurrentWaveTurretAccuracy >= 0.75f;
+        public bool HasTurretAccuracyBonus => CurrentWaveTurretAccuracy >= (InputManager.IsMobile ? 0.67f : 0.75f);
+        public bool HasCannonAccuracyBonus => CurrentWaveCannonAccuracy >= 0.75;
+        public bool HasAccuracyBonus => HasTurretAccuracyBonus && HasCannonAccuracyBonus;
         public bool IsSpecialWave => SpecialWave >= 0;
         public bool[] SpecialOccurInWave = new bool[999];
         public bool HasPowerUp => PowerUp is { };

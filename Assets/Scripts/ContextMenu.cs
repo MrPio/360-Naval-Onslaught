@@ -41,9 +41,10 @@ public class ContextMenu : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         CloseGame,
         QualitySetting,
         MainMenuContinue,
+        None
     }
 
-    [SerializeField] private GameObject contextMenu, lockedContextMenu, canvas, mainBase;
+    [SerializeField] private GameObject contextMenu, lockedContextMenu, canvas, mainBase, mobileShopConfirm;
     [SerializeField] private bool followMouse = true;
     [SerializeField] private ContextMenuType type;
     [SerializeField] private int turretIndex = -1, cannonIndex = -1, specialIndex = 0;
@@ -79,9 +80,11 @@ public class ContextMenu : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         {
             _contextMenu = Instantiate(
                 original: menu,
-                position: (followMouse
+                position:
+                (followMouse
                     ? (Vector2)MainCamera.MainCam.ScreenToWorldPoint(Input.mousePosition)
-                    : transform.position) + Vector2.up * 0.215f,
+                    : transform.position) +
+                Vector2.up * (InputManager.IsMobile ? 1f : 0.3f),
                 rotation: Quaternion.identity,
                 canvas.transform
             ).transform;
@@ -114,24 +117,24 @@ public class ContextMenu : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
                 ContextMenuType.UpgradeHealth => Game.HealthStep,
 
                 ContextMenuType.CannonDamage => math.max(1,
-                    Math.Round((TurretModel.UpgradeStep - 1f) * Game.CurrentCannonModel.Damage,1)),
+                    Math.Round((TurretModel.UpgradeStep - 1f) * Game.CurrentCannonModel.Damage, 1)),
                 ContextMenuType.CannonRadius => math.max(1,
-                    Math.Round((TurretModel.UpgradeStep - 1f) * Game.CurrentCannonModel.Radius,1)),
+                    Math.Round((TurretModel.UpgradeStep - 1f) * Game.CurrentCannonModel.Radius, 1)),
                 ContextMenuType.CannonReload => math.max(1,
-                    Math.Round((TurretModel.UpgradeStep - 1f) * Game.CurrentCannonModel.Reload,1)),
+                    Math.Round((TurretModel.UpgradeStep - 1f) * Game.CurrentCannonModel.Reload, 1)),
                 ContextMenuType.CannonSpeed => math.max(1,
-                    Math.Round((TurretModel.UpgradeStep - 1f) * Game.CurrentCannonModel.Speed,1)),
+                    Math.Round((TurretModel.UpgradeStep - 1f) * Game.CurrentCannonModel.Speed, 1)),
 
                 ContextMenuType.TurretDamage => math.max(1,
-                    Math.Round((TurretModel.UpgradeStep - 1f) * Game.CurrentTurretModel.Damage,1)),
+                    Math.Round((TurretModel.UpgradeStep - 1f) * Game.CurrentTurretModel.Damage, 1)),
                 ContextMenuType.TurretAmmo => math.max(1,
-                    Math.Round((TurretModel.UpgradeStep - 1f) * Game.CurrentTurretModel.Ammo,1)),
+                    Math.Round((TurretModel.UpgradeStep - 1f) * Game.CurrentTurretModel.Ammo, 1)),
                 ContextMenuType.TurretRate => math.max(1,
-                    Math.Round((TurretModel.UpgradeStep - 1f) * Game.CurrentTurretModel.Rate,1)),
+                    Math.Round((TurretModel.UpgradeStep - 1f) * Game.CurrentTurretModel.Rate, 1)),
                 ContextMenuType.TurretReload => math.max(1,
-                    Math.Round((TurretModel.UpgradeStep - 1f) * Game.CurrentTurretModel.Reload,1)),
+                    Math.Round((TurretModel.UpgradeStep - 1f) * Game.CurrentTurretModel.Reload, 1)),
                 ContextMenuType.TurretSpeed => math.max(1,
-                    Math.Round((TurretModel.UpgradeStep - 1f) * Game.CurrentTurretModel.Speed,1)),
+                    Math.Round((TurretModel.UpgradeStep - 1f) * Game.CurrentTurretModel.Speed, 1)),
 
                 ContextMenuType.BuySpecial => 1,
 
@@ -217,7 +220,8 @@ public class ContextMenu : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         if (followMouse)
         {
             _contextMenu.transform.position =
-                ((Vector2)MainCamera.MainCam.ScreenToWorldPoint(Input.mousePosition)) + Vector2.up * 0.3f;
+                ((Vector2)MainCamera.MainCam.ScreenToWorldPoint(Input.mousePosition)) +
+                Vector2.up * (InputManager.IsMobile ? 1f : 0.3f);
         }
     }
 
@@ -257,7 +261,7 @@ public class ContextMenu : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         }
         else if (type == ContextMenuType.CloseAccuracyMenu)
         {
-            if (Game.HasBonus)
+            if (Game.HasAccuracyBonus)
                 GameObject.FindWithTag("wave_spawner").GetComponent<WaveSpawner>().bonusMenu.SetActive(true);
             else
                 GameObject.FindWithTag("wave_spawner").GetComponent<WaveSpawner>().shopMenu.SetActive(true);
@@ -320,59 +324,70 @@ public class ContextMenu : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
                 return;
             }
 
-            switch (type)
+            Action action = () =>
             {
-                case ContextMenuType.Repair:
-                    Game.BuyRepair();
-                    break;
-                case ContextMenuType.UpgradeHealth:
-                    Game.BuyHealth();
-                    break;
-                case ContextMenuType.CannonDamage:
-                    Game.CurrentCannonModel.BuyDamage();
-                    break;
-                case ContextMenuType.CannonRadius:
-                    Game.CurrentCannonModel.BuyRadius();
-                    break;
-                case ContextMenuType.CannonReload:
-                    Game.CurrentCannonModel.BuyReload();
-                    break;
-                case ContextMenuType.CannonSpeed:
-                    Game.CurrentCannonModel.BuySpeed();
-                    break;
-                case ContextMenuType.TurretDamage:
-                    Game.CurrentTurretModel.BuyDamage();
-                    break;
-                case ContextMenuType.TurretAmmo:
-                    Game.CurrentTurretModel.BuyAmmo();
-                    break;
-                case ContextMenuType.TurretRate:
-                    Game.CurrentTurretModel.BuyRate();
-                    break;
-                case ContextMenuType.TurretReload:
-                    Game.CurrentTurretModel.BuyReload();
-                    break;
-                case ContextMenuType.TurretSpeed:
-                    Game.CurrentTurretModel.BuySpeed();
-                    break;
-                case ContextMenuType.BuySpecial:
-                    Game.BuySpecial(specialIndex);
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
+                switch (type)
+                {
+                    case ContextMenuType.Repair:
+                        Game.BuyRepair();
+                        break;
+                    case ContextMenuType.UpgradeHealth:
+                        Game.BuyHealth();
+                        break;
+                    case ContextMenuType.CannonDamage:
+                        Game.CurrentCannonModel.BuyDamage();
+                        break;
+                    case ContextMenuType.CannonRadius:
+                        Game.CurrentCannonModel.BuyRadius();
+                        break;
+                    case ContextMenuType.CannonReload:
+                        Game.CurrentCannonModel.BuyReload();
+                        break;
+                    case ContextMenuType.CannonSpeed:
+                        Game.CurrentCannonModel.BuySpeed();
+                        break;
+                    case ContextMenuType.TurretDamage:
+                        Game.CurrentTurretModel.BuyDamage();
+                        break;
+                    case ContextMenuType.TurretAmmo:
+                        Game.CurrentTurretModel.BuyAmmo();
+                        break;
+                    case ContextMenuType.TurretRate:
+                        Game.CurrentTurretModel.BuyRate();
+                        break;
+                    case ContextMenuType.TurretReload:
+                        Game.CurrentTurretModel.BuyReload();
+                        break;
+                    case ContextMenuType.TurretSpeed:
+                        Game.CurrentTurretModel.BuySpeed();
+                        break;
+                    case ContextMenuType.BuySpecial:
+                        Game.BuySpecial(specialIndex);
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
 
-            MainCamera.AudioSource.PlayOneShot(_buy);
+                MainCamera.AudioSource.PlayOneShot(_buy);
+                // Update the shop menu
+                GameObject.FindWithTag("shop_menu").GetComponent<ShopMenu>().UpdateUI();
+            };
+            if (InputManager.IsMobile)
+            {
+                mobileShopConfirm.SetActive(true);
+                var script = mobileShopConfirm.GetComponent<MobileShopConfirm>();
+                script.Action = action;
+                script.SetContent(_contextMenu.gameObject);
+            }
+            else
+                action.Invoke();
         }
 
         if (contextMenu.name == "turret_context_menu")
         {
-            var turret = Data.Turrets[turretIndex];
-            if (turret.IsLocked)
-            {
+            if (Data.Turrets[turretIndex].IsLocked)
                 MainCamera.AudioSource.PlayOneShot(_noBuy);
-            }
-            else
+            else if (Game.CurrentTurret != turretIndex)
             {
                 Game.CurrentTurret = turretIndex;
                 MainCamera.AudioSource.PlayOneShot(_weaponSelect);
@@ -381,12 +396,9 @@ public class ContextMenu : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
         if (contextMenu.name == "cannon_context_menu")
         {
-            var cannon = Data.Cannons[cannonIndex];
-            if (cannon.IsLocked)
-            {
+            if (Data.Cannons[cannonIndex].IsLocked)
                 MainCamera.AudioSource.PlayOneShot(_noBuy);
-            }
-            else
+            else if (Game.CurrentCannon != cannonIndex)
             {
                 Game.CurrentCannon = cannonIndex;
                 MainCamera.AudioSource.PlayOneShot(_weaponSelect);

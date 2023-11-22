@@ -146,6 +146,7 @@ GameObject:
   - component: {fileID: 3142106153216320819}
   - component: {fileID: 3142106153216320817}
   - component: {fileID: 3142106153216320818}
+  - component: {fileID: 486945054395537801}
   m_Layer: 5
   m_Name: upgrade_context_menu
   m_TagString: Untagged
@@ -162,8 +163,8 @@ RectTransform:
   m_GameObject: {fileID: 3142106153216320828}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 1.05, y: 1.05, z: 1.05}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 3142106152911850621}
   - {fileID: 2555871854981376974}
@@ -214,6 +215,18 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 0.75
+--- !u!114 &486945054395537801
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3142106153216320828}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b56ecfe39cb1386458fbada605b04ff3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7726199874942151377
 GameObject:
   m_ObjectHideFlags: 0

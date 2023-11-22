@@ -74,7 +74,7 @@ public class Ship : MonoBehaviour, IDamageble
         if (_model.Name == "SpeedBoat")
         {
             var specialBoat = !Game.IsSpecialWave && !Game.SpecialOccurInWave[Game.Wave] &&
-                              (alwaysSpecial || Random.Range(0f, 1f) < .08f);
+                              (alwaysSpecial || Random.Range(0f, 1f) < .0675f);
             GetComponent<ShipPath>().AddPath(
                 Game.IsSpecialWave || specialBoat || Random.Range(0, 2) == 0
                     ? new List<Vector2> { Vector2.zero }

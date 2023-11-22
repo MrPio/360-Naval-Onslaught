@@ -54,7 +54,6 @@ public class PadManager : MonoBehaviour
                 {
                     if (turretCollider.OverlapPoint(worldPos))
                         HandleTurretMovement(worldPos);
-                    // left finger
                     else
                         turretCircleTransform.anchoredPosition = Vector2.zero;
                 }

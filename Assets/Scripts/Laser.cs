@@ -30,7 +30,7 @@ public class Laser : MonoBehaviour
         if (Arm is { })
             transform.SetPositionAndRotation(Arm.position, In.GetInput().ToQuaternion());
 
-        if (Input.GetMouseButtonUp(0) || Game.Ammo <= 0)
+        if (InputManager.Instance.GetTurretUp() || Game.Ammo <= 0)
         {
             if (Turret is { })
             {

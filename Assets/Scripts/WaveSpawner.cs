@@ -38,7 +38,8 @@ public class WaveSpawner : MonoBehaviour
         baseHealthSlider,
         accuracyMenu,
         winMenu,
-        mainMenuContinueGame;
+        mainMenuContinueGame,
+        mobileShopConfirm;
 
     [NonSerialized] public bool isPaused;
     [SerializeField] private bool isDebug;
@@ -244,6 +245,7 @@ public class WaveSpawner : MonoBehaviour
         scoreContainer.SetActive(false);
         waveContainer.SetActive(false);
         shopMenu.SetActive(false);
+        mobileShopConfirm.SetActive(false);
         bonusMenu.SetActive(false);
         winMenu.SetActive(false);
         GlobalVolumeAnimator.SetTrigger(Animator.StringToHash("fade"));
@@ -274,6 +276,7 @@ public class WaveSpawner : MonoBehaviour
         scoreContainer.SetActive(true);
         waveContainer.SetActive(true);
         shopMenu.SetActive(false);
+        mobileShopConfirm.SetActive(false);
         accuracyMenu.SetActive(false);
         bonusMenu.SetActive(false);
         winMenu.SetActive(false);
