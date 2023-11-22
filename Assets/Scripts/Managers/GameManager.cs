@@ -46,6 +46,8 @@ namespace Managers
 
         public int Quality = InputManager.IsMobile ? 0 : 2;
         public readonly string[] QualityNames = { "Low", "High", "Ultra" };
+        public int Difficulty = InputManager.IsMobile ? 0 : 1;
+        public readonly string[] DifficultyNames = { "Easy", "Medium", "Hard" };
 
         public string[] QualityOceanMaterials =
             { "Materials/ocean_low", "Materials/ocean_high", "Materials/ocean_ultra" };
@@ -63,8 +65,8 @@ namespace Managers
         public int CurrentTurret = 0;
         public int CurrentCannon = 0;
         public int Score;
-        public float PowerUpDuration = 20;
-        public int MissileAssaultCount = 20;
+        public float PowerUpDuration => new[] { 30, 25, 20 }[Difficulty];
+        public int MissileAssaultCount => new[] { 30, 25, 20 }[Difficulty];
         [System.NonSerialized] private Bubble.PowerUp? _powerUp;
         [System.NonSerialized] public bool HasOverride;
 
@@ -90,7 +92,12 @@ namespace Managers
         public float PowerUpProgress => (Time.time - PowerUpStart) / PowerUpDuration;
 
         public int HealthStep => (int)(_healthBaseStep * (1f + 0.25f * HealthLevel));
-        public int HealthCost => (int)(_healthBaseCost * (1f + 0.35f * HealthLevel));
+
+        public int HealthCost => (int)(_healthBaseCost * (1f + 0.35f * HealthLevel) *
+                                       (Difficulty == 0 ? 0.9f : 1) *
+                                       (Difficulty == 2 ? 1.25f : 1)
+            );
+
         public int RepairCost => (int)(0.28f * (MaxHealth - Health) * (1f + 0.25f * _repairLevel));
 
         public int CurrentWaveTurretFired = 0,

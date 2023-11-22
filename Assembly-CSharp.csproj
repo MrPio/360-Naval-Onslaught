@@ -102,6 +102,8 @@
      <Compile Include="Assets\Scripts\Bullet.cs" />
      <Compile Include="Assets\MobileShopConfirm.cs" />
      <Compile Include="Assets\Scalable.cs" />
+     <Compile Include="Assets\DifficultyMenu.cs" />
+     <Compile Include="Assets\CloudManager.cs" />
      <Folder Include="Assets" />
      <Folder Include="Assets\Resources\Sprites\hud" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
@@ -122,6 +124,7 @@
      <Folder Include="Assets\TextMesh Pro\Resources" />
      <Folder Include="Assets\Resources\Sprites\inputs\Keyboard &amp; Mouse" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Surface-Mobile.shader" />
+     <Folder Include="Assets\Resources\Sprites\difficulty" />
      <Folder Include="Assets\Scenes\SampleScene" />
      <Folder Include="Assets\TextMesh Pro" />
      <Folder Include="Assets\Prefabs\Paths\specials" />

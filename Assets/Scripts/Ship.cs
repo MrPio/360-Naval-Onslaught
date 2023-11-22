@@ -54,7 +54,15 @@ public class Ship : MonoBehaviour, IDamageble
         {
             var pair = Game.CurrentWave.Spawn();
             _currentIndex = pair?.Key ?? 0;
-            print("Assegnato indice "+_currentIndex);
+
+            // Set Fog strength
+            if (_currentIndex == Game.CurrentWave.startFog)
+                GameObject.FindWithTag("cloud_manager").GetComponent<CloudManager>()
+                    .SetStrength(Random.Range(Game.CurrentWave.FogStrength * 0.75f,
+                        Game.CurrentWave.FogStrength * 1.5f));
+            if (_currentIndex == Game.CurrentWave.endFog)
+                GameObject.FindWithTag("cloud_manager").GetComponent<CloudManager>().SetStrength();
+
             _model = pair?.Value;
         }
 

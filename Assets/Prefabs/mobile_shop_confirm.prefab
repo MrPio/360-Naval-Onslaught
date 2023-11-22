@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 979858006871665347}
   m_Layer: 5
   m_Name: mobile_shop_confirm
-  m_TagString: specials_menu
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

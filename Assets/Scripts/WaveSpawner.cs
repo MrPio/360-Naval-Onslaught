@@ -39,7 +39,8 @@ public class WaveSpawner : MonoBehaviour
         accuracyMenu,
         winMenu,
         mainMenuContinueGame,
-        mobileShopConfirm;
+        mobileShopConfirm,
+        difficultyMenu;
 
     [NonSerialized] public bool isPaused;
     [SerializeField] private bool isDebug;
@@ -218,8 +219,12 @@ public class WaveSpawner : MonoBehaviour
     {
         GameManager.Reset();
         DataManager.Reset();
-        overlay.GetComponent<Overlay>().OnEnd = BeginWave;
-        overlay.SetActive(true);
+        difficultyMenu.SetActive(true);
+        difficultyMenu.GetComponent<DifficultyMenu>().OnClose = () =>
+        {
+            overlay.GetComponent<Overlay>().OnEnd = BeginWave;
+            overlay.SetActive(true);
+        };
     }
 
     private void EndWave(bool isLoading = false)
@@ -284,6 +289,7 @@ public class WaveSpawner : MonoBehaviour
         if (isDebug)
             baseMain.SetActive(true);
         _model = Game.CurrentWave;
+        GameObject.FindWithTag("cloud_manager").GetComponent<CloudManager>().SetStrength();
         _waveStart = Time.time;
         _accumulator = 0;
         _nextSpawn = 2f;

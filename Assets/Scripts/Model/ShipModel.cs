@@ -29,12 +29,27 @@ namespace Model
 
         public int Speed => (int)(_baseSpeed * (1f + 0.05f * Game.Wave) *
                                   (Game.IsSpecialWave ? (InputManager.IsMobile ? 3f : 3.35f) : 1f) *
-                                  (Game.SpecialWave == 2 ? 1.5f : 1f));
+                                  (Game.SpecialWave == 2 ? 1.5f : 1f) *
+                                  (Game.Difficulty == 0 ? 0.9f : 1) *
+                                  (Game.Difficulty == 2 ? 1.15f : 1)
+            );
 
-        public int Rate => (int)(_baseRate * (1f + 0.025f * Game.Wave));
-        public int Damage => (int)(_baseDamage * (1f + 0.025f * Game.Wave) * (Game.IsSpecialWave ? 0.75f : 1f));
-        public int Health => (int)(_baseHealth * (1f + (4f * Game.WaveFactor) + (0.3f * (int)(Game.Wave / 5))));
-        public int Money => (int)(_baseMoney * (1f + 0.025f * Game.Wave) * (Game.IsSpecialWave ? 0.333f : 1f));
+        public int Rate => (int)(_baseRate * (1f + 0.025f * Game.Wave) *
+                                 (Game.Difficulty == 0 ? 0.9f : 1) *
+                                 (Game.Difficulty == 2 ? 1.15f : 1));
+
+        public int Damage => (int)(_baseDamage * (1f + 0.025f * Game.Wave) *
+                                   (Game.IsSpecialWave ? 0.75f : 1f) *
+                                   (Game.Difficulty == 0 ? 0.9f : 1) *
+                                   (Game.Difficulty == 2 ? 1.15f : 1));
+
+        public int Health => (int)(_baseHealth * (1f + (4f * Game.WaveFactor) + (0.3f * (int)(Game.Wave / 5))) *
+                                   (Game.Difficulty == 0 ? 0.9f : 1) *
+                                   (Game.Difficulty == 2 ? 1.15f : 1));
+
+        public int Money => (int)(_baseMoney * (1f + 0.025f * Game.Wave) * (Game.IsSpecialWave ? 0.333f : 1f) *
+                                  (Game.Difficulty == 0 ? 0.9f : 1) *
+                                  (Game.Difficulty == 2 ? 1.15f : 1));
 
         public ShipModel(string name, string sprite, string foamAnim, string[] fireClip, string explodeClip,
             int baseSpeed, int baseRate,

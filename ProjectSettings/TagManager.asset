@@ -32,6 +32,7 @@ TagManager:
   - power_ups_controller
   - pad_container
   - global_volume
+  - cloud_manager
   layers:
   - Default
   - TransparentFX
