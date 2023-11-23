@@ -444,12 +444,56 @@ MonoBehaviour:
   lockedContextMenu: {fileID: 0}
   canvas: {fileID: 726961136}
   mainBase: {fileID: 0}
-  mobileShopConfirm: {fileID: 0}
+  mobileShopConfirm: {fileID: 5615515944948895759}
   followMouse: 1
   type: 18
   turretIndex: -1
   cannonIndex: -1
   specialIndex: 3
+--- !u!114 &182989806
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 182989798}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Navigation:
+    m_Mode: 3
+    m_WrapAround: 0
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 1
+  m_Colors:
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_SelectedTrigger: Selected
+    m_DisabledTrigger: Disabled
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 0}
+  m_OnClick:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &197800574
 GameObject:
   m_ObjectHideFlags: 0
@@ -8270,12 +8314,56 @@ MonoBehaviour:
   lockedContextMenu: {fileID: 0}
   canvas: {fileID: 726961136}
   mainBase: {fileID: 0}
-  mobileShopConfirm: {fileID: 0}
+  mobileShopConfirm: {fileID: 5615515944948895759}
   followMouse: 1
   type: 18
   turretIndex: -1
   cannonIndex: -1
   specialIndex: 0
+--- !u!114 &1122388387
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1122388379}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Navigation:
+    m_Mode: 3
+    m_WrapAround: 0
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 1
+  m_Colors:
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_SelectedTrigger: Selected
+    m_DisabledTrigger: Disabled
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 0}
+  m_OnClick:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &1165359518
 GameObject:
   m_ObjectHideFlags: 0
@@ -8600,12 +8688,56 @@ MonoBehaviour:
   lockedContextMenu: {fileID: 0}
   canvas: {fileID: 726961136}
   mainBase: {fileID: 0}
-  mobileShopConfirm: {fileID: 0}
+  mobileShopConfirm: {fileID: 5615515944948895759}
   followMouse: 1
   type: 18
   turretIndex: -1
   cannonIndex: -1
   specialIndex: 2
+--- !u!114 &1233627712
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1233627704}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Navigation:
+    m_Mode: 3
+    m_WrapAround: 0
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 1
+  m_Colors:
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_SelectedTrigger: Selected
+    m_DisabledTrigger: Disabled
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 0}
+  m_OnClick:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &1240426878
 GameObject:
   m_ObjectHideFlags: 0
@@ -15092,12 +15224,56 @@ MonoBehaviour:
   lockedContextMenu: {fileID: 0}
   canvas: {fileID: 726961136}
   mainBase: {fileID: 0}
-  mobileShopConfirm: {fileID: 0}
+  mobileShopConfirm: {fileID: 5615515944948895759}
   followMouse: 1
   type: 18
   turretIndex: -1
   cannonIndex: -1
   specialIndex: 1
+--- !u!114 &1828451944
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1828451936}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Navigation:
+    m_Mode: 3
+    m_WrapAround: 0
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 1
+  m_Colors:
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_SelectedTrigger: Selected
+    m_DisabledTrigger: Disabled
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 0}
+  m_OnClick:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &1896423619 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3135331640016609974, guid: 16c244378441df54ca0c33f6b8032563, type: 3}
@@ -16918,6 +17094,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: main_menu
       objectReference: {fileID: 0}
+    - target: {fileID: 1501511185852881912, guid: 5bc25290174390c4599d0e9a3a214d72, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1501511185852881913, guid: 5bc25290174390c4599d0e9a3a214d72, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -18094,6 +18274,10 @@ PrefabInstance:
       propertyPath: canvas
       value: 
       objectReference: {fileID: 726961136}
+    - target: {fileID: 4626825609024940147, guid: c66b6c5ed4f3d574badea26cc32b4e7a, type: 3}
+      propertyPath: mobileShopConfirm
+      value: 
+      objectReference: {fileID: 5615515944948895759}
     - target: {fileID: 4626825609042620147, guid: c66b6c5ed4f3d574badea26cc32b4e7a, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1
@@ -18268,11 +18452,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4626825609279941552, guid: c66b6c5ed4f3d574badea26cc32b4e7a, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4626825609279941552, guid: c66b6c5ed4f3d574badea26cc32b4e7a, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4626825609377079165, guid: c66b6c5ed4f3d574badea26cc32b4e7a, type: 3}
       propertyPath: m_Sprite
@@ -18342,6 +18526,10 @@ PrefabInstance:
       propertyPath: canvas
       value: 
       objectReference: {fileID: 726961136}
+    - target: {fileID: 4626825609455144469, guid: c66b6c5ed4f3d574badea26cc32b4e7a, type: 3}
+      propertyPath: mobileShopConfirm
+      value: 
+      objectReference: {fileID: 5615515944948895759}
     - target: {fileID: 4626825609455144470, guid: c66b6c5ed4f3d574badea26cc32b4e7a, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -18532,7 +18720,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4626825610346378179, guid: c66b6c5ed4f3d574badea26cc32b4e7a, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4626825610349033766, guid: c66b6c5ed4f3d574badea26cc32b4e7a, type: 3}
       propertyPath: canvas
@@ -19314,7 +19502,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5206603583168924946, guid: f765d5a0cfeb49e4480a78fb7ceee6a8, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5206603583627187003, guid: f765d5a0cfeb49e4480a78fb7ceee6a8, type: 3}
       propertyPath: m_AnchoredPosition.y

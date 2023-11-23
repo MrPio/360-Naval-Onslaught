@@ -49,6 +49,7 @@
      <Compile Include="Assets\URP\Blit.cs" />
      <Compile Include="Assets\Scripts\Cannon.cs" />
      <Compile Include="Assets\Scripts\MainCamera.cs" />
+     <Compile Include="Assets\CloudManager.cs" />
      <Compile Include="Assets\Scripts\ShopMenu.cs" />
      <Compile Include="Assets\Scripts\SpecialsMenu.cs" />
      <Compile Include="Assets\Scripts\AccuracyMenu.cs" />
@@ -56,6 +57,7 @@
      <Compile Include="Assets\Scripts\Overlay.cs" />
      <Compile Include="Assets\Scripts\Managers\GameManager.cs" />
      <Compile Include="Assets\Scripts\Turret.cs" />
+     <Compile Include="Assets\MobileShopConfirm.cs" />
      <Compile Include="Assets\Scripts\Base.cs" />
      <Compile Include="Assets\Scripts\SpecialsCounter.cs" />
      <Compile Include="Assets\Scripts\ExtensionsFunctions\EnumExtensions.cs" />
@@ -65,6 +67,7 @@
      <Compile Include="Assets\Scripts\CloudSpawner.cs" />
      <Compile Include="Assets\Scripts\Managers\IOManager.cs" />
      <Compile Include="Assets\Scripts\Destroyable.cs" />
+     <Compile Include="Assets\Scalable.cs" />
      <Compile Include="Assets\Scripts\ReloadBar.cs" />
      <Compile Include="Assets\Scripts\Model\TurretModel.cs" />
      <Compile Include="Assets\Scripts\WaveSpawner.cs" />
@@ -92,6 +95,7 @@
      <Compile Include="Assets\Scripts\Plane.cs" />
      <Compile Include="Assets\Scripts\CannonBall.cs" />
      <Compile Include="Assets\Scripts\SmallCannonBall.cs" />
+     <Compile Include="Assets\DifficultyMenu.cs" />
      <Compile Include="Assets\Scripts\Missile.cs" />
      <Compile Include="Assets\Scripts\Explosion.cs" />
      <Compile Include="Assets\Scripts\Interfaces\IDamageble.cs" />
@@ -100,10 +104,6 @@
      <Compile Include="Assets\Scripts\Bubble.cs" />
      <Compile Include="Assets\Scripts\PowerUpsController.cs" />
      <Compile Include="Assets\Scripts\Bullet.cs" />
-     <Compile Include="Assets\MobileShopConfirm.cs" />
-     <Compile Include="Assets\Scalable.cs" />
-     <Compile Include="Assets\DifficultyMenu.cs" />
-     <Compile Include="Assets\CloudManager.cs" />
      <Folder Include="Assets" />
      <Folder Include="Assets\Resources\Sprites\hud" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

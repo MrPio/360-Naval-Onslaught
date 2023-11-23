@@ -372,7 +372,7 @@ public class ContextMenu : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
                 // Update the shop menu
                 GameObject.FindWithTag("shop_menu").GetComponent<ShopMenu>().UpdateUI();
             };
-            if (InputManager.IsMobile)
+            if (!InputManager.IsMobile)//todo
             {
                 mobileShopConfirm.SetActive(true);
                 var script = mobileShopConfirm.GetComponent<MobileShopConfirm>();
