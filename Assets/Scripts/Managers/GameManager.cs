@@ -121,12 +121,19 @@ namespace Managers
         public float WaveFactor => Wave / (float)Data.Waves.Length;
         public List<int> SpecialsCount = new() { 1, 1, 1, 1 };
         private List<int> _specialsBought = new() { 0, 0, 0, 0 };
-        private List<int> _specialsBaseCosts = new() { 1000, 2000, 2500, 3000 };
+
+        private List<int> SpecialsBaseCosts => Difficulty switch
+        {
+            0 => new List<int> { 650, 1000, 1250, 1500 },
+            1 => new List<int> { 800, 1250, 1500, 1750 },
+            _ => new List<int> { 1000, 1500, 1750, 2000 }
+        };
+
         public List<string> SpecialsName = new() { "Air Assault", "Shield", "EMP", "Health" };
         public int SpecialDamage1 => (int)(750 * (1f + 0.1f * Wave));
 
         public int SpecialCost(int index) =>
-            (int)(_specialsBaseCosts[index] * Mathf.Pow(1.06f, _specialsBought[index]));
+            (int)(SpecialsBaseCosts[index] * Mathf.Pow(1.06f, _specialsBought[index]));
 
 
         public void BuySpecial(int index)
