@@ -85,6 +85,7 @@ public class Base : MonoBehaviour, IDamageble
         {
             StartCoroutine(In.Vibrate());
             Game.Health -= damage;
+            GetComponent<Damageable>()?.Damage(damage);
             damageAnimators.ForEach(animator => animator.SetTrigger(DamageHeavy));
             chromaticAberration.SetTrigger(Start1);
             GetComponent<GlitchEffect>().Animate();
@@ -190,7 +191,7 @@ public class Base : MonoBehaviour, IDamageble
         specialsCounter.UpdateUI();
         _lastSpecialUsed = Time.time;
     }
-    
+
     public void Explode(bool reward = true)
     {
         throw new NotImplementedException();

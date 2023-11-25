@@ -1,7 +1,6 @@
-using System;
-using Managers;
 using UnityEngine;
 using UnityEngine.UI;
+
 
 public class HealthBar : MonoBehaviour
 {
@@ -13,10 +12,10 @@ public class HealthBar : MonoBehaviour
 
     private void Start()
     {
-        transform.position = target.position + Vector3.up * offset;
+        if (Mathf.Abs(offset) > 0.001f)
+            transform.position = target.position + Vector3.up * offset;
     }
 
-    
     private void Update()
     {
         if (adjustRotationAndPosition)

@@ -53,6 +53,7 @@ namespace Managers
             { "Materials/ocean_low", "Materials/ocean_high", "Materials/ocean_ultra" };
 
         public int Health;
+        public float Armor = 0.5f;
         public int MaxHealth = 3500;
         private int _healthBaseStep = 175;
         private int _healthBaseCost = 400;

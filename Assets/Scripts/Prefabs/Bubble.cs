@@ -39,6 +39,7 @@ public class Bubble : MonoBehaviour, IDamageble
 
     private void Awake()
     {
+        lifespan /= 1 + Game.Difficulty * 0.15f;
         _powerUp = Random.Range(0f, 1f) < 0.2f ? PowerUp.Satellite : EnumExtensions.RandomItem<PowerUp>();
         _health = (int)(120 * (1f + 4f * Game.WaveFactor));
         _bubbleAnimator = GetComponent<Animator>();
@@ -91,6 +92,7 @@ public class Bubble : MonoBehaviour, IDamageble
         if (_health > 0)
         {
             _health -= damage;
+            GetComponent<Damageable>()?.Damage(damage);
             if (_health <= 0)
                 Explode();
             else

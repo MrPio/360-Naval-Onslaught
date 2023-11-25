@@ -33,6 +33,7 @@ TagManager:
   - pad_container
   - global_volume
   - cloud_manager
+  - damage_text_container
   layers:
   - Default
   - TransparentFX

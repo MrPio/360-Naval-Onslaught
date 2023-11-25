@@ -180,6 +180,7 @@ public class Ship : MonoBehaviour, IDamageble
         if (!Invincible && _health > 0)
         {
             _health -= damage;
+            GetComponent<Damageable>()?.Damage(damage);
             animator.SetTrigger(ShipDamage);
             healthBar.SetValue(_health / (float)_model.Health);
 
