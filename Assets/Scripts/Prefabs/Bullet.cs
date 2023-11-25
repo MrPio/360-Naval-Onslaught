@@ -106,7 +106,7 @@ public class Bullet : MonoBehaviour
         if ((col.gameObject.tag.Contains("ship") && !col.GetComponent<Ship>().Invincible) ||
             col.gameObject.tag.Contains("bubble"))
         {
-            col.GetComponent<IDamageble>().TakeDamage(Game.CurrentTurretModel.Damage);
+            col.GetComponent<IDamageable>().TakeDamage(Game.CurrentTurretModel.Damage,critical:Game.IsTurretCritical);
             ++GameManager.Instance.CurrentWaveTurretHit;
 
             Instantiate(

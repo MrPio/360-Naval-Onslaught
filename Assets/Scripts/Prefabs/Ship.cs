@@ -11,7 +11,7 @@ using TMPro;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class Ship : MonoBehaviour, IDamageble
+public class Ship : MonoBehaviour, IDamageable
 {
     private static GameManager Game => GameManager.Instance;
 
@@ -82,7 +82,7 @@ public class Ship : MonoBehaviour, IDamageble
         if (_model.Name == "SpeedBoat")
         {
             var specialBoat = !Game.IsSpecialWave && !Game.SpecialOccurInWave[Game.Wave] &&
-                              (alwaysSpecial || Random.Range(0f, 1f) < .0675f);
+                              (alwaysSpecial || Random.Range(0f, 1f) < Game.SpecialShipChance);
             GetComponent<ShipPath>().AddPath(
                 Game.IsSpecialWave || specialBoat || Random.Range(0, 2) == 0
                     ? new List<Vector2> { Vector2.zero }
@@ -175,16 +175,18 @@ public class Ship : MonoBehaviour, IDamageble
         newMissile.Damage = _model.Damage;
     }
 
-    public void TakeDamage(int damage, bool EMP = false)
+    public void TakeDamage(int damage, bool critical = false, bool emp = false)
     {
         if (!Invincible && _health > 0)
         {
+            if (critical)
+                damage = (int)(damage * Game.CriticalFactor);
             _health -= damage;
-            GetComponent<Damageable>()?.Damage(damage);
+            GetComponent<Damageable>()?.Damage(damage, critical: critical);
             animator.SetTrigger(ShipDamage);
             healthBar.SetValue(_health / (float)_model.Health);
 
-            if (EMP)
+            if (emp)
             {
                 MainCamera.AudioSource.PlayOneShot(empHitClip, 0.9f);
                 IsFreezed = true;

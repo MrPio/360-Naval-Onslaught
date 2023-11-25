@@ -888,7 +888,12 @@ MonoBehaviour:
   damageText: {fileID: 8065218561341102297, guid: 7cb9ca6d51fb29d48af86f06bd25a8d9, type: 3}
   offset: 0.8
   textSize: 26
-  color: {r: 1, g: 0.8392157, b: 0, a: 1}
+  color: {r: 1, g: 1, b: 1, a: 1}
+  damageClips:
+  - {fileID: 8300000, guid: 115bbcde4ed6131409a7f90dc7ae9176, type: 3}
+  - {fileID: 8300000, guid: 7255f6c78f92b9041abc795a4fbe1152, type: 3}
+  criticalDamageClips:
+  - {fileID: 8300000, guid: fffa667bd7e30c644870bddd878194ee, type: 3}
 --- !u!1 &4078800433943139704
 GameObject:
   m_ObjectHideFlags: 0

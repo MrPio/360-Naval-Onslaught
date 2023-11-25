@@ -8,7 +8,7 @@ using TMPro;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class Base : MonoBehaviour, IDamageble
+public class Base : MonoBehaviour, IDamageable
 {
     private static readonly int DamageHeavy = Animator.StringToHash("damage_heavy");
     private static readonly int Start1 = Animator.StringToHash("start");
@@ -79,7 +79,7 @@ public class Base : MonoBehaviour, IDamageble
         lowHealthHUD.Evaluate(fraction);
     }
 
-    public void TakeDamage(int damage, bool _ = false)
+    public void TakeDamage(int damage, bool _ = false, bool __ = false)
     {
         if (Game.Health > 0 && !_invincible)
         {
@@ -167,7 +167,7 @@ public class Base : MonoBehaviour, IDamageble
                 if (ship.isVisible)
                 {
                     found = true;
-                    ship.TakeDamage(0, true);
+                    ship.TakeDamage(0, emp: true);
                 }
 
             if (!found)

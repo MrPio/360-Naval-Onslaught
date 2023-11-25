@@ -55,13 +55,13 @@ public class CannonBall : MonoBehaviour
             var hit = false;
             // Check collisions
             foreach (var ship in Physics2D
-                         .OverlapCircleAll(currentPos, GameManager.Instance.CurrentCannonModel.Radius / 100f)
+                         .OverlapCircleAll(currentPos, Game.CurrentCannonModel.Radius / 100f)
                          .Where(col => col.CompareTag("ship") || col.CompareTag("bubble") )
                     )
             {
                 hit = true;
-                ++GameManager.Instance.CurrentWaveCannonHit;
-                ship.GetComponent<IDamageble>().TakeDamage(GameManager.Instance.CurrentCannonModel.Damage,hasEMP);
+                ++Game.CurrentWaveCannonHit;
+                ship.GetComponent<IDamageable>().TakeDamage(Game.CurrentCannonModel.Damage,critical:Game.IsCannonCritical,emp:hasEMP);
             }
             
 
@@ -77,6 +77,6 @@ public class CannonBall : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, GameManager.Instance.CurrentCannonModel.Radius / 100f);
+        Gizmos.DrawWireSphere(transform.position, Game.CurrentCannonModel.Radius / 100f);
     }
 }

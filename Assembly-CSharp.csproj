@@ -98,7 +98,7 @@
      <Compile Include="Assets\Scripts\Menus\DifficultyMenu.cs" />
      <Compile Include="Assets\Scripts\Prefabs\Missile.cs" />
      <Compile Include="Assets\Scripts\Prefabs\Explosion.cs" />
-     <Compile Include="Assets\Scripts\Interfaces\IDamageble.cs" />
+     <Compile Include="Assets\Scripts\Interfaces\IDamageable.cs" />
      <Compile Include="Assets\Scripts\Model\WaveModel.cs" />
      <Compile Include="Assets\Scripts\Managers\DataManager.cs" />
      <Compile Include="Assets\Scripts\Prefabs\Bubble.cs" />

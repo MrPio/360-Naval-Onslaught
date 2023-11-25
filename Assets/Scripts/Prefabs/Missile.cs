@@ -39,7 +39,7 @@ public class Missile : MonoBehaviour
                     )
             {
                 hit = true;
-                go.GetComponent<IDamageble>().TakeDamage(Damage);
+                go.GetComponent<IDamageable>().TakeDamage(Damage);
                 Instantiate(explosion).transform.position = transform.position;
             }
 

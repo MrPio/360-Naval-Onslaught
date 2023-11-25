@@ -1,11 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using JetBrains.Annotations;
 using Model;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Managers
 {
-    [System.Serializable]
+    [Serializable]
     public class GameManager
     {
         private static readonly string IOName = "GameManager.json";
@@ -60,16 +62,21 @@ namespace Managers
         private int _repairLevel = 1;
         public int HealthLevel = 1;
         public int Wave = 0;
-        [System.NonSerialized] public int SpecialWave = -1;
+        [NonSerialized] public int SpecialWave = -1;
         public int Ammo, CannonAmmo;
         public int Money = 200;
-        public int CurrentTurret = 0;
+        public int CurrentTurret = 3;
         public int CurrentCannon = 0;
         public int Score;
+        public float SpecialShipChance = 0.05f;
+        public float TurretCriticalChance = 0.05f, CannonCriticalChance = 0.05f;
+        public float CriticalFactor = 2f;
+        public bool IsTurretCritical => new System.Random().Next(0, 1000) < TurretCriticalChance * 1000;
+        public bool IsCannonCritical => new System.Random().Next(0, 1000) < CannonCriticalChance * 1000;
         public float PowerUpDuration => new[] { 30, 25, 20 }[Difficulty];
         public int MissileAssaultCount => new[] { 30, 25, 20 }[Difficulty];
-        [System.NonSerialized] private Bubble.PowerUp? _powerUp;
-        [System.NonSerialized] public bool HasOverride;
+        [NonSerialized] private Bubble.PowerUp? _powerUp;
+        [NonSerialized] public bool HasOverride;
 
         public Bubble.PowerUp? PowerUp
         {
@@ -89,7 +96,7 @@ namespace Managers
             }
         }
 
-        [System.NonSerialized] public float PowerUpStart;
+        [NonSerialized] public float PowerUpStart;
         public float PowerUpProgress => (Time.time - PowerUpStart) / PowerUpDuration;
 
         public int HealthStep => (int)(_healthBaseStep * (1f + 0.25f * HealthLevel));
@@ -131,7 +138,7 @@ namespace Managers
         };
 
         public List<string> SpecialsName = new() { "Air Assault", "Shield", "EMP", "Health" };
-        public int SpecialDamage1 => (int)(750 * (1f + 0.1f * Wave));
+        public int SpecialDamage => (int)(750 * (1f + 0.1f * Wave));
 
         public int SpecialCost(int index) =>
             (int)(SpecialsBaseCosts[index] * Mathf.Pow(1.06f, _specialsBought[index]));

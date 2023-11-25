@@ -61,7 +61,7 @@ namespace Managers
             new(
                 name: "Laser Gun", sprite: "Sprites/my/turret_4", fireClip: "Audio/laser",
                 bulletSprite: "",
-                baseSpeed: 1250, baseRate: 2000, baseDamage: 22, baseAmmo: 140, baseReload: 46,
+                baseSpeed: 1250, baseRate: 1000, baseDamage: 43, baseAmmo: 86, baseReload: 46,
                 speedBaseCost: 420, rateBaseCost: 630, damageBaseCost: 650, ammoBaseCost: 780, reloadBaseCost: 475,
                 waveUnlock: 15
             ),

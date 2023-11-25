@@ -13,7 +13,7 @@ public class Laser : MonoBehaviour
 
     private TurretModel Model => GameManager.Instance.CurrentTurretModel;
     private float _accumulator;
-    private List<IDamageble> _strickenDamagebles = new ();
+    private List<IDamageable> _strickenDamagebles = new();
     private AmmoCounter _ammoCounter;
     [NonSerialized] public Transform Arm = null, Turret = null;
     [NonSerialized] public bool IsFreezed = false;
@@ -25,7 +25,7 @@ public class Laser : MonoBehaviour
 
     private void Update()
     {
-        if(IsFreezed)
+        if (IsFreezed)
             return;
         if (Arm is { })
             transform.SetPositionAndRotation(Arm.position, In.GetInput().ToQuaternion());
@@ -38,8 +38,8 @@ public class Laser : MonoBehaviour
                 var turret = Turret.GetComponent<Turret>();
                 if (!turret.reloadBar.IsReloading && Game.Ammo <= 0)
                     turret.Reload();
-                
             }
+
             Destroy(gameObject);
             return;
         }
@@ -51,18 +51,19 @@ public class Laser : MonoBehaviour
             --Game.Ammo;
             _ammoCounter.UpdateUI();
 
-            foreach (var strickenDamageble in _strickenDamagebles)
-                strickenDamageble.TakeDamage(Model.Damage / 2);
+            foreach (var strickenDamageable in _strickenDamagebles)
+                strickenDamageable.TakeDamage(Model.Damage / 2, critical: Game.IsTurretCritical);
         }
     }
 
     private void OnTriggerEnter2D(Collider2D col)
     {
-        if(IsFreezed)
+        if (IsFreezed)
             return;
-        if ((col.gameObject.tag.Contains("ship") && !col.GetComponent<Ship>().Invincible) || col.gameObject.tag.Contains("bubble"))
+        if ((col.gameObject.tag.Contains("ship") && !col.GetComponent<Ship>().Invincible) ||
+            col.gameObject.tag.Contains("bubble"))
         {
-            var go = col.gameObject.GetComponent<IDamageble>();
+            var go = col.gameObject.GetComponent<IDamageable>();
             if (!_strickenDamagebles.Contains(go))
                 _strickenDamagebles.Add(go);
         }
@@ -70,11 +71,12 @@ public class Laser : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D col)
     {
-        if(IsFreezed)
+        if (IsFreezed)
             return;
-        if ((col.gameObject.tag.Contains("ship") && !col.GetComponent<Ship>().Invincible) || col.gameObject.tag.Contains("bubble"))
+        if ((col.gameObject.tag.Contains("ship") && !col.GetComponent<Ship>().Invincible) ||
+            col.gameObject.tag.Contains("bubble"))
         {
-            var go = col.gameObject.GetComponent<IDamageble>();
+            var go = col.gameObject.GetComponent<IDamageable>();
             if (_strickenDamagebles.Contains(go))
                 _strickenDamagebles.Remove(go);
         }

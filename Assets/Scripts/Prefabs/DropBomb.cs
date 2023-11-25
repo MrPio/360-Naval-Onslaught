@@ -35,7 +35,7 @@ public class DropBomb : MonoBehaviour
         {
             hit = true;
             if (isAlly)
-                mainBase.GetComponent<Ship>().TakeDamage(GameManager.Instance.SpecialDamage1);
+                mainBase.GetComponent<Ship>().TakeDamage(GameManager.Instance.SpecialDamage);
             else
                 mainBase.GetComponent<Base>().TakeDamage(DataManager.Instance.Ships[4].Damage);
         }

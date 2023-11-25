@@ -8,14 +8,15 @@ public class Damageable : MonoBehaviour
     [SerializeField] private GameObject damageText;
     [SerializeField] private float offset = 1, textSize = 36;
     [SerializeField] private Color color = Color.red;
-    [SerializeField] private List<AudioClip> damageClips = new();
+    [SerializeField] private List<AudioClip> damageClips = new(), criticalDamageClips = new();
 
-    public void Damage(int damage)
+    public void Damage(int damage, bool critical = false)
     {
-        SpawnText(damage);
-        MakeSound();
+        SpawnText(damage, critical);
+        MakeSound(critical);
     }
-    private void SpawnText(int damage)
+
+    private void SpawnText(int damage, bool critical)
     {
         Instantiate(
             original: damageText,
@@ -25,16 +26,17 @@ public class Damageable : MonoBehaviour
             go.transform.position = transform.position + Vector3.up * offset;
             go.transform.GetComponentInChildren<TextMeshProUGUI>().Apply(text =>
             {
-                text.color = color;
-                text.fontSize = textSize;
+                text.color = critical ? Color.red : color;
+                text.fontSize = textSize * (critical ? 1.25f : 1f);
                 text.text = "-" + damage.ToString("N0");
             });
         });
     }
 
-    private void MakeSound()
+    private void MakeSound(bool critical)
     {
-        if (damageClips.Count > 0)
-            MainCamera.AudioSource.PlayOneShot(damageClips.RandomItem(),0.8f);
+        var clips = critical ? criticalDamageClips : damageClips;
+        if (clips.Count > 0)
+            MainCamera.AudioSource.PlayOneShot(clips.RandomItem(), 0.65f);
     }
 }

@@ -6,7 +6,7 @@ using Managers;
 using TMPro;
 using UnityEngine;
 
-public class Bubble : MonoBehaviour, IDamageble
+public class Bubble : MonoBehaviour, IDamageable
 {
     private static GameManager Game => GameManager.Instance;
 
@@ -87,12 +87,13 @@ public class Bubble : MonoBehaviour, IDamageble
             transform.parent.GetComponent<Destroyable>().Condition = true;
     }
 
-    public void TakeDamage(int damage, bool _ = false)
-    {
+    public void TakeDamage(int damage,bool critical= false, bool _ = false)    {
         if (_health > 0)
         {
+            if (critical)
+                damage = (int)(damage * Game.CriticalFactor);
             _health -= damage;
-            GetComponent<Damageable>()?.Damage(damage);
+            GetComponent<Damageable>()?.Damage(damage,critical: critical);
             if (_health <= 0)
                 Explode();
             else

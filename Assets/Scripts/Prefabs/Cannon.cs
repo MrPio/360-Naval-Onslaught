@@ -45,7 +45,7 @@ public class Cannon : MonoBehaviour
     {
         // Rotate with mouse movement
         transform.rotation = In.GetInput().ToQuaternion();
-        
+
         _fireAccumulator += Time.deltaTime;
         if (In.GetCannonDown())
         {
@@ -100,14 +100,14 @@ public class Cannon : MonoBehaviour
                 var newDestination = Model.Name == "Rocket Launcher"
                     ? destination + new Vector2(Random.Range(-1.0f, 1.0f), Random.Range(-1.0f, 1.0f))
                     : destination;
-                
+
                 animator.SetTrigger(Fire1);
                 Vector2 spawnPos = spawnPoint.position;
                 var newCannonBall = Instantiate(
                     original: cannonBall,
                     position: spawnPos,
-                    rotation: (newDestination- spawnPos).ToQuaternion()
-                              // * (MainCamera.MainCam.AngleToMouse(startMousePos))
+                    rotation: (newDestination - spawnPos).ToQuaternion()
+                    // * (MainCamera.MainCam.AngleToMouse(startMousePos))
                 );
                 var speedMultiplier = 1f + 2f * (1f - destination.magnitude / _maxDistance);
                 newCannonBall.GetComponent<SpriteRenderer>().sprite = _cannonBallSprite;
