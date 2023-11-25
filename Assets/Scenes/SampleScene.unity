@@ -18361,11 +18361,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4626825609279941552, guid: c66b6c5ed4f3d574badea26cc32b4e7a, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4626825609279941552, guid: c66b6c5ed4f3d574badea26cc32b4e7a, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4626825609425207124, guid: c66b6c5ed4f3d574badea26cc32b4e7a, type: 3}
       propertyPath: mobileShopConfirm
@@ -18386,6 +18386,10 @@ PrefabInstance:
     - target: {fileID: 4626825610346378179, guid: c66b6c5ed4f3d574badea26cc32b4e7a, type: 3}
       propertyPath: m_Name
       value: shop_menu
+      objectReference: {fileID: 0}
+    - target: {fileID: 4626825610346378179, guid: c66b6c5ed4f3d574badea26cc32b4e7a, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4626825610349033766, guid: c66b6c5ed4f3d574badea26cc32b4e7a, type: 3}
       propertyPath: mobileShopConfirm
@@ -19843,7 +19847,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2718786584769255142, guid: efd96a5baab5de34dacdf0714d539cbf, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2718786584769255142, guid: efd96a5baab5de34dacdf0714d539cbf, type: 3}
       propertyPath: m_TagString
@@ -19851,7 +19855,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9057099901264544489, guid: efd96a5baab5de34dacdf0714d539cbf, type: 3}
       propertyPath: isDebug
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9057099901264544489, guid: efd96a5baab5de34dacdf0714d539cbf, type: 3}
       propertyPath: newWave

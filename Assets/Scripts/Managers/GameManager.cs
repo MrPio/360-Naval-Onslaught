@@ -64,7 +64,7 @@ namespace Managers
         public int Wave = 0;
         [NonSerialized] public int SpecialWave = -1;
         public int Ammo, CannonAmmo;
-        public int Money = 20000;
+        public int Money = 200;
         public int CurrentTurret = 0;
         public int CurrentCannon = 0;
         public int Score;
