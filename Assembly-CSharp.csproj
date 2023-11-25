@@ -107,6 +107,7 @@
      <Compile Include="Assets\Scripts\Partials\Stack.cs" />
      <Compile Include="Assets\Scripts\Partials\Damageable.cs" />
      <Compile Include="Assets\Scripts\ExtensionsFunctions\ObjectExtensions.cs" />
+     <Compile Include="Assets\Scripts\Partials\TabMenu.cs" />
      <Folder Include="Assets" />
      <Folder Include="Assets\Resources\Sprites\hud" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

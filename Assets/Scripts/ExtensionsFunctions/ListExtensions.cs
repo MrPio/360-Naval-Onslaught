@@ -1,5 +1,6 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using System;
+using System.Collections.Generic;
+using Random = UnityEngine.Random;
 
 namespace ExtensionsFunctions
 {
@@ -16,6 +17,12 @@ namespace ExtensionsFunctions
                 var randomIndex = Random.Range(0, --n + 1);
                 (list[randomIndex], list[n]) = (list[n], list[randomIndex]);
             }
+        }
+        
+        public static void ForEach<T>(this List<T> list,Action<T,int> action)
+        {
+            for (var i = 0; i < list.Count; i++)
+                action(list[i], i);
         }
     }
 }

@@ -59,18 +59,24 @@ namespace Managers
         public int MaxHealth = 3500;
         private int _healthBaseStep = 175;
         private int _healthBaseCost = 400;
-        private int _repairLevel = 1;
-        public int HealthLevel = 1;
+        public int HealthLevel;
+        private int _repairLevel;
         public int Wave = 0;
         [NonSerialized] public int SpecialWave = -1;
         public int Ammo, CannonAmmo;
-        public int Money = 200;
-        public int CurrentTurret = 3;
+        public int Money = 20000;
+        public int CurrentTurret = 0;
         public int CurrentCannon = 0;
         public int Score;
         public float SpecialShipChance = 0.05f;
-        public float TurretCriticalChance = 0.05f, CannonCriticalChance = 0.05f;
-        public float CriticalFactor = 2f;
+        public float CriticalFactor = 2f, TurretCriticalChance = 0.05f, CannonCriticalChance = 0.05f;
+
+        private int _criticalFactorBaseCost = 325,
+            _turretCriticalChanceBaseCost = 300,
+            _cannonCriticalChanceBaseCost = 300;
+
+        public int CriticalFactorLevel, TurretCriticalChanceLevel, CannonCriticalChanceLevel;
+        public int CriticalMaxLevel = 9;
         public bool IsTurretCritical => new System.Random().Next(0, 1000) < TurretCriticalChance * 1000;
         public bool IsCannonCritical => new System.Random().Next(0, 1000) < CannonCriticalChance * 1000;
         public float PowerUpDuration => new[] { 30, 25, 20 }[Difficulty];
@@ -101,10 +107,33 @@ namespace Managers
 
         public int HealthStep => (int)(_healthBaseStep * (1f + 0.25f * HealthLevel));
 
-        public int HealthCost => (int)(_healthBaseCost * (1f + 0.35f * HealthLevel) *
+        public int HealthCost => (int)(_healthBaseCost * (1f + 0.5f * HealthLevel) *
                                        (Difficulty == 0 ? 0.9f : 1) *
-                                       (Difficulty == 2 ? 1.25f : 1)
-            );
+                                       (Difficulty == 2 ? 1.25f : 1));
+
+        public int CriticalFactorCost => (int)(_criticalFactorBaseCost * (1f + 0.5f * CriticalFactorLevel) *
+                                               (Difficulty == 0 ? 0.9f : 1) *
+                                               (Difficulty == 2 ? 1.25f : 1)) *
+                                         (CriticalFactorLevel >= CriticalMaxLevel ? 0 : 1);
+
+        public float CriticalFactorStep => 0.25f;
+
+        public int TurretCriticalChanceCost =>
+            (int)(_turretCriticalChanceBaseCost * (1f + 1f * TurretCriticalChanceLevel) *
+                  (Difficulty == 0 ? 0.9f : 1) *
+                  (Difficulty == 2 ? 1.25f : 1)) *
+            (TurretCriticalChanceLevel >= CriticalMaxLevel ? 0 : 1);
+
+        public float TurretCriticalChanceStep => 0.015f;
+
+        public int CannonCriticalChanceCost =>
+            (int)(_cannonCriticalChanceBaseCost * (1f + 1f * CannonCriticalChanceLevel) *
+                  (Difficulty == 0 ? 0.9f : 1) *
+                  (Difficulty == 2 ? 1.25f : 1)) *
+            (CannonCriticalChanceLevel >= CriticalMaxLevel ? 0 : 1);
+
+        public float CannonCriticalChanceStep => 0.015f;
+
 
         public int RepairCost => (int)(0.28f * (MaxHealth - Health) * (1f + 0.25f * _repairLevel));
 
@@ -174,5 +203,24 @@ namespace Managers
                 _repairLevel++;
             }
         }
+
+        private void BuyPerk(ref float what, ref int level, int cost, float step)
+        {
+            if (Money < cost || level >= CriticalMaxLevel) return;
+            Money -= cost;
+            what += step;
+            ++level;
+        }
+
+        public void BuyCriticalFactor() =>
+            BuyPerk(ref CriticalFactor, ref CriticalFactorLevel, CriticalFactorCost, CriticalFactorStep);
+
+        public void BuyTurretCriticalChance() =>
+            BuyPerk(ref TurretCriticalChance, ref TurretCriticalChanceLevel, TurretCriticalChanceCost,
+                TurretCriticalChanceStep);
+
+        public void BuyCannonCriticalChance() =>
+            BuyPerk(ref CannonCriticalChance, ref CannonCriticalChanceLevel, CannonCriticalChanceCost,
+                CannonCriticalChanceStep);
     }
 }

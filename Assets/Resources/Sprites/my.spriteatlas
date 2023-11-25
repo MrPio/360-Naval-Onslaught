@@ -80,6 +80,7 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 6ec7e245b1d6576428d23c79f50656c7, type: 3}
   - {fileID: 21300000, guid: 0f3419a6642efe24e90c6bb2152197ba, type: 3}
   - {fileID: 21300000, guid: 969b43c6a5613794e9eb1d8d62cb21f3, type: 3}
+  - {fileID: 21300000, guid: 116267577a651ab4491283a44612fd17, type: 3}
   - {fileID: 21300000, guid: f1ef84183d8044141b6a398e986d7952, type: 3}
   - {fileID: 21300000, guid: ac721378510627847816c7a5644497d7, type: 3}
   - {fileID: 21300000, guid: 65229fd997ea5154ba85e367d7683728, type: 3}
@@ -107,6 +108,7 @@ SpriteAtlas:
   - ship_2
   - turret_5
   - turret_4
+  - turret
   - turret_2
   - ship_4
   - ship_5

@@ -2,7 +2,7 @@ using System;
 using JetBrains.Annotations;
 using UnityEngine;
 
-public class MobileShopConfirm : MonoBehaviour
+public class MobileShopConfirmMenu : MonoBehaviour
 {
     [SerializeField] private GameObject contextContainer;
     [NonSerialized] [CanBeNull] public Action Action;
