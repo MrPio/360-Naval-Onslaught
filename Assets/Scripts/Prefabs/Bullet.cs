@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Linq;
 using ExtensionsFunctions;
@@ -92,12 +93,15 @@ public class Bullet : MonoBehaviour
         rb.velocity = _transform.right * Game.CurrentTurretModel.Speed / 100f;
     }
 
-    private IEnumerator OnBecameInvisible()
+    private void OnBecameInvisible()
     {
-        if (_isDestroying)
-            yield break;
+        if (!_isDestroying)
+            StartCoroutine(WaitAndDestroy());
         _isDestroying = true;
-        yield return new WaitForSeconds(5.0f);
+    }
+    private IEnumerator WaitAndDestroy()
+    {
+        yield return new WaitForSeconds(1.0f);
         Destroy(gameObject);
     }
 
@@ -114,6 +118,7 @@ public class Bullet : MonoBehaviour
                 position: transform.position,
                 rotation: Quaternion.identity
             );
+            _isDestroying = true;
             Destroy(gameObject);
         }
     }

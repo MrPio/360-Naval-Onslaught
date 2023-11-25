@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using ExtensionsFunctions;
@@ -9,8 +10,8 @@ public class TabMenu : MonoBehaviour
 {
     [SerializeField] private Color enabledColor, disabledColor;
     [SerializeField] private List<GameObject> sections;
-    private List<Button> _tabs;
-    private List<TextMeshProUGUI> _tabTexts;
+    private List<Button> _tabs = new();
+    private List<TextMeshProUGUI> _tabTexts = new();
 
     public int CurrentIndex
     {
@@ -29,4 +30,6 @@ public class TabMenu : MonoBehaviour
         _tabs.ForEach((it, i) => it.onClick.AddListener(() => CurrentIndex = i));
         CurrentIndex = 0;
     }
+
+    private void OnEnable() => CurrentIndex = 0;
 }

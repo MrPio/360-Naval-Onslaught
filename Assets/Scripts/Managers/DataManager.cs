@@ -47,28 +47,28 @@ namespace Managers
             new(
                 name: "Gatling Gun", sprite: "Sprites/my/turret_2", fireClip: "Audio/turret_fire_2",
                 bulletSprite: "Sprites/bullet_2",
-                baseSpeed: 600, baseRate: 1200, baseDamage: 14, baseAmmo: 80, baseReload: 58,
+                baseSpeed: 600, baseRate: 1200, baseDamage: 18, baseAmmo: 80, baseReload: 58,
                 speedBaseCost: 200, rateBaseCost: 460, damageBaseCost: 430, ammoBaseCost: 185, reloadBaseCost: 225,
                 waveUnlock: 5
             ),
             new(
                 name: "Missile Launcher", sprite: "Sprites/my/turret_3", fireClip: "Audio/cannon_fire_3",
                 bulletSprite: "Sprites/missile_2",
-                baseSpeed: 220, baseRate: 40, baseDamage: 600, baseAmmo: 2, baseReload: 42,
+                baseSpeed: 220, baseRate: 40, baseDamage: 700, baseAmmo: 2, baseReload: 42,
                 speedBaseCost: 420, rateBaseCost: 630, damageBaseCost: 620, ammoBaseCost: 1500, reloadBaseCost: 475,
                 waveUnlock: 10
             ),
             new(
                 name: "Laser Gun", sprite: "Sprites/my/turret_4", fireClip: "Audio/laser",
                 bulletSprite: "",
-                baseSpeed: 1250, baseRate: 1000, baseDamage: 43, baseAmmo: 86, baseReload: 46,
+                baseSpeed: 1250, baseRate: 1000, baseDamage: 50, baseAmmo: 86, baseReload: 46,
                 speedBaseCost: 420, rateBaseCost: 630, damageBaseCost: 650, ammoBaseCost: 780, reloadBaseCost: 475,
                 waveUnlock: 15
             ),
             new(
                 name: "Auto-Locking Gun", sprite: "Sprites/my/turret_5", fireClip: "Audio/turret_fire_1",
                 bulletSprite: "Sprites/bullet_2",
-                baseSpeed: 395, baseRate: 580, baseDamage: 74, baseAmmo: 38, baseReload: 40,
+                baseSpeed: 395, baseRate: 580, baseDamage: 100, baseAmmo: 38, baseReload: 40,
                 speedBaseCost: 420, rateBaseCost: 530, damageBaseCost: 650, ammoBaseCost: 500, reloadBaseCost: 475,
                 waveUnlock: 20
             ),

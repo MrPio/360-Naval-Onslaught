@@ -63,7 +63,8 @@ namespace Managers
         private int _repairLevel;
         public int Wave = 0;
         [NonSerialized] public int SpecialWave = -1;
-        public int Ammo, CannonAmmo;
+        public int Ammo;
+        [NonSerialized] public int CannonAmmo = 1;
         public int Money = 200;
         public int CurrentTurret = 0;
         public int CurrentCannon = 0;
@@ -73,7 +74,7 @@ namespace Managers
 
         private int _criticalFactorBaseCost = 325,
             _turretCriticalChanceBaseCost = 300,
-            _cannonCriticalChanceBaseCost = 300;
+            _cannonCriticalChanceBaseCost = 200;
 
         public int CriticalFactorLevel, TurretCriticalChanceLevel, CannonCriticalChanceLevel;
         public int CriticalMaxLevel = 9;
