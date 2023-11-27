@@ -26,7 +26,6 @@ TagManager:
   - bonus_menu
   - laser
   - camera_container
-  - bubble
   - restore_health_hud
   - power_up_slider
   - power_ups_controller
@@ -34,6 +33,8 @@ TagManager:
   - global_volume
   - cloud_manager
   - damage_text_container
+  - power_up
+  - bubble
   layers:
   - Default
   - TransparentFX

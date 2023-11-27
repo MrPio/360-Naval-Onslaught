@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using ExtensionsFunctions;
 using Managers;
+using Model;
 using UnityEngine;
 
 public class PowerUpsController : MonoBehaviour
@@ -17,7 +18,7 @@ public class PowerUpsController : MonoBehaviour
         powerUpUI.SetActive(true);
     }
 
-    public void PerformAttack()
+    public void PerformAttack(PowerUpModel powerUp)
     {
         IEnumerator SpawnMissiles()
         {
@@ -25,7 +26,7 @@ public class PowerUpsController : MonoBehaviour
                 Vector3.zero,
                 new Vector2(MainCamera.MainCam.GetWidth(), MainCamera.MainCam.GetHeight()) * 2f
             );
-            for (var i = 0; i < Game.MissileAssaultCount; i++)
+            for (var i = 0; i < powerUp.Amount; i++)
             {
                 if (!Game.HasPowerUp)
                     break;
@@ -52,8 +53,7 @@ public class PowerUpsController : MonoBehaviour
                 missile.StartPosition = new Vector2(0.033f, 17f);
                 missile.Destination = new Vector2(0.033f, 0f);
                 missile.Damage = (int)(200 * (1f + 4f * Game.WaveFactor));
-                yield return new WaitForSeconds(Game.PowerUpDuration / Game.MissileAssaultCount *
-                                                Random.Range(0.75f, 1.15f));
+                yield return new WaitForSeconds(powerUp.Duration / powerUp.Amount * Random.Range(0.75f, 1.15f));
             }
         }
 

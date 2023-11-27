@@ -24,7 +24,7 @@ public class WaveSpawner : MonoBehaviour
     private static readonly int Start1 = Animator.StringToHash("start");
     [SerializeField] private AudioSource audioSource, specialAudioSource;
 
-    [SerializeField] private AudioClip winClip, mainMenuClip;
+    [SerializeField] private AudioClip winClip, mainMenuClip, lastLevelClip;
     [SerializeField] private List<AudioClip> levelsClip, specialLevelsClip;
 
     [SerializeField] private GameObject waveCounter,
@@ -149,11 +149,16 @@ public class WaveSpawner : MonoBehaviour
         var specialWave = Random.Range(0, specialPaths.Count);
         Game.SpecialWave = specialWave;
         Game.SpecialOccurInWave[Game.Wave] = true;
+
+        // Retrieve the special spawn points list
         var path = specialPaths[specialWave];
+
+        // Retrieve the spawn points transforms
         currentSpecialPoints = path.GetComponentsInChildren<Transform>()
             .Where(tr => tr != path)
             .ToList();
 
+        // Move the Camera according to the special wave type (TODO move to SpecialWaveModel class)
         if (specialWave == 1)
             MainCamera.MainCam.GetComponent<MainCamera>().TransitionTo(Vector2.up * 3.5f, 8.5f);
         else if (specialWave == 2)
@@ -178,7 +183,10 @@ public class WaveSpawner : MonoBehaviour
         // Destroy current ships
         foreach (var ship in GameObject.FindGameObjectsWithTag("ship").Select(it => it.GetComponent<Ship>()))
             if (ship.Invincible)
+            {
                 Destroy(ship.gameObject);
+                ++Game.CurrentWave.Destroyed;
+            }
             else
                 ship.TakeDamage(int.MaxValue);
     }
@@ -311,7 +319,7 @@ public class WaveSpawner : MonoBehaviour
 
         audioSource.Stop();
         audioSource.volume = 0.5f;
-        audioSource.clip = levelsClip.RandomItem();
+        audioSource.clip = Game.Wave == Data.Waves.Length - 1 ? lastLevelClip : levelsClip.RandomItem();
         audioSource.Play();
     }
 }

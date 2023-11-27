@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using ExtensionsFunctions;
 using TMPro;
+using Unity.Mathematics;
 using UnityEngine;
 
 public class Damageable : MonoBehaviour
@@ -12,7 +13,7 @@ public class Damageable : MonoBehaviour
 
     public void Damage(int damage, bool critical = false)
     {
-        SpawnText(damage, critical);
+        SpawnText(math.min(damage, 9999), critical);
         MakeSound(critical);
     }
 

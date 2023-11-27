@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Managers;
-using Unity.VisualScripting;
+﻿using Managers;
 
 namespace Model
 {
@@ -24,10 +21,10 @@ namespace Model
         private float _radius;
         private float _damage;
         public int Speed => (int)(_speed * (Game.IsSpecialWave ? 3f : 1f));
-        public int Damage => (int)(_damage * (Game.PowerUp == Bubble.PowerUp.Damage ? 2f : 1f));
+        public int Damage => (int)(_damage * (Game.PowerUp?.Type == PowerUpModel.PowerUp.Damage ? 2f : 1f));
 
         public int Reload =>
-            (int)(_reload * (Game.IsSpecialWave ? 5f : 1f) * (Game.PowerUp == Bubble.PowerUp.Rate ? 2f : 1f));
+            (int)(_reload * (Game.IsSpecialWave ? 5f : 1f) * (Game.PowerUp?.Type == PowerUpModel.PowerUp.Rate ? 2f : 1f));
 
         public int Radius => (int)(_radius * (Game.IsSpecialWave ? 3.25f : 1f));
 

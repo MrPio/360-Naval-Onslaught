@@ -8,7 +8,9 @@ using JetBrains.Annotations;
 using Managers;
 using Model;
 using TMPro;
+using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 public class Ship : MonoBehaviour, IDamageable
@@ -23,7 +25,8 @@ public class Ship : MonoBehaviour, IDamageable
     [SerializeField] private Animator animator, foamAnimator;
     [SerializeField] public SpriteRenderer spriteRenderer;
     [SerializeField] public BoxCollider2D boxCollider;
-    [SerializeField] private GameObject floatingTextBig, missile, empExplosion, empText, militaryPlane, bubble;
+    [SerializeField] private GameObject floatingTextBig, missile, empExplosion, empText, militaryPlane;
+    [SerializeField] private GameObject powerUp;
     [SerializeField] private AudioClip empHitClip;
     private Sprite _missileSprite;
     private List<AudioClip> _fireClip;
@@ -231,7 +234,7 @@ public class Ship : MonoBehaviour, IDamageable
         StartCoroutine(SpawnExplosions());
 
 
-        // Money Reward
+        // Money Reward and power up spawn
         if (reward)
         {
             if (!Game.IsSpecialWave && !isSpecialShip)
@@ -247,18 +250,13 @@ public class Ship : MonoBehaviour, IDamageable
             _scoreCounter.UpdateUI();
             if (isSpecialShip)
                 GameObject.FindWithTag("wave_spawner").GetComponent<WaveSpawner>().BeginSpecialWave();
-            if (!Game.HasPowerUp && Random.Range(0f, 1f) < 0.18f)
-            {
-                var bound = new Bounds(
-                    Vector3.zero,
-                    new Vector2(MainCamera.MainCam.GetWidth(), MainCamera.MainCam.GetHeight()) * 2f
-                );
-                Instantiate(bubble).transform.position = transform.position + new Vector3(
+            
+            if (!Game.HasPowerUp && Game.HasBubbleSpawn)
+                Instantiate(powerUp).transform.position = transform.position + new Vector3(
                     Random.Range(-2f, 2f),
                     Random.Range(-2f, 2f),
                     0
-                ); //bound.GetRandomPointInBounds();
-            }
+                );
         }
 
         IEnumerator ScheduleDestroy()

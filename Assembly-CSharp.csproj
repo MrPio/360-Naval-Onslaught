@@ -66,6 +66,7 @@
      <Compile Include="Assets\Scripts\ExtensionsFunctions\BoolExtensions.cs" />
      <Compile Include="Assets\Scripts\CloudSpawner[Old].cs" />
      <Compile Include="Assets\Scripts\Managers\IOManager.cs" />
+     <Compile Include="Assets\Scripts\ExtensionsFunctions\ObjectExtensions.cs" />
      <Compile Include="Assets\Scripts\Partials\Destroyable.cs" />
      <Compile Include="Assets\Scripts\Partials\Scalable.cs" />
      <Compile Include="Assets\Scripts\Ui\ReloadBar.cs" />
@@ -86,10 +87,13 @@
      <Compile Include="Assets\Scripts\Menus\HowToPlayMenu.cs" />
      <Compile Include="Assets\Scripts\Prefabs\Splash.cs" />
      <Compile Include="Assets\Scripts\Ui\GlitchEffect.cs" />
+     <Compile Include="Assets\Scripts\Partials\Stack.cs" />
      <Compile Include="Assets\Scripts\Prefabs\EmpText.cs" />
      <Compile Include="Assets\Scripts\Model\ShipModel.cs" />
      <Compile Include="Assets\Scripts\Prefabs\ShipPath.cs" />
+     <Compile Include="Assets\Scripts\Partials\Damageable.cs" />
      <Compile Include="Assets\Scripts\Prefabs\DropBomb.cs" />
+     <Compile Include="Assets\Scripts\Partials\TabMenu.cs" />
      <Compile Include="Assets\Scripts\Managers\InputManager.cs" />
      <Compile Include="Assets\Scripts\Menus\BonusMenu.cs" />
      <Compile Include="Assets\Scripts\Prefabs\Plane.cs" />
@@ -104,10 +108,7 @@
      <Compile Include="Assets\Scripts\Prefabs\Bubble.cs" />
      <Compile Include="Assets\Scripts\PowerUpsController.cs" />
      <Compile Include="Assets\Scripts\Prefabs\Bullet.cs" />
-     <Compile Include="Assets\Scripts\Partials\Stack.cs" />
-     <Compile Include="Assets\Scripts\Partials\Damageable.cs" />
-     <Compile Include="Assets\Scripts\ExtensionsFunctions\ObjectExtensions.cs" />
-     <Compile Include="Assets\Scripts\Partials\TabMenu.cs" />
+     <Compile Include="Assets\Scripts\Model\PowerUpModel.cs" />
      <Folder Include="Assets" />
      <Folder Include="Assets\Resources\Sprites\hud" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

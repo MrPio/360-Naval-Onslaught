@@ -70,22 +70,33 @@ namespace Managers
         public int CurrentCannon = 0;
         public int Score;
         public float SpecialShipChance = 0.05f;
-        public float CriticalFactor = 2f, TurretCriticalChance = 0.05f, CannonCriticalChance = 0.05f;
+        [NonSerialized] public bool HasOverride;
 
+        // === CRITICAL HIT =========================================================
         private int _criticalFactorBaseCost = 325,
             _turretCriticalChanceBaseCost = 300,
             _cannonCriticalChanceBaseCost = 200;
 
+        public float CriticalFactor = 2f, TurretCriticalChance = 0.05f, CannonCriticalChance = 0.05f;
         public int CriticalFactorLevel, TurretCriticalChanceLevel, CannonCriticalChanceLevel;
         public int CriticalMaxLevel = 9;
         public bool IsTurretCritical => new System.Random().Next(0, 1000) < TurretCriticalChance * 1000;
-        public bool IsCannonCritical => new System.Random().Next(0, 1000) < CannonCriticalChance * 1000;
-        public float PowerUpDuration => new[] { 30, 25, 20 }[Difficulty];
-        public int MissileAssaultCount => new[] { 30, 25, 20 }[Difficulty];
-        [NonSerialized] private Bubble.PowerUp? _powerUp;
-        [NonSerialized] public bool HasOverride;
 
-        public Bubble.PowerUp? PowerUp
+        public bool IsCannonCritical => new System.Random().Next(0, 1000) < CannonCriticalChance * 1000;
+        // ==========================================================================
+
+
+        // === BUBBLE/POWER-UP ======================================================
+        [NonSerialized] private PowerUpModel? _powerUp;
+        public bool HasBubbleSpawn => new System.Random().Next(0, 100) < 0.1f;
+
+        [NonSerialized] public float PowerUpStart;
+
+        // public float PowerUpDuration => new[] { 30, 25, 20 }[Difficulty];
+        // public int MissileAssaultCount => new[] { 30, 25, 20 }[Difficulty];
+        public float PowerUpProgress => _powerUp is null ? 999f : (Time.time - PowerUpStart) / _powerUp.Duration;
+
+        public PowerUpModel? PowerUp
         {
             get
             {
@@ -95,16 +106,17 @@ namespace Managers
             }
             set
             {
-                if (value is { })
+                if (value is null)
                 {
-                    _powerUp = (Bubble.PowerUp)value;
-                    PowerUpStart = Time.time;
+                    PowerUpStart = 0f;
+                    return;
                 }
+
+                _powerUp = value;
+                PowerUpStart = Time.time;
             }
         }
-
-        [NonSerialized] public float PowerUpStart;
-        public float PowerUpProgress => (Time.time - PowerUpStart) / PowerUpDuration;
+        // ==========================================================================
 
         public int HealthStep => (int)(_healthBaseStep * (1f + 0.25f * HealthLevel));
 

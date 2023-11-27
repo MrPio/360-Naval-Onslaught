@@ -61,7 +61,7 @@ public class Laser : MonoBehaviour
         if (IsFreezed)
             return;
         if ((col.gameObject.tag.Contains("ship") && !col.GetComponent<Ship>().Invincible) ||
-            col.gameObject.tag.Contains("bubble"))
+            col.gameObject.tag.Contains("power_up"))
         {
             var go = col.gameObject.GetComponent<IDamageable>();
             if (!_strickenDamagebles.Contains(go))
@@ -74,7 +74,7 @@ public class Laser : MonoBehaviour
         if (IsFreezed)
             return;
         if ((col.gameObject.tag.Contains("ship") && !col.GetComponent<Ship>().Invincible) ||
-            col.gameObject.tag.Contains("bubble"))
+            col.gameObject.tag.Contains("power_up"))
         {
             var go = col.gameObject.GetComponent<IDamageable>();
             if (_strickenDamagebles.Contains(go))

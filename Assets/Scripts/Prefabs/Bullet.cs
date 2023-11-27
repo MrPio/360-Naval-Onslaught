@@ -108,7 +108,7 @@ public class Bullet : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D col)
     {
         if ((col.gameObject.tag.Contains("ship") && !col.GetComponent<Ship>().Invincible) ||
-            col.gameObject.tag.Contains("bubble"))
+            col.gameObject.tag.Contains("power_up"))
         {
             col.GetComponent<IDamageable>().TakeDamage(Game.CurrentTurretModel.Damage,critical:Game.IsTurretCritical);
             ++GameManager.Instance.CurrentWaveTurretHit;

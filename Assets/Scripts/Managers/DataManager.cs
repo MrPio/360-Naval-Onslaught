@@ -202,5 +202,10 @@ namespace Managers
             new(shipsCount: new[] { 4, 7, 7, 1, 0 }),
             new(shipsCount: new[] { 22, 12, 10, 6, 3 }, spawnSpeedMultiply: 0.9f),
         };
+
+        public readonly PowerUpModel[] PowerUps =
+        {
+
+        };
     }
 }

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4078800432586248037}
   - component: {fileID: 4078800432586248036}
   m_Layer: 0
-  m_Name: speed_bubble
+  m_Name: speed_power_up
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -200,7 +200,7 @@ GameObject:
   - component: {fileID: 4078800433117760578}
   - component: {fileID: 4078800433117760577}
   m_Layer: 0
-  m_Name: damage_bubble
+  m_Name: damage_power_up
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -454,7 +454,7 @@ GameObject:
   - component: {fileID: 4078800433252051349}
   - component: {fileID: 4078800433252051348}
   m_Layer: 0
-  m_Name: bubble_container
+  m_Name: power_up_container
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -545,7 +545,7 @@ GameObject:
   - component: {fileID: 4078800433261998573}
   - component: {fileID: 4078800433261998572}
   m_Layer: 0
-  m_Name: rate_bubble
+  m_Name: rate_power_up
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -634,7 +634,7 @@ GameObject:
   - component: {fileID: 4078800433552775246}
   - component: {fileID: 8730318847806891268}
   m_Layer: 0
-  m_Name: bubble
+  m_Name: power_up
   m_TagString: bubble
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -906,7 +906,7 @@ GameObject:
   - component: {fileID: 4078800433943139973}
   - component: {fileID: 4078800433943139972}
   m_Layer: 0
-  m_Name: bubble_content_container
+  m_Name: power_up_content_container
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -977,7 +977,7 @@ GameObject:
   - component: {fileID: 4078800433955845855}
   - component: {fileID: 4078800433955845854}
   m_Layer: 0
-  m_Name: satellite_bubble
+  m_Name: satellite_power_up
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1061,7 +1061,7 @@ GameObject:
   - component: {fileID: 1364571012155260468}
   - component: {fileID: 8754551696663318716}
   m_Layer: 0
-  m_Name: hearth_bubble
+  m_Name: hearth_power_up
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

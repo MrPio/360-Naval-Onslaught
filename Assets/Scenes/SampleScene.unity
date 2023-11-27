@@ -1309,7 +1309,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 50
+      scalar: 120
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -7897,10 +7897,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5aeb18fe155bb264dbdaf92a868f7205, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  frequency: 3.7
-  cloud: {fileID: 4264005332038465135, guid: 93bdf9525878a2d4d99d4181e2c4fbee, type: 3}
-  _accumulator: 0
-  _nextSpawn: 1
 --- !u!4 &1053942244 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2873596691322146052, guid: 238518afc8e862e4c8ea547d19e33479, type: 3}
@@ -9849,7 +9845,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 50
+      scalar: 120
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -19983,7 +19979,7 @@ PrefabInstance:
       objectReference: {fileID: 799739348}
     - target: {fileID: 9057099901264544489, guid: efd96a5baab5de34dacdf0714d539cbf, type: 3}
       propertyPath: levelsClip.Array.size
-      value: 8
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 9057099901264544489, guid: efd96a5baab5de34dacdf0714d539cbf, type: 3}
       propertyPath: specialPaths.Array.size
@@ -20021,6 +20017,10 @@ PrefabInstance:
       propertyPath: levelsClip.Array.data[7]
       value: 
       objectReference: {fileID: 8300000, guid: a0c00f77dcf8c3743ad8cc179c0d481f, type: 3}
+    - target: {fileID: 9057099901264544489, guid: efd96a5baab5de34dacdf0714d539cbf, type: 3}
+      propertyPath: levelsClip.Array.data[8]
+      value: 
+      objectReference: {fileID: 8300000, guid: ea7b884403e68eb4d89cd631d64c773c, type: 3}
     - target: {fileID: 9057099901264544489, guid: efd96a5baab5de34dacdf0714d539cbf, type: 3}
       propertyPath: specialPaths.Array.data[0]
       value: 

@@ -29,14 +29,14 @@ namespace Model
         private float _reload;
 
         public int Speed => (int)(_speed * (Game.IsSpecialWave ? 1.5f : 1f) *
-                                  (Game.PowerUp == Bubble.PowerUp.Speed ? 2f : 1f));
+                                  (Game.PowerUp?.Type == PowerUpModel.PowerUp.Speed ? 2f : 1f));
 
         public int Rate => (int)(_rate * (Game.IsSpecialWave ? 3.5f : 1f) *
-                                 (Game.PowerUp == Bubble.PowerUp.Rate ? 2f : 1f) *
+                                 (Game.PowerUp?.Type == PowerUpModel.PowerUp.Rate ? 2f : 1f) *
                                  (Game.HasOverride ? 1.5f : 1f));
 
         public int Damage => (int)(_damage * (Game.IsSpecialWave ? 1.5f : 1f) *
-                                   (Game.PowerUp == Bubble.PowerUp.Damage ? 2f : 1f) *
+                                   (Game.PowerUp?.Type == PowerUpModel.PowerUp.Damage ? 2f : 1f) *
                                    (Game.HasOverride ? 0.8f : 1f));
 
         public int Ammo => Game.IsSpecialWave ? 9999 : (int)_ammo;
