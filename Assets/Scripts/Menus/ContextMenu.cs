@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using ExtensionsFunctions;
 using Managers;
 using Model;
 using TMPro;
@@ -45,13 +47,14 @@ public class ContextMenu : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         None,
         UpgradeCriticalFactor,
         UpgradeTurretCriticalChance,
-        UpgradeCannonCriticalChance
+        UpgradeCannonCriticalChance,
+        PowerUp,
     }
 
     [SerializeField] private GameObject contextMenu, lockedContextMenu, mainBase, mobileShopConfirm;
     [SerializeField] private bool followMouse = true;
     [SerializeField] private ContextMenuType type;
-    [SerializeField] private int turretIndex = -1, cannonIndex = -1, specialIndex = 0;
+    [SerializeField] private int turretIndex = -1, cannonIndex = -1, specialIndex = 0, powerUpIndex = -1;
     private Transform _contextMenu;
     private static AudioClip _buy, _noBuy, _weaponSelect, _click, _hover;
 
@@ -76,6 +79,8 @@ public class ContextMenu : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         ContextMenuType.UpgradeCriticalFactor => Game.CriticalFactorCost,
         ContextMenuType.UpgradeTurretCriticalChance => Game.TurretCriticalChanceCost,
         ContextMenuType.UpgradeCannonCriticalChance => Game.CannonCriticalChanceCost,
+        
+        ContextMenuType.PowerUp=>Data.PowerUps[powerUpIndex].Select(it=>it.IsLocked?it.UnlockCost:it.UpgradeCost),
 
         _ => 0
     };
@@ -223,6 +228,41 @@ public class ContextMenu : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
                 _contextMenu.Find("reload_text").GetComponent<TextMeshProUGUI>().text = cannon.Reload.ToString("N0");
             }
         }
+
+        if (contextMenu.name == "power_up_context_menu")
+        {
+            var powerUp = Data.PowerUps[powerUpIndex];
+            if (powerUp.IsLocked)
+            {
+                InstantiateContextMenu(lockedContextMenu);
+                new Dictionary<string, string>
+                    {
+                        ["title"] = $"( {powerUp.Name} )",
+                        ["description"] = powerUp.Description,
+                        ["money_text"] = powerUp.UnlockCost.ToString("N0")
+                    }
+                    .ForEach((k, v) => _contextMenu.Find(k).GetComponent<TextMeshProUGUI>().text = v);
+            }
+            else
+            {
+                InstantiateContextMenu(contextMenu);
+                new Dictionary<string, string>
+                    {
+                        ["title"] = $"( {powerUp.Name} )",
+                        ["description"] = powerUp.Description,
+                        ["money_text"] = powerUp.UpgradeCost.ToString("N0"),
+
+                        ["level_old"] = powerUp.Level.ToString("N0"),
+                        ["strength_old"] = powerUp.Strength.ToString("N2"),
+                        ["duration_old"] = powerUp.Duration.ToString("N1"),
+
+                        ["level_new"] = (powerUp.Level + 1).ToString("N0"),
+                        ["strength_new"] = (powerUp.Strength * (1f + powerUp.StrengthStepFactor)).ToString("N2"),
+                        ["duration_new"] = (powerUp.Duration * (1f + powerUp.DurationStepFactor)).ToString("N1"),
+                    }
+                    .ForEach((k, v) => _contextMenu.Find(k).GetComponent<TextMeshProUGUI>().text = v);
+            }
+        }
     }
 
     public void OnPointerExit(PointerEventData eventData)
@@ -314,7 +354,7 @@ public class ContextMenu : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
             return;
         }
 
-        if (contextMenu.name == "upgrade_context_menu")
+        if (contextMenu.name == "upgrade_context_menu" || contextMenu.name=="power_up_context_menu")
         {
             if (Cost > Game.Money || Cost == 0)
             {
@@ -370,6 +410,9 @@ public class ContextMenu : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
                         break;
                     case ContextMenuType.UpgradeCannonCriticalChance:
                         Game.BuyCannonCriticalChance();
+                        break;
+                    case ContextMenuType.PowerUp:
+                        Data.PowerUps[powerUpIndex].Upgrade();
                         break;
                     default:
                         throw new ArgumentOutOfRangeException();
