@@ -1,30 +1,33 @@
-﻿using Managers;
+﻿using System;
+using Managers;
+using UnityEngine;
 
 namespace Model
 {
+    [Serializable]
     public class CannonModel
     {
         private static GameManager Game => GameManager.Instance;
 
-        public string Name;
-        public string Sprite;
-        public string FireClip, CannonBallSprite;
-        public int WaveUnlock;
+        public readonly string Name;
+        public readonly string Sprite;
+        public readonly string FireClip, CannonBallSprite;
+        public readonly int WaveUnlock;
 
         public int BaseSpeed;
         public int BaseDamage;
         public int BaseReload;
         public int BaseRadius;
 
-        private float _speed;
-        private float _reload;
-        private float _radius;
-        private float _damage;
+        [SerializeField] private float _speed;
+        [SerializeField]private float _reload;
+        [SerializeField]private float _radius;
+        [SerializeField]private float _damage;
         public int Speed => (int)(_speed * (Game.IsSpecialWave ? 3f : 1f));
-        public int Damage => (int)(_damage * (Game.PowerUp?.Type == PowerUpModel.PowerUp.Damage ? 2f : 1f));
+        public int Damage => (int)(_damage * Game.PowerUpFactor(PowerUpModel.PowerUp.Damage));
 
         public int Reload =>
-            (int)(_reload * (Game.IsSpecialWave ? 5f : 1f) * (Game.PowerUp?.Type == PowerUpModel.PowerUp.Rate ? 2f : 1f));
+            (int)(_reload * (Game.IsSpecialWave ? 5f : 1f));
 
         public int Radius => (int)(_radius * (Game.IsSpecialWave ? 3.25f : 1f));
 

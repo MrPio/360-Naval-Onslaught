@@ -1,11 +1,12 @@
-﻿using System.Collections.Generic;
-using JetBrains.Annotations;
+﻿using System;
+using System.Linq;
+using ExtensionsFunctions;
 using Model;
 using UnityEngine;
 
 namespace Managers
 {
-    [System.Serializable]
+    [Serializable]
     public class DataManager
     {
         private static readonly string IOName = "DataManager.json";
@@ -31,12 +32,13 @@ namespace Managers
 
         private DataManager()
         {
+            PowerUps.ToList().RandomItem().IsLocked = false;
         }
 
         public static DataManager Instance => _instance ??= new DataManager();
 
 
-        public readonly TurretModel[] Turrets =
+        public TurretModel[] Turrets =
         {
             new(
                 name: "Base Turret", sprite: "Sprites/my/turret_1", fireClip: "Audio/turret_fire_1",
@@ -74,7 +76,7 @@ namespace Managers
             ),
         };
 
-        public readonly CannonModel[] Cannons =
+        public CannonModel[] Cannons =
         {
             new(
                 name: "Base Cannon", sprite: "Sprites/my/cannon_1", fireClip: "Audio/cannon_fire_2"
@@ -112,7 +114,7 @@ namespace Managers
             ),
         };
 
-        [System.NonSerialized] public readonly ShipModel[] Ships =
+        [NonSerialized] public ShipModel[] Ships =
         {
             new(
                 name: "SpeedBoat", sprite: "Sprites/my/ship_1", foamAnim: "foam_1", fireClip: null,
@@ -168,13 +170,11 @@ namespace Managers
             ),
         };
 
-        public readonly WaveModel[] Waves =
+        public WaveModel[] Waves =
         {
-            // new(shipsChances: new List<float> { 0f, 0.1f, 0.1f, 1f, 1f },shipsCount:71),
-
-            new(shipsCount: new[] { 5, 2, 0, 0, 0 }),
-            new(shipsCount: new[] { 6, 2, 1, 0, 0 }),
-            new(shipsCount: new[] { 8, 2, 2, 0, 0 }),
+            new(shipsCount: new[] { 6, 1, 0, 0, 0 }),
+            new(shipsCount: new[] { 6, 3, 0, 0, 0 }),
+            new(shipsCount: new[] { 9, 2, 1, 0, 0 }),
             new(shipsCount: new[] { 14, 0, 0, 0, 0 }, spawnSpeedMultiply: 1.65f),
             new(shipsCount: new[] { 7, 5, 3, 0, 0 }, spawnSpeedMultiply: 0.85f),
 
@@ -203,9 +203,82 @@ namespace Managers
             new(shipsCount: new[] { 22, 12, 10, 6, 3 }, spawnSpeedMultiply: 0.9f),
         };
 
-        public readonly PowerUpModel[] PowerUps =
+        public PowerUpModel[] PowerUps =
         {
-
+            new(
+                type: PowerUpModel.PowerUp.Speed,
+                description: "Increases the turret bullets speed",
+                sprite: "Sprites/power_up/speed_2",
+                upgradeBaseCost: 200,
+                unlockCost: 100,
+                // isLocked: false,
+                isMultiplier: true
+            ),
+            new(
+                type: PowerUpModel.PowerUp.Rate,
+                description: "Increases the turret fire rate",
+                sprite: "Sprites/power_up/rate_2",
+                upgradeBaseCost: 350,
+                unlockCost: 450,
+                // isLocked: false,
+                isMultiplier: true
+            ),
+            new(
+                type: PowerUpModel.PowerUp.Damage,
+                description: "Increases the turret and cannon damage",
+                sprite: "Sprites/power_up/damage",
+                upgradeBaseCost: 400,
+                unlockCost: 550,
+                // isLocked: false,
+                isMultiplier: true
+            ),
+            new(
+                type: PowerUpModel.PowerUp.Reload,
+                description: "Increases the turret and cannon reload speed",
+                sprite: "Sprites/power_up/reload",
+                upgradeBaseCost: 350,
+                unlockCost: 350,
+                // isLocked: false,
+                isMultiplier: true
+            ),
+            new(
+                type: PowerUpModel.PowerUp.Satellite,
+                description: "Requests a powerful missile support from satellite",
+                sprite: "Sprites/power_up/satellite",
+                upgradeBaseCost: 500,
+                // isLocked: false,
+                baseStrength: 1f,
+                unlockCost: 500
+            ),
+            new(
+                type: PowerUpModel.PowerUp.Critical,
+                description: "Increases the turret and cannon critical damage chance",
+                sprite: "Sprites/power_up/critical",
+                upgradeBaseCost: 350,
+                unlockCost: 425,
+                // isLocked: false,
+                baseStrength: 4f,
+                isMultiplier: true
+            ),
+            new(
+                type: PowerUpModel.PowerUp.Health,
+                description: "Refills a part of the health bar",
+                sprite: "Sprites/power_up/health",
+                upgradeBaseCost: 550,
+                unlockCost: 450,
+                // isLocked: false,
+                baseStrength: 1f
+            ),
+            new(
+                type: PowerUpModel.PowerUp.Money,
+                description: "Increases the gains",
+                sprite: "Sprites/power_up/money",
+                upgradeBaseCost: 550,
+                unlockCost: 325,
+                // isLocked: false,
+                baseStrength: 2f,
+                isMultiplier: true
+            ),
         };
     }
 }

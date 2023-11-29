@@ -1,22 +1,23 @@
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using ExtensionsFunctions;
 using Interfaces;
 using Managers;
 using Model;
 using TMPro;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
-public class Bubble : MonoBehaviour, IDamageable
+public class PowerUp : MonoBehaviour, IDamageable
 {
     private static GameManager Game => GameManager.Instance;
 
     private PowerUpModel _model;
     private Animator _bubbleAnimator;
     [SerializeField] private Animator containerAnimator, smallBubblesAnimator;
-    [SerializeField] private float lifespan = 7;
     [SerializeField] private List<GameObject> powerUps;
-    [SerializeField] private GameObject text2X, floatingTextBig;
+    [SerializeField] private GameObject floatingTextBig;
+    [SerializeField] private TextMeshProUGUI text2X;
+    [SerializeField] private Canvas canvas;
     [SerializeField] private AudioClip spawnAudioClip;
     private float _health;
     private MoneyCounter _moneyCounter, _scoreCounter;
@@ -31,9 +32,15 @@ public class Bubble : MonoBehaviour, IDamageable
 
     private void Awake()
     {
-        // lifespan /= 1 + Game.Difficulty * 0.15f; TODO
-        // _powerUp = Random.Range(0f, 1f) < 0.2f ? PowerUp.Satellite : EnumExtensions.RandomItem<PowerUp>();
-        // _health = (int)(120 * (1f + 4f * Game.WaveFactor));
+        _model = Game.DrawPowerUp();
+        if (_model is null)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        _health = _model.Health;
+        canvas.worldCamera = MainCamera.MainCam;
         _bubbleAnimator = GetComponent<Animator>();
         _parent = transform.parent;
         _parent.GetComponent<Destroyable>().Condition = false;
@@ -45,7 +52,8 @@ public class Bubble : MonoBehaviour, IDamageable
 
         // Enable the correct powerUp and 2X accordingly
         powerUps.ForEach(it => it.SetActive(it.name.ToLower().Contains(_model.Name)));
-        text2X.SetActive(_model.HasMultiplier);
+        text2X.text = Math.Round(_model.Strength, 2) + "x";
+        text2X.gameObject.SetActive(_model.IsMultiplier);
     }
 
     private void Start()
@@ -61,7 +69,7 @@ public class Bubble : MonoBehaviour, IDamageable
             _acc += Time.deltaTime;
 
         // Fading animation
-        if (_acc > lifespan / 2)
+        if (_acc > _model.Lifespan / 2)
         {
             if (!_idling)
                 containerAnimator.SetTrigger(Animator.StringToHash("fade"));
@@ -70,12 +78,12 @@ public class Bubble : MonoBehaviour, IDamageable
             // Increase fade speed with time
             containerAnimator.SetFloat(
                 Animator.StringToHash("fade_speed"),
-                1f + 2f * ((_acc - lifespan / 2f) / (lifespan / 2f)) // [1f, 3f]
+                1f + 2f * ((_acc - _model.Lifespan / 2f) / (_model.Lifespan / 2f)) // [1f, 3f]
             );
         }
 
         // Not picked up in time
-        if (_acc >= lifespan)
+        if (_acc >= _model.Lifespan)
             transform.parent.GetComponent<Destroyable>().Condition = true;
     }
 
@@ -105,14 +113,19 @@ public class Bubble : MonoBehaviour, IDamageable
         if (reward)
         {
             _audioSource.Play();
+            // Instantaneous PowerUp
             if (_model.Type == PowerUpModel.PowerUp.Health)
             {
                 _audioSource.PlayOneShot(Resources.Load(HealthRestoreAudioClip) as AudioClip);
-                Game.Health = Mathf.Min(Game.MaxHealth, Game.Health + Game.MaxHealth / 3);
+                Game.Health = Mathf.Min(
+                    Game.MaxHealth,
+                    Game.Health + (int)(Game.MaxHealth * _model.Strength / 4f)
+                );
                 GameObject.FindWithTag("base").GetComponent<Base>().UpdateUI();
                 GameObject.FindWithTag("restore_health_hud").GetComponent<Animator>()
                     .SetTrigger(Animator.StringToHash("start"));
             }
+            // Durable PowerUp
             else if (!Game.HasPowerUp)
             {
                 Game.PowerUp = _model;
@@ -120,6 +133,7 @@ public class Bubble : MonoBehaviour, IDamageable
                     _powerUpsController.PerformAttack(_model);
                 _powerUpsController.ShowRadialSlider();
             }
+            // Money reward if already using a durable PowerUp
             else
             {
                 var money = (int)Random.Range(20, 200 + 400 * Game.WaveFactor);

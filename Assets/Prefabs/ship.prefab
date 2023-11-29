@@ -545,7 +545,7 @@ MonoBehaviour:
   empExplosion: {fileID: 7233679452023427196, guid: d80d11c4399dfdb4bb17f566901fe769, type: 3}
   empText: {fileID: 5654853334238969557}
   militaryPlane: {fileID: 2033064765144681969, guid: 7768dc4772d081b43a23497bcff66010, type: 3}
-  powerUp: {fileID: 4078800433252051336, guid: a68f6fa5e79a40e439193e4c5334a608, type: 3}
+  powerUp: {fileID: 9168673604649244767, guid: a68f6fa5e79a40e439193e4c5334a608, type: 3}
   empHitClip: {fileID: 8300000, guid: 1fac2c0e6528aca41b3366d96947052f, type: 3}
   audioSource: {fileID: -1933154318848190664}
   specialAudioClip: {fileID: 8300000, guid: 806c7d4948d2ee349a4fc25f3a16560a, type: 3}

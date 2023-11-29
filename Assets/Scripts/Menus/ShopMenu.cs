@@ -1,5 +1,5 @@
 using System;
-using System.Collections.Generic;
+using System.Linq;
 using ExtensionsFunctions;
 using Managers;
 using TMPro;
@@ -20,11 +20,14 @@ public class ShopMenu : MonoBehaviour
         cannonCriticalChanceText,
         criticalFactorLevelText,
         turretCriticalChanceLevelText,
-        cannonCriticalChanceLevelText;
+        cannonCriticalChanceLevelText,
+        powerUpSpawnChance,
+        powerUpSpawnChanceLevel;
 
+    [SerializeField] private TextMeshProUGUI[] powerUpLevels, powerUpStrengths, powerUpDurations;
     [SerializeField] private Slider healthSlider;
-    [SerializeField] private Image[] cannonSlots, turretSlots;
-    [SerializeField] private GameObject[] cannonsLocks, turretsLocks;
+    [SerializeField] private Image[] cannonSlots, turretSlots, powerUpSlots;
+    [SerializeField] private GameObject[] cannonsLocks, turretsLocks, powerUpLocks;
     [SerializeField] private Sprite slotOn, slotOff;
 
     private void OnEnable()
@@ -37,7 +40,7 @@ public class ShopMenu : MonoBehaviour
         // Header
         moneyText.text = Game.Money.ToString("N0");
         waveText.text = (Game.Wave).ToString();
-        
+
         // Artillery tab
         healthSlider.maxValue = Game.MaxHealth;
         healthSlider.value = Game.Health;
@@ -50,7 +53,7 @@ public class ShopMenu : MonoBehaviour
             cannonSlots[i].sprite = Game.CurrentCannon == i ? slotOn : slotOff;
         for (var i = 0; i < turretSlots.Length; i++)
             turretSlots[i].sprite = Game.CurrentTurret == i ? slotOn : slotOff;
-        
+
         // CriticalHit tab
         criticalFactorText.text = $"+{(int)((Game.CriticalFactor - 1f) * 100f)}%";
         turretCriticalChanceText.text = $"{Math.Round(Game.TurretCriticalChance * 100f, 1)}%";
@@ -60,14 +63,18 @@ public class ShopMenu : MonoBehaviour
         cannonCriticalChanceLevelText.text = $"{Game.CannonCriticalChanceLevel + 1}";
 
         // PowerUp tab
+        powerUpSpawnChance.text = $"{Math.Round(Game.PowerUpSpawnChance * 100f, 1)}%";
+        powerUpSpawnChanceLevel.text = $"{Game.PowerUpSpawnChanceLevel + 1}";
         foreach (var powerUp in Data.PowerUps)
         {
-            transform.Find(powerUp.Name + "_level").GetComponent<TextMeshProUGUI>().text =
-                "lv. " + (powerUp.Level + 1);
-            transform.Find(powerUp.Name + "_strength").GetComponent<TextMeshProUGUI>().text =
-                (powerUp.Strength).ToString("N2") + "x";
-            transform.Find(powerUp.Name + "_duration").GetComponent<TextMeshProUGUI>().text =
-                (powerUp.Duration + 1).ToString("N1") + "s";
+            powerUpLevels[powerUp.Index].text =  powerUp.IsLocked?"-":"lv. " + (powerUp.Level + 1);
+            powerUpStrengths[powerUp.Index].text =  powerUp.IsLocked?"-":powerUp.Strength.ToString("N2") + "x";
+            powerUpDurations[powerUp.Index].text = powerUp.IsLocked ? "-" :powerUp.Duration.ToString("N0") + "s";
         }
+
+        for (var i = 0; i < powerUpSlots.Length; i++)
+            powerUpSlots[i].color = Color.white.WithAlpha(Data.PowerUps[i].IsLocked ? 0.5f : 1f);
+        for (var i = 0; i < powerUpLocks.Length; i++)
+            powerUpLocks[i].SetActive(Data.PowerUps[i].IsLocked);
     }
 }

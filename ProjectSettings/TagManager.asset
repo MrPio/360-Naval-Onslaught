@@ -34,7 +34,6 @@ TagManager:
   - cloud_manager
   - damage_text_container
   - power_up
-  - bubble
   layers:
   - Default
   - TransparentFX

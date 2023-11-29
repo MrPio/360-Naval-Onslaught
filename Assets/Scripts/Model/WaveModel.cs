@@ -6,6 +6,7 @@ using Managers;
 
 namespace Model
 {
+    [Serializable]
     public class WaveModel
     {
         private static GameManager Game => GameManager.Instance;
@@ -30,7 +31,7 @@ namespace Model
             _spawnSequence.Shuffle();
 
             // Strong fog
-            if (new Random().Next(0, 100) < 25)
+            if (new Random().Next(0, 100) < 33)
             {
                 startFog = new Random().Next(0, _spawnSequence.Count - 4);
                 endFog = new Random().Next(startFog + 4, _spawnSequence.Count);

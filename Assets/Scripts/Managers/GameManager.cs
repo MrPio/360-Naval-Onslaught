@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using ExtensionsFunctions;
 using JetBrains.Annotations;
 using Model;
+using Unity.VisualScripting;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -57,15 +60,15 @@ namespace Managers
         public int Health;
         public float Armor = 0.5f;
         public int MaxHealth = 3500;
-        private int _healthBaseStep = 175;
-        private int _healthBaseCost = 400;
+        private readonly int _healthBaseStep = 175;
+        private readonly int _healthBaseCost = 400;
         public int HealthLevel;
-        private int _repairLevel;
+        [SerializeField] private int _repairLevel;
         public int Wave = 0;
         [NonSerialized] public int SpecialWave = -1;
         public int Ammo;
         [NonSerialized] public int CannonAmmo = 1;
-        public int Money = 200;
+        public int Money = 20000;
         public int CurrentTurret = 0;
         public int CurrentCannon = 0;
         public int Score;
@@ -73,27 +76,92 @@ namespace Managers
         [NonSerialized] public bool HasOverride;
 
         // === CRITICAL HIT =========================================================
-        private int _criticalFactorBaseCost = 325,
+        private readonly int _criticalFactorBaseCost = 325,
             _turretCriticalChanceBaseCost = 300,
             _cannonCriticalChanceBaseCost = 200;
 
-        public float CriticalFactor = 2f, TurretCriticalChance = 0.05f, CannonCriticalChance = 0.05f;
+        public float CriticalFactor => 2f + Enumerable.Range(0, CriticalFactorLevel).Sum(CriticalFactorStep);
+        public float TurretCriticalChance => 0.05f + TurretCriticalChanceStep * TurretCriticalChanceLevel;
+        public float CannonCriticalChance => 0.05f + CannonCriticalChanceStep * CannonCriticalChanceLevel;
+
         public int CriticalFactorLevel, TurretCriticalChanceLevel, CannonCriticalChanceLevel;
         public int CriticalMaxLevel = 9;
-        public bool IsTurretCritical => new System.Random().Next(0, 1000) < TurretCriticalChance * 1000;
 
-        public bool IsCannonCritical => new System.Random().Next(0, 1000) < CannonCriticalChance * 1000;
+        public bool IsTurretCritical => new System.Random().Next(0, 1000) <
+                                        TurretCriticalChance * 1000 * PowerUpFactor(PowerUpModel.PowerUp.Critical);
+
+        public bool IsCannonCritical => new System.Random().Next(0, 1000) <
+                                        CannonCriticalChance * 1000 * PowerUpFactor(PowerUpModel.PowerUp.Critical);
+
+        public float CriticalFactorStep(int level = -1) => 0.25f + .15f * (level < 0 ? CriticalFactorLevel : level);
+        public float TurretCriticalChanceStep => 0.015f;
+        public float CannonCriticalChanceStep => 0.015f;
+
+        public int CriticalFactorCost => (int)(_criticalFactorBaseCost * (1f + 0.75f * CriticalFactorLevel) *
+                                               (Difficulty == 0 ? 0.9f : 1) *
+                                               (Difficulty == 2 ? 1.25f : 1)) *
+                                         (CriticalFactorLevel >= CriticalMaxLevel ? 0 : 1);
+
+        public int TurretCriticalChanceCost =>
+            (int)(_turretCriticalChanceBaseCost * (1f * (1 + CannonCriticalChanceLevel)) *
+                  (Difficulty == 0 ? 0.9f : 1) *
+                  (Difficulty == 2 ? 1.25f : 1)) *
+            (TurretCriticalChanceLevel >= CriticalMaxLevel ? 0 : 1);
+
+        public int CannonCriticalChanceCost =>
+            (int)(_cannonCriticalChanceBaseCost * (1f * (1 + CannonCriticalChanceLevel)) *
+                  (Difficulty == 0 ? 0.9f : 1) *
+                  (Difficulty == 2 ? 1.25f : 1)) *
+            (CannonCriticalChanceLevel >= CriticalMaxLevel ? 0 : 1);
+
+
+        private void BuyCritical(ref int level, int cost)
+        {
+            if (Money < cost || level >= CriticalMaxLevel) return;
+            Money -= cost;
+            ++level;
+        }
+
+        public void BuyCriticalFactor() =>
+            BuyCritical(ref CriticalFactorLevel, CriticalFactorCost);
+
+        public void BuyTurretCriticalChance() =>
+            BuyCritical(ref TurretCriticalChanceLevel, TurretCriticalChanceCost);
+
+        public void BuyCannonCriticalChance() =>
+            BuyCritical(ref CannonCriticalChanceLevel, CannonCriticalChanceCost);
         // ==========================================================================
 
 
-        // === BUBBLE/POWER-UP ======================================================
+        // === POWER-UP ======================================================
         [NonSerialized] private PowerUpModel? _powerUp;
-        public bool HasBubbleSpawn => new System.Random().Next(0, 100) < 0.1f;
+
+        [CanBeNull]
+        public PowerUpModel DrawPowerUp() => Data.PowerUps.Where(it => !it.IsLocked).ToList()
+            .Select(it => it.Count > 0 ? it.RandomItem() : null);
+
+        public float PowerUpSpawnChance => 0.125f + PowerUpSpawnChanceStep * PowerUpSpawnChanceLevel;
+        private readonly int _powerUpSpawnChanceBaseCost = 350;
+
+        public bool HasPowerUpSpawn => new System.Random().Next(0, 1000) < PowerUpSpawnChance * 1000;
+        public int PowerUpSpawnChanceLevel, PowerUpSpawnChanceMaxLevel = 9;
+
+        public int PowerUpSpawnChanceCost =>
+            (int)(_powerUpSpawnChanceBaseCost * (1f + 0.5f * PowerUpSpawnChanceLevel) *
+                  (Difficulty == 0 ? 0.9f : 1) *
+                  (Difficulty == 2 ? 1.15f : 1)) *
+            (PowerUpSpawnChanceLevel >= PowerUpSpawnChanceMaxLevel ? 0 : 1);
+
+        public float PowerUpSpawnChanceStep => 0.025f;
+
+        public void BuyPowerUpSpawnChance()
+        {
+            if (Money < PowerUpSpawnChanceCost || PowerUpSpawnChanceLevel >= PowerUpSpawnChanceMaxLevel) return;
+            Money -= PowerUpSpawnChanceCost;
+            ++PowerUpSpawnChanceLevel;
+        }
 
         [NonSerialized] public float PowerUpStart;
-
-        // public float PowerUpDuration => new[] { 30, 25, 20 }[Difficulty];
-        // public int MissileAssaultCount => new[] { 30, 25, 20 }[Difficulty];
         public float PowerUpProgress => _powerUp is null ? 999f : (Time.time - PowerUpStart) / _powerUp.Duration;
 
         public PowerUpModel? PowerUp
@@ -116,6 +184,10 @@ namespace Managers
                 PowerUpStart = Time.time;
             }
         }
+
+        public float PowerUpFactor(PowerUpModel.PowerUp type) =>
+            PowerUp?.Type == type ? PowerUp.Strength : 1f;
+
         // ==========================================================================
 
         public int HealthStep => (int)(_healthBaseStep * (1f + 0.25f * HealthLevel));
@@ -123,30 +195,6 @@ namespace Managers
         public int HealthCost => (int)(_healthBaseCost * (1f + 0.5f * HealthLevel) *
                                        (Difficulty == 0 ? 0.9f : 1) *
                                        (Difficulty == 2 ? 1.25f : 1));
-
-        public int CriticalFactorCost => (int)(_criticalFactorBaseCost * (1f + 0.5f * CriticalFactorLevel) *
-                                               (Difficulty == 0 ? 0.9f : 1) *
-                                               (Difficulty == 2 ? 1.25f : 1)) *
-                                         (CriticalFactorLevel >= CriticalMaxLevel ? 0 : 1);
-
-        public float CriticalFactorStep => 0.25f;
-
-        public int TurretCriticalChanceCost =>
-            (int)(_turretCriticalChanceBaseCost * (1f + 1f * TurretCriticalChanceLevel) *
-                  (Difficulty == 0 ? 0.9f : 1) *
-                  (Difficulty == 2 ? 1.25f : 1)) *
-            (TurretCriticalChanceLevel >= CriticalMaxLevel ? 0 : 1);
-
-        public float TurretCriticalChanceStep => 0.015f;
-
-        public int CannonCriticalChanceCost =>
-            (int)(_cannonCriticalChanceBaseCost * (1f + 1f * CannonCriticalChanceLevel) *
-                  (Difficulty == 0 ? 0.9f : 1) *
-                  (Difficulty == 2 ? 1.25f : 1)) *
-            (CannonCriticalChanceLevel >= CriticalMaxLevel ? 0 : 1);
-
-        public float CannonCriticalChanceStep => 0.015f;
-
 
         public int RepairCost => (int)(0.28f * (MaxHealth - Health) * (1f + 0.25f * _repairLevel));
 
@@ -161,7 +209,7 @@ namespace Managers
         public bool HasCannonAccuracyBonus => CurrentWaveCannonAccuracy >= 0.75;
         public bool HasAccuracyBonus => HasTurretAccuracyBonus && HasCannonAccuracyBonus;
         public bool IsSpecialWave => SpecialWave >= 0;
-        public bool[] SpecialOccurInWave = new bool[999];
+        public bool[] SpecialOccurInWave = new bool[99];
         public bool HasPowerUp => PowerUp is { };
 
 
@@ -170,7 +218,7 @@ namespace Managers
         public WaveModel CurrentWave => Data.Waves[Wave];
         public float WaveFactor => Wave / (float)Data.Waves.Length;
         public List<int> SpecialsCount = new() { 1, 1, 1, 1 };
-        private List<int> _specialsBought = new() { 0, 0, 0, 0 };
+        [SerializeField] private List<int> _specialsBought = new() { 0, 0, 0, 0 };
 
         private List<int> SpecialsBaseCosts => Difficulty switch
         {
@@ -216,24 +264,5 @@ namespace Managers
                 _repairLevel++;
             }
         }
-
-        private void BuyPerk(ref float what, ref int level, int cost, float step)
-        {
-            if (Money < cost || level >= CriticalMaxLevel) return;
-            Money -= cost;
-            what += step;
-            ++level;
-        }
-
-        public void BuyCriticalFactor() =>
-            BuyPerk(ref CriticalFactor, ref CriticalFactorLevel, CriticalFactorCost, CriticalFactorStep);
-
-        public void BuyTurretCriticalChance() =>
-            BuyPerk(ref TurretCriticalChance, ref TurretCriticalChanceLevel, TurretCriticalChanceCost,
-                TurretCriticalChanceStep);
-
-        public void BuyCannonCriticalChance() =>
-            BuyPerk(ref CannonCriticalChance, ref CannonCriticalChanceLevel, CannonCriticalChanceCost,
-                CannonCriticalChanceStep);
     }
 }

@@ -1,68 +1,77 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Managers;
 
 namespace Model
 {
+    [Serializable]
     public class PowerUpModel
     {
-        public enum PowerUp
-        {
-            Satellite,
-            Damage,
-            Rate,
-            Speed,
-            Health
-        }
-
         private static GameManager Game => GameManager.Instance;
         private static DataManager Data => DataManager.Instance;
 
-        private readonly float _duration;
-        private readonly int _amount, _upgradeBaseCost;
-        public float _strength = 1f;
+        public enum PowerUp
+        {
+            Speed,
+            Rate,
+            Damage,
+            Reload,
+            Satellite,
+            Critical,
+            Health,
+            Money
+        }
+
+
+        private readonly int _upgradeBaseCost;
+        public readonly float BaseDuration;
+        public readonly float BaseStrength;
 
         public readonly PowerUp Type;
         public readonly string Description;
         public readonly string Sprite;
-        public readonly float Multiplier;
+        public readonly bool IsMultiplier;
         public readonly int UnlockCost;
         public int Level;
-        public bool IsLocked = true;
-
+        public bool IsLocked;
         public int Health => (int)(120 * (1f + 4f * Game.WaveFactor));
 
-        public float StrengthStepFactor = 0.25f,AmountStepFactor=1.15f,DurationStepFactor=1.15f;
+        public float StrengthStepFactor = 0.25f, DurationStepFactor = 0.15f;
+
         public float Lifespan => 7f *
                                  (Game.Difficulty == 0 ? 1.15f : 1) *
                                  (Game.Difficulty == 2 ? 0.87f : 1);
 
-        public float Duration => _duration * (1f + Level * DurationStepFactor) *
+        public float Duration => BaseDuration * (1f + Level * DurationStepFactor) *
                                  (Game.Difficulty == 0 ? 1.2f : 1) *
                                  (Game.Difficulty == 2 ? 0.83f : 1);
 
-        public int Amount => (int)(_amount * (1f + Level * AmountStepFactor) *
-                                   (Game.Difficulty == 0 ? 1.2f : 1) *
-                                   (Game.Difficulty == 2 ? 0.83f : 1));
-
-        public int Strength => (int)(_strength * (1f + Level * StrengthStepFactor));
+        public float Strength => BaseStrength * (1f + Level * StrengthStepFactor);
 
         public int Index => Data.PowerUps.ToList().IndexOf(this);
         public string Name => Type.ToString().ToLower();
         public int UpgradeCost => (int)(_upgradeBaseCost * (1f + 0.425f * Level));
-        public bool HasMultiplier => Multiplier >= 0;
 
-        public PowerUpModel(PowerUp type, string description, string sprite, float duration, int upgradeBaseCost,
-            int unlockCost, int amount = 0,
-            float multiplier = -1f)
+        public PowerUpModel(PowerUp type, string description, string sprite, int upgradeBaseCost,
+            int unlockCost, float baseBaseDuration = 20f, float baseStrength = 1.5f, bool isMultiplier = false,
+            bool isLocked = true)
         {
             Type = type;
             Description = description;
             Sprite = sprite;
-            _duration = duration;
+            BaseDuration = baseBaseDuration;
+            BaseStrength = baseStrength;
             _upgradeBaseCost = upgradeBaseCost;
             UnlockCost = unlockCost;
-            _amount = amount;
-            Multiplier = multiplier;
+            IsMultiplier = isMultiplier;
+            IsLocked = isLocked;
+        }
+
+        public void Unlock()
+        {
+            if (Game.Money < UnlockCost || !IsLocked) return;
+            Game.Money -= UnlockCost;
+            IsLocked = false;
         }
 
         public void Upgrade()

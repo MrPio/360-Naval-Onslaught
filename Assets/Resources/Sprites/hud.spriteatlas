@@ -66,6 +66,7 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 986dae5145e417c46a9becd97a8b8d89, type: 3}
   - {fileID: 21300000, guid: 16ad0081f771e9946ac21fb137fea683, type: 3}
   - {fileID: 21300000, guid: 726de5a17f52b78468cc45dbfa0cbc46, type: 3}
+  - {fileID: 21300000, guid: 34287572acf002643b01a57d3cc5e339, type: 3}
   - {fileID: 21300000, guid: 5684e0b2f56ff7349a419fe822d1c309, type: 3}
   - {fileID: 21300000, guid: ff6605b29e88ba941b0aadd656f44bbf, type: 3}
   - {fileID: 21300000, guid: 0a59c3c206b82d64086a4e6c28533532, type: 3}
@@ -77,6 +78,7 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 4d1bc7c3d2fa6db46a44f9582144038b, type: 3}
   - {fileID: 21300000, guid: b0d78af44cbe0b7499d161c39dcdf160, type: 3}
   - {fileID: 21300000, guid: 8ea94c25f50a0d1449e4dea11e78fcd5, type: 3}
+  - {fileID: 21300000, guid: 4c117cf51eb65c44a978ddccc6423c57, type: 3}
   - {fileID: 21300000, guid: cb04c496b92b7d24fa694e8104c21e72, type: 3}
   - {fileID: 21300000, guid: 7c6024e62f3ff3546b37b7aa52d9659a, type: 3}
   - {fileID: 21300000, guid: 064f4f17772e79842a1bb3e9badb96ec, type: 3}
@@ -105,6 +107,7 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 7aba873bf626ae54ab6f5b41d71421d9, type: 3}
   - {fileID: 21300000, guid: 854acd4c6ccc4264fb89901f5a033593, type: 3}
   - {fileID: 21300000, guid: 0f78ae6cbda2774459bf05f3cce0eb33, type: 3}
+  - {fileID: 21300000, guid: 72ad33dc0e10d954f8f2df063287a154, type: 3}
   - {fileID: 21300000, guid: 42fd1bec07f2e3f4c9e2b626dc0f0ab7, type: 3}
   - {fileID: 21300000, guid: 232489cd65323e748a23e08b82857162, type: 3}
   - {fileID: 21300000, guid: 39a3e68e57440444198502472f95a3ff, type: 3}
@@ -113,17 +116,19 @@ SpriteAtlas:
   - heart
   - wave
   - 2x
+  - right_arrow
   - bubble_2
   - bombing
-  - speed_bubble
+  - speed
   - override_2
   - cash
   - override_1
   - button_1
-  - rate_bubble
+  - rate
   - override_3
   - bubble_pop_under_water_01
-  - damage_bubble
+  - damage
+  - money
   - shield
   - sonar
   - button_3
@@ -136,8 +141,8 @@ SpriteAtlas:
   - bubble_pop_under_water_spritesheet_7
   - bubble_pop_under_water_spritesheet_4
   - bubble_pop_under_water_spritesheet_5
-  - critical_bubble
-  - hearth_bubble
+  - critical
+  - health
   - bubble_pop_one_spritesheet_512px_by_512px_per_frame_2
   - bubble_pop_one_spritesheet_512px_by_512px_per_frame_3
   - bubble_pop_one_spritesheet_512px_by_512px_per_frame_0
@@ -147,15 +152,16 @@ SpriteAtlas:
   - menu_item_unselected
   - points
   - button_2
-  - satellite_bubble
+  - satellite
   - danger_hud
-  - rate_bubble_2
-  - rate_bubble_white
+  - rate_2
+  - rate_white
   - lock
+  - reload
   - ammo_icon
   - menu_item_selected
   - bubble_shadow
-  - speed_bubble_2
+  - speed_2
   m_RenderDataMap: {}
   m_Tag: hud
   m_IsVariant: 0

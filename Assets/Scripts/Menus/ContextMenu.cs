@@ -49,6 +49,7 @@ public class ContextMenu : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         UpgradeTurretCriticalChance,
         UpgradeCannonCriticalChance,
         PowerUp,
+        UpgradePowerUpSpawnChance
     }
 
     [SerializeField] private GameObject contextMenu, lockedContextMenu, mainBase, mobileShopConfirm;
@@ -79,10 +80,13 @@ public class ContextMenu : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         ContextMenuType.UpgradeCriticalFactor => Game.CriticalFactorCost,
         ContextMenuType.UpgradeTurretCriticalChance => Game.TurretCriticalChanceCost,
         ContextMenuType.UpgradeCannonCriticalChance => Game.CannonCriticalChanceCost,
-        
-        ContextMenuType.PowerUp=>Data.PowerUps[powerUpIndex].Select(it=>it.IsLocked?it.UnlockCost:it.UpgradeCost),
+        ContextMenuType.UpgradePowerUpSpawnChance => Game.PowerUpSpawnChanceCost,
 
-        _ => 0
+        ContextMenuType.PowerUp => Data.PowerUps[powerUpIndex]
+            .Select(it => it.IsLocked ? it.UnlockCost : it.UpgradeCost),
+
+
+        _ => -1
     };
 
     private void Awake()
@@ -148,6 +152,7 @@ public class ContextMenu : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
                 { ContextMenuType.UpgradeCriticalFactor, "damage" },
                 { ContextMenuType.UpgradeTurretCriticalChance, "chance" },
                 { ContextMenuType.UpgradeCannonCriticalChance, "chance" },
+                { ContextMenuType.UpgradePowerUpSpawnChance, "chance" },
             };
             var increment = type switch
             {
@@ -176,9 +181,10 @@ public class ContextMenu : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
                 ContextMenuType.BuySpecial => 1,
 
-                ContextMenuType.UpgradeCriticalFactor => Math.Round(Game.CriticalFactorStep * 100, 1),
+                ContextMenuType.UpgradeCriticalFactor => Math.Round(Game.CriticalFactorStep() * 100, 1),
                 ContextMenuType.UpgradeTurretCriticalChance => Math.Round(Game.TurretCriticalChanceStep * 100, 1),
                 ContextMenuType.UpgradeCannonCriticalChance => Math.Round(Game.CannonCriticalChanceStep * 100, 1),
+                ContextMenuType.UpgradePowerUpSpawnChance => Math.Round(Game.PowerUpSpawnChanceStep * 100, 1),
 
                 _ => 0
             };
@@ -252,22 +258,25 @@ public class ContextMenu : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
                         ["description"] = powerUp.Description,
                         ["money_text"] = powerUp.UpgradeCost.ToString("N0"),
 
-                        ["level_old"] = powerUp.Level.ToString("N0"),
-                        ["strength_old"] = powerUp.Strength.ToString("N2"),
-                        ["duration_old"] = powerUp.Duration.ToString("N1"),
+                        ["level_old"] = (powerUp.Level + 1).ToString("N0"),
+                        ["strength_old"] = powerUp.Strength.ToString("N2") + "x",
+                        ["duration_old"] = powerUp.Duration.ToString("N0") + "s",
 
-                        ["level_new"] = (powerUp.Level + 1).ToString("N0"),
-                        ["strength_new"] = (powerUp.Strength * (1f + powerUp.StrengthStepFactor)).ToString("N2"),
-                        ["duration_new"] = (powerUp.Duration * (1f + powerUp.DurationStepFactor)).ToString("N1"),
+                        ["level_new"] = (powerUp.Level + 2).ToString("N0"),
+                        ["strength_new"] =
+                            (powerUp.Strength + powerUp.BaseStrength * powerUp.StrengthStepFactor).ToString("N2") + "x",
+                        ["duration_new"] =
+                            (powerUp.Duration + powerUp.BaseDuration * powerUp.DurationStepFactor).ToString("N0") + "s",
                     }
                     .ForEach((k, v) => _contextMenu.Find(k).GetComponent<TextMeshProUGUI>().text = v);
+                // if(powerUp.Level>=powerUp.MaxLevel) 
             }
         }
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        if (contextMenu == null || _contextMenu.IsDestroyed())
+        if (contextMenu == null || Cost == 0 || _contextMenu.IsDestroyed())
             return;
         Destroy(_contextMenu.gameObject);
     }
@@ -276,11 +285,9 @@ public class ContextMenu : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     {
         if (contextMenu == null) return;
         if (followMouse)
-        {
             _contextMenu.transform.position =
                 ((Vector2)MainCamera.MainCam.ScreenToWorldPoint(Input.mousePosition)) +
                 Vector2.up * (InputManager.IsMobile ? 1f : 0.3f);
-        }
     }
 
     public void OnPointerClick(PointerEventData eventData)
@@ -354,7 +361,8 @@ public class ContextMenu : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
             return;
         }
 
-        if (contextMenu.name == "upgrade_context_menu" || contextMenu.name=="power_up_context_menu")
+        // If is something to buy
+        if (contextMenu.name is "upgrade_context_menu" or "power_up_context_menu")
         {
             if (Cost > Game.Money || Cost == 0)
             {
@@ -398,6 +406,7 @@ public class ContextMenu : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
                         break;
                     case ContextMenuType.TurretSpeed:
                         Game.CurrentTurretModel.BuySpeed();
+                        Data.Save();
                         break;
                     case ContextMenuType.BuySpecial:
                         Game.BuySpecial(specialIndex);
@@ -411,8 +420,17 @@ public class ContextMenu : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
                     case ContextMenuType.UpgradeCannonCriticalChance:
                         Game.BuyCannonCriticalChance();
                         break;
+                    case ContextMenuType.UpgradePowerUpSpawnChance:
+                        Game.BuyPowerUpSpawnChance();
+                        break;
                     case ContextMenuType.PowerUp:
-                        Data.PowerUps[powerUpIndex].Upgrade();
+                        Data.PowerUps[powerUpIndex].Apply(it =>
+                        {
+                            if (it.IsLocked)
+                                it.Unlock();
+                            else
+                                it.Upgrade();
+                        });
                         break;
                     default:
                         throw new ArgumentOutOfRangeException();

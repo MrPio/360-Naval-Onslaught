@@ -728,7 +728,7 @@ MonoBehaviour:
   mainBase: {fileID: 0}
   mobileShopConfirm: {fileID: 979858006871665372, guid: 50b2f2b42700cd34c862fd0ecc3f6b26, type: 3}
   followMouse: 1
-  type: 26
+  type: 30
   turretIndex: -1
   cannonIndex: -1
   specialIndex: 0
@@ -1314,7 +1314,7 @@ MonoBehaviour:
   mainBase: {fileID: 0}
   mobileShopConfirm: {fileID: 979858006871665372, guid: 50b2f2b42700cd34c862fd0ecc3f6b26, type: 3}
   followMouse: 1
-  type: 26
+  type: 30
   turretIndex: -1
   cannonIndex: -1
   specialIndex: 0
@@ -2863,7 +2863,7 @@ GameObject:
   - component: {fileID: 7560420074004009912}
   - component: {fileID: 3173703362957486960}
   m_Layer: 5
-  m_Name: critical_factor_title
+  m_Name: spawn_chance_title
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10155,6 +10155,35 @@ MonoBehaviour:
   criticalFactorLevelText: {fileID: 9099974652613223044}
   turretCriticalChanceLevelText: {fileID: 5463327105967971155}
   cannonCriticalChanceLevelText: {fileID: 471198799268203738}
+  powerUpSpawnChance: {fileID: 7361512773859465375}
+  powerUpSpawnChanceLevel: {fileID: 5147672968131395988}
+  powerUpLevels:
+  - {fileID: 7875363033538494709}
+  - {fileID: 6307170170425045105}
+  - {fileID: 6900253227489020220}
+  - {fileID: 7925785197675274090}
+  - {fileID: 55890048830204447}
+  - {fileID: 2433207063539075543}
+  - {fileID: 8542373844781569297}
+  - {fileID: 7297042560699394737}
+  powerUpStrengths:
+  - {fileID: 7665019721379388476}
+  - {fileID: 2581508358602044392}
+  - {fileID: 8556831446423160387}
+  - {fileID: 1394919491938804394}
+  - {fileID: 7755358969156239373}
+  - {fileID: 6621910685779999551}
+  - {fileID: 4388050672615185606}
+  - {fileID: 8243228973192433236}
+  powerUpDurations:
+  - {fileID: 8627916939161276429}
+  - {fileID: 3784758898932360535}
+  - {fileID: 7317321164824788107}
+  - {fileID: 6004222070685824770}
+  - {fileID: 2688604575377421066}
+  - {fileID: 2909670014748881549}
+  - {fileID: 6789069320398270352}
+  - {fileID: 1797800696136005002}
   healthSlider: {fileID: 4626825609042620146}
   cannonSlots:
   - {fileID: 4626825610459633757}
@@ -10168,6 +10197,15 @@ MonoBehaviour:
   - {fileID: 4626825610313806367}
   - {fileID: 4626825610502394941}
   - {fileID: 4626825609186174487}
+  powerUpSlots:
+  - {fileID: 1682303631630268865}
+  - {fileID: 4226246771848950451}
+  - {fileID: 8193278098222480756}
+  - {fileID: 3262785553566233859}
+  - {fileID: 8291271590856136334}
+  - {fileID: 8088083327738053285}
+  - {fileID: 1632909529091949508}
+  - {fileID: 4880469251269960138}
   cannonsLocks:
   - {fileID: 7946142211028220463}
   - {fileID: 4626825609574569370}
@@ -10180,6 +10218,15 @@ MonoBehaviour:
   - {fileID: 4626825610585364482}
   - {fileID: 4626825610199856849}
   - {fileID: 4626825609814266017}
+  powerUpLocks:
+  - {fileID: 3683561339283188933}
+  - {fileID: 3197762137457462408}
+  - {fileID: 4761813251791240290}
+  - {fileID: 5113756921924319650}
+  - {fileID: 7148668466047854560}
+  - {fileID: 3552965500772034990}
+  - {fileID: 3950552518361993957}
+  - {fileID: 1113714715931324096}
   slotOn: {fileID: 21300000, guid: 232489cd65323e748a23e08b82857162, type: 3}
   slotOff: {fileID: 21300000, guid: bd7bfef9f8a4c2145aa5e51432000932, type: 3}
 --- !u!1 &4626825610349033760
@@ -11069,7 +11116,7 @@ MonoBehaviour:
   mainBase: {fileID: 0}
   mobileShopConfirm: {fileID: 979858006871665372, guid: 50b2f2b42700cd34c862fd0ecc3f6b26, type: 3}
   followMouse: 1
-  type: 26
+  type: 30
   turretIndex: -1
   cannonIndex: -1
   specialIndex: 0
@@ -11305,7 +11352,7 @@ MonoBehaviour:
   mainBase: {fileID: 0}
   mobileShopConfirm: {fileID: 979858006871665372, guid: 50b2f2b42700cd34c862fd0ecc3f6b26, type: 3}
   followMouse: 1
-  type: 26
+  type: 30
   turretIndex: -1
   cannonIndex: -1
   specialIndex: 0
@@ -11533,7 +11580,7 @@ GameObject:
   - component: {fileID: 3033197057733851405}
   - component: {fileID: 2078093233119383546}
   m_Layer: 5
-  m_Name: critical_factor_level_title
+  m_Name: spawn_chance_level_title
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12022,7 +12069,7 @@ MonoBehaviour:
   mainBase: {fileID: 0}
   mobileShopConfirm: {fileID: 979858006871665372, guid: 50b2f2b42700cd34c862fd0ecc3f6b26, type: 3}
   followMouse: 1
-  type: 26
+  type: 30
   turretIndex: -1
   cannonIndex: -1
   specialIndex: 0
@@ -12199,7 +12246,7 @@ MonoBehaviour:
   mainBase: {fileID: 0}
   mobileShopConfirm: {fileID: 979858006871665372, guid: 50b2f2b42700cd34c862fd0ecc3f6b26, type: 3}
   followMouse: 1
-  type: 26
+  type: 30
   turretIndex: -1
   cannonIndex: -1
   specialIndex: 0
@@ -12300,7 +12347,7 @@ MonoBehaviour:
   mainBase: {fileID: 0}
   mobileShopConfirm: {fileID: 979858006871665372, guid: 50b2f2b42700cd34c862fd0ecc3f6b26, type: 3}
   followMouse: 1
-  type: 26
+  type: 30
   turretIndex: -1
   cannonIndex: -1
   specialIndex: 0
@@ -12317,7 +12364,7 @@ GameObject:
   - component: {fileID: 7181043278680515517}
   - component: {fileID: 7361512773859465375}
   m_Layer: 5
-  m_Name: critical_factor_text
+  m_Name: spawn_chance_text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -13389,7 +13436,7 @@ GameObject:
   - component: {fileID: 375614123842451243}
   - component: {fileID: 4056408800753783583}
   m_Layer: 5
-  m_Name: upgrade_critical_factor_button
+  m_Name: upgrade_spawn_chance_button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -13515,7 +13562,7 @@ MonoBehaviour:
   mainBase: {fileID: 0}
   mobileShopConfirm: {fileID: 0}
   followMouse: 0
-  type: 27
+  type: 31
   turretIndex: -1
   cannonIndex: -1
   specialIndex: 0
@@ -14251,7 +14298,7 @@ GameObject:
   - component: {fileID: 4067843152781735868}
   - component: {fileID: 5147672968131395988}
   m_Layer: 5
-  m_Name: critical_factor_level_text
+  m_Name: spawn_chance_level_text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -16056,7 +16103,7 @@ GameObject:
   - component: {fileID: 3835555932863948322}
   - component: {fileID: 833147506238390735}
   m_Layer: 5
-  m_Name: duration
+  m_Name: durations
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -17425,7 +17472,7 @@ MonoBehaviour:
   mainBase: {fileID: 0}
   mobileShopConfirm: {fileID: 979858006871665372, guid: 50b2f2b42700cd34c862fd0ecc3f6b26, type: 3}
   followMouse: 1
-  type: 26
+  type: 30
   turretIndex: -1
   cannonIndex: -1
   specialIndex: 0
@@ -18216,7 +18263,7 @@ GameObject:
   - component: {fileID: 6504254201037788229}
   - component: {fileID: 2992304614811942645}
   m_Layer: 5
-  m_Name: strenght
+  m_Name: strenghts
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

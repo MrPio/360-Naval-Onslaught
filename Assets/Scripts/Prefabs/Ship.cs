@@ -251,7 +251,7 @@ public class Ship : MonoBehaviour, IDamageable
             if (isSpecialShip)
                 GameObject.FindWithTag("wave_spawner").GetComponent<WaveSpawner>().BeginSpecialWave();
             
-            if (!Game.HasPowerUp && Game.HasBubbleSpawn)
+            if (!Game.HasPowerUp && Game.HasPowerUpSpawn)
                 Instantiate(powerUp).transform.position = transform.position + new Vector3(
                     Random.Range(-2f, 2f),
                     Random.Range(-2f, 2f),

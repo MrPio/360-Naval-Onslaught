@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace Model
 {
+    [Serializable]
     public class ShipModel
     {
         private static GameManager Game => GameManager.Instance;
@@ -48,6 +49,7 @@ namespace Model
                                    (Game.Difficulty == 2 ? 1.25f : 1));
 
         public int Money => (int)(_baseMoney * (1f + 0.025f * Game.Wave) * (Game.IsSpecialWave ? 0.333f : 1f) *
+                                  Game.PowerUpFactor(PowerUpModel.PowerUp.Money) *
                                   (Game.Difficulty == 0 ? 0.9f : 1) *
                                   (Game.Difficulty == 2 ? 1.25f : 1));
 

@@ -26,7 +26,9 @@ public class PowerUpsController : MonoBehaviour
                 Vector3.zero,
                 new Vector2(MainCamera.MainCam.GetWidth(), MainCamera.MainCam.GetHeight()) * 2f
             );
-            for (var i = 0; i < powerUp.Amount; i++)
+            var rate = powerUp.Strength;
+            var amount = (int)rate * powerUp.Duration;
+            for (var i = 0; i < amount; i++)
             {
                 if (!Game.HasPowerUp)
                     break;
@@ -53,7 +55,8 @@ public class PowerUpsController : MonoBehaviour
                 missile.StartPosition = new Vector2(0.033f, 17f);
                 missile.Destination = new Vector2(0.033f, 0f);
                 missile.Damage = (int)(200 * (1f + 4f * Game.WaveFactor));
-                yield return new WaitForSeconds(powerUp.Duration / powerUp.Amount * Random.Range(0.75f, 1.15f));
+                yield return
+                    new WaitForSeconds(powerUp.Duration / amount * Random.Range(0.75f, 1.15f)); // Big Number Law
             }
         }
 

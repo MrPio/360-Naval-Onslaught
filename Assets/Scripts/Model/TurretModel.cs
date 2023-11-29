@@ -1,10 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Managers;
 using Unity.VisualScripting;
+using UnityEngine;
 
 namespace Model
 {
+    [Serializable]
     public class TurretModel
     {
         public static float UpgradeStep => 1.08f + (0.004f * Game.Wave); // +8%~16% for each upgrade
@@ -22,25 +25,26 @@ namespace Model
         private int _baseAmmo;
         private int _baseReload;
 
-        private float _rate;
-        private float _damage;
-        private float _ammo;
-        private float _speed;
-        private float _reload;
+        [SerializeField] private float _rate;
+        [SerializeField] private float _damage;
+        [SerializeField] private float _ammo;
+        [SerializeField] private float _speed;
+        [SerializeField] private float _reload;
 
         public int Speed => (int)(_speed * (Game.IsSpecialWave ? 1.5f : 1f) *
-                                  (Game.PowerUp?.Type == PowerUpModel.PowerUp.Speed ? 2f : 1f));
+                                  Game.PowerUpFactor(PowerUpModel.PowerUp.Speed));
 
         public int Rate => (int)(_rate * (Game.IsSpecialWave ? 3.5f : 1f) *
-                                 (Game.PowerUp?.Type == PowerUpModel.PowerUp.Rate ? 2f : 1f) *
+                                 Game.PowerUpFactor(PowerUpModel.PowerUp.Rate) *
                                  (Game.HasOverride ? 1.5f : 1f));
 
         public int Damage => (int)(_damage * (Game.IsSpecialWave ? 1.5f : 1f) *
-                                   (Game.PowerUp?.Type == PowerUpModel.PowerUp.Damage ? 2f : 1f) *
+                                   Game.PowerUpFactor(PowerUpModel.PowerUp.Damage) *
                                    (Game.HasOverride ? 0.8f : 1f));
 
         public int Ammo => Game.IsSpecialWave ? 9999 : (int)_ammo;
-        public int Reload => (int)_reload;
+
+        public int Reload => (int)(_reload);
 
         public int SpeedLevel = 1;
         public int RateLevel = 1;

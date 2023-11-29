@@ -1,12 +1,15 @@
 using System;
 using JetBrains.Annotations;
+using Managers;
+using Model;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.UI;
 
-
 public class ReloadBar : MonoBehaviour
 {
+    private static GameManager Game => GameManager.Instance;
+
     [SerializeField] private Slider slider;
     [SerializeField] [CanBeNull] private Stack stackParent;
     [NonSerialized] public bool IsReloading;
@@ -18,7 +21,7 @@ public class ReloadBar : MonoBehaviour
     private void Update()
     {
         if (!IsReloading) return;
-        _accumulator += Time.deltaTime;
+        _accumulator += Time.deltaTime* Game.PowerUpFactor(PowerUpModel.PowerUp.Reload);
         var value = _accumulator / _duration;
         if (value < 1)
             slider.value = value;
