@@ -260,13 +260,16 @@ public class ContextMenu : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
                         ["level_old"] = (powerUp.Level + 1).ToString("N0"),
                         ["strength_old"] = powerUp.Strength.ToString("N2") + "x",
-                        ["duration_old"] = powerUp.Duration.ToString("N0") + "s",
+                        ["duration_old"] = powerUp.HasDuration ? powerUp.Duration.ToString("N0") + "s" : "-",
 
                         ["level_new"] = (powerUp.Level + 2).ToString("N0"),
                         ["strength_new"] =
                             (powerUp.Strength + powerUp.BaseStrength * powerUp.StrengthStepFactor).ToString("N2") + "x",
                         ["duration_new"] =
-                            (powerUp.Duration + powerUp.BaseDuration * powerUp.DurationStepFactor).ToString("N0") + "s",
+                            powerUp.HasDuration
+                                ? (powerUp.Duration + powerUp.BaseDuration * powerUp.DurationStepFactor)
+                                .ToString("N0") + "s"
+                                : "-",
                     }
                     .ForEach((k, v) => _contextMenu.Find(k).GetComponent<TextMeshProUGUI>().text = v);
                 // if(powerUp.Level>=powerUp.MaxLevel) 

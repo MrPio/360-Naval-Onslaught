@@ -67,9 +67,11 @@ public class ShopMenu : MonoBehaviour
         powerUpSpawnChanceLevel.text = $"{Game.PowerUpSpawnChanceLevel + 1}";
         foreach (var powerUp in Data.PowerUps)
         {
-            powerUpLevels[powerUp.Index].text =  powerUp.IsLocked?"-":"lv. " + (powerUp.Level + 1);
-            powerUpStrengths[powerUp.Index].text =  powerUp.IsLocked?"-":powerUp.Strength.ToString("N2") + "x";
-            powerUpDurations[powerUp.Index].text = powerUp.IsLocked ? "-" :powerUp.Duration.ToString("N0") + "s";
+            powerUpLevels[powerUp.Index].text = powerUp.IsLocked ? "-" : "lv. " + (powerUp.Level + 1);
+            powerUpStrengths[powerUp.Index].text = powerUp.IsLocked ? "-" : powerUp.Strength.ToString("N2") + "x";
+            powerUpDurations[powerUp.Index].text = (powerUp.IsLocked || !powerUp.HasDuration)
+                ? "-"
+                : powerUp.Duration.ToString("N0") + "s";
         }
 
         for (var i = 0; i < powerUpSlots.Length; i++)

@@ -44,7 +44,7 @@ namespace Model
 
         public int Ammo => Game.IsSpecialWave ? 9999 : (int)_ammo;
 
-        public int Reload => (int)(_reload);
+        public int Reload => (int)(_reload* (Game.IsSpecialWave ? 3f : 1f));
 
         public int SpeedLevel = 1;
         public int RateLevel = 1;

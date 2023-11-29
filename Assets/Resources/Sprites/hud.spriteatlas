@@ -82,6 +82,7 @@ SpriteAtlas:
   - {fileID: 21300000, guid: cb04c496b92b7d24fa694e8104c21e72, type: 3}
   - {fileID: 21300000, guid: 7c6024e62f3ff3546b37b7aa52d9659a, type: 3}
   - {fileID: 21300000, guid: 064f4f17772e79842a1bb3e9badb96ec, type: 3}
+  - {fileID: 21300000, guid: c115942721d8a844faf1d47066883566, type: 3}
   - {fileID: 21300000, guid: 7cefb897c7b2a0b4a88a2280e763aa29, type: 3}
   - {fileID: 299993122, guid: 97a26338e539c164f8319f1452a6e0ad, type: 3}
   - {fileID: -2006687098, guid: 97a26338e539c164f8319f1452a6e0ad, type: 3}
@@ -111,6 +112,7 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 42fd1bec07f2e3f4c9e2b626dc0f0ab7, type: 3}
   - {fileID: 21300000, guid: 232489cd65323e748a23e08b82857162, type: 3}
   - {fileID: 21300000, guid: 39a3e68e57440444198502472f95a3ff, type: 3}
+  - {fileID: 21300000, guid: f73811eeb1667b44da1912c02ff645af, type: 3}
   - {fileID: 21300000, guid: 39863f2fb6763a341be8f0185958e179, type: 3}
   m_PackedSpriteNamesToIndex:
   - heart
@@ -132,6 +134,7 @@ SpriteAtlas:
   - shield
   - sonar
   - button_3
+  - warning_high
   - warning_hud
   - bubble_pop_under_water_spritesheet_2
   - bubble_pop_under_water_spritesheet_3
@@ -161,6 +164,7 @@ SpriteAtlas:
   - ammo_icon
   - menu_item_selected
   - bubble_shadow
+  - warning_low
   - speed_2
   m_RenderDataMap: {}
   m_Tag: hud

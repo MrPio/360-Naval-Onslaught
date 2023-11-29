@@ -267,6 +267,7 @@ namespace Managers
                 upgradeBaseCost: 550,
                 unlockCost: 450,
                 // isLocked: false,
+                baseDuration:-1f,
                 baseStrength: 1f
             ),
             new(

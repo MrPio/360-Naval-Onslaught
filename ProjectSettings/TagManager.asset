@@ -34,6 +34,7 @@ TagManager:
   - cloud_manager
   - damage_text_container
   - power_up
+  - override_controller
   layers:
   - Default
   - TransparentFX

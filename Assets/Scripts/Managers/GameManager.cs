@@ -68,12 +68,20 @@ namespace Managers
         [NonSerialized] public int SpecialWave = -1;
         public int Ammo;
         [NonSerialized] public int CannonAmmo = 1;
-        public int Money = 20000;
+        public int Money = 2000;
         public int CurrentTurret = 0;
         public int CurrentCannon = 0;
         public int Score;
         public float SpecialShipChance = 0.05f;
         [NonSerialized] public bool HasOverride;
+        [NonSerialized] public float OverrideAmount;
+        public float OverheatingDurationFactor => IsSpecialWave ? 0.5f : 1.5f;
+        [NonSerialized] public bool IsOverheated;
+
+        public float OverrideDuration => 2.5f *
+                                         (IsSpecialWave ? 2.5f : 1f) *
+                                         (Difficulty == 0 ? 1.15f : 1) *
+                                         (Difficulty == 2 ? 0.9f : 1);
 
         // === CRITICAL HIT =========================================================
         private readonly int _criticalFactorBaseCost = 325,

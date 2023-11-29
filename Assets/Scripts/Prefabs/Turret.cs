@@ -17,7 +17,7 @@ public class Turret : MonoBehaviour
     [SerializeField] private AudioClip reloadStart, reloadMiss, reloadFinish, noAmmo;
     [SerializeField] private AudioSource bulletAudioSource;
     [SerializeField] private List<AudioClip> clatchAudioClips;
-    [SerializeField] private Animator overrideAnimator;
+    private OverrideController _overrideController;
     private AmmoCounter _ammoCounter;
     private float _fireAccumulator = 9999f, _lastFireTriggered;
     private AudioClip _fireClip;
@@ -29,6 +29,7 @@ public class Turret : MonoBehaviour
         spriteRenderer.sprite = Resources.Load<Sprite>(Model.Sprite);
         _fireClip = Resources.Load<AudioClip>(Model.FireClip);
         _ammoCounter = GameObject.FindWithTag("ammo_counter").GetComponent<AmmoCounter>();
+        _overrideController = GameObject.FindWithTag("override_controller").GetComponent<OverrideController>();
     }
 
     private void Update()
@@ -38,10 +39,10 @@ public class Turret : MonoBehaviour
 
         var currentFireInput = In.GetTurret();
         _fireAccumulator += Time.deltaTime;
-        if (currentFireInput && !_lastFireInput && Game.Ammo <= 0)
-            MainCamera.AudioSource.PlayOneShot(noAmmo);
+        if (currentFireInput && !_lastFireInput && (Game.Ammo <= 0 || Game.IsOverheated))
+            MainCamera.AudioSource.PlayOneShot(Game.IsOverheated ? clatchAudioClips.RandomItem() : noAmmo);
         if (currentFireInput && Game.Ammo > 0 && _fireAccumulator > 100f / Model.Rate && !reloadBar.IsReloading &&
-            (Model.Name != "Laser Gun" || !_isLaserFiring))
+            !Game.IsOverheated && (Model.Name != "Laser Gun" || !_isLaserFiring))
         {
             _fireAccumulator = 0;
             ++_fireCount;
@@ -62,14 +63,14 @@ public class Turret : MonoBehaviour
         if (!_lastFireInput && currentFireInput)
         {
             if (!Game.HasOverride && Time.time - _lastFireTriggered < 0.2)
-                Override(true);
+                _overrideController.Override(true);
             _lastFireTriggered = Time.time;
         }
 
         // Button UP
         if (_lastFireInput && !currentFireInput)
         {
-            Override(false);
+            _overrideController.Override(false);
             if (_isLaserFiring)
                 bulletAudioSource.Stop();
             _isLaserFiring = false;
@@ -117,7 +118,7 @@ public class Turret : MonoBehaviour
 
     public void Reload()
     {
-        Override(false);
+        _overrideController.Override(false);
         MainCamera.AudioSource.PlayOneShot(reloadStart);
         reloadBar.Reload(
             duration: 100f / Model.Reload,
@@ -127,21 +128,5 @@ public class Turret : MonoBehaviour
                 Game.Ammo = Game.CurrentTurretModel.Ammo;
                 GameObject.FindWithTag("ammo_counter")?.GetComponent<AmmoCounter>()?.UpdateUI();
             });
-    }
-
-    public void Override(bool value)
-    {
-        if (!value && Game.HasOverride)
-        {
-            overrideAnimator.SetTrigger(Animator.StringToHash("reverse"));
-            Game.HasOverride = false;
-            bulletAudioSource.pitch = 1f;
-        }
-        else if (value && !Game.HasOverride)
-        {
-            overrideAnimator.SetTrigger(Animator.StringToHash("start"));
-            Game.HasOverride = true;
-            bulletAudioSource.pitch = 1.4f;
-        }
     }
 }

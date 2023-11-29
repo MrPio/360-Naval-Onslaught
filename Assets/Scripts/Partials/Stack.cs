@@ -1,17 +1,20 @@
 using System.Collections.Generic;
 using System.Linq;
+using EditorCools;
+using ExtensionsFunctions;
 using Unity.Mathematics;
+using Unity.VisualScripting;
 using UnityEngine;
 
 [ExecuteAlways]
 public class Stack : MonoBehaviour
 {
-    private List<Transform> _children=new ();
+    private List<Transform> _children = new();
     [SerializeField] private Transform target;
     [SerializeField] private float gap = 1, offset;
     [SerializeField] private bool vertical = true, useRectTransform, auto = false;
 
-    [EditorCools.Button("Update")]
+    [Button("Update")]
     public void UpdateUI()
     {
         // Retrieve first level children
@@ -38,6 +41,21 @@ public class Stack : MonoBehaviour
                 child.GetComponent<RectTransform>().anchoredPosition = childPos;
             else
                 child.transform.position = childPos;
+        }
+    }
+
+    private void Awake()
+    {
+        // Listen on  children enable/disable
+        foreach (Transform child in transform)
+        {
+            if (child.GetComponent<Notifier>() is null)
+                child.AddComponent<Notifier>();
+            child.GetComponent<Notifier>().Apply(it =>
+            {
+                it.Enabled += UpdateUI;
+                it.Disabled += UpdateUI;
+            });
         }
     }
 

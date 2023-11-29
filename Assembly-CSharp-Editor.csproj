@@ -41,11 +41,11 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
-     <Compile Include="Assets\Third Party\EditorCools\Vector2MinMax\Editor\MinMaxAttributeDrawer.cs" />
      <Compile Include="Assets\Third Party\EditorCools\InspectorButton\Editor\ButtonsDrawer.cs" />
+     <Compile Include="Assets\Third Party\EditorCools\Vector2MinMax\Editor\MinMaxAttributeDrawer.cs" />
+     <Compile Include="Assets\Third Party\EditorCools\InspectorButton\Editor\ObjectEditor.cs" />
      <Compile Include="Assets\Third Party\EditorCools\DropdownStringAttribute\Editor\DropdownAttributePropertyDrawer.cs" />
      <Compile Include="Assets\Third Party\EditorCools\InspectorButton\Editor\Button.cs" />
-     <Compile Include="Assets\Third Party\EditorCools\InspectorButton\Editor\ObjectEditor.cs" />
      <Folder Include="Assets\Third Party\EditorCools\Vector2MinMax\Editor" />
      <Folder Include="Assets\Third Party\EditorCools\DropdownStringAttribute\Editor" />
      <Folder Include="Assets\Third Party\EditorCools\InspectorButton\Editor" />

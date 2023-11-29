@@ -51,15 +51,16 @@ namespace Model
         public int Index => Data.PowerUps.ToList().IndexOf(this);
         public string Name => Type.ToString().ToLower();
         public int UpgradeCost => (int)(_upgradeBaseCost * (1f + 0.425f * Level));
+        public bool HasDuration => BaseDuration > 0;
 
         public PowerUpModel(PowerUp type, string description, string sprite, int upgradeBaseCost,
-            int unlockCost, float baseBaseDuration = 20f, float baseStrength = 1.5f, bool isMultiplier = false,
+            int unlockCost, float baseDuration = 20f, float baseStrength = 1.5f, bool isMultiplier = false,
             bool isLocked = true)
         {
             Type = type;
             Description = description;
             Sprite = sprite;
-            BaseDuration = baseBaseDuration;
+            BaseDuration = baseDuration;
             BaseStrength = baseStrength;
             _upgradeBaseCost = upgradeBaseCost;
             UnlockCost = unlockCost;
