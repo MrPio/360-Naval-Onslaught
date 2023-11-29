@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+    using System.Collections.Generic;
 using UnityEngine;
 
 public class Enableable : MonoBehaviour
@@ -11,4 +11,7 @@ public class Enableable : MonoBehaviour
         foreach (var animator in animators)
             animator.SetTrigger(trigger);
     }
+
+    private void Disable() => gameObject.SetActive(false);
+    private void Enable() => gameObject.SetActive(true);
 }

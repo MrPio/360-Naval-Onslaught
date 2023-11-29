@@ -8,7 +8,7 @@ public class OverrideController : MonoBehaviour
 {
     private static GameManager Game => GameManager.Instance;
 
-    [SerializeField] private GameObject overheatingWarning;
+    [SerializeField] private GameObject overheatingWarning, baseSmoke;
     [SerializeField] private Slider overheatingSlider;
     [SerializeField] private Turret turret;
     [SerializeField] private SpriteRenderer turretSpriteRenderer, cannonSpriteRenderer, baseSpriteRenderer;
@@ -42,6 +42,7 @@ public class OverrideController : MonoBehaviour
                 Override(false);
                 turret.Reload();
                 MainCamera.AudioSource.PlayOneShot(overheating);
+                baseSmoke.SetActive(true);
             }
         }
         else if (Game.OverrideAmount > 0.001f)
@@ -58,6 +59,7 @@ public class OverrideController : MonoBehaviour
                 baseAnimator.Rebind();
                 cannonAnimator.Rebind();
                 turretAnimator.Rebind();
+                baseSmoke.GetComponent<Animator>().SetTrigger(Animator.StringToHash("fade_out"));
                 return;
             }
 
