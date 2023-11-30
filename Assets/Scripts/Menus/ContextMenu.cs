@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using ExtensionsFunctions;
 using Managers;
 using Model;
@@ -16,7 +15,7 @@ public class ContextMenu : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     private static GameManager Game => GameManager.Instance;
     private static DataManager Data => DataManager.Instance;
 
-    enum ContextMenuType
+    private enum ContextMenuType
     {
         Repair,
         UpgradeHealth,
@@ -49,7 +48,8 @@ public class ContextMenu : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         UpgradeTurretCriticalChance,
         UpgradeCannonCriticalChance,
         PowerUp,
-        UpgradePowerUpSpawnChance
+        UpgradePowerUpSpawnChance,
+        PlayHowToPlay,
     }
 
     [SerializeField] private GameObject contextMenu, lockedContextMenu, mainBase, mobileShopConfirm;
@@ -57,6 +57,7 @@ public class ContextMenu : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     [SerializeField] private ContextMenuType type;
     [SerializeField] private int turretIndex = -1, cannonIndex = -1, specialIndex = 0, powerUpIndex = -1;
     private Transform _contextMenu;
+    private static WaveSpawner _waveSpawner;
     private static AudioClip _buy, _noBuy, _weaponSelect, _click, _hover;
 
     private int Cost => type switch
@@ -91,14 +92,12 @@ public class ContextMenu : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
     private void Awake()
     {
-        if (_buy is null)
-        {
-            _buy = Resources.Load<AudioClip>("Audio/buy");
-            _noBuy = Resources.Load<AudioClip>("Audio/no_buy");
-            _weaponSelect = Resources.Load<AudioClip>("Audio/menu_weapon_select");
-            _click = Resources.Load<AudioClip>("Audio/menu_click");
-            _hover = Resources.Load<AudioClip>("Audio/menu_click_2");
-        }
+        _buy ??= Resources.Load<AudioClip>("Audio/buy");
+        _noBuy ??= Resources.Load<AudioClip>("Audio/no_buy");
+        _weaponSelect ??= Resources.Load<AudioClip>("Audio/menu_weapon_select");
+        _click ??= Resources.Load<AudioClip>("Audio/menu_click");
+        _hover ??= Resources.Load<AudioClip>("Audio/menu_click_2");
+        _waveSpawner ??= GameObject.FindWithTag("wave_spawner").GetComponent<WaveSpawner>();
     }
 
     private void OnEnable()
@@ -296,26 +295,34 @@ public class ContextMenu : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     public void OnPointerClick(PointerEventData eventData)
     {
         if (type == ContextMenuType.NextWave)
-            GameObject.FindWithTag("wave_spawner").GetComponent<WaveSpawner>().BeginWave();
-        else if (type == ContextMenuType.CloseHowToPlay)
-            GameObject.FindWithTag("how_to_play_menu").SetActive(false);
+            _waveSpawner.BeginWave();
+        else if (type == ContextMenuType.PlayHowToPlay)
+            _waveSpawner.NewGame();
         else if (type == ContextMenuType.MainMenuPlay)
-            GameObject.FindWithTag("wave_spawner").GetComponent<WaveSpawner>().NewGame();
+            _waveSpawner.howToPlayMenu.Apply(it =>
+            {
+                it.SetActive(true);
+                it.GetComponent<HowToPlayMenu>().IsNewGame = true;
+            });
         else if (type == ContextMenuType.MainMenuContinue)
-            GameObject.FindWithTag("wave_spawner").GetComponent<WaveSpawner>().LoadGame();
+            _waveSpawner.LoadGame();
         else if (type == ContextMenuType.MainMenuHowToPlay)
-            GameObject.FindWithTag("wave_spawner").GetComponent<WaveSpawner>().howToPlayMenu.SetActive(true);
+            _waveSpawner.howToPlayMenu.Apply(it =>
+            {
+                it.SetActive(true);
+                it.GetComponent<HowToPlayMenu>().IsNewGame = false;
+            });
         else if (type == ContextMenuType.GameOverGotoMainMenu)
-            GameObject.FindWithTag("wave_spawner").GetComponent<WaveSpawner>().RestartGame();
+            _waveSpawner.RestartGame();
         else if (type == ContextMenuType.CloseSpecialsMenu)
             GameObject.FindWithTag("specials_menu").SetActive(false);
         else if (type == ContextMenuType.OpenSpecialsMenu)
-            GameObject.FindWithTag("wave_spawner").GetComponent<WaveSpawner>().specialsMenu.SetActive(true);
+            _waveSpawner.specialsMenu.SetActive(true);
         else if (type == ContextMenuType.ClosePauseMenu)
         {
             mainBase.SetActive(true);
             GameObject.FindWithTag("pause_menu").SetActive(false);
-            GameObject.FindWithTag("wave_spawner").GetComponent<WaveSpawner>().isPaused = false;
+            _waveSpawner.isPaused = false;
             foreach (var ship in GameObject.FindGameObjectsWithTag("ship"))
             {
                 ship.GetComponent<Ship>().IsFreezed = false;
@@ -330,9 +337,9 @@ public class ContextMenu : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         else if (type == ContextMenuType.CloseAccuracyMenu)
         {
             if (Game.HasAccuracyBonus)
-                GameObject.FindWithTag("wave_spawner").GetComponent<WaveSpawner>().bonusMenu.SetActive(true);
+                _waveSpawner.bonusMenu.SetActive(true);
             else
-                GameObject.FindWithTag("wave_spawner").GetComponent<WaveSpawner>().shopMenu.SetActive(true);
+                _waveSpawner.shopMenu.SetActive(true);
             GameObject.FindWithTag("accuracy_menu").SetActive(false);
         }
         else if (type == ContextMenuType.BonusStop)
@@ -345,7 +352,7 @@ public class ContextMenu : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         {
             type = ContextMenuType.BonusStop;
             GameObject.FindWithTag("bonus_menu").GetComponent<BonusMenu>().Redeem();
-            GameObject.FindWithTag("wave_spawner").GetComponent<WaveSpawner>().shopMenu.SetActive(true);
+            _waveSpawner.shopMenu.SetActive(true);
             GameObject.FindWithTag("bonus_menu").SetActive(false);
         }
         else if (type == ContextMenuType.CloseGame)

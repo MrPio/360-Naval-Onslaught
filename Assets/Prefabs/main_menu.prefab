@@ -410,7 +410,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   contextMenu: {fileID: 0}
   lockedContextMenu: {fileID: 0}
-  canvas: {fileID: 0}
   mainBase: {fileID: 0}
   mobileShopConfirm: {fileID: 0}
   followMouse: 0
@@ -418,6 +417,7 @@ MonoBehaviour:
   turretIndex: -1
   cannonIndex: -1
   specialIndex: 0
+  powerUpIndex: -1
 --- !u!114 &651481832
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -571,7 +571,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   contextMenu: {fileID: 0}
   lockedContextMenu: {fileID: 0}
-  canvas: {fileID: 0}
   mainBase: {fileID: 0}
   mobileShopConfirm: {fileID: 0}
   followMouse: 1
@@ -579,6 +578,7 @@ MonoBehaviour:
   turretIndex: -1
   cannonIndex: -1
   specialIndex: 0
+  powerUpIndex: -1
 --- !u!114 &799739350
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -732,7 +732,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   contextMenu: {fileID: 0}
   lockedContextMenu: {fileID: 0}
-  canvas: {fileID: 0}
   mainBase: {fileID: 0}
   mobileShopConfirm: {fileID: 0}
   followMouse: 0
@@ -740,6 +739,7 @@ MonoBehaviour:
   turretIndex: -1
   cannonIndex: -1
   specialIndex: 0
+  powerUpIndex: -1
 --- !u!114 &1402684207
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1028,7 +1028,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   contextMenu: {fileID: 0}
   lockedContextMenu: {fileID: 0}
-  canvas: {fileID: 0}
   mainBase: {fileID: 0}
   mobileShopConfirm: {fileID: 0}
   followMouse: 1
@@ -1036,6 +1035,7 @@ MonoBehaviour:
   turretIndex: -1
   cannonIndex: -1
   specialIndex: 0
+  powerUpIndex: -1
 --- !u!114 &1501511184549052077
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1324,7 +1324,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   contextMenu: {fileID: 0}
   lockedContextMenu: {fileID: 0}
-  canvas: {fileID: 0}
   mainBase: {fileID: 0}
   mobileShopConfirm: {fileID: 0}
   followMouse: 0
@@ -1332,6 +1331,7 @@ MonoBehaviour:
   turretIndex: -1
   cannonIndex: -1
   specialIndex: 0
+  powerUpIndex: -1
 --- !u!114 &1501511185546968732
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1365,7 +1365,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1501511185852881913
 RectTransform:
   m_ObjectHideFlags: 0

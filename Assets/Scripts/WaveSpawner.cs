@@ -27,7 +27,8 @@ public class WaveSpawner : MonoBehaviour
     [SerializeField] private AudioClip winClip, mainMenuClip, lastLevelClip;
     [SerializeField] private List<AudioClip> levelsClip, specialLevelsClip;
 
-    [SerializeField] private GameObject waveCounter,
+    [SerializeField] private GameObject
+        waveCounter,
         baseMain,
         ammoContainer,
         moneyContainer,
@@ -42,6 +43,15 @@ public class WaveSpawner : MonoBehaviour
         mobileShopConfirm,
         difficultyMenu;
 
+    public GameObject
+        overlay,
+        mainMenu,
+        gameOver,
+        specialsMenu,
+        shopMenu,
+        bonusMenu,
+        howToPlayMenu;
+
     [NonSerialized] public bool isPaused;
     [SerializeField] private bool isDebug;
     [SerializeField] private List<Transform> specialPaths;
@@ -50,8 +60,6 @@ public class WaveSpawner : MonoBehaviour
     [SerializeField] private GameObject WarningPanel;
     [SerializeField] private Animator CameraAnimator, GlobalVolumeAnimator;
 
-
-    public GameObject howToPlayMenu, overlay, mainMenu, gameOver, specialsMenu, shopMenu, bonusMenu;
 
     public void RestartGame()
     {
@@ -72,6 +80,7 @@ public class WaveSpawner : MonoBehaviour
             mainMenu.SetActive(true);
             gameOver.SetActive(false);
             specialsMenu.SetActive(false);
+            howToPlayMenu.SetActive(false);
             GameObject.FindWithTag("pad_container").SetActive(InputManager.IsMobile);
             GameObject.Find("wave_container").GetComponent<RectTransform>().anchoredPosition =
                 Vector2.right * (InputManager.IsMobile ? 150 : 0);

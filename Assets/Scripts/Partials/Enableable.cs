@@ -1,9 +1,9 @@
-    using System.Collections.Generic;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Enableable : MonoBehaviour
 {
-    [SerializeField] private List<Animator> animators;
+    [SerializeField] private List<Animator> animators = new();
     [SerializeField] private string trigger;
 
     private void OnEnable()
@@ -12,6 +12,6 @@ public class Enableable : MonoBehaviour
             animator.SetTrigger(trigger);
     }
 
-    private void Disable() => gameObject.SetActive(false);
-    private void Enable() => gameObject.SetActive(true);
+    public void Disable() => gameObject.SetActive(false);
+    public void Enable() => gameObject.SetActive(true);
 }
