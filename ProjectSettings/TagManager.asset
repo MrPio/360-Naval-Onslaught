@@ -35,8 +35,7 @@ TagManager:
   - damage_text_container
   - power_up
   - override_controller
-  - how_to_play_menu_2
-  - how_to_play_menu_1
+  - diamond_counter
   layers:
   - Default
   - TransparentFX

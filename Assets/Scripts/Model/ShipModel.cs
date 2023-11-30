@@ -9,6 +9,7 @@ namespace Model
     {
         private static GameManager Game => GameManager.Instance;
         public static float SpecialSpeedMultiplier => InputManager.IsMobile ? 3.7f : 3.75f;
+        public static float ArmoredSpeedMultiplier => 0.7f;
         public readonly string Name;
         public readonly string Sprite;
         public readonly string FoamAnim;

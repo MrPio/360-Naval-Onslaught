@@ -20,7 +20,7 @@ public class PowerUp : MonoBehaviour, IDamageable
     [SerializeField] private Canvas canvas;
     [SerializeField] private AudioClip spawnAudioClip;
     private float _health;
-    private MoneyCounter _moneyCounter, _scoreCounter;
+    private Counter _counter, _scoreCounter;
     private float _acc;
     private bool _idling, _picking;
     private Transform _parent;
@@ -46,8 +46,8 @@ public class PowerUp : MonoBehaviour, IDamageable
         _parent.GetComponent<Destroyable>().Condition = false;
         _audioSource = GetComponent<AudioSource>();
         _powerUpsController = GameObject.FindWithTag("power_ups_controller").GetComponent<PowerUpsController>();
-        _moneyCounter = GameObject.FindWithTag("money_counter").GetComponent<MoneyCounter>();
-        _scoreCounter = GameObject.FindWithTag("score_counter").GetComponent<MoneyCounter>();
+        _counter = GameObject.FindWithTag("money_counter").GetComponent<Counter>();
+        _scoreCounter = GameObject.FindWithTag("score_counter").GetComponent<Counter>();
         _waveSpawner = GameObject.FindWithTag("wave_spawner").GetComponent<WaveSpawner>();
 
         // Enable the correct powerUp and 2X accordingly
@@ -141,8 +141,8 @@ public class PowerUp : MonoBehaviour, IDamageable
                 floatingTextBig.transform.Find("Text").GetComponent<TextMeshProUGUI>().text = $"+ {money} $";
                 floatingTextBig.transform.position = transform.position + Vector3.up * 0.5f;
                 Game.Money += money;
-                Game.Score += Game.Money * 2;
-                _moneyCounter.UpdateUI();
+                Game.Score += money * 2;
+                _counter.UpdateUI();
                 _scoreCounter.UpdateUI();
             }
         }

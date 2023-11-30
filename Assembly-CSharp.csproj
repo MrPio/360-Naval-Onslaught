@@ -65,7 +65,7 @@
      <Compile Include="Assets\Scripts\ExtensionsFunctions\EnumExtensions.cs" />
      <Compile Include="Assets\Third Party\EditorCools\DropdownStringAttribute\DropdownAttribute.cs" />
      <Compile Include="Assets\Scripts\Ui\NewWaveSign.cs" />
-     <Compile Include="Assets\Scripts\Ui\MoneyCounter.cs" />
+     <Compile Include="Assets\Scripts\Ui\Counter.cs" />
      <Compile Include="Assets\Scripts\ExtensionsFunctions\BoolExtensions.cs" />
      <Compile Include="Assets\Scripts\CloudSpawner[Old].cs" />
      <Compile Include="Assets\Scripts\Managers\IOManager.cs" />
@@ -116,6 +116,8 @@
      <Compile Include="Assets\Scripts\Managers\DataManager.cs" />
      <Compile Include="Assets\Scripts\PowerUpsController.cs" />
      <Compile Include="Assets\Scripts\Prefabs\Bullet.cs" />
+     <Compile Include="Assets\Scripts\Prefabs\Diamond.cs" />
+     <Compile Include="Assets\ArmorPiece.cs" />
      <Folder Include="Assets" />
      <Folder Include="Assets\Resources\Sprites\hud" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

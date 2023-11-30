@@ -9,6 +9,7 @@ using Managers;
 using Model;
 using TMPro;
 using Unity.Mathematics;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
@@ -26,11 +27,11 @@ public class Ship : MonoBehaviour, IDamageable
     [SerializeField] public SpriteRenderer spriteRenderer;
     [SerializeField] public BoxCollider2D boxCollider;
     [SerializeField] private GameObject floatingTextBig, missile, empExplosion, empText, militaryPlane;
-    [SerializeField] private GameObject powerUp;
+    [SerializeField] private GameObject powerUp, diamond;
     [SerializeField] private AudioClip empHitClip;
     private Sprite _missileSprite;
     private List<AudioClip> _fireClip;
-    private MoneyCounter _moneyCounter, _scoreCounter;
+    private Counter _counter, _scoreCounter;
     private AudioClip _explodeClip;
     private ShipModel _model;
     private int _health;
@@ -44,10 +45,13 @@ public class Ship : MonoBehaviour, IDamageable
     [NonSerialized] public bool isVisible;
     private bool _withBaseCollided;
     [SerializeField] private AudioSource audioSource;
-    [SerializeField] private AudioClip specialAudioClip;
-    [SerializeField] private GameObject glow;
+    [SerializeField] private AudioClip specialAudioClip, armoredSpawnClip, dropArmorPieceClip;
+    [SerializeField] private GameObject glow, armor, armorPiece;
+    [SerializeField] private List<GameObject> armorPieces;
     [SerializeField] private bool alwaysSpecial;
-    private bool isSpecialShip;
+    private bool _isSpecial, _isArmored;
+    private int _activeArmorPieces, _totalArmorPieces;
+    private int MaxHealth => _model.Health * (_isArmored ? 3 : 1);
 
     private void Awake()
     {
@@ -57,31 +61,20 @@ public class Ship : MonoBehaviour, IDamageable
         {
             var pair = Game.CurrentWave.Spawn();
             _currentIndex = pair?.Key ?? 0;
-
-            // Set Fog strength
-            if (_currentIndex == Game.CurrentWave.startFog)
-                GameObject.FindWithTag("cloud_manager").GetComponent<CloudManager>()
-                    .SetStrength(Random.Range(Game.CurrentWave.FogStrength * 0.75f,
-                        Game.CurrentWave.FogStrength * 1.5f));
-            if (_currentIndex == Game.CurrentWave.endFog)
-                GameObject.FindWithTag("cloud_manager").GetComponent<CloudManager>().SetStrength();
-
             _model = pair?.Value;
         }
 
-        spriteRenderer.sprite = Resources.Load<Sprite>(_model.Sprite);
         if (_model.ExplodeClip != null)
             _explodeClip = Resources.Load<AudioClip>(_model.ExplodeClip);
         if (_model.FireClip != null)
             _fireClip = _model.FireClip.Select(Resources.Load<AudioClip>).ToList();
-        _moneyCounter = GameObject.FindWithTag("money_counter").GetComponent<MoneyCounter>();
-        _scoreCounter = GameObject.FindWithTag("score_counter").GetComponent<MoneyCounter>();
+        _counter = GameObject.FindWithTag("money_counter").GetComponent<Counter>();
+        _scoreCounter = GameObject.FindWithTag("score_counter").GetComponent<Counter>();
         GetComponent<ShipPath>().Model = _model;
         if (_model.MissileSprite is { })
             _missileSprite = Resources.Load<Sprite>(_model.MissileSprite);
 
         // Custom Path for SpeedBoat
-
         if (_model.Name == "SpeedBoat")
         {
             var specialBoat = !Game.IsSpecialWave && !Game.SpecialOccurInWave[Game.Wave] &&
@@ -98,20 +91,38 @@ public class Ship : MonoBehaviour, IDamageable
             if (specialBoat)
             {
                 audioSource.PlayOneShot(specialAudioClip);
-                GetComponent<ShipPath>().SpeedSpecialMultiplier = ShipModel.SpecialSpeedMultiplier;
+                GetComponent<ShipPath>().SpeedMultiplier = ShipModel.SpecialSpeedMultiplier;
                 animator.SetTrigger(Animator.StringToHash("special_ship"));
                 glow.SetActive(true);
-                isSpecialShip = true;
+                _isSpecial = true;
+            }
+            else if (!Game.IsSpecialWave && Game.DrawArmoredShip)
+            {
+                _isArmored = true;
+                armor.SetActive(true);
+                _totalArmorPieces = armorPieces.Count / 3;
+                _activeArmorPieces = _totalArmorPieces;
+                GetComponent<ShipPath>().SpeedMultiplier = ShipModel.ArmoredSpeedMultiplier;
             }
         }
 
+        spriteRenderer.sprite = Resources.Load<Sprite>(_model.Sprite + (_isArmored ? "_armored" : ""));
+
         _randomAdditionalDelay = Random.Range(0f, 1f);
         foamAnimator.Play(_model.FoamAnim);
+
+        // Set Fog strength
+        if (_currentIndex == Game.CurrentWave.startFog)
+            GameObject.FindWithTag("cloud_manager").GetComponent<CloudManager>()
+                .SetStrength(Random.Range(Game.CurrentWave.FogStrength * 0.75f,
+                    Game.CurrentWave.FogStrength * 1.5f));
+        if (_currentIndex == Game.CurrentWave.endFog)
+            GameObject.FindWithTag("cloud_manager").GetComponent<CloudManager>().SetStrength();
     }
 
     private void Start()
     {
-        _health = _model.Health;
+        _health = MaxHealth;
         healthBar.gameObject.SetActive(false);
         _model.StartCallback?.Invoke(gameObject);
     }
@@ -139,6 +150,8 @@ public class Ship : MonoBehaviour, IDamageable
         isVisible = true;
         if (_model.Name != "Submarine")
             Invincible = false;
+        if (_isArmored)
+            MainCamera.AudioSource.PlayOneShot(armoredSpawnClip);
     }
 
     private void Fire()
@@ -185,9 +198,9 @@ public class Ship : MonoBehaviour, IDamageable
             if (critical)
                 damage = (int)(damage * Game.CriticalFactor);
             _health -= damage;
-            GetComponent<Damageable>()?.Damage(damage, critical: critical);
+            GetComponent<Damageable>()?.Damage(damage, critical: critical, armored: _isArmored);
             animator.SetTrigger(ShipDamage);
-            healthBar.SetValue(_health / (float)_model.Health);
+            healthBar.SetValue(_health / (float)MaxHealth);
 
             if (emp)
             {
@@ -204,9 +217,39 @@ public class Ship : MonoBehaviour, IDamageable
                 );
             }
 
+            if (_isArmored)
+            {
+                var armorLeft = (int)(_health / (float)MaxHealth * _totalArmorPieces);
+                if (armorLeft < _activeArmorPieces && armorPieces.Count > 0)
+                {
+                    var diff = _activeArmorPieces - armorLeft;
+                    _activeArmorPieces = armorLeft;
+                    for (var i = 0; i < diff; i++)
+                        armorPieces.RandomItem().Apply(it =>
+                        {
+                            DropArmorPiece(it);
+                            armorPieces.Remove(it);
+                        });
+                }
+            }
+
             if (_health <= 0)
                 Explode();
         }
+    }
+
+    private void DropArmorPiece(GameObject piece)
+    {
+        Instantiate(armorPiece).transform.Apply(it =>
+        {
+            var localPosition = piece.transform.localPosition;
+            var startPos = piece.transform.position + localPosition * 0.25f;
+            it.position = startPos;
+            it.GetComponent<ArmorPiece>()
+                .Drop(startPos + localPosition * Random.Range(1.5f, 3.5f));
+        });
+        MainCamera.AudioSource.PlayOneShot(dropArmorPieceClip);
+        // Destroy(piece);
     }
 
     public void Explode(bool reward = true)
@@ -237,27 +280,39 @@ public class Ship : MonoBehaviour, IDamageable
         // Money Reward and power up spawn
         if (reward)
         {
-            if (!Game.IsSpecialWave && !isSpecialShip)
+            if (!Game.IsSpecialWave && !_isSpecial)
                 GameObject.FindWithTag("camera_container").GetComponent<Animator>()
                     .SetTrigger(Animator.StringToHash("one_shake"));
-            var money = (int)(_model.Money * (isSpecialShip ? 2f : 1f));
+            var money = (int)(_model.Money * (_isSpecial ? 2f : 1f) * (_isArmored ? 2f : 1f));
             var floatingTextBig = Instantiate(this.floatingTextBig, GameObject.FindWithTag("canvas").transform);
             floatingTextBig.transform.Find("Text").GetComponent<TextMeshProUGUI>().text = $"+ {money} $";
             floatingTextBig.transform.position = transform.position + Vector3.up * 0.5f;
             Game.Money += money;
-            Game.Score += _model.Health;
-            _moneyCounter.UpdateUI();
+            Game.Score += MaxHealth;
+            _counter.UpdateUI();
             _scoreCounter.UpdateUI();
-            if (isSpecialShip)
+            if (_isSpecial)
                 GameObject.FindWithTag("wave_spawner").GetComponent<WaveSpawner>().BeginSpecialWave();
-            
-            if (!Game.HasPowerUp && Game.HasPowerUpSpawn)
+            if (_isArmored && Game.CanSpawnDiamond)
+            {
+                Instantiate(diamond).transform.position = transform.position + new Vector3(
+                    Random.Range(-1f, 1f),
+                    Random.Range(-1f, 1f),
+                    0
+                );
+                ++Game.PendingDiamonds;
+            }
+
+            if (!Game.HasPowerUp && Game.DrawPowerUpSpawn)
                 Instantiate(powerUp).transform.position = transform.position + new Vector3(
                     Random.Range(-2f, 2f),
                     Random.Range(-2f, 2f),
                     0
                 );
         }
+
+        if (_isArmored)
+            armorPieces.ForEach(DropArmorPiece);
 
         IEnumerator ScheduleDestroy()
         {
@@ -275,7 +330,8 @@ public class Ship : MonoBehaviour, IDamageable
         if (other.CompareTag("base") && !_withBaseCollided)
         {
             _withBaseCollided = true;
-            GameObject.FindWithTag("base").GetComponent<Base>().TakeDamage(_model.Damage);
+            GameObject.FindWithTag("base").GetComponent<Base>().TakeDamage((int)(_model.Damage *
+                (_isArmored ? 1.5f : 1f)));
             Explode(false);
         }
         else if (_currentIndex != -1 && other.CompareTag("ship"))

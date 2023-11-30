@@ -12,7 +12,7 @@ public class Stack : MonoBehaviour
     private List<Transform> _children = new();
     [SerializeField] private Transform target;
     [SerializeField] private float gap = 1, offset;
-    [SerializeField] private bool vertical = true, useRectTransform, auto = false;
+    [SerializeField] private bool vertical = true, useRectTransform, auto, inverse;
 
     [Button("Update")]
     public void UpdateUI()
@@ -30,11 +30,11 @@ public class Stack : MonoBehaviour
         var located = 0;
         var activeChildren = _children.Where(child => child.gameObject.activeSelf).ToList();
         var rect = GetComponent<RectTransform>().rect;
-        var step = (vertical ? rect.height : rect.width) / math.max(1, activeChildren.Count - 1);
+        var step = (vertical ? rect.height : rect.width) / math.max(1, activeChildren.Count - 1) ;
         foreach (var child in activeChildren)
         {
             // Calculate child position
-            var childPos = (vertical ? Vector3.up : Vector3.right) * ((auto ? step : gap) * located++);
+            var childPos = (vertical ? Vector3.up : Vector3.right) * ((auto ? step : gap) * located++ * (inverse ? -1f : 1f));
 
             // Assign child position
             if (useRectTransform)

@@ -211,11 +211,11 @@ public class WaveSpawner : MonoBehaviour
 
     private void SpawnShip()
     {
-        var pos = MainCamera.MainCam.RandomBoundaryPoint() * 1.3f;
+        var spawnPoint = MainCamera.MainCam.RandomBoundaryPoint() * 1.3f;
 
         var newShip = Instantiate(ship).GetComponent<Ship>();
         newShip.boxCollider.size = newShip.spriteRenderer.bounds.size;
-        newShip.transform.SetPositionAndRotation(pos, pos.ToQuaternion());
+        newShip.transform.SetPositionAndRotation(spawnPoint, spawnPoint.ToQuaternion());
 
         var immediateSpawnChance = 0.1 + 0.185 * Game.WaveFactor;
 

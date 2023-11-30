@@ -60,7 +60,7 @@ public class ContextMenu : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     private static WaveSpawner _waveSpawner;
     private static AudioClip _buy, _noBuy, _weaponSelect, _click, _hover;
 
-    private int Cost => type switch
+    private int CostMoney => type switch
     {
         ContextMenuType.Repair => Game.RepairCost,
         ContextMenuType.UpgradeHealth => Game.HealthCost,
@@ -90,6 +90,14 @@ public class ContextMenu : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         _ => -1
     };
 
+    private int CostDiamonds => type switch
+    {
+        ContextMenuType.PowerUp => Data.PowerUps[powerUpIndex]
+            .Select(it => it.IsLocked ? it.UnlockDiamondCost : 0),
+        _ => 0
+    };
+
+
     private void Awake()
     {
         _buy ??= Resources.Load<AudioClip>("Audio/buy");
@@ -110,7 +118,7 @@ public class ContextMenu : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     {
         MainCamera.AudioSource.PlayOneShot(_hover);
 
-        if (contextMenu == null || Cost == 0)
+        if (contextMenu == null || CostMoney + CostDiamonds == 0)
             return;
 
         void InstantiateContextMenu(GameObject menu)
@@ -190,7 +198,7 @@ public class ContextMenu : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
 
             _contextMenu.Find("title_text").GetComponent<TextMeshProUGUI>().text = $"{title[type]}:  +{increment}";
-            _contextMenu.Find("money_text").GetComponent<TextMeshProUGUI>().text = Cost.ToString("N0");
+            _contextMenu.Find("money_text").GetComponent<TextMeshProUGUI>().text = CostMoney.ToString("N0");
         }
 
         if (contextMenu.name == "turret_context_menu")
@@ -244,7 +252,8 @@ public class ContextMenu : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
                     {
                         ["title"] = $"( {powerUp.Name} )",
                         ["description"] = powerUp.Description,
-                        ["money_text"] = powerUp.UnlockCost.ToString("N0")
+                        ["money_text"] = powerUp.UnlockCost.ToString("N0"),
+                        ["diamond_text"] = powerUp.UnlockDiamondCost.ToString("N0"),
                     }
                     .ForEach((k, v) => _contextMenu.Find(k).GetComponent<TextMeshProUGUI>().text = v);
             }
@@ -278,7 +287,7 @@ public class ContextMenu : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        if (contextMenu == null || Cost == 0 || _contextMenu.IsDestroyed())
+        if (contextMenu == null || CostMoney + CostDiamonds == 0 || _contextMenu.IsDestroyed())
             return;
         Destroy(_contextMenu.gameObject);
     }
@@ -374,7 +383,7 @@ public class ContextMenu : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         // If is something to buy
         if (contextMenu.name is "upgrade_context_menu" or "power_up_context_menu")
         {
-            if (Cost > Game.Money || Cost == 0)
+            if (CostMoney > Game.Money || CostDiamonds > Game.Diamonds || CostMoney + CostDiamonds == 0)
             {
                 MainCamera.AudioSource.PlayOneShot(_noBuy);
                 return;

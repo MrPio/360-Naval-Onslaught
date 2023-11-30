@@ -68,11 +68,21 @@ namespace Managers
         [NonSerialized] public int SpecialWave = -1;
         public int Ammo;
         [NonSerialized] public int CannonAmmo = 1;
-        public int Money = 2000;
+        public int Money = 200;
+        public int Diamonds = 0, TotalDiamonds, PendingDiamonds;
         public int CurrentTurret = 0;
         public int CurrentCannon = 0;
         public int Score;
         public float SpecialShipChance = 0.05f;
+
+        public float DiamondHealth => (100f + 300f * WaveFactor) *
+                                      (Difficulty == 0 ? 0.9f : 1) *
+                                      (Difficulty == 2 ? 1.5f : 1);
+
+        public float DiamondLifespan => 7f *
+                                        (Difficulty == 0 ? 1.15f : 1) *
+                                        (Difficulty == 2 ? 0.87f : 1);
+
         [NonSerialized] public bool HasOverride;
         [NonSerialized] public float OverrideAmount;
         public float OverheatingDurationFactor => IsSpecialWave ? 0.5f : 1.5f;
@@ -82,6 +92,11 @@ namespace Managers
                                          (IsSpecialWave ? 2.5f : 1f) *
                                          (Difficulty == 0 ? 1.15f : 1) *
                                          (Difficulty == 2 ? 0.9f : 1);
+
+        public bool DrawArmoredShip => new System.Random().Next(0, 100) < 20;
+
+        public bool CanSpawnDiamond => Wave / (Data.Waves.Length / (Data.PowerUps.Length - 1f)) >=
+                                       TotalDiamonds + PendingDiamonds - 1;
 
         // === CRITICAL HIT =========================================================
         private readonly int _criticalFactorBaseCost = 325,
@@ -151,7 +166,7 @@ namespace Managers
         public float PowerUpSpawnChance => 0.125f + PowerUpSpawnChanceStep * PowerUpSpawnChanceLevel;
         private readonly int _powerUpSpawnChanceBaseCost = 350;
 
-        public bool HasPowerUpSpawn => new System.Random().Next(0, 1000) < PowerUpSpawnChance * 1000;
+        public bool DrawPowerUpSpawn => new System.Random().Next(0, 1000) < PowerUpSpawnChance * 1000;
         public int PowerUpSpawnChanceLevel, PowerUpSpawnChanceMaxLevel = 9;
 
         public int PowerUpSpawnChanceCost =>

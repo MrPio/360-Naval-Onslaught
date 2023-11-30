@@ -92,6 +92,7 @@ SpriteAtlas:
   - {fileID: -1181818422, guid: 97a26338e539c164f8319f1452a6e0ad, type: 3}
   - {fileID: 1423504516, guid: 97a26338e539c164f8319f1452a6e0ad, type: 3}
   - {fileID: -1108595084, guid: 97a26338e539c164f8319f1452a6e0ad, type: 3}
+  - {fileID: 21300000, guid: 0c761c7833071eb4ab3fbc04288c7d2c, type: 3}
   - {fileID: 21300000, guid: d55ca809141597b4c854351a71404050, type: 3}
   - {fileID: 21300000, guid: 93567329ae6c4c14a97eef670e4eec7b, type: 3}
   - {fileID: 295544810, guid: 76024c597eeab0b4eb2ed8b85839ef47, type: 3}
@@ -144,6 +145,7 @@ SpriteAtlas:
   - bubble_pop_under_water_spritesheet_7
   - bubble_pop_under_water_spritesheet_4
   - bubble_pop_under_water_spritesheet_5
+  - diamond
   - critical
   - health
   - bubble_pop_one_spritesheet_512px_by_512px_per_frame_2

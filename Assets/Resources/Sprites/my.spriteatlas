@@ -87,7 +87,9 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 8873d87ae7312234788b5ee21b78300c, type: 3}
   - {fileID: 21300000, guid: 7627bd1b6c722d24f95f8fa7fedf2bb9, type: 3}
   - {fileID: 21300000, guid: cf17367b65fcf4042857df4eb5c22ad6, type: 3}
+  - {fileID: 21300000, guid: cf714b0c6905df547830e7e8b4070213, type: 3}
   - {fileID: 21300000, guid: eb9372bce5a37b94f8dafae73f23ea9f, type: 3}
+  - {fileID: 21300000, guid: 9b42f61e88930494b8e67ecc64676166, type: 3}
   - {fileID: 21300000, guid: b017e4cf994a7694babbbfd6d8d6b13b, type: 3}
   m_PackedSpriteNamesToIndex:
   - cannon_2
@@ -115,7 +117,9 @@ SpriteAtlas:
   - turret_1
   - ship_1
   - cannon_1
+  - armor_piece
   - ship_3
+  - ship_1_armored
   - main_base
   m_RenderDataMap: {}
   m_Tag: my

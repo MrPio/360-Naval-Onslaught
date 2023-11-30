@@ -12,7 +12,9 @@ public class ShopMenu : MonoBehaviour
     private static GameManager Game => GameManager.Instance;
     private static DataManager Data => DataManager.Instance;
 
-    [SerializeField] private TextMeshProUGUI moneyText,
+    [SerializeField] private TextMeshProUGUI
+        moneyText,
+        diamondText,
         waveText,
         hpText,
         criticalFactorText,
@@ -39,6 +41,7 @@ public class ShopMenu : MonoBehaviour
     {
         // Header
         moneyText.text = Game.Money.ToString("N0");
+        diamondText.text = Game.Diamonds.ToString("N0");
         waveText.text = (Game.Wave).ToString();
 
         // Artillery tab

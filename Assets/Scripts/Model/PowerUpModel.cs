@@ -31,7 +31,7 @@ namespace Model
         public readonly string Description;
         public readonly string Sprite;
         public readonly bool IsMultiplier;
-        public readonly int UnlockCost;
+        public readonly int UnlockCost, UnlockDiamondCost;
         public int Level;
         public bool IsLocked;
         public int Health => (int)(120 * (1f + 4f * Game.WaveFactor));
@@ -54,7 +54,8 @@ namespace Model
         public bool HasDuration => BaseDuration > 0;
 
         public PowerUpModel(PowerUp type, string description, string sprite, int upgradeBaseCost,
-            int unlockCost, float baseDuration = 20f, float baseStrength = 1.5f, bool isMultiplier = false,
+            int unlockCost, int unlockDiamondCost = 1, float baseDuration = 20f, float baseStrength = 1.5f,
+            bool isMultiplier = false,
             bool isLocked = true)
         {
             Type = type;
@@ -64,14 +65,16 @@ namespace Model
             BaseStrength = baseStrength;
             _upgradeBaseCost = upgradeBaseCost;
             UnlockCost = unlockCost;
+            UnlockDiamondCost = unlockDiamondCost;
             IsMultiplier = isMultiplier;
             IsLocked = isLocked;
         }
 
         public void Unlock()
         {
-            if (Game.Money < UnlockCost || !IsLocked) return;
+            if (Game.Money < UnlockCost || Game.Diamonds < UnlockDiamondCost || !IsLocked) return;
             Game.Money -= UnlockCost;
+            Game.Diamonds -= UnlockDiamondCost;
             IsLocked = false;
         }
 

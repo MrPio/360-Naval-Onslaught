@@ -9,12 +9,14 @@ public class Damageable : MonoBehaviour
     [SerializeField] private GameObject damageText;
     [SerializeField] private float offset = 1, textSize = 36;
     [SerializeField] private Color color = Color.red;
-    [SerializeField] private List<AudioClip> damageClips = new(), criticalDamageClips = new();
 
-    public void Damage(int damage, bool critical = false)
+    [SerializeField]
+    private List<AudioClip> damageClips = new(), criticalDamageClips = new(), armoredDamageClips = new();
+
+    public void Damage(int damage, bool critical = false, bool armored = false)
     {
         SpawnText(math.min(damage, 9999), critical);
-        MakeSound(critical);
+        MakeSound(critical, armored);
     }
 
     private void SpawnText(int damage, bool critical)
@@ -34,9 +36,9 @@ public class Damageable : MonoBehaviour
         });
     }
 
-    private void MakeSound(bool critical)
+    private void MakeSound(bool critical, bool armored)
     {
-        var clips = critical ? criticalDamageClips : damageClips;
+        var clips = critical ? criticalDamageClips : (armored ? armoredDamageClips : damageClips);
         if (clips.Count > 0)
             MainCamera.AudioSource.PlayOneShot(clips.RandomItem(), 0.65f);
     }
