@@ -31,7 +31,7 @@ public class DropBomb : MonoBehaviour
         // Check collisions
         foreach (var mainBase in Physics2D
                      .OverlapCircleAll(currentPos, radius)
-                     .Where(col => col.CompareTag(isAlly ? "ship" : "base")))
+                     .Where(col => (!isAlly ? new[] { "base" } : new[] { "ship", "power_up" }).Any(col.CompareTag)))
         {
             hit = true;
             if (isAlly)

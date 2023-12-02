@@ -44,7 +44,7 @@ namespace Managers
             new(
                 name: "Base Turret", sprite: "Sprites/my/turret_1", fireClip: "Audio/turret_fire_1",
                 bulletSprite: "Sprites/bullet_1",
-                baseSpeed: 380, baseRate: 300, baseDamage: 20, baseAmmo: 32, baseReload: 62,
+                baseSpeed: 380, baseRate: 300, baseDamage: 18, baseAmmo: 32, baseReload: 62,
                 speedBaseCost: 90, rateBaseCost: 140, damageBaseCost: 170, ammoBaseCost: 125, reloadBaseCost: 115
             ),
             new(
@@ -120,7 +120,7 @@ namespace Managers
             new(
                 name: "SpeedBoat", sprite: "Sprites/my/ship_1", foamAnim: "foam_1", fireClip: null,
                 explodeClip: "Audio/ship_destroy",
-                baseSpeed: 100, baseRate: 0, baseDamage: 350, baseHealth: 90, baseMoney: 72,
+                baseSpeed: 100, baseRate: 0, baseDamage: 350, baseHealth: 110, baseMoney: 72,
                 hasPath: false, missileSprite: null
             ),
             new(
@@ -258,7 +258,8 @@ namespace Managers
                 upgradeBaseCost: 350,
                 unlockCost: 425,
                 // isLocked: false,
-                baseStrength: 4f,
+                baseDuration: 30,
+                baseStrength: 5f,
                 isMultiplier: true
             ),
             new(
@@ -306,19 +307,19 @@ namespace Managers
             [Slot.Green] = new List<PrizeModel>
             {
                 new(500, PrizeModel.PrizeType.Score),
-                new(300, PrizeModel.PrizeType.Money),
+                new(100, PrizeModel.PrizeType.Money),
             },
             [Slot.Yellow] = new List<PrizeModel>
             {
                 new(1000, PrizeModel.PrizeType.Score),
-                new(500, PrizeModel.PrizeType.Money),
-                new(500, PrizeModel.PrizeType.Money),
+                new(300, PrizeModel.PrizeType.Money),
+                new(200, PrizeModel.PrizeType.Money),
             },
             [Slot.Orange] = new List<PrizeModel>
             {
                 new(1500, PrizeModel.PrizeType.Score),
-                new(1000, PrizeModel.PrizeType.Money),
-                new(1000, PrizeModel.PrizeType.Money),
+                new(500, PrizeModel.PrizeType.Money),
+                new(400, PrizeModel.PrizeType.Money),
             },
             [Slot.Red] = new List<PrizeModel>
             {
@@ -328,7 +329,7 @@ namespace Managers
             [Slot.Cyan] = new List<PrizeModel>
             {
                 new(2000, PrizeModel.PrizeType.Score),
-                new(1500, PrizeModel.PrizeType.Money),
+                new(1000, PrizeModel.PrizeType.Money),
             },
         };
     }

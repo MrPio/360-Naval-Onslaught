@@ -70,7 +70,7 @@ namespace Managers
         [NonSerialized] public int CannonAmmo = 1;
         public int Money = 200;
         public int Diamonds = 0, TotalDiamonds, PendingDiamonds;
-        public int CurrentTurret = 0;
+        public int CurrentTurret = 2;
         public int CurrentCannon = 0;
         public int Score;
         public float SpecialShipChance = 0.05f;
@@ -97,15 +97,17 @@ namespace Managers
 
         public bool CanSpawnDiamond => Wave / (Data.Waves.Length / (Data.PowerUps.Length - 1f)) >=
                                        TotalDiamonds + PendingDiamonds - 1;
+        public bool DrawDiamond => new System.Random().Next(0, 100) < 50;
+
 
         // === CRITICAL HIT =========================================================
         private readonly int _criticalFactorBaseCost = 325,
-            _turretCriticalChanceBaseCost = 300,
-            _cannonCriticalChanceBaseCost = 200;
+            _turretCriticalChanceBaseCost = 400,
+            _cannonCriticalChanceBaseCost = 300;
 
         public float CriticalFactor => 2f + Enumerable.Range(0, CriticalFactorLevel).Sum(CriticalFactorStep);
-        public float TurretCriticalChance => 0.05f + TurretCriticalChanceStep * TurretCriticalChanceLevel;
-        public float CannonCriticalChance => 0.05f + CannonCriticalChanceStep * CannonCriticalChanceLevel;
+        public float TurretCriticalChance => 0.03f + TurretCriticalChanceStep * TurretCriticalChanceLevel;
+        public float CannonCriticalChance => 0.075f + CannonCriticalChanceStep * CannonCriticalChanceLevel;
 
         public int CriticalFactorLevel, TurretCriticalChanceLevel, CannonCriticalChanceLevel;
         public int CriticalMaxLevel = 9;

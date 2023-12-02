@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using ExtensionsFunctions;
@@ -6,6 +7,7 @@ using Model;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public class Wheel : MonoBehaviour
 {
@@ -16,6 +18,7 @@ public class Wheel : MonoBehaviour
     [SerializeField] private float duration = 5f;
     [MinMaxSlider(0, 50)] [SerializeField] private Vector2 lapsRange;
     [SerializeField] private AudioClip spinningClip, moneyClip, diamondClip, scoreClip, menuIn, menuOut;
+    [SerializeField] private List<AudioClip> ticks;
     [SerializeField] private AnimationCurve dragCurve;
     [SerializeField] private Animator animator;
     private Counter _scoreCounter, _moneyCounter, _diamondCounter;
@@ -25,6 +28,7 @@ public class Wheel : MonoBehaviour
     private bool _isSpinning;
     private float AngleStep => 360f / _slots.Count;
     private PrizeModel[] _prizes;
+    private int _ticked;
 
     private void Awake()
     {
@@ -59,8 +63,19 @@ public class Wheel : MonoBehaviour
             TakeReward();
         }
         else
+        {
+            var newAngle = Mathf.Lerp(0, _totalAngle, dragCurve.Evaluate(progress));
+
+            // Tick sound
+            if (newAngle - _ticked * AngleStep > AngleStep)
+            {
+                ++_ticked;
+                MainCamera.AudioSource.PlayOneShot(ticks.RandomItem());
+            }
+
             wheel.transform.localRotation =
-                Quaternion.Euler(0, 0, Mathf.Lerp(0, _totalAngle, dragCurve.Evaluate(progress)));
+                Quaternion.Euler(0, 0, newAngle);
+        }
     }
 
     private void OnEnable()
@@ -69,8 +84,11 @@ public class Wheel : MonoBehaviour
         MainCamera.AudioSource.PlayOneShot(menuIn);
     }
 
-    private void ShowText() =>
+    private void ShowText()
+    {
+        GameObject.FindWithTag("wave_spawner").GetComponent<WaveSpawner>().baseMain.SetActive(false);
         tapText.SetActive(true);
+    }
 
     public void OnClick()
     {
@@ -121,7 +139,13 @@ public class Wheel : MonoBehaviour
             it.transform.position = Vector2.zero;
         });
         animator.SetTrigger(Animator.StringToHash("exit"));
+        GameObject.FindWithTag("wave_spawner").GetComponent<WaveSpawner>().baseMain.SetActive(true);
     }
 
     private void Exit() => MainCamera.AudioSource.PlayOneShot(menuOut);
+
+    private void OnDisable()
+    {
+        GameObject.FindWithTag("wave_spawner").GetComponent<WaveSpawner>().isPaused = false;
+    }
 }

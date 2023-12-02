@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Managers;
 using UnityEngine;
 
@@ -8,8 +9,15 @@ namespace Model
     public class ShipModel
     {
         private static GameManager Game => GameManager.Instance;
+
         public static float SpecialSpeedMultiplier => InputManager.IsMobile ? 3.7f : 3.75f;
-        public static float ArmoredSpeedMultiplier => 0.7f;
+
+        public static List<float> SpecialWaveSpeedMultiplier = new()
+        {
+            3.35f, 4.55f, 3.35f, 3.85f, 3.85f, 3.2f,
+        };
+
+        public static float ArmoredSpeedMultiplier => 0.65f;
         public readonly string Name;
         public readonly string Sprite;
         public readonly string FoamAnim;
@@ -30,7 +38,10 @@ namespace Model
         public float Delay => 7f + Mathf.Max(0f, 1f - Game.WaveFactor) * 4f;
 
         public int Speed => (int)(_baseSpeed * (1f + 0.05f * Game.Wave) *
-                                  (Game.IsSpecialWave ? (InputManager.IsMobile ? 3f : 3.35f) : 1f) *
+                                  (Game.IsSpecialWave
+                                      ? SpecialWaveSpeedMultiplier[Game.SpecialWave] *
+                                        (InputManager.IsMobile ? 0.9f : 1f)
+                                      : 1f) *
                                   (Game.SpecialWave == 2 ? 1.5f : 1f) *
                                   (Game.Difficulty == 0 ? 0.9f : 1) *
                                   (Game.Difficulty == 2 ? 1.25f : 1)
@@ -49,7 +60,7 @@ namespace Model
                                    (Game.Difficulty == 0 ? 0.9f : 1) *
                                    (Game.Difficulty == 2 ? 1.25f : 1));
 
-        public int Money => (int)(_baseMoney * (1f + 0.025f * Game.Wave) * (Game.IsSpecialWave ? 0.333f : 1f) *
+        public int Money => (int)(_baseMoney * (1f + 0.025f * Game.Wave) * (Game.IsSpecialWave ? 0.2f : 1f) *
                                   Game.PowerUpFactor(PowerUpModel.PowerUp.Money) *
                                   (Game.Difficulty == 0 ? 0.9f : 1) *
                                   (Game.Difficulty == 2 ? 1.25f : 1));

@@ -287,7 +287,7 @@ public class ContextMenu : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        if (contextMenu == null || CostMoney + CostDiamonds == 0 || _contextMenu.IsDestroyed())
+        if (contextMenu == null || _contextMenu.IsDestroyed())
             return;
         Destroy(_contextMenu.gameObject);
     }

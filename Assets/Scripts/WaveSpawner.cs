@@ -29,7 +29,6 @@ public class WaveSpawner : MonoBehaviour
 
     [SerializeField] private GameObject
         waveCounter,
-        baseMain,
         ammoContainer,
         moneyContainer,
         specialsContainer,
@@ -41,10 +40,12 @@ public class WaveSpawner : MonoBehaviour
         winMenu,
         mainMenuContinueGame,
         mobileShopConfirm,
-        difficultyMenu;
+        difficultyMenu,
+        wheel;
 
     public GameObject
         overlay,
+        baseMain,
         mainMenu,
         gameOver,
         specialsMenu,
@@ -133,21 +134,14 @@ public class WaveSpawner : MonoBehaviour
                 }
                 // End special wave
                 else if (_accumulator >= 7f && specialSpawned >= currentSpecialPoints.Count)
-                {
-                    _accumulator = -4f;
-                    Game.SpecialWave = -1;
-                    specialSpawned = 0;
-                    specialAudioSource.Stop();
-                    audioSource.volume = 0.5f;
-                    audioSource.Play();
-                    WarningPanel.SetActive(false);
-                    Game.Ammo = Game.CurrentTurretModel.Ammo;
-                    ammoContainer.GetComponentsInChildren<AmmoCounter>()[0].UpdateUI();
-                    CameraAnimator.SetTrigger(Animator.StringToHash("stop_shake"));
-                    MainCamera.MainCam.GetComponent<MainCamera>().TransitionTo(Vector2.zero, MainCamera.BaseOrthoSize);
-                }
+                    EndSpecialWave();
             }
         }
+    }
+
+    public void SpecialShipSpawned()
+    {
+        _accumulator -= 3;
     }
 
     public void BeginSpecialWave()
@@ -168,16 +162,22 @@ public class WaveSpawner : MonoBehaviour
             .ToList();
 
         // Move the Camera according to the special wave type (TODO move to SpecialWaveModel class)
-        if (specialWave == 1)
+        if (path.name is "n")
             MainCamera.MainCam.GetComponent<MainCamera>().TransitionTo(Vector2.up * 3.5f, 8.5f);
-        else if (specialWave == 2)
-            MainCamera.MainCam.GetComponent<MainCamera>().TransitionTo(Vector2.right * 10f, 9.5f);
-        else
+        if (path.name is "e")
+            MainCamera.MainCam.GetComponent<MainCamera>().TransitionTo(Vector2.right * 10f, 8.5f);
+        if (path.name is "s")
+            MainCamera.MainCam.GetComponent<MainCamera>().TransitionTo(Vector2.down * 3.5f, 8.5f);
+        if (path.name is "ne")
+            MainCamera.MainCam.GetComponent<MainCamera>().TransitionTo(Vector2.one * 3.5f, 9f);
+        if (path.name is "se")
+            MainCamera.MainCam.GetComponent<MainCamera>().TransitionTo(new Vector2(1, -1) * 3.5f, 9f);
+        if (path.name is "nesw")
             MainCamera.MainCam.GetComponent<MainCamera>().TransitionTo(Vector2.zero, 8.5f);
         DestroyAllShips();
         CameraAnimator.SetTrigger(Animator.StringToHash("shake"));
 
-        _accumulator = -3f;
+        _accumulator = -2f;
         Game.Ammo = Game.CurrentTurretModel.Ammo;
         ammoContainer.GetComponentsInChildren<AmmoCounter>()[0].UpdateUI();
         WarningPanel.SetActive(true);
@@ -185,6 +185,24 @@ public class WaveSpawner : MonoBehaviour
         audioSource.Pause();
         specialAudioSource.clip = specialLevelsClip.RandomItem();
         specialAudioSource.Play();
+    }
+
+
+    private void EndSpecialWave()
+    {
+        isPaused = true;
+        _accumulator = -3f;
+        Game.SpecialWave = -1;
+        specialSpawned = 0;
+        specialAudioSource.Stop();
+        audioSource.volume = 0.5f;
+        audioSource.Play();
+        WarningPanel.SetActive(false);
+        Game.Ammo = Game.CurrentTurretModel.Ammo;
+        ammoContainer.GetComponentsInChildren<AmmoCounter>()[0].UpdateUI();
+        CameraAnimator.SetTrigger(Animator.StringToHash("stop_shake"));
+        MainCamera.MainCam.GetComponent<MainCamera>().TransitionTo(Vector2.zero, MainCamera.BaseOrthoSize);
+        wheel.SetActive(true);
     }
 
     private void DestroyAllShips()
@@ -220,7 +238,7 @@ public class WaveSpawner : MonoBehaviour
         var immediateSpawnChance = 0.1 + 0.185 * Game.WaveFactor;
 
         _nextSpawn = Random.Range(0f, 1f) < immediateSpawnChance
-            ? 0f
+            ? 0.25f
             : (2.25f + Random.Range(0, 6f * (1 - 0.35f * Game.WaveFactor))) / _model.SpawnSpeedMultiply;
     }
 

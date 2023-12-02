@@ -27,7 +27,7 @@ public class SmallCannonBall : MonoBehaviour
         // Check collisions
         foreach (var ship in Physics2D
                      .OverlapCircleAll(currentPos, GameManager.Instance.CurrentCannonModel.Radius / 100f)
-                     .Where(col => col.CompareTag("ship"))
+                     .Where(col => new[] { "ship", "power_up" }.Any(col.CompareTag))
                 )
         {
             hit = true;

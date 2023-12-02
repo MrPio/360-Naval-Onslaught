@@ -72,9 +72,10 @@ public class Bullet : MonoBehaviour
             _accumulator = 0;
             Physics2D.OverlapCircleNonAlloc(transform.position + (transform.rotation * Vector2.right) * 1f, 1.65f,
                 _collidersArray);
-            foreach (var col in _collidersArray.Where(it => it is { } && !it.IsDestroyed() && it.CompareTag("ship")))
+            foreach (var col in _collidersArray.Where(it =>
+                         it is { } && !it.IsDestroyed() && new[] { "ship", "power_up" }.Any(it.CompareTag)))
             {
-                if (!col.GetComponent<Ship>().Invincible)
+                if (!col.CompareTag("ship") || !col.GetComponent<Ship>().Invincible)
                 {
                     _target = col.gameObject;
                     break;
@@ -99,6 +100,7 @@ public class Bullet : MonoBehaviour
             StartCoroutine(WaitAndDestroy());
         _isDestroying = true;
     }
+
     private IEnumerator WaitAndDestroy()
     {
         yield return new WaitForSeconds(1.0f);
@@ -110,7 +112,7 @@ public class Bullet : MonoBehaviour
         if ((col.gameObject.tag.Contains("ship") && !col.GetComponent<Ship>().Invincible) ||
             col.gameObject.tag.Contains("power_up"))
         {
-            col.GetComponent<IDamageable>().TakeDamage(Game.CurrentTurretModel.Damage,critical:Game.IsTurretCritical);
+            col.GetComponent<IDamageable>().TakeDamage(Game.CurrentTurretModel.Damage, critical: Game.IsTurretCritical);
             ++GameManager.Instance.CurrentWaveTurretHit;
 
             Instantiate(

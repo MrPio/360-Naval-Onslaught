@@ -36,6 +36,8 @@ TagManager:
   - power_up
   - override_controller
   - diamond_counter
+  - how_to_play_menu_1
+  - wheel
   layers:
   - Default
   - TransparentFX

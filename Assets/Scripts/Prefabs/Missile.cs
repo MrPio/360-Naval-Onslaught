@@ -34,8 +34,8 @@ public class Missile : MonoBehaviour
 
             // Check collisions
             foreach (var go in Physics2D
-                         .OverlapCircleAll((Vector2)transform.position+ Vector2.down * 0.25f, hitRange)
-                         .Where(col => col.CompareTag(isEnemy ? "base" : "ship"))
+                         .OverlapCircleAll((Vector2)transform.position + Vector2.down * 0.25f, hitRange)
+                         .Where(col => (isEnemy ? new[] { "base" } : new[] { "ship", "power_up" }).Any(col.CompareTag))
                     )
             {
                 hit = true;
@@ -52,7 +52,7 @@ public class Missile : MonoBehaviour
     void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere((Vector2)transform.position+ Vector2.down * 0.25f, hitRange);
+        Gizmos.DrawWireSphere((Vector2)transform.position + Vector2.down * 0.25f, hitRange);
     }
 
     public void SetMissile(Sprite missileSprite)

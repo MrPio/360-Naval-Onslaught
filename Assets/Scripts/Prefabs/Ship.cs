@@ -51,7 +51,7 @@ public class Ship : MonoBehaviour, IDamageable
     [SerializeField] private bool alwaysSpecial;
     private bool _isSpecial, _isArmored;
     private int _activeArmorPieces, _totalArmorPieces;
-    private int MaxHealth => _model.Health * (_isArmored ? 3 : 1);
+    private int MaxHealth => _model.Health * (_isArmored ? 4 : 1);
 
     private void Awake()
     {
@@ -90,6 +90,7 @@ public class Ship : MonoBehaviour, IDamageable
             );
             if (specialBoat)
             {
+                GameObject.FindWithTag("wave_spawner").GetComponent<WaveSpawner>().SpecialShipSpawned();
                 audioSource.PlayOneShot(specialAudioClip);
                 GetComponent<ShipPath>().SpeedMultiplier = ShipModel.SpecialSpeedMultiplier;
                 animator.SetTrigger(Animator.StringToHash("special_ship"));
@@ -198,6 +199,7 @@ public class Ship : MonoBehaviour, IDamageable
             if (critical)
                 damage = (int)(damage * Game.CriticalFactor);
             _health -= damage;
+            _health = Mathf.Max(_health, 0);
             GetComponent<Damageable>()?.Damage(damage, critical: critical, armored: _isArmored);
             animator.SetTrigger(ShipDamage);
             healthBar.SetValue(_health / (float)MaxHealth);
@@ -293,7 +295,7 @@ public class Ship : MonoBehaviour, IDamageable
             _scoreCounter.UpdateUI();
             if (_isSpecial)
                 GameObject.FindWithTag("wave_spawner").GetComponent<WaveSpawner>().BeginSpecialWave();
-            if (_isArmored && Game.CanSpawnDiamond)
+            if (_isArmored && Game.CanSpawnDiamond && Game.DrawDiamond)
             {
                 Instantiate(diamond).transform.position = transform.position + new Vector3(
                     Random.Range(-1f, 1f),
