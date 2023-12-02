@@ -326,7 +326,7 @@ public class WaveSpawner : MonoBehaviour
         _model = Game.CurrentWave;
         GameObject.FindWithTag("cloud_manager").GetComponent<CloudManager>().SetStrength();
         _waveStart = Time.time;
-        _accumulator = 0;
+        _accumulator = -3f;
         _nextSpawn = 2f;
         PathsOrder = Enumerable.Range(0, pathsSize).ToList();
         PathsOrder.Shuffle();

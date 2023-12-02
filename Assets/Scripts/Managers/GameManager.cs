@@ -70,7 +70,7 @@ namespace Managers
         [NonSerialized] public int CannonAmmo = 1;
         public int Money = 200;
         public int Diamonds = 0, TotalDiamonds, PendingDiamonds;
-        public int CurrentTurret = 2;
+        public int CurrentTurret = 0;
         public int CurrentCannon = 0;
         public int Score;
         public float SpecialShipChance = 0.05f;
