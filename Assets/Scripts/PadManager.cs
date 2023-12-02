@@ -78,6 +78,6 @@ public class PadManager : MonoBehaviour
     {
         var dir = turretCircleParentTransform.InverseTransformPoint(worldPos);
         In.MobileTurretDirection = dir.normalized;
-        turretCircleTransform.anchoredPosition = dir / 2f;
+        turretCircleTransform.anchoredPosition = dir / 1.5f;
     }
 }

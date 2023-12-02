@@ -4,14 +4,10 @@ using System.Collections.Generic;
 using System.Linq;
 using ExtensionsFunctions;
 using Interfaces;
-using JetBrains.Annotations;
 using Managers;
 using Model;
 using TMPro;
-using Unity.Mathematics;
-using UnityEditor.SceneManagement;
 using UnityEngine;
-using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 public class Ship : MonoBehaviour, IDamageable
@@ -51,7 +47,7 @@ public class Ship : MonoBehaviour, IDamageable
     [SerializeField] private bool alwaysSpecial;
     private bool _isSpecial, _isArmored;
     private int _activeArmorPieces, _totalArmorPieces;
-    private int MaxHealth => _model.Health * (_isArmored ? 4 : 1);
+    private int MaxHealth => _model.Health * (_isArmored ? 3 : 1);
 
     private void Awake()
     {

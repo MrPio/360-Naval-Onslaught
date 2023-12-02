@@ -1,9 +1,7 @@
 using System.Collections.Generic;
 using Managers;
-using Mono.Cecil;
 using UnityEngine;
 using UnityEngine.UI;
-
 
 public class PowerUpSlider : MonoBehaviour
 {

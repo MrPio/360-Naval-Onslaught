@@ -78,7 +78,7 @@ public class ShopMenu : MonoBehaviour
         }
 
         for (var i = 0; i < powerUpSlots.Length; i++)
-            powerUpSlots[i].color = Color.white.WithAlpha(Data.PowerUps[i].IsLocked ? 0.5f : 1f);
+            powerUpSlots[i].color = new Color(1, 1, 1, Data.PowerUps[i].IsLocked ? 0.5f : 1f);
         for (var i = 0; i < powerUpLocks.Length; i++)
             powerUpLocks[i].SetActive(Data.PowerUps[i].IsLocked);
     }

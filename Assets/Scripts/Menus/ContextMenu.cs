@@ -57,7 +57,7 @@ public class ContextMenu : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     [SerializeField] private ContextMenuType type;
     [SerializeField] private int turretIndex = -1, cannonIndex = -1, specialIndex = 0, powerUpIndex = -1;
     private Transform _contextMenu;
-    private static WaveSpawner _waveSpawner;
+    private WaveSpawner _waveSpawner;
     private static AudioClip _buy, _noBuy, _weaponSelect, _click, _hover;
 
     private int CostMoney => type switch
@@ -98,14 +98,14 @@ public class ContextMenu : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     };
 
 
-    private void Awake()
+    private void Start()
     {
         _buy ??= Resources.Load<AudioClip>("Audio/buy");
         _noBuy ??= Resources.Load<AudioClip>("Audio/no_buy");
         _weaponSelect ??= Resources.Load<AudioClip>("Audio/menu_weapon_select");
         _click ??= Resources.Load<AudioClip>("Audio/menu_click");
         _hover ??= Resources.Load<AudioClip>("Audio/menu_click_2");
-        _waveSpawner ??= GameObject.FindWithTag("wave_spawner").GetComponent<WaveSpawner>();
+        _waveSpawner = GameObject.FindWithTag("wave_spawner").GetComponent<WaveSpawner>();
     }
 
     private void OnEnable()
@@ -129,7 +129,7 @@ public class ContextMenu : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
                 (followMouse
                     ? (Vector2)MainCamera.MainCam.ScreenToWorldPoint(Input.mousePosition)
                     : transform.position) +
-                Vector2.up * (InputManager.IsMobile ? 1f : 0.3f),
+                Vector2.up * (InputManager.IsMobile ? 1.35f : 0.3f),
                 rotation: Quaternion.identity,
                 GameObject.FindWithTag("canvas").transform
             ).transform;
@@ -298,7 +298,7 @@ public class ContextMenu : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         if (followMouse)
             _contextMenu.transform.position =
                 ((Vector2)MainCamera.MainCam.ScreenToWorldPoint(Input.mousePosition)) +
-                Vector2.up * (InputManager.IsMobile ? 1f : 0.3f);
+                Vector2.up * (InputManager.IsMobile ? 1.35f : 0.3f);
     }
 
     public void OnPointerClick(PointerEventData eventData)

@@ -10,11 +10,11 @@ namespace Model
     {
         private static GameManager Game => GameManager.Instance;
 
-        public static float SpecialSpeedMultiplier => InputManager.IsMobile ? 3.7f : 3.75f;
+        public static float SpecialSpeedMultiplier => InputManager.IsMobile ? 3.65f : 3.75f;
 
         public static List<float> SpecialWaveSpeedMultiplier = new()
         {
-            3.35f, 4.55f, 3.35f, 3.85f, 3.85f, 3.2f,
+            3.35f, 4.55f, 3.25f, 3.85f, 3.85f, 3.2f,
         };
 
         public static float ArmoredSpeedMultiplier => 0.65f;
@@ -40,10 +40,10 @@ namespace Model
         public int Speed => (int)(_baseSpeed * (1f + 0.05f * Game.Wave) *
                                   (Game.IsSpecialWave
                                       ? SpecialWaveSpeedMultiplier[Game.SpecialWave] *
-                                        (InputManager.IsMobile ? 0.9f : 1f)
+                                        (InputManager.IsMobile ? 0.815f : 1f)
                                       : 1f) *
                                   (Game.SpecialWave == 2 ? 1.5f : 1f) *
-                                  (Game.Difficulty == 0 ? 0.9f : 1) *
+                                  (Game.Difficulty == 0 ? 0.85f : 1) *
                                   (Game.Difficulty == 2 ? 1.25f : 1)
             );
 
@@ -57,7 +57,7 @@ namespace Model
                                    (Game.Difficulty == 2 ? 1.25f : 1));
 
         public int Health => (int)(_baseHealth * (1f + (4f * Game.WaveFactor) + (0.3f * (int)(Game.Wave / 5))) *
-                                   (Game.Difficulty == 0 ? 0.9f : 1) *
+                                   (Game.Difficulty == 0 ? 0.85f : 1) *
                                    (Game.Difficulty == 2 ? 1.25f : 1));
 
         public int Money => (int)(_baseMoney * (1f + 0.025f * Game.Wave) * (Game.IsSpecialWave ? 0.2f : 1f) *

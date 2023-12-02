@@ -76,7 +76,7 @@ namespace Managers
         public float SpecialShipChance = 0.05f;
 
         public float DiamondHealth => (100f + 300f * WaveFactor) *
-                                      (Difficulty == 0 ? 0.9f : 1) *
+                                      (Difficulty == 0 ? 0.8f : 1) *
                                       (Difficulty == 2 ? 1.5f : 1);
 
         public float DiamondLifespan => 7f *
@@ -93,10 +93,11 @@ namespace Managers
                                          (Difficulty == 0 ? 1.15f : 1) *
                                          (Difficulty == 2 ? 0.9f : 1);
 
-        public bool DrawArmoredShip => new System.Random().Next(0, 100) < 20;
+        public bool DrawArmoredShip => new System.Random().Next(0, 100) < 10;
 
         public bool CanSpawnDiamond => Wave / (Data.Waves.Length / (Data.PowerUps.Length - 1f)) >=
                                        TotalDiamonds + PendingDiamonds - 1;
+
         public bool DrawDiamond => new System.Random().Next(0, 100) < 50;
 
 
