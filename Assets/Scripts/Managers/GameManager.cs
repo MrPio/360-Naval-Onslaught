@@ -213,6 +213,10 @@ namespace Managers
 
         // ==========================================================================
 
+        // === FORTUNE WHEEL ========================================================
+        public int WheelsSpinned;
+        // ==========================================================================
+
         public int HealthStep => (int)(_healthBaseStep * (1f + 0.25f * HealthLevel));
 
         public int HealthCost => (int)(_healthBaseCost * (1f + 0.5f * HealthLevel) *

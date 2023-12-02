@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using ExtensionsFunctions;
 using Model;
@@ -267,7 +268,7 @@ namespace Managers
                 upgradeBaseCost: 550,
                 unlockCost: 450,
                 // isLocked: false,
-                baseDuration:-1f,
+                baseDuration: -1f,
                 baseStrength: 1f
             ),
             new(
@@ -280,6 +281,55 @@ namespace Managers
                 baseStrength: 2f,
                 isMultiplier: true
             ),
+        };
+
+        public enum Slot
+        {
+            Yellow,
+            Orange,
+            Red,
+            Cyan,
+            Green,
+        }
+
+        public Dictionary<Slot, List<int>> SlotIndices = new()
+        {
+            [Slot.Green] = new List<int> { 0, 5 },
+            [Slot.Yellow] = new List<int> { 1, 4, 8 },
+            [Slot.Orange] = new List<int> { 2, 6 },
+            [Slot.Red] = new List<int> { 3, 7 },
+            [Slot.Cyan] = new List<int> { 9 },
+        };
+
+        public Dictionary<Slot, List<PrizeModel>> Prizes = new()
+        {
+            [Slot.Green] = new List<PrizeModel>
+            {
+                new(500, PrizeModel.PrizeType.Score),
+                new(300, PrizeModel.PrizeType.Money),
+            },
+            [Slot.Yellow] = new List<PrizeModel>
+            {
+                new(1000, PrizeModel.PrizeType.Score),
+                new(500, PrizeModel.PrizeType.Money),
+                new(500, PrizeModel.PrizeType.Money),
+            },
+            [Slot.Orange] = new List<PrizeModel>
+            {
+                new(1500, PrizeModel.PrizeType.Score),
+                new(1000, PrizeModel.PrizeType.Money),
+                new(1000, PrizeModel.PrizeType.Money),
+            },
+            [Slot.Red] = new List<PrizeModel>
+            {
+                new(1, PrizeModel.PrizeType.Diamond),
+                new(99, PrizeModel.PrizeType.Diamond, isImpossible: true),
+            },
+            [Slot.Cyan] = new List<PrizeModel>
+            {
+                new(2000, PrizeModel.PrizeType.Score),
+                new(1500, PrizeModel.PrizeType.Money),
+            },
         };
     }
 }

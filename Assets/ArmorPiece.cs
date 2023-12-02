@@ -32,6 +32,7 @@ public class ArmorPiece : MonoBehaviour
         // _normalBias = Random.Range(-0.25f, 0.25f);
         _rotation = Random.Range(180 * 2, 180 * 5) * (Random.Range(0, 1) == 0 ? 1 : -1);
         _duration = Random.Range(0.6f, 1.5f);
+        _acc = 0;
         _isDropping = true;
     }
 }

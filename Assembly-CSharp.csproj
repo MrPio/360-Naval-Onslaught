@@ -44,12 +44,14 @@
      <Compile Include="Assets\Scripts\Prefabs\Laser.cs" />
      <Compile Include="Assets\Scripts\Partials\Enableable.cs" />
      <Compile Include="Assets\Scripts\PadManager.cs" />
+     <Compile Include="Assets\ArmorPiece.cs" />
      <Compile Include="Assets\Scripts\Prefabs\Cloud.cs" />
      <Compile Include="Assets\Scripts\ExtensionsFunctions\CameraExtensions.cs" />
      <Compile Include="Assets\URP\Blit.cs" />
      <Compile Include="Assets\Scripts\Prefabs\Cannon.cs" />
      <Compile Include="Assets\Scripts\MainCamera.cs" />
      <Compile Include="Assets\Scripts\CloudManager.cs" />
+     <Compile Include="Assets\Scripts\Prefabs\Diamond.cs" />
      <Compile Include="Assets\Scripts\Menus\ShopMenu.cs" />
      <Compile Include="Assets\Scripts\Menus\SpecialsMenu.cs" />
      <Compile Include="Assets\Scripts\Menus\AccuracyMenu.cs" />
@@ -98,6 +100,7 @@
      <Compile Include="Assets\Scripts\Prefabs\EmpText.cs" />
      <Compile Include="Assets\Scripts\Model\ShipModel.cs" />
      <Compile Include="Assets\Scripts\Prefabs\ShipPath.cs" />
+     <Compile Include="Assets\Wheel.cs" />
      <Compile Include="Assets\Scripts\Partials\Damageable.cs" />
      <Compile Include="Assets\Scripts\Prefabs\DropBomb.cs" />
      <Compile Include="Assets\Scripts\Partials\TabMenu.cs" />
@@ -116,8 +119,7 @@
      <Compile Include="Assets\Scripts\Managers\DataManager.cs" />
      <Compile Include="Assets\Scripts\PowerUpsController.cs" />
      <Compile Include="Assets\Scripts\Prefabs\Bullet.cs" />
-     <Compile Include="Assets\Scripts\Prefabs\Diamond.cs" />
-     <Compile Include="Assets\ArmorPiece.cs" />
+     <Compile Include="Assets\Scripts\Model\PrizeModel.cs" />
      <Folder Include="Assets" />
      <Folder Include="Assets\Resources\Sprites\hud" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
@@ -125,6 +127,7 @@
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
      <Folder Include="Assets\TextMesh Pro\Sprites" />
      <Folder Include="Assets\Third Party\EditorCools" />
+     <Folder Include="Assets\Resources\Sprites\wheel" />
      <Folder Include="Assets\TextMesh Pro\Resources\Sprite Assets" />
      <Folder Include="Assets\Resources\Sprites\inputs\Android" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF 1.shader" />
