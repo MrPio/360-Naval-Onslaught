@@ -50,7 +50,7 @@ namespace Managers
             new(
                 name: "Gatling Gun", sprite: "Sprites/my/turret_2", fireClip: "Audio/turret_fire_2",
                 bulletSprite: "Sprites/bullet_2",
-                baseSpeed: 600, baseRate: 1200, baseDamage: 18, baseAmmo: 80, baseReload: 58,
+                baseSpeed: 600, baseRate: 1000, baseDamage: 16, baseAmmo: 80, baseReload: 58,
                 speedBaseCost: 200, rateBaseCost: 460, damageBaseCost: 430, ammoBaseCost: 185, reloadBaseCost: 225,
                 waveUnlock: 5
             ),
@@ -120,13 +120,13 @@ namespace Managers
             new(
                 name: "SpeedBoat", sprite: "Sprites/my/ship_1", foamAnim: "foam_1", fireClip: null,
                 explodeClip: "Audio/ship_destroy",
-                baseSpeed: 100, baseRate: 0, baseDamage: 350, baseHealth: 110, baseMoney: 72,
+                baseSpeed: 100, baseRate: 0, baseDamage: 350, baseHealth: 110, baseMoney: 60,
                 hasPath: false, missileSprite: null
             ),
             new(
                 name: "Vessel", sprite: "Sprites/my/ship_2", foamAnim: "foam_2", missileSprite: "Sprites/missile_2",
                 fireClip: new[] { "Audio/cannon_fire_4", "Audio/missile_coming" }, explodeClip: "Audio/ship_destroy",
-                baseSpeed: 92, baseRate: 20, baseDamage: 145, baseHealth: 220, baseMoney: 118,
+                baseSpeed: 92, baseRate: 20, baseDamage: 145, baseHealth: 220, baseMoney: 110,
                 hasPath: true, explosionsCount: 2
             ),
             new(

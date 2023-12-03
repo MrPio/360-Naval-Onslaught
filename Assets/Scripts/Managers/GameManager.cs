@@ -68,7 +68,7 @@ namespace Managers
         [NonSerialized] public int SpecialWave = -1;
         public int Ammo;
         [NonSerialized] public int CannonAmmo = 1;
-        public int Money = 200;
+        public int Money = 0;
         public int Diamonds = 0, TotalDiamonds, PendingDiamonds;
         public int CurrentTurret = 0;
         public int CurrentCannon = 0;
@@ -93,7 +93,7 @@ namespace Managers
                                          (Difficulty == 0 ? 1.15f : 1) *
                                          (Difficulty == 2 ? 0.9f : 1);
 
-        public bool DrawArmoredShip => new System.Random().Next(0, 100) < 10;
+        public bool DrawArmoredShip => new System.Random().Next(0, 100) < 8;
 
         public bool CanSpawnDiamond => Wave / (Data.Waves.Length / (Data.PowerUps.Length - 1f)) >=
                                        TotalDiamonds + PendingDiamonds - 1;
@@ -129,7 +129,7 @@ namespace Managers
                                          (CriticalFactorLevel >= CriticalMaxLevel ? 0 : 1);
 
         public int TurretCriticalChanceCost =>
-            (int)(_turretCriticalChanceBaseCost * (1f * (1 + CannonCriticalChanceLevel)) *
+            (int)(_turretCriticalChanceBaseCost * (1f * (1 + TurretCriticalChanceLevel)) *
                   (Difficulty == 0 ? 0.9f : 1) *
                   (Difficulty == 2 ? 1.25f : 1)) *
             (TurretCriticalChanceLevel >= CriticalMaxLevel ? 0 : 1);

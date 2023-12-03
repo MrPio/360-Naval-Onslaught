@@ -238,8 +238,8 @@ public class WaveSpawner : MonoBehaviour
         var immediateSpawnChance = 0.1 + 0.185 * Game.WaveFactor;
 
         _nextSpawn = Random.Range(0f, 1f) < immediateSpawnChance
-            ? 0.25f
-            : (2.25f + Random.Range(0, 6f * (1 - 0.35f * Game.WaveFactor))) / _model.SpawnSpeedMultiply;
+            ? 0.45f
+            : (2.45f + Random.Range(0, 6f * (1 - 0.35f * Game.WaveFactor))) / _model.SpawnSpeedMultiply;
     }
 
     public void LoadGame()
@@ -260,50 +260,6 @@ public class WaveSpawner : MonoBehaviour
             overlay.GetComponent<Overlay>().OnEnd = BeginWave;
             overlay.SetActive(true);
         };
-    }
-
-    private void EndWave(bool isLoading = false)
-    {
-        if (!isLoading)
-        {
-            _model = null;
-            Game.Score += 1000;
-            ++Game.Wave;
-            DestroyAllShips();
-            foreach (var bullet in GameObject.FindGameObjectsWithTag("bullet"))
-                Destroy(bullet);
-            foreach (var laser in GameObject.FindGameObjectsWithTag("laser"))
-                Destroy(laser);
-            Game.Save();
-            Data.Save();
-        }
-
-        baseMain.SetActive(false);
-        ammoContainer.SetActive(false);
-        moneyContainer.SetActive(false);
-        specialsContainer.SetActive(false);
-        scoreContainer.SetActive(false);
-        waveContainer.SetActive(false);
-        shopMenu.SetActive(false);
-        mobileShopConfirm.SetActive(false);
-        bonusMenu.SetActive(false);
-        winMenu.SetActive(false);
-        GlobalVolumeAnimator.SetTrigger(Animator.StringToHash("fade"));
-
-        if (Game.Wave >= Data.Waves.Length)
-        {
-            // Show Win Menu
-            winMenu.SetActive(true);
-            winMenu.transform.Find("score_text").GetComponent<TextMeshProUGUI>().text =
-                Game.Score.ToString("N0") + " pts";
-        }
-        else
-            accuracyMenu.SetActive(true);
-
-        audioSource.Stop();
-        audioSource.volume = 1f;
-        audioSource.clip = winClip;
-        audioSource.Play();
     }
 
     public void BeginWave()
@@ -349,4 +305,49 @@ public class WaveSpawner : MonoBehaviour
         audioSource.clip = Game.Wave == Data.Waves.Length - 1 ? lastLevelClip : levelsClip.RandomItem();
         audioSource.Play();
     }
+    private void EndWave(bool isLoading = false)
+    {
+        if (!isLoading)
+        {
+            _model = null;
+            Game.Score += 1000;
+            ++Game.Wave;
+            DestroyAllShips();
+            foreach (var bullet in GameObject.FindGameObjectsWithTag("bullet"))
+                Destroy(bullet);
+            foreach (var laser in GameObject.FindGameObjectsWithTag("laser"))
+                Destroy(laser);
+            Game.Save();
+            Data.Save();
+        }
+
+        baseMain.SetActive(false);
+        ammoContainer.SetActive(false);
+        moneyContainer.SetActive(false);
+        specialsContainer.SetActive(false);
+        scoreContainer.SetActive(false);
+        waveContainer.SetActive(false);
+        shopMenu.SetActive(false);
+        mobileShopConfirm.SetActive(false);
+        bonusMenu.SetActive(false);
+        winMenu.SetActive(false);
+        GlobalVolumeAnimator.SetTrigger(Animator.StringToHash("fade"));
+
+        if (Game.Wave >= Data.Waves.Length)
+        {
+            // Show Win Menu
+            winMenu.SetActive(true);
+            winMenu.transform.Find("score_text").GetComponent<TextMeshProUGUI>().text =
+                Game.Score.ToString("N0") + " pts";
+        }
+        else
+            accuracyMenu.SetActive(true);
+
+        audioSource.Stop();
+        audioSource.volume = 1f;
+        audioSource.clip = winClip;
+        audioSource.Play();
+    }
+
+
 }

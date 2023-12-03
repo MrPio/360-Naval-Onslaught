@@ -94,6 +94,7 @@
      <Compile Include="Assets\Scripts\ExtensionsFunctions\VectorExtensions.cs" />
      <Compile Include="Assets\Scripts\Ui\FloatingText.cs" />
      <Compile Include="Assets\Scripts\Menus\HowToPlayMenu.cs" />
+     <Compile Include="Assets\Scripts\Model\PrizeModel.cs" />
      <Compile Include="Assets\Scripts\Prefabs\Splash.cs" />
      <Compile Include="Assets\Scripts\Ui\GlitchEffect.cs" />
      <Compile Include="Assets\Scripts\Partials\Stack.cs" />
@@ -119,7 +120,6 @@
      <Compile Include="Assets\Scripts\Managers\DataManager.cs" />
      <Compile Include="Assets\Scripts\PowerUpsController.cs" />
      <Compile Include="Assets\Scripts\Prefabs\Bullet.cs" />
-     <Compile Include="Assets\Scripts\Model\PrizeModel.cs" />
      <Folder Include="Assets" />
      <Folder Include="Assets\Resources\Sprites\hud" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

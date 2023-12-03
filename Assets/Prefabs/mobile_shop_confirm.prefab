@@ -18,7 +18,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &979858006871665375
 RectTransform:
   m_ObjectHideFlags: 0
@@ -94,6 +94,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   contextContainer: {fileID: 4645311652049329143}
+  titleText: {fileID: 4645311652103582526}
 --- !u!1 &4645311651027301117
 GameObject:
   m_ObjectHideFlags: 0
@@ -378,7 +379,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   contextMenu: {fileID: 0}
   lockedContextMenu: {fileID: 0}
-  canvas: {fileID: 0}
   mainBase: {fileID: 0}
   mobileShopConfirm: {fileID: 0}
   followMouse: 1
@@ -386,6 +386,7 @@ MonoBehaviour:
   turretIndex: -1
   cannonIndex: -1
   specialIndex: 0
+  powerUpIndex: -1
 --- !u!1 &4645311651920307082
 GameObject:
   m_ObjectHideFlags: 0
@@ -535,7 +536,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   contextMenu: {fileID: 0}
   lockedContextMenu: {fileID: 0}
-  canvas: {fileID: 0}
   mainBase: {fileID: 0}
   mobileShopConfirm: {fileID: 0}
   followMouse: 1
@@ -543,6 +543,7 @@ MonoBehaviour:
   turretIndex: -1
   cannonIndex: -1
   specialIndex: 0
+  powerUpIndex: -1
 --- !u!1 &4645311651982857035
 GameObject:
   m_ObjectHideFlags: 0

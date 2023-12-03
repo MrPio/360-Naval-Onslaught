@@ -105,17 +105,23 @@ namespace Managers
         public bool GetReloadingDown() =>
             IsMobile
                 ? IsMobileReloadPadDown.GetAsTrigger()
-                : Input.GetKeyDown(HasJoystick() ? KeyCode.Joystick1Button2 : KeyCode.R);
+                : HasJoystick()
+                    ? Input.GetKeyDown(KeyCode.Joystick1Button2)
+                    : Input.GetKeyDown(KeyCode.R) || Input.GetMouseButtonDown(2);
 
         public bool GetCannonUp() =>
             IsMobile
                 ? IsMobileCannonPadUp.GetAsTrigger()
-                : Input.GetKeyUp(HasJoystick() ? KeyCode.Joystick1Button0 : KeyCode.Space);
+                : HasJoystick()
+                    ? Input.GetKeyUp(KeyCode.Joystick1Button0)
+                    : Input.GetKeyUp(KeyCode.Space) || Input.GetMouseButtonUp(1);
 
         public bool GetCannonDown() =>
             IsMobile
                 ? IsMobileCannonPadDown.GetAsTrigger()
-                : Input.GetKeyDown(HasJoystick() ? KeyCode.Joystick1Button0 : KeyCode.Space);
+                : HasJoystick()
+                    ? Input.GetKeyDown(KeyCode.Joystick1Button0)
+                    : Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(1);
 
         public bool GetPause() =>
             IsMobile
