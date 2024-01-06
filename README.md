@@ -1,6 +1,9 @@
 # 360° Naval Onslaught
 
-### ⏱️Time Invested: 12 days
+### ⏱️Time Invested: 20 days
+
+<a href='https://play.google.com/store/apps/details?id=com.MrPio.NavalOnslaught'><img alt='Get it on Google Play' height="160" src='https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png'/></a>
+
 
 ## Gameplay [HERE](https://youtu.be/EqW0VPKNMzs)
 ## Itch.io [HERE](https://mrpio.itch.io/360-naval-onslaught)
