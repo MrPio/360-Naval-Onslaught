@@ -5,8 +5,10 @@
 <a href='https://play.google.com/store/apps/details?id=com.MrPio.NavalOnslaught'><img alt='Get it on Google Play' height="160" src='https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png'/></a>
 
 
-## Gameplay [HERE](https://youtu.be/EqW0VPKNMzs)
+## ⬇️ Download it [HERE](https://github.com/MrPio/360-Naval-Onslaught/releases/tag/Stable)
 ## Itch.io [HERE](https://mrpio.itch.io/360-naval-onslaught)
+## Gameplay [HERE](https://youtu.be/EqW0VPKNMzs)
+
 
 A tower defence game. Survive increasingly difficult waves and upgrade your weaponry.
 
