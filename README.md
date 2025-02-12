@@ -1,16 +1,20 @@
 # 360° Naval Onslaught
+A tower defense game. Survive increasingly difficult waves and upgrade your weaponry.
 
 ### ⏱️Time Invested: 20 days
 
-<a href='https://play.google.com/store/apps/details?id=com.MrPio.NavalOnslaught'><img alt='Get it on Google Play' height="160" src='https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png'/></a>
 
+
+## [🌍 Play it on the web!](https://play.unity.com/en/games/3e848b90-ba30-413f-a65e-62e459a52077/360-naval-onslaught)
 
 ## ⬇️ Download it [HERE](https://github.com/MrPio/360-Naval-Onslaught/releases/tag/Stable)
+
+### 🎮 Play with your Joystick!
+
 ## Itch.io [HERE](https://mrpio.itch.io/360-naval-onslaught)
 ## Gameplay [HERE](https://youtu.be/EqW0VPKNMzs)
 
 
-A tower defense game. Survive increasingly difficult waves and upgrade your weaponry.
 
 ![vlcsnap-2023-10-25-07h16m24s090 (1)](https://github.com/MrPio/360-Naval-Onslaught/assets/22773005/9da2f7b6-037d-4c5c-bd45-74413e966644)
 ![vlcsnap-2023-10-25-07h20m59s092](https://github.com/MrPio/360-Naval-Onslaught/assets/22773005/bbf5c91d-d2e9-492e-a334-8d47b367589d)
