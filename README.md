@@ -1,9 +1,14 @@
 # 360° Naval Onslaught
-A tower defense game. Survive increasingly difficult waves and upgrade your weaponry.
+A tower defence game. Survive increasingly difficult waves and upgrade your weaponry.
 
 ### ⏱️Time Invested: 20 days
 
-
+## Gameplay
+<p align="center">
+  <a href="https://youtu.be/EqW0VPKNMzs">
+  	<img style="width: 66%; height: auto;" src="https://github.com/user-attachments/assets/ded2eaa1-844d-4514-9055-4db4f83b6b61" alt="Gameplay">
+  </a>
+</p>
 
 ## [🌍 Play it on the web!](https://play.unity.com/en/games/3e848b90-ba30-413f-a65e-62e459a52077/360-naval-onslaught)
 
